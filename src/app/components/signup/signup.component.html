@@ -2,9 +2,10 @@
 
 
   <mat-card fxFlex.lg="34%" fxFlex.md="100%" fxFlex.xs="100%" fxFlex.sm="100%">
+    <form>
     <mat-card-title align:left>
       <h4>Create your account</h4><br>
-      <h3>to continue to Gmail</h3>
+      <h3>to continue to fundooNotes</h3>
     </mat-card-title>
 
     <mat-card-content fxLayout="column">
@@ -13,27 +14,18 @@
 
 
       <div class="example-container">
-
+        
         <mat-form-field>
+            <!-- <input matInput placeholder="Enter your email" [formControl]="email" required> -->
 
-          <input type="text" matInput placeholder="First name" class="form-control" required Firstname="Firstname" [(ngModel)]="model.Firstname" #Firstname="ngModel"  id="Firstname" >
+          <input  matInput placeholder="First name"  [formControl]="firstname"  required minlength="3" [(ngModel)]="model.Firstname"  >
         
-        <!-- <div [hidden]="Firstname.valid || Firstname.pristine"> -->
-            <mat-hint *ngIf="Firstname.invalid && (Firstname.dirty || Firstname.touched)" >Name is required 
-            
+
+              <mat-error *ngIf="firstname.invalid">{{getErrorMessageFirstName()}}</mat-error>
+
+            </mat-form-field>
         
-          <!-- <div *ngIf="Firstname.errors.required">
-            Name is required.
-          </div> -->
-          <!-- <div *ngIf="Firstname.minlength">
-            Name must be at least 4 characters long.
-          </div>
-          <div *ngIf="Firstname.errors.forbiddenName">
-            Name cannot be Bob.
-          </div> -->
-            </mat-hint></mat-form-field>
-        
-        
+
         
   <!-- Name is required -->
 <!-- </div> -->
@@ -44,8 +36,10 @@
 
         <mat-form-field>        
 
-          <input matInput placeholder="Last name" [(ngModel)]="model.Lastname" #Lastname="ngModel" required>
-        </mat-form-field>
+          <input  matInput placeholder="Last name" [formControl]="lastname" required minlength="3" [(ngModel)]="model.Lastname" >
+          <mat-error *ngIf="lastname.invalid">{{getErrorMessageLastName()}}</mat-error>
+
+          </mat-form-field>
       </div>
 
 
@@ -53,8 +47,10 @@
 
 
       <mat-form-field id="abc" hintLabel="You can use letters,numbers & periods">
-        <input matInput placeholder="User name" [(ngModel)]="model.Username" #Username="ngModel" required>
-      </mat-form-field>
+        <input matInput placeholder="Email"   [formControl]="email" required [(ngModel)]="model.Username" >
+        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+
+        </mat-form-field>
 
 
 
@@ -62,8 +58,11 @@
       <div>
         <mat-form-field class=pass hintLabel="Use 8 or more characters">
 
-          <input matInput placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required [type]="hide ? 'password' : 'text'">
-        </mat-form-field>&nbsp;
+          <input type="text" matInput placeholder="Password" [formControl]="password" required minlength="8" [(ngModel)]="model.password" required [type]="hide ? 'password' : 'text'">
+          <!-- <mat-error *ngIf="password.invalid && (password.dirty || password.touched)" >password is required  -->
+              <mat-error *ngIf="password.invalid">{{getErrorMessagePassword()}}</mat-error>
+
+          </mat-form-field>&nbsp;
 
         <mat-form-field>
           <input matInput placeholder="Confirm password" [type]="hide ? 'password' : 'text'">
@@ -94,7 +93,13 @@
           routerLink="/login" color="primary">
           <h2>Sign in instead</h2>
         </button>
-        <button mat-flat-button color="primary" id="pichi" (click)=signup()>
+        <button mat-flat-button color="primary" id="pichi"   (click)=signup()>
           Sign up</button>
 
       </div>
+    </mat-card-content></form></mat-card></div>
+
+
+
+
+

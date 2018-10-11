@@ -1,138 +1,9 @@
-
- <!-- <div class="example-container">
-  <mat-form-field hintLabel="Max 10 characters">
-    <input matInput #input maxlength="10" placeholder="Enter some input">
-    <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
-  </mat-form-field>
-
- </div>   -->
- <!-- <div class="example-container">
-    <mat-card  align=center > 
-
-  <mat-form-field> 
-    <input matInput placeholder="Enter your email" [formControl]="email" required>
-    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-  </mat-form-field></mat-card>
-</div> -->
-<!-- 
-
-<div class="container"
-     fxLayout="column"
-     fxLayout.xs="column"
-     fxLayoutAlign="center"
-     fxLayoutGap="0px"
-     fxLayoutGap.xs="0">
-  <div class="item item-1" fxFlex="0 1 80px">Item 1</div>
-  <div class="item item-2" fxLayout.xs="column" fxFlex>
-
-      <div class="item item-1" fxFlex="33%">Item 1</div>
-      <div class="item item-2" fxFlex>
-        
-          <mat-card align:center>  <h4>Sign in</h4><br><h3>with your account</h3> 
-
-
-
-
-              <mat-form-field> 
-                <input matInput placeholder="Enter your email" [formControl]="email" required>
-                <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error></mat-form-field><br>
-
-
-
-
-
-                
-
-                 
-                    <mat-form-field>
-                      <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
-                      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
-                    </mat-form-field>
-                  
-
-                    
-
-
-
-
-                    <div class="password">
-                        <button mat-button color="primary">Forgot password ?</button>
-                        </div>
-
-
-                   
-                    <div class="next">
-                       <button mat-flat-button color="primary">Next</button>
-                      </div>
-
-
-
-
-                      
-                      
-                      
-                      
-                      
-                      <div class="account">
-                        <button mat-button color="primary">Create account</button>
-                        </div>
-
-
-                       
-
-
-
-
-
-              </mat-card>
-
-
-
-
-
-
-
-
-
-      </div>
-
-      <div class="item item-3" fxFlex="33%" fxFlexOrder="3">Item 3</div>
-  </div>
-  <div class="item item-3" fxFlex="0 1 80px" fxFlexOrder="3">Item 3</div>
-</div>
-
- -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div fxLayout="row wrap" fxLayoutAlign="center center" class="row-height">
     
   
   <!-- <mat-card fxFlex="34%"> -->
       <mat-card fxFlex.lg="34%" fxFlex.md="100%" fxFlex.xs="100%" fxFlex.sm="100%">
-
+<form>
         <mat-card-title align:center>  <h4>Sign in</h4><br><h3>with your account</h3></mat-card-title>
 
         <mat-card-content fxLayout="column">
@@ -141,15 +12,19 @@
           
           
           <mat-form-field> 
-                <input matInput placeholder="Enter your email" [formControl]="email" required>
+                <input matInput placeholder="Enter your email" [formControl]="email"  [(ngModel)]="model1.emailid" required>
                 <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error></mat-form-field><br><br><br>
 
             
 
 
                 <mat-form-field>
-                    <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
+                    <input matInput placeholder="Enter your password"  [formControl]="password" required minlength="8" [(ngModel)]="model1.password"  [type]="hide ? 'password' : 'text'">
                     <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+
+                    <mat-error *ngIf="password.invalid">{{getErrorMessagePassword()}}</mat-error>
+
+                  
                   </mat-form-field>
                 
 
@@ -160,8 +35,10 @@
 
 
                  
+
+                      
                   <div class="next">
-                     <button mat-flat-button color="primary">Next</button>
+                     <button mat-flat-button color="primary"(click)=next()>Next</button>
                     </div>
 
 
@@ -189,5 +66,5 @@
 
              </mat-card-content>
 
-    </mat-card>
+   </form> </mat-card>
 </div>

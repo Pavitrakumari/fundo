@@ -1,51 +1,8 @@
-/* .example-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .example-container > * {
-    width: 30%;
-  }*/
 
   mat-card{ 
     position:relative;
     max-width:100%;
   }
-  /* position: absolute;
-
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
-  max-width: 440px;
- min-width: 150px; */
-/* margin :150px 120px 50px 440px;  */
-
-
-
-
-/* 
-min-width: 150px;
-max-width: 440px; 
-max-height:100%;
-min-height:100px;
-font-size:1.5em;
- */
-
-
-
-
-
-  
-  /* .example-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .example-container > * {
-    width: 100%;
-  }
-   */
   
   mat-form-field{
     /* width:400px; */
@@ -75,7 +32,7 @@ overflow:hidden;
 
 
   .next {
-    margin:270px 10px 0px 300px;
+    margin:260px 0px 0px 190px;
     overflow:hidden;
     position:fixed;
   }
@@ -85,9 +42,6 @@ overflow:hidden;
 }
 .password button,
 .password {
-  /* margin: 0px 130px 100px 0px; */
-  /* padding-top:0px; */
-  /* padding-bottom:100px; */
   margin-top:-10px;
 overflow:hidden;
 }

@@ -10,6 +10,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { MatSnackBarModule } from "@angular/material";
 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -26,6 +27,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { HttpClientModule }    from '@angular/common/http';
+import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 
 // import { HttpClient } from '@angular/common/http';
 
@@ -35,7 +37,8 @@ import { HttpClientModule }    from '@angular/common/http';
   declarations: [
     AppComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    ForgotpasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -47,9 +50,9 @@ import { HttpClientModule }    from '@angular/common/http';
     MatCheckboxModule,
     MatDatepickerModule,
     MatRadioModule,
-    MatSelectModule,MatSliderModule,MatSlideToggleModule,MatCardModule, HttpClientModule ,FormsModule,
+    MatSelectModule,MatSliderModule,MatSlideToggleModule,MatCardModule, HttpClientModule ,FormsModule,MatSnackBarModule,
 
-ReactiveFormsModule,    FlexLayoutModule,MatIconModule,MatButtonModule,MatTooltipModule
+ReactiveFormsModule,FlexLayoutModule,MatIconModule,MatButtonModule,MatTooltipModule
 
 
 

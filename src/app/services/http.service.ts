@@ -44,6 +44,13 @@ export class HttpService {
     return this.http.get(url);
 
   }
+  postlogin(url,body) 
+  {
+          url=this.url+url;;
+
+
+          return   this.http.post(url,body);
+  }
              
             
      
