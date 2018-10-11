@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -23,6 +23,13 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import {MatIconModule} from '@angular/material/icon'
 import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
+import { HttpClientModule }    from '@angular/common/http';
+
+// import { HttpClient } from '@angular/common/http';
+
+// import { Injectable } from '@angular/core';
 
 @NgModule({
   declarations: [
@@ -40,13 +47,15 @@ import {MatButtonModule} from '@angular/material/button';
     MatCheckboxModule,
     MatDatepickerModule,
     MatRadioModule,
-    MatSelectModule,MatSliderModule,MatSlideToggleModule,MatCardModule,
-    ReactiveFormsModule,    FlexLayoutModule,MatIconModule,MatButtonModule
+    MatSelectModule,MatSliderModule,MatSlideToggleModule,MatCardModule, HttpClientModule ,FormsModule,
+
+ReactiveFormsModule,    FlexLayoutModule,MatIconModule,MatButtonModule,MatTooltipModule
 
 
 
   ],
-  providers: [],
+    providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export class TooltipCustomClassExample {}

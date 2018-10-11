@@ -1,3 +1,100 @@
-<p>
-  signup works!
-</p>
+<div fxLayout="row wrap" fxLayoutAlign="center center" class="row-height">
+
+
+  <mat-card fxFlex.lg="34%" fxFlex.md="100%" fxFlex.xs="100%" fxFlex.sm="100%">
+    <mat-card-title align:left>
+      <h4>Create your account</h4><br>
+      <h3>to continue to Gmail</h3>
+    </mat-card-title>
+
+    <mat-card-content fxLayout="column">
+
+
+
+
+      <div class="example-container">
+
+        <mat-form-field>
+
+          <input type="text" matInput placeholder="First name" class="form-control" required Firstname="Firstname" [(ngModel)]="model.Firstname" #Firstname="ngModel"  id="Firstname" >
+        
+        <!-- <div [hidden]="Firstname.valid || Firstname.pristine"> -->
+            <mat-hint *ngIf="Firstname.invalid && (Firstname.dirty || Firstname.touched)" >Name is required 
+            
+        
+          <!-- <div *ngIf="Firstname.errors.required">
+            Name is required.
+          </div> -->
+          <!-- <div *ngIf="Firstname.minlength">
+            Name must be at least 4 characters long.
+          </div>
+          <div *ngIf="Firstname.errors.forbiddenName">
+            Name cannot be Bob.
+          </div> -->
+            </mat-hint></mat-form-field>
+        
+        
+        
+  <!-- Name is required -->
+<!-- </div> -->
+
+        &nbsp;
+
+
+
+        <mat-form-field>        
+
+          <input matInput placeholder="Last name" [(ngModel)]="model.Lastname" #Lastname="ngModel" required>
+        </mat-form-field>
+      </div>
+
+
+
+
+
+      <mat-form-field id="abc" hintLabel="You can use letters,numbers & periods">
+        <input matInput placeholder="User name" [(ngModel)]="model.Username" #Username="ngModel" required>
+      </mat-form-field>
+
+
+
+
+      <div>
+        <mat-form-field class=pass hintLabel="Use 8 or more characters">
+
+          <input matInput placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required [type]="hide ? 'password' : 'text'">
+        </mat-form-field>&nbsp;
+
+        <mat-form-field>
+          <input matInput placeholder="Confirm password" [type]="hide ? 'password' : 'text'">
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+      </div>
+
+
+
+
+
+      <div flexLayout="row" fxFlexLayout="center">
+        <div fxFlex.lg="100" *ngFor="let data of card">
+          <mat-card mat-button (click)="respond(data)" [ngClass]="data.select? 'selected': 'notselected'" style="height:70px;width:100px">
+            <mat-card-title style="font-size:20px;width:30px;padding-top:-50px;margin-bottom:2px;margin-top:-10px">
+              {{data.name}}</mat-card-title>
+            <mat-card-content style="font-size:12px">{{data.description}}</mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      
+      
+      
+      
+      
+      <div class="password">
+        <button matTooltip="If you already have an account" matTooltipClass="example-tooltip-red" mat-button mat-button
+          routerLink="/login" color="primary">
+          <h2>Sign in instead</h2>
+        </button>
+        <button mat-flat-button color="primary" id="pichi" (click)=signup()>
+          Sign up</button>
+
+      </div>

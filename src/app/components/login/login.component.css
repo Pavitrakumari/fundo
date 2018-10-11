@@ -53,27 +53,14 @@ font-size:1.5em;
 overflow:hidden;
     font-size:16px;
     min-width:10px;
-    padding :20px 10px 10px 10px;
+    padding :0px 10px 0px 10px;
     /* margin:500px 0px 10px 10px; */
     float:left;
   } 
-  /* .item-1{
-    background-color:rgb(248, 211, 223);
-    flex-direction: row
-
-  }
-  .item-2{
-    background-color:rgb(188, 235, 238);
-    
-overflow:hidden;
-  }
-  .item-3{
-    background-color:rgb(190, 195, 236);flex-direction: row
-
-  } */
   .container{
     min-height:100vh;
     position:relative;
+    justify-content:center;
   }
   h4{
 text-align:center;
@@ -85,16 +72,16 @@ margin-top:0px;
 overflow:hidden;
 
   }
-  .next button,
+
 
   .next {
-    margin:20px 0px 0px 130px;
-    padding-left:20px;
+    margin:270px 10px 0px 300px;
     overflow:hidden;
+    position:fixed;
   }
-  .account button,
+  
 .account {
-  margin-right: 60px 130px 0px 0px;
+  margin: 50px 130px -20px 0px;
 }
 .password button,
 .password {
