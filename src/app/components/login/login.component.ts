@@ -18,11 +18,11 @@ import {MatSnackBar} from '@angular/material';
 export class LoginComponent implements OnInit {
   model1: any = {
     "email":" ",
-    "password":" "
+    "password":""
     
   };
   hide=true;
-  constructor(private httpService: HttpService,public snackBar: MatSnackBar) { }
+  constructor(public httpService: HttpService,public snackBar: MatSnackBar) { }
   ngOnInit() {}
 
 

@@ -28,6 +28,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { HttpClientModule }    from '@angular/common/http';
 import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
+import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 
 // import { HttpClient } from '@angular/common/http';
 
@@ -38,7 +39,8 @@ import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassw
     AppComponent,
     SignupComponent,
     LoginComponent,
-    ForgotpasswordComponent
+    ForgotpasswordComponent,
+    ResetpasswordComponent
   ],
   imports: [
     BrowserModule,

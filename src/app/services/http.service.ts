@@ -44,14 +44,38 @@ export class HttpService {
     return this.http.get(url);
 
   }
-  postlogin(url,body) 
+  postpassword(url,input,token)
   {
-          url=this.url+url;;
+    console.log(token);
+    console.log(input);
 
+          url=this.url+url;
+          var httpAuthOptions1 = {
+            headers: new HttpHeaders({
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Authorization': token
+            })
+      
+          };
+          
 
-          return   this.http.post(url,body);
+          
+          return this.http.post(url,this.getFormUrlEncoded(input),httpAuthOptions1);
+        
   }
-             
+
+  getFormUrlEncoded(toConvert) {
+    const formBody = [];
+    for (const property in toConvert) {
+      const encodedKey = encodeURIComponent(property);
+      const encodedValue = encodeURIComponent(toConvert[property]);
+      formBody.push(encodedKey + '=' + encodedValue);
+    }
+    return formBody.join('&');
+   }
+
+  
+         
             
      
         
@@ -59,3 +83,30 @@ export class HttpService {
 }
 
 
+/**
+ * postPassword(adress,bodydata,acessToken)
+  {
+    console.log(acessToken);
+    console.log(bodydata);
+    
+    var httpAuthOptions1 = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': acessToken
+      })
+
+    };
+    
+  
+    return this.http.post(this.url+"/"+adress,this.getFormUrlEncoded(bodydata),httpAuthOptions1)
+  }
+  getFormUrlEncoded(toConvert) {
+    const formBody = [];
+    for (const property in toConvert) {
+      const encodedKey = encodeURIComponent(property);
+      const encodedValue = encodeURIComponent(toConvert[property]);
+      formBody.push(encodedKey + '=' + encodedValue);
+    }
+    return formBody.join('&');
+   }
+ */

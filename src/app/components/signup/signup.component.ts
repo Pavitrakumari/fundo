@@ -89,6 +89,7 @@ ngOnInit() {
   console.log(this.model.Firstname)
   console.log(this.model.Lastname)
   console.log(this.model.Username)
+  console.log(this.model.password)
 
     this.httpService.postdata("user/userSignUp",
 
