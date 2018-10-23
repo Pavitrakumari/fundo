@@ -3,6 +3,7 @@
 import {Component,OnInit} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { HttpService } from '/home/administrator/fundo/src/app/services/http.service'
+import {  Router } from '@angular/router';
 
 import {MatSnackBar} from '@angular/material';
 
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
     
   };
   hide=true;
-  constructor(public httpService: HttpService,public snackBar: MatSnackBar) { }
+  constructor(public httpService: HttpService,public router:Router,public snackBar: MatSnackBar) { }
   ngOnInit() {}
 
 
@@ -53,8 +54,14 @@ export class LoginComponent implements OnInit {
       "password":this.model1.password
     }).subscribe(
       data => {
-
+        var email1=this.model1.emailid;
       console.log("login successfull");
+      this.router.navigate(["/home"]);
+      localStorage.setItem('name',email1);
+      localStorage.setItem('token',data['id']);
+      console.log("raam");
+      console.log(data['id']);
+
       this.snackBar.open("successfully login", "login", {
         duration:10000,
       });

@@ -1,47 +1,92 @@
-.sidenav-container {
-  height: 100%;
-}
 
-.sidenav {
-  width: 200px;
-  /* background-color:pink */
+.title{
+  color:black;
+  font-family:BURW Chancery L, cursive  
 }
+.sidenav-container {
+  height: 90%;
+  background:gainsboro;
+
+}
+.row-height{
+  height:100%;
+  
+}
+.sidenav {
+  width: 300px;
+  margin-top:70px;
+  background:gainsboro;
+
+  }
 
 .mat-toolbar.mat-primary {
   position: sticky;
+  background:#fb0 ;
+  color: black;
+
   top: 0;
 }
-.mat-drawer.mat-drawer-side {
-  top:0;
-  height:100%;
-  margin-top:65px;
-  /* position: relative; */
+
+/* .mat-drawer:not(.mat-drawer-side) {
+  box-shadow: none;
+} */
+.search{
+background-color:#fb0;
+overflow: hidden;
+
+
 }
-.mat-toolbar.mat-primary {
-  background:#fb0 ;
-  color: #fff;
-}
-.gb_bf{
-  background: white;
-  border: none;
-  font: normal 16px Roboto,sans-serif;
-  -webkit-font-variant-ligatures: none;
-  font-variant-ligatures: none;
-  height: 46px;
+
+
+.search input{
+  border:none;
+  font-size:15px;
+  height:40px;
   outline: none;
-  padding: 11px 16px 11px 16px;
-  width: 100%;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+  background-color:#fb0;
+  min-width:100px;
+  /* width:700%; */
+  overflow: hidden;
+
+}
+.search input:focus{
+  background-color:white
+
+}
+/* 
+.search input:hover{
+  background-color: white;
+} */
+
+.mat-select-panel {
+  margin-top: 45px;
+}
+.note{
+  opacity: 0.75;
 }
 
-
-
-
-
-
-
-
-
+.notes1{
+  margin-left: 30px;
+  
+}.notes2{
+  margin-left: 30px;
+}.notes3{
+  margin-left: 30px;
+}.notes4{
+  margin-left: 30px;
+}.notes5{
+  margin-left: 30px;
+}.notes6{
+  margin-left: 30px;
+}.notes7{
+  margin-left: 30px;
+}.notes8{
+  margin-left: 30px;
+}.notes9{
+  margin-left: 30px;
+}
+.notes10{
+  margin-left: 30px;
+}
 
 

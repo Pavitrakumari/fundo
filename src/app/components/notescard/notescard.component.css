@@ -1,0 +1,13 @@
+.example-card{
+    margin-top:20px;
+    height:auto;
+    width: 200px;
+
+}
+/* mat-card{
+    opacity: 0;
+    width:200px;
+} */
+mat-card-content{
+    width:200px;
+}

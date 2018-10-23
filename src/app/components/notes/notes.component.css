@@ -1,0 +1,110 @@
+.row-height{
+    /* height:19%; */
+    margin-top:2%;
+  }
+  
+   .input {
+    width: 80%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    margin-left: 10px;
+    padding-top: 14px;
+    font-family: cursive;
+    
+  } 
+  .card1{
+  height:45px;
+  width: 500px;   
+   border: none;
+  outline: none;
+
+  /* left: 0; */
+  /* right: 0; */
+  /* margin: auto; */
+  padding: 2px;
+  }
+  .icon1{
+      opacity: 0.5;
+    margin-top:-19px;
+  }
+  .icon1:hover{
+    opacity: 1.5;
+  margin-top:-19px;
+}
+  
+  .input2{
+    font-weight: normal;
+    font-size: 20px;
+text-align: left;
+      border:none;
+      outline:none;
+  }
+  .input3{
+    /* margin-left: 10px; */
+
+      float:left;
+      border:none;
+      outline:none;
+  }
+  div[contenteditable=true]:empty::before {
+    content: attr(placeholder);
+    opacity: 0.5;;
+    }
+    .hiddencard {
+        width: 400;
+        /* min-width:200px; */
+        /* height: auto; */
+        /* position: relative; */
+        
+        left: 0;
+        right: 0;
+        margin: auto;
+        margin-top: 20px;
+        padding: 2px;
+        /* margin-bottom: 5px; */
+      }
+      .hiddenDiv {
+        padding: 10px;
+    }
+    .inputTitle {
+        border: none;
+        outline: none;
+        width: 450px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .inputNote {
+        border: none;
+        outline: none;
+        padding-left: 10px;
+        padding-top: 10px;
+        font-size: 14px;
+    }
+    .pin {
+        margin-top:0px;
+        float: right;
+        opacity: 0.5;
+    }
+    .pin:hover{
+        opacity: 1;
+    }
+    .app-icon1{
+        opacity: 0.5;
+    }
+.closeButton{
+    opacity: 0.5;
+}
+.closeButton:hover{
+    opacity: 1;
+}
+   
+    
+    
+    
+      
+      
+
+
+
+  
