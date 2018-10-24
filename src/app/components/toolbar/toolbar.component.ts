@@ -34,7 +34,7 @@ token;
     this.firstchar=array[0];
     console.log(this.firstchar);
     console.log("pichoiiii");
-    this.token=localStorage.getItem('token');
+    // this.token=localStorage.getItem('token');
     console.log(this.token);
   }
   logout(){

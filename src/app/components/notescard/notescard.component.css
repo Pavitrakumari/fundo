@@ -1,13 +1,31 @@
 .example-card{
     margin-top:20px;
-    height:auto;
-    width: 200px;
+    /* height:auto; */
+    /* width: 200px; */
 
 }
-/* mat-card{
+ /* mat-card{
     opacity: 0;
     width:200px;
-} */
+}  */
+mat-card-title{
+    width:200px;
+    height:auto;
+    word-wrap: break-word;
+    /* background-color: rgb(214, 143, 138); */
+
+    font-weight: bold
+}
 mat-card-content{
     width:200px;
+    height:auto;
+    word-wrap: break-word;
+    /* background-color: palegoldenrod; */
+
+}
+.invisible{
+    opacity: 0;
+}
+.invisible:hover{
+    opacity: 1;
 }
