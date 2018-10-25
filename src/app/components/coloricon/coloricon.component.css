@@ -1,8 +1,92 @@
-
-
 .icon2{
     opacity: 0.5;
 }
 .icon2:hover{
 opacity: 1;
+}
+.white{
+    background-color: white;
+    width:35px;
+    height: 35px;
+
+}
+.red{
+background-color: rgb(242, 139, 130);
+width:35px;
+    height: 35px;
+
+
+}
+.orange{
+    background-color:orange;
+    width:35px;
+    height: 35px;
+
+
+    
+    border: 9pc;
+    border-color: rgb(20, 20, 20);
+}
+.yellow{
+    width:35px;
+    height: 35px;
+
+
+    background-color:yellow;
+}
+.green{
+    width:35px;
+    height: 35px;
+
+
+    background-color: green;
+}
+.teal{
+    width:35px;
+    height: 35px;
+
+
+    background-color: teal;
+}
+.blue{
+    width:35px;
+    height: 35px;
+
+
+    background-color:blue;
+}
+.darkblue{
+    width:35px;
+    height: 35px;
+
+
+    background-color: darkblue;
+}
+.purple{
+    width:35px;
+    height: 35px;
+
+
+    background-color: purple;
+}
+.pink{
+    width:35px;
+    height: 35px;
+
+
+    background-color: pink;
+}
+.brown{
+    width:35px;
+    height: 35px;
+
+
+    background-color: brown;
+}
+.gray{
+    width:35px;
+    height: 35px;
+
+
+    background-color: gray;
 }
