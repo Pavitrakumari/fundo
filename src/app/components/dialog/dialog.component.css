@@ -1,0 +1,62 @@
+.hiddencard {
+    width: 400;
+    /* min-width:200px; */
+    /* height: auto; */
+    /* position: relative; */
+    
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 0px;
+    padding: 2px;
+    /* margin-bottom: 5px; */
+  }
+  .hiddenDiv {
+    padding: 10px;
+}
+.inputTitle {
+    border: none;
+    outline: none;
+    width: 450px;
+    font-size: 16px;
+    font-weight: 600;
+}
+.inputNote {
+    border: none;
+    outline: none;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 14px;
+    font-weight: normal;
+}
+.pin {
+    margin-top:-10px;
+    margin-right:-20px;
+    float: right;
+    opacity: 0.5;
+}
+.pin:hover{
+    opacity: 1;
+}
+.app-icon1{
+    opacity: 0.5;
+}
+.closeButton{
+opacity: 0.5;
+margin-top:-30px;
+}
+.closeButton:hover{
+opacity: 1;
+}
+.one{
+    width:250px;
+}
+.two{
+    margin-top:-60px;
+    float: right;
+    margin-left:270px;
+}
+div[contenteditable=true]:empty::before {
+    content: attr(placeholder);
+    opacity: 0.5;;
+    }

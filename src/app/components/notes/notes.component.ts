@@ -10,7 +10,8 @@ import {  Router } from '@angular/router';
 })
 /**To use components in other modules , we have to export them */
 export class NotesComponent implements OnInit {
-expression1=true;
+  colorChange="#ffffff";
+  expression1=true;
 expression2=false;
 public title;
 public note;
@@ -29,32 +30,46 @@ display(){/**display() method to show & hide the card based on click of close bu
   this.expression1=false;
 this.expression2=true;
 }
+color(event){
+  if(event){
+    this.colorChange=event;
+    
+    console.log(this.colorChange);
+      }
+}
 close(){/**method that need to perform while clicking the close button */
   this.expression1=true;
 this.expression2=false;
 // }
 // click(){
+  /**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */
   this.title=document.getElementById('title').innerHTML;
   this.note=document.getElementById('note').innerHTML;
-  // var token=localStorage.getItem('token');
+  /**document.getElementById() method returns the element of specified id */
   console.log(this.title);
   console.log(this.note);
   console.log(this.pinned);
   this.clicked=!this.clicked;
-this.httpService.postpassword("notes/addnotes",{
-"title":this.title,
-"description":this.note,
-"labelIdList":"",
-"checklist":"",
-"isPined":this.pinned
-},this.token).subscribe( 
+  var body={
+    "title":this.title,
+    "description":this.note,/**attributes to call the api */
+    "labelIdList":"",
+    "checklist":"",
+    "isPined":this.pinned,
+    "color":""
+    }
+    body.color=this.colorChange;
+    console.log(this.colorChange);
+    
+this.httpService.postpassword("notes/addnotes",body,this.token).subscribe( /**registers handlers for events emitted by this instance */
   data=>{
-    console.log("successfull add notes",data);
+    console.log("successfull add notes",data);/**if success then display the data */
     this.onNewEntryAdded.emit();
   },error=>{
-    console.log("Error", error);
+    console.log("Error", error);/**if there exists error then display the error */
   });
   
+  this.colorChange="#ffffff"
 }
 
 

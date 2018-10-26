@@ -1,85 +1,50 @@
 import { Component,Input, EventEmitter,Output,OnInit } from '@angular/core';
 import{HttpService} from '../../services/http.service'
-
+import {MatSnackBar} from '@angular/material';
+/**A componenet can be reused throughout the application & even in other applications */
 @Component({
-  selector: 'app-coloricon',
-  templateUrl: './coloricon.component.html',
-  styleUrls: ['./coloricon.component.css']
+  selector: 'app-coloricon',/**A string value which represents the component on browser at execution time */
+  templateUrl: './coloricon.component.html',/**External templating process to define html tags in component */
+  styleUrls: ['./coloricon.component.css']/**It is used to provide style of components */
 })
+/**To use components in other modules , we have to export them */
+
 export class ColoriconComponent implements OnInit {
+  /**Input and Output are two decorators in Angular responsible for communication between two components*/
 @Input() newcolor;
 @Output() resp=new EventEmitter
-constructor(public httpService: HttpService) { }
+
+@Output() response=new EventEmitter<string>()
+
+constructor(public httpService: HttpService,public snackBar: MatSnackBar) { }
 // nowcolor=1;
 // index;
 token=localStorage.getItem('token');
 changecolor(paint)
 {
-  // this.nowcolor=paint;
-  // switch(this.nowcolor)
-  // {
-  //   case 1:{
-  //       this.index="#ffffff";
-  //        break;
-  //   }
-  //   case 2:{
-  //     this.index="#90ee90";
-  //      break;
-  //    }
-  //    case 3:{
-  //      this.index="#f66ef6";
-  //       break;
-  //    }
-  //    case 4:{
-  //        this.index="#f08080";
-  //         break;
-  //     }
-  //    case 5:{
-  //         this.index="#05f6f6";
-  //         break;
-  //     }
-  //   case 6:{
-  //       this.index="#ffb6c1";
-  //        break;
-  //    }
-  //    case 7:{
-  //        this.index="#ffff66";
-  //        break;
-  //    }
-  //    case 8:{
-  //        this.index="#add8e6";
-  //        break;
-  //     }
-  //     case 9:{
-  //       this.index="#e6a9a9";
-  //       break;
-  //     }
-  //     case 10:{
-  //        this.index="#ffff81";
-  //         break;
-  //       }
-  //     case 11:{
-  //        this.index="#a9a9d8";
-  //        break;
-  //     }
-  //     case 12:{
-  //       this.index="#d9d9d9";
-  //       break;
-  //    }
-  //   }
+  
+ this.response.emit(paint);
   var body={
     "color":paint,
     "noteIdList":[this.newcolor]
   }
+        /**hitting the api by passing the url & token */
+
   this.httpService.postdeletecard("notes/changesColorNotes",body,this.token).subscribe(
     data=>{
-      console.log("color changes successfully",this.newcolor);
+      console.log("color changes successfully",this.newcolor);/**if error doesnot exist then display data */
+      this.snackBar.open("color change success", "success", {/**snackbar to display the result */
+        duration:10000,
+      });
       this.resp.emit();
-    },
+    }),
     error=>{
       console.log("error in coloring",error);
-      })
-}  
+      
+      }
+}
+  /**it is a interface */
+  /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
 ngOnInit() {
   }
 

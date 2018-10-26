@@ -1,1 +1,15 @@
-&nbsp;&nbsp;<mat-icon class="icon2"mat-icon-button (click)="addMore()" matTooltip="More">more_vert</mat-icon>&nbsp;&nbsp;
+<!-- &nbsp;&nbsp;<mat-icon class="icon2"mat-icon-button (click)="addMore()" matTooltip="More">more_vert</mat-icon>&nbsp;&nbsp; -->
+
+<mat-icon class="icon2" mat-icon-button style="margin-bottom:30px;user-select: none;" [matMenuTriggerFor]="menu"  matTooltip="More">more_vert</mat-icon>&nbsp;
+
+<mat-menu  style="padding-top:30px;"class="menu" #menu="matMenu" [overlapTrigger]="false">
+    <button mat-menu-item (click)="deletecard(arrayofnotes.id)"><span>Delete Note</span></button>
+    <button mat-menu-item (click)="addlabel()"><span>Add label</span></button>
+    <button mat-menu-item><span>Add drawing</span></button>
+    <button mat-menu-item><span>Make a copy</span></button>
+    <button mat-menu-item><span>Show check boxes</span></button>
+    <button mat-menu-item><mat-icon>Copy to Google docs</mat-icon>
+     <!-- <span>Pick date & time </span>  -->
+    </button> 
+
+  </mat-menu>

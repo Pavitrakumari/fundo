@@ -1,4 +1,4 @@
 
 <app-notes (onNewEntryAdded)="getCard($event)"></app-notes>
-<app-notescard [myData]=temp> </app-notescard>
+<app-notescard  [myData]="arraynewdata" (noteevent)="getCard($event)" (updateevent)="getCard($event)" (archiveevent)="getCard($event)"(colorevent)="getCard($event)"> </app-notescard>
 

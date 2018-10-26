@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
       console.log("raam");
       console.log(data['id']);
 
-      this.snackBar.open("successfully login", "login", {
+      this.snackBar.open("successfully login", "login",{
         duration:10000,
       });
     },

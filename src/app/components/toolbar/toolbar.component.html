@@ -22,7 +22,7 @@
   [mode]="(isHandset$ | async) ? 'over' : 'side'"
   [opened]="!(isHandset$ | async)">
   <mat-nav-list>
-    <a mat-list-item routerLink="/home/notes1"><img class="note"src="../../../assets/images/image1.svg"><span class="notes1">Notes</span></a>
+    <a mat-list-item routerLink="/home/notes"><img class="note"src="../../../assets/images/image1.svg"><span class="notes">Notes</span></a>
     <a mat-list-item routerLink="/home/reminders"><img class="note"src="../../../assets/images/image2.svg"><span class="notes2">Reminders</span></a><hr>
     <div class="labels">Labels<a mat-button routerLink="." style="margin-left:130px;">Edit</a></div>
     <a mat-list-item routerLink="/home/newlabel"><img class="note"src="../../../assets/images/image3.svg"><span class="notes3">Create new label</span></a><hr>

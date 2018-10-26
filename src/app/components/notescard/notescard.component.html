@@ -1,19 +1,25 @@
-<div fxLayoutWrap fxLayoutAlign="start start" fxLayout="row wrap" fxLayoutGap="20px" >
-<mat-card class="example-card" *ngFor='let index of myData'>
-  <mat-card-header>
+
+<div fxLayoutWrap fxLayoutAlign="start start" fxFlex fxLayout="row wrap" fxLayoutGap="20px" style="padding:75px;">
+
+  <mat-card fxFlex.lg="28" fxFlex.sm="100" fxFlex.md="100" fxFlex.xs="100" class="example-card" *ngFor='let index of myData' [ngStyle]="{'background-color':index.color}">
+  <div (click)="openDialog(index)">
+    <mat-card-header>
     <mat-card-title ><div class="inputTitle" contenteditable="false"aria-multiline="true" role="textbox"[innerHTML]="index.title"></div></mat-card-title> 
   </mat-card-header>
   <mat-card-content class="content">
     <div contenteditable="false" role="textbox" aria-multiline="true" layout-align="end center" class="content"[innerHTML]="index.description"></div>
+  <div></div>
   </mat-card-content>
+  
+</div>
   <mat-card-actions>
     <span class="invisible">
       <app-icon1></app-icon1>
       <app-collaboratoricon></app-collaboratoricon>
-      <app-coloricon></app-coloricon>
+      <app-coloricon (resp)="color($event)" [newcolor]="index.id"></app-coloricon>
       <app-imageicon></app-imageicon>
-      <app-archiveicon></app-archiveicon>
-      <app-moreicon></app-moreicon>
+      <app-archiveicon (archiveevent)="archive($event)" [noteid]="index.id"></app-archiveicon>
+      <app-moreicon (moreevent)="receive($event)"[arrayofnotes]="index"></app-moreicon>
     </span>
   </mat-card-actions>
 </mat-card></div>
