@@ -47,7 +47,7 @@ postdata(url,body)/**post() service to post he data */
           return this.http.post(url,this.getFormUrlEncoded(input),httpAuthOptions1);/**passing the input & calling the  getFormUrlEncoded()*/
         }
 
-  getFormUrlEncoded(toConvert) {/**a method that encodes the token */
+  getFormUrlEncoded(toConvert) {/**a method that encodes the token*/
     const formBody = [];
     for (const property in toConvert) {
       const encodedKey = encodeURIComponent(property);
@@ -56,7 +56,7 @@ postdata(url,body)/**post() service to post he data */
     }
     return formBody.join('&');
    }
-/**api to logout  */
+/**api to logout*/
 postlogout(url,token){
   console.log(token);
   url=this.url+url;
@@ -67,9 +67,6 @@ postlogout(url,token){
     })
   };
   return this.http.post(url,{},httpAuthOptions2);/**passing the input & calling the  getFormUrlEncoded()*/
-
-
-
 }
 getcard(url,token){
   console.log(token);
@@ -83,6 +80,34 @@ getcard(url,token){
   };
   return this.http.get(url,httpAuthOptions3);
 }
+postdeletecard(url,model,token){
+  url=this.url+url;
+  var httpAuthOptions4 = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': token
+
+    })
+  };
+  return this.http.post(url,model,httpAuthOptions4);
+}
+
+
+
+
+// }
+// postcolorcard(url,body){
+//   url=this.url+url;
+//   var httpAuthOptions5= {
+//     headers: new HttpHeaders({
+//       'Content-Type': 'application/json',
+//       'Authorization': 
+
+//     })
+//   };
+//   return this.http.post(url,httpAuthOptions5)
+
+// }
 
 
 

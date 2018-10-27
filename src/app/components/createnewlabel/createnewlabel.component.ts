@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
+
 
 @Component({
   selector: 'app-createnewlabel',
@@ -7,9 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreatenewlabelComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
-
+  
 }

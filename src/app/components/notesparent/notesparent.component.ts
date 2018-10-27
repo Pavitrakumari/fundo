@@ -1,3 +1,18 @@
+/************************************************************************************************
+*  Execution       :   1. default node         cmd> notesparent.ts 
+*        
+*  Purpose         : To create,add,update & delete the notes 
+* 
+*  Description    
+* 
+*  @file           : notesparent.js
+*  @overview       : To create,add,update & delete the notes
+*  @module         : notesparent.ts - This is optional if expeclictly its an npm or local package
+*  @author         : Pavitrakumari <pavithra.korapati@gmail.com>
+*  @since          : 20-10-2018
+*
+*************************************************************************************************/
+
 /**component has imports , decorator & class */
 import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 import { HttpService } from '../../services/http.service'
@@ -39,12 +54,12 @@ getCard(){
            if(data['data'].data[i].isDeleted == false && data['data'].data[i].isArchived == false)/**if cards are not deleted  */
            {
                  this.arraynewdata.push(data['data'].data[i]);/**then push those cards into the array */
+                }
+              }
+              console.log(this.arraynewdata,"array of new data");/**display new array*/
+            }),
+            error=>{/**if error occurs then display the error */
+              console.log("error",error);
             }
-      }
-      console.log(this.arraynewdata,"array of new data");/**display new array*/
-    }),
-    error=>{/**if error occurs then display the error */
-      console.log("error",error);
-    }
-  }
-}
+          }
+         }

@@ -21,6 +21,7 @@ import { HelpComponent } from './components/help/help.component';
 import { AppdownloadsComponent } from './components/appdownloads/appdownloads.component';
 import { KeyboardshortcutsComponent } from './components/keyboardshortcuts/keyboardshortcuts.component';
 import { AuthGuard as AuthGuard } from '../app/auth/auth.guard';
+import { NotesparentComponent } from './components/notesparent/notesparent.component';
 
 
 
@@ -30,8 +31,10 @@ const appRoutes:Routes=[
   {path:'forgotpassword',component:ForgotpasswordComponent},
   /**{path:'resetpassword/:id',component:ResetpasswordComponent},*/
   {path:'home',component:HomeComponent,canActivate:[AuthGuard],children:[
-    {path:'',redirectTo:'notes1',pathMatch:'full'},
-    {path:'notes1',component:NotesComponent,},
+    
+    {path:'',redirectTo:'notes',pathMatch:'full'},
+    // {path:'notesparent',component:NotesparentComponent},
+    {path:'notes',component:NotesparentComponent,},
     {path:'reminders',component:RemindersComponent},
     {path:'newlabel',component:CreatenewlabelComponent},
     {

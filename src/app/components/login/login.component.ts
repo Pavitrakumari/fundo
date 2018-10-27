@@ -24,9 +24,12 @@ export class LoginComponent implements OnInit {
   };
   hide=true;
   constructor(public httpService: HttpService,public router:Router,public snackBar: MatSnackBar) { }
-  ngOnInit() {}
-
-
+  ngOnInit(){
+var token;
+if(localStorage.getItem('token')){
+  this.router.navigate(['/home']);
+}
+}
 
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */

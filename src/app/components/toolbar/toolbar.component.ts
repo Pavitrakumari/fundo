@@ -1,5 +1,24 @@
+/************************************************************************************************
+*  Execution       :   1. default node         cmd> toolbar.ts 
+*        
+*  Purpose         : To create the dashboard layout containing sidenav,sidenav container & toolbar
+* 
+*  Description    
+* 
+*  @file           : toolbar.ts
+*  @overview       : To create the dashboard layout containing sidenav,sidenav container & toolbar
+*  @module         : toolbar.ts - This is optional if expeclictly its an npm or local package
+*  @author         : Pavitrakumari <pavithra.korapati@gmail.com>
+*  @since          : 20-10-2018
+*
+*************************************************************************************************/
+
 /**component has imports , decorator & class */
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit,Input,Output,EventEmitter } from '@angular/core';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
+import { AddlabelComponent } from '../addlabel/addlabel.component';
+import { CreatenewlabelComponent } from '../createnewlabel/createnewlabel.component';
+
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,8 +31,10 @@ import {MatSnackBar} from '@angular/material';
   templateUrl: './toolbar.component.html',/**External templating process to define html tags in component */
   styleUrls: ['./toolbar.component.css']/**It is used to provide style of components */
 })
+
 /**To use components in other modules , we have to export them */
 export class ToolbarComponent implements OnInit {
+
 name='';
 firstchar='';
 raw_data;
@@ -22,7 +43,7 @@ token;
     .pipe(
       map(result => result.matches)
     );
-    constructor(public snackBar: MatSnackBar,private breakpointObserver: BreakpointObserver,public httpService:HttpService,public router:Router) {}
+    constructor(public dialog: MatDialog,public snackBar: MatSnackBar,private breakpointObserver: BreakpointObserver,public httpService:HttpService,public router:Router) {}
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
   ngOnInit(){
@@ -47,5 +68,14 @@ token;
 
   },
   )}
+  addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
+    this.dialog.open(CreatenewlabelComponent, {/**open dialog  */
+      data: {
+        
+        panelClass: 'myapp-no-padding-dialog'
+  
+      }
+    });
+  }
 }
 

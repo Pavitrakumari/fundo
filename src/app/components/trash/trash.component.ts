@@ -1,3 +1,18 @@
+/************************************************************************************************
+*  Execution       :   1. default node         cmd> trash.ts 
+*        
+*  Purpose         : To move the deleted cards to trash
+* 
+*  Description    
+* 
+*  @file           : trash.ts
+*  @overview       : To move the deleted cards to trash
+*  @module         : trash.ts - This is optional if expeclictly its an npm or local package
+*  @author         : Pavitrakumari <pavithra.korapati@gmail.com>
+*  @since          : 20-10-2018
+*
+*************************************************************************************************/
+
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../services/http.service'
 

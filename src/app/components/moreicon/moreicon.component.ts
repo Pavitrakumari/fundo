@@ -1,3 +1,18 @@
+/************************************************************************************************
+*  Execution       :   1. default node         cmd> moreicon.ts 
+*        
+*  Purpose         : To include the moreicon into the notes cards & perform delete operation
+* 
+*  Description    
+* 
+*  @file           : moreicon.js
+*  @overview       : To include the moreicon into the notes cards & perform delete operation
+*  @module         : moreicon.ts - This is optional if expeclictly its an npm or local package
+*  @author         : Pavitrakumari <pavithra.korapati@gmail.com>
+*  @since          : 20-10-2018
+*
+*************************************************************************************************/
+
 /**component has imports , decorator & class */
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 
@@ -35,11 +50,10 @@ deletecard(){/**method to delete the cards */
     this.moreevent.emit();/**to emit an event to the parent */
   })
 }
-
-addlabel() {
-  this.dialog.open(AddlabelComponent, {
+addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
+  this.dialog.open(AddlabelComponent, {/**open dialog  */
     data: {
-      animal: 'panda',
+      
       panelClass: 'myapp-no-padding-dialog'
 
     }

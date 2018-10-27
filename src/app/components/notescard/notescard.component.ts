@@ -1,3 +1,18 @@
+/************************************************************************************************
+*  Execution       :   1. default node         cmd> notescard.ts 
+*        
+*  Purpose         : To add the cards down & display the collection of cards after the click of close button
+* 
+*  Description    
+* 
+*  @file           : notescard.js
+*  @overview       : To add the cards down & display the collection of cards after the click of close button
+*  @module         : notescard.ts - This is optional if expeclictly it's an npm or local package
+*  @author         : Pavitrakumari <pavithra.korapati@gmail.com>
+*  @since          : 20-10-2018
+*
+*************************************************************************************************/
+
 /**component has imports , decorator & class */
 import { Component,Input, EventEmitter,OnInit, Output } from '@angular/core';
 import { HttpService } from '../../services/http.service'
@@ -13,15 +28,13 @@ import { DialogComponent } from '../dialog/dialog.component';
 })
 /**To use components in other modules , we have to export them */
 export class NotescardComponent implements OnInit {
+  /**To be able to use our output we need to import & bind a new instance of the event emitter to it */
   @Output() noteevent= new EventEmitter<any>();
   @Output() colorevent= new EventEmitter<any>();
   @Output() archiveevent= new EventEmitter<any>();
   @Output() updateevent= new EventEmitter<any>();
-
   @Input() myData
-  animal: string;
-  name: string;
-constructor(public httpService: HttpService,public dialog: MatDialog) { }
+  constructor(public httpService: HttpService,public dialog: MatDialog) { }
 /**Input and Output are two decorators in Angular responsible for communication between two components*/
 /**myData is a varaible */
 /**it is a interface */
@@ -39,16 +52,14 @@ archive($event){/**callback will be invoked &data associated with the event will
 
 openDialog(dialogdata): void {
   const dialogRef = this.dialog.open(DialogComponent, {
-    width: '550px',
-    data: dialogdata,
-    panelClass: 'myapp-no-padding-dialog'
+    width: '550px',/**width of the dialog box */
+    data: dialogdata,/**paramaeter that we are passing */
+    panelClass: 'myapp-no-padding-dialog'/**to change the padding in dialog box */
   });
 
   dialogRef.afterClosed().subscribe(result => {
     console.log('The dialog was closed');
-    
-    this.updateevent.emit();
-    // this.animal = data;
+    this.updateevent.emit();/**emit an event to the parent */
   });
 }
 

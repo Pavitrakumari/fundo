@@ -8,7 +8,7 @@
     <div fxFlex></div>
     <button mat-icon-button><mat-icon  fxFlex="40px"  style="color:black" aria-label="Side nav toggle icon" matTooltip="Refresh">refresh</mat-icon></button>
     <button mat-icon-button><mat-icon fxFlex="40px"  style="color:black" aria-label="Side nav toggle icon" matTooltip="List view">view_stream</mat-icon></button>
-    <button mat-icon-button><mat-icon fxFlex="40px" style="color:black"  aria-label="Side nav toggle icon" matTooltip=" Notifications">notifications_none</mat-icon></button>
+    <button mat-icon-button><mat-icon fxF lex="40px" style="color:black"  aria-label="Side nav toggle icon" matTooltip=" Notifications">notifications_none</mat-icon></button>
     <button mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:white;color:black" matTooltip="Fundoo Account">{{firstchar | titlecase}}</button>
     <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
       <button mat-menu-item routerLink="/signup">Add account</button>
@@ -25,7 +25,7 @@
     <a mat-list-item routerLink="/home/notes"><img class="note"src="../../../assets/images/image1.svg"><span class="notes">Notes</span></a>
     <a mat-list-item routerLink="/home/reminders"><img class="note"src="../../../assets/images/image2.svg"><span class="notes2">Reminders</span></a><hr>
     <div class="labels">Labels<a mat-button routerLink="." style="margin-left:130px;">Edit</a></div>
-    <a mat-list-item routerLink="/home/newlabel"><img class="note"src="../../../assets/images/image3.svg"><span class="notes3">Create new label</span></a><hr>
+    <a mat-list-item (click)="addlabel()"><img class="note"src="../../../assets/images/image3.svg"><span class="notes3">Create new label</span></a><hr>
     <a mat-list-item routerLink="/home/archive"><mat-icon class="note">archive</mat-icon><span class="notes4"></span>Archive</a>
     <a mat-list-item routerLink="/home/trash"><mat-icon class="note">delete</mat-icon><span class="notes5"></span>Trash</a><hr>
     <a mat-list-item routerLink="/home/notes6"><mat-icon class="note">settings</mat-icon><span class="notes6"></span>Settings</a>

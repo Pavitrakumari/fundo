@@ -52,6 +52,10 @@ import { MoreiconComponent } from './components/moreicon/moreicon.component';
 import { UndoiconComponent } from './components/undoicon/undoicon.component';
 import { RedoiconComponent } from './components/redoicon/redoicon.component';
 import { NotescardComponent } from './components/notescard/notescard.component';
+import { NotesparentComponent } from './components/notesparent/notesparent.component';
+import { DialogComponent } from './components/dialog/dialog.component';
+import {MatDialogModule} from '@angular/material';
+import { AddlabelComponent } from './components/addlabel/addlabel.component';
 
 
 // import { HttpClient } from '@angular/common/http';
@@ -87,6 +91,9 @@ import { NotescardComponent } from './components/notescard/notescard.component';
     UndoiconComponent,
     RedoiconComponent,
     NotescardComponent,
+    NotesparentComponent,
+    DialogComponent,
+    AddlabelComponent,
    
   
   ],
@@ -103,11 +110,12 @@ import { NotescardComponent } from './components/notescard/notescard.component';
     MatSelectModule,MatMenuModule,MatSliderModule,MatSlideToggleModule,MatCardModule, HttpClientModule ,FormsModule,MatSnackBarModule,
 
 ReactiveFormsModule,FlexLayoutModule,MatIconModule,MatButtonModule,MatTooltipModule, LayoutModule, MatToolbarModule, MatSidenavModule, MatListModule
-
+,MatDialogModule
 
 
   ],
     providers: [],
+    entryComponents:[DialogComponent,AddlabelComponent,CreatenewlabelComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

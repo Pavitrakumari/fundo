@@ -1,9 +1,22 @@
+/************************************************************************************************
+*  Execution       :   1. default node         cmd> archiveicon.ts 
+*        
+*  Purpose         : To include the archive icon into the cards
+* 
+*  Description    
+* 
+*  @file           : archiveicon.ts
+*  @overview       : To include the archive icon into the cards
+*  @module         : notesparent.ts - This is optional if expeclictly its an npm or local package
+*  @author         : Pavitrakumari <pavithra.korapati@gmail.com>
+*  @since          : 20-10-2018
+*
+*************************************************************************************************/
 /**component has imports , decorator & class */
-
 import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
 import{HttpService} from '../../services/http.service'
 import {MatSnackBar} from '@angular/material';
-
+/**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-archiveicon',
   templateUrl: './archiveicon.component.html',
@@ -31,6 +44,7 @@ archive(){
         duration:10000,
       });
       this.archiveevent.emit();
+      
     },
     error=>{
       console.log("error in coloring",error);

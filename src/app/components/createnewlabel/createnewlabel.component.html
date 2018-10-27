@@ -1,3 +1,11 @@
-<p>
-  createnewlabel works!
-</p>
+ <h1  mat-dialog-title>Edit labels</h1>
+ <div fxLayoutGap="space-between" fxLayoutAlign="row" mat-dialog-content>
+   <mat-icon class="done" fxFlex=20 mat-icon-button  matTooltip="Done">done</mat-icon>
+   <!-- <mat-form-field class="inputTitle" fxFlex=80  contenteditable="true" placeholder="Create new label">  -->
+   <mat-form-field>
+     <input class="input" placeholder="Create new label"  >
+
+  </mat-form-field>
+   <mat-icon class="clear" fxFlex=10 mat-icon-button  matTooltip="clear">clear</mat-icon>
+  </div> 
+  <button mat-button  class="button"(click)="close()">Done</button>

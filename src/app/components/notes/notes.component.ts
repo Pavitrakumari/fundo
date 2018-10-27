@@ -1,3 +1,18 @@
+/************************************************************************************************
+*  Execution       :   1. default node         cmd> notes.ts 
+*        
+*  Purpose         : To display small card & hiddencards & change color when clicked 
+* 
+*  Description    
+* 
+*  @file           : notes.ts
+*  @overview       : To display small card & hiddencards & change color when clicked
+*  @module         : notes.ts - This is optional if expeclictly its an npm or local package
+*  @author         : Pavitrakumari <pavithra.korapati@gmail.com>
+*  @since          : 20-10-2018
+*
+*************************************************************************************************/
+
 /**component has imports , decorator & class */
 import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
 import { HttpService } from '../../services/http.service'
@@ -31,11 +46,10 @@ display(){/**display() method to show & hide the card based on click of close bu
 this.expression2=true;
 }
 color(event){
-  if(event){
+  if(event){/**if event occurs then change the color */
     this.colorChange=event;
-    
     console.log(this.colorChange);
-      }
+   }
 }
 close(){/**method that need to perform while clicking the close button */
   this.expression1=true;
@@ -43,13 +57,13 @@ this.expression2=false;
 // }
 // click(){
   /**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */
-  this.title=document.getElementById('title').innerHTML;
-  this.note=document.getElementById('note').innerHTML;
+  try{
+  this.title=document.getElementById('title').innerHTML;/**innerHTML property setys or returns HTML content of an element */
+  this.note=document.getElementById('note').innerHTML;/**returns an element of specified id */
   /**document.getElementById() method returns the element of specified id */
   console.log(this.title);
   console.log(this.note);
   console.log(this.pinned);
-  this.clicked=!this.clicked;
   var body={
     "title":this.title,
     "description":this.note,/**attributes to call the api */
@@ -60,19 +74,18 @@ this.expression2=false;
     }
     body.color=this.colorChange;
     console.log(this.colorChange);
-    
-this.httpService.postpassword("notes/addnotes",body,this.token).subscribe( /**registers handlers for events emitted by this instance */
-  data=>{
-    console.log("successfull add notes",data);/**if success then display the data */
-    this.onNewEntryAdded.emit();
-  },error=>{
-    console.log("Error", error);/**if there exists error then display the error */
-  });
-  
-  this.colorChange="#ffffff"
+    this.httpService.postpassword("notes/addnotes",body,this.token).subscribe( /**registers handlers for events emitted by this instance */
+      data=>{
+        console.log("successfull add notes",data);/**if success then display the data */
+        this.onNewEntryAdded.emit();
+      },error=>{
+        console.log("Error", error);/**if there exists error then display the error */
+      });
+      this.colorChange="#ffffff"
+    }
+    catch(error){
+      console.log(error);
+      
+    }
 }
-
-
-
-
 }

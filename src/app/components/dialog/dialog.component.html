@@ -1,23 +1,19 @@
-
- 
- <div >
- <div fxFlex="100" [ngStyle]="{'background-color':data.color}">
-
+<div >
+<div fxFlex="100" [ngStyle]="{'background-color':data.color}">
 <div   fxFlex.lg="65%" fxFlex.md="100%" fxFlex.xs="100%" fxFlex.sm="100%" class="hiddencard">
-  <div fxLayout="row" class="hiddenDiv">
-      <div class="inputTitle" contenteditable="true" id="title" [innerHTML]="data.title" placeholder="Title">{{data.title}}</div>
-      <div><img class="pin" src="../../../assets/images/pin.svg" matTooltip="Pin Note"alt=""></div></div>
-      <div class="inputNote" contenteditable="true" id="note" [innerHTML]="data.description"placeholder="Note" autofocus #description>{{data.description}}</div><br>
-   <div fxLayout="row wrap"> <div class="one" fxLayoutAlign="space-between">
-
+    <div fxLayout="row" class="hiddenDiv">
+        <div class="inputTitle" contenteditable="true" id="title" [innerHTML]="data.title" placeholder="Title">{{data.title}}</div>
+        <div><img class="pin" src="../../../assets/images/pin.svg" matTooltip="Pin Note"alt=""></div></div>
+      <div class="inputNote" contenteditable="true" id="note" [innerHTML]="data.description"placeholder="Note" autofocus>{{data.description}}</div><br>
+      <div fxLayout="row wrap"> <div class="one" fxLayoutAlign="space-between">
           <app-icon1></app-icon1>
           <app-collaboratoricon></app-collaboratoricon>
-          <app-coloricon></app-coloricon>
+          <app-coloricon (updateevent)="color($event)" [newcolor]="data.id"></app-coloricon>
           <app-imageicon></app-imageicon>
-          <app-archiveicon></app-archiveicon>
+          <app-archiveicon (archiveevent)="archive($event)" [noteid]="data.id"></app-archiveicon>
           <app-moreicon></app-moreicon>
-          </div>
-<div class="two" >
+        </div>
+        <div class="two" >
           <button mat-button (click)="onNoClick()" (click)="close()">CLOSE</button>
       </div>
 </div>
