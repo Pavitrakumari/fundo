@@ -62,6 +62,8 @@ if(localStorage.getItem('token')){
       this.router.navigate(["/home"]);
       localStorage.setItem('name',email1);
       localStorage.setItem('token',data['id']);
+      localStorage.setItem('userId',data['userId']);
+
       console.log("raam");
       console.log(data['id']);
 

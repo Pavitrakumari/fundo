@@ -12,10 +12,8 @@
 *  @since          : 20-10-2018
 *
 *************************************************************************************************/
-
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../services/http.service'
-
 @Component({
   selector: 'app-trash',
   templateUrl: './trash.component.html',

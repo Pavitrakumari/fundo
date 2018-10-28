@@ -12,13 +12,11 @@
 *  @since          : 20-10-2018
 *
 *************************************************************************************************/
-
 /**component has imports , decorator & class */
 import { Component,OnInit,Input,Output,EventEmitter } from '@angular/core';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 import { AddlabelComponent } from '../addlabel/addlabel.component';
 import { CreatenewlabelComponent } from '../createnewlabel/createnewlabel.component';
-
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -31,10 +29,8 @@ import {MatSnackBar} from '@angular/material';
   templateUrl: './toolbar.component.html',/**External templating process to define html tags in component */
   styleUrls: ['./toolbar.component.css']/**It is used to provide style of components */
 })
-
 /**To use components in other modules , we have to export them */
 export class ToolbarComponent implements OnInit {
-
 name='';
 firstchar='';
 raw_data;
@@ -65,7 +61,6 @@ token;
       this.snackBar.open("successfully logout", "LOGOUT", {/**snackbar to display the result */
       duration:10000,/**for a duration of 10 seconds */
     });
-
   },
   )}
   addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */

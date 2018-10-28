@@ -17,6 +17,7 @@ export class HttpService {
   constructor(private http: HttpClient) { }
   url= 'http://34.213.106.173/api/';/**url */
 
+  
   getDataService(url)/**get() method  to get he data using service*/
   {
   url=this.url+url;
@@ -31,7 +32,10 @@ postdata(url,body)/**post() service to post he data */
     url=this.url+url;
     return this.http.get(url);/**returns the output */
   }
-  
+  deletedata(url){/**get() service to get he data */
+    url=this.url+url;
+    return this.http.delete(url);/**returns the output */
+  }
   postpassword(url,input,token)/**post() service to post the token which is generated */
   {
     console.log(token);
@@ -66,7 +70,7 @@ postlogout(url,token){
       'Authorization': token
     })
   };
-  return this.http.post(url,{},httpAuthOptions2);/**passing the input & calling the  getFormUrlEncoded()*/
+  return this.http.post(url,httpAuthOptions2);/**passing the input & calling the  getFormUrlEncoded()*/
 }
 getcard(url,token){
   console.log(token);

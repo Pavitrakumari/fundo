@@ -23,7 +23,27 @@ h1{
     margin-top:50px;
     margin-left:100px;
 }
-.input{
-    
 
+.labelButton {
+    float: right;
+}
+
+.name {
+    font-family: 'Roboto',arial,sans-serif;
+    font-size: 18px;
+}
+
+.input {
+    margin-left: 8px;
+    float: left;
+    outline: none;
+    border: none;
+}
+
+.divider {
+    padding: 5px;
+}
+
+.labelNameEdit {
+    outline: none;
 }
