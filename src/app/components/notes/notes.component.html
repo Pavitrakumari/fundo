@@ -1,34 +1,42 @@
 <div fxLayout="row" fxLayoutAlign="center center" class="row-height">
-    <mat-card fxFlex="55" fxFlex.md="98%" fxFlex.xs="98%" fxFlex.sm="98%"class="card1" *ngIf="expression1" (click)="display()">
-        <span ><input fxFlex="30"  class="input" (click)="display()" contenteditable="true" placeholder="Take a note.."></span>
+    <mat-card fxFlex="55" fxFlex.md="98%" fxFlex.xs="98%" fxFlex.sm="98%"class="card1" *ngIf="expression1">
+        <span ><input fxFlex="30"  class="input" contenteditable="true" (click)="display()" placeholder="Take a note..."></span>
         <div fxLayoutGap="space-between" fxLayoutAlign="end">
-            <mat-icon fxFlex="10" class="icon1" matTooltip="New Note" mat-icon-button>format_list_bulleted</mat-icon>
+            <mat-icon fxFlex="10" (click)="expression3=!expression3"  (click)="expression2=true" (click)="expression1=false" class="icon1"   matTooltip="New Note"  mat-icon-button>format_list_bulleted</mat-icon>
             <mat-icon fxFlex="10" matTooltip="New note with image" class="icon1" mat-icon-button>image</mat-icon>
             <mat-icon fxFlex="5" matTooltip="Drawing not available"  class="icon1" mat-icon-button>brush</mat-icon>
         </div>
     </mat-card>
     
     
+    
+    
+    
+    
     <mat-card [ngStyle]="{'background-color':colorChange}" fxFlex.lg="55%" fxFlex.md="100%" fxFlex.xs="100%" fxFlex.sm="100%"*ngIf="expression2" class="hiddencard">
         <div fxLayout="row" class="hiddenDiv">
-            <div class="inputTitle" contenteditable="true" id="title"placeholder="Title"></div>
+            <div  class="inputTitle" contenteditable="true"   id="title"placeholder="Title"></div>
             <div><img class="pin" src="../../../assets/images/pin.svg" matTooltip="Pin Note"alt=""></div></div>
-            <div class="inputNote" contenteditable="true" id="note"placeholder="Take a note..." autofocus #description></div><br>
+            <div  *ngIf="expression3"     class="inputNote" contenteditable="true" id="note"placeholder="Take a note..." autofocus #description></div><br>
+
+            
+            <div fxLayoutAlign="space-between">
+         <mat-icon *ngIf="!expression3" >add</mat-icon><div fxFlex="60" *ngIf="!expression3" class="inputNote1" contenteditable="true" id="note"placeholder="checkbox list" autofocus #description></div>
+        
+        
+        
+        </div>
+            
             <span>
                 <app-icon1></app-icon1>
-                <app-collaboratoricon></app-collaboratoricon>
+               <app-collaboratoricon></app-collaboratoricon>
                 <app-coloricon (response)="color($event)"></app-coloricon>
                 <app-imageicon></app-imageicon>
                 <app-archiveicon></app-archiveicon>
-                <app-moreicon></app-moreicon>
+                <app-moreicon ></app-moreicon>
                 <app-undoicon></app-undoicon>
                 <app-redoicon></app-redoicon>
                 <button mat-button  (click)="close()">CLOSE</button>
             </span>
-    
-
-
-
-
-      </mat-card>
-  </div><br>
+    </mat-card>
+</div><br>

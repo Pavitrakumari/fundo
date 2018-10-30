@@ -1,33 +1,19 @@
-  <h1  mat-dialog-title>Edit labels</h1>
- <div fxLayoutGap="space-between" fxLayoutAlign="row" mat-dialog-content>
-   <mat-icon class="done" fxFlex=20 mat-icon-button (click)=done() matTooltip="Done">done</mat-icon>
-   
-   
-     <input class="input" [(ngModel)]="label" placeholder="Create new label">
+<h1  mat-dialog-title>Edit labels</h1>
+<div fxLayoutGap="space-between" fxLayoutAlign="row" mat-dialog-content>
+  <mat-icon class="done" fxFlex=20 mat-icon-button (click)=done() matTooltip="Done">done</mat-icon>
+  <input class="input" [(ngModel)]="label" placeholder="Create new label">
+  <mat-icon class="clear" fxFlex=10 mat-icon-button  matTooltip="clear">clear</mat-icon>
+</div><br>
+<div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let label of labelarray">
+  <div fxLayout="row" fxLayoutAlign="space-between center" class="delete">
+    <mat-icon (click)=delete(label.id) class="delete">delete</mat-icon> 
+    <div fxFlex="80%" [innerHTML]="label.label" class="label" *ngIf="!editable || label.label!=editLabel"></div>
+    <div fxFlex="80%" [innerHTML]="label.label" class="label" contenteditable="true" *ngIf="editable && label.label==editLabel" #myDiv></div>
+    <div fxFlex="10%"><mat-icon (click)=edit(label) *ngIf="editDoneIcon || label.id!=editId">edit</mat-icon>
+      <mat-icon (click)=editDone(label) *ngIf="editClick && label.id==editId">done</mat-icon></div>
+    </div>
+  </div>
+  <div><button mat-button class="button" (click)="onClose()">Done</button></div>
+
 
   
-   <mat-icon class="clear"  fxFlex=10 mat-icon-button  matTooltip="clear">clear</mat-icon>
-  </div> <br>
-  <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let label of labelarray">
-    <div fxLayout="row"  fxLayoutAlign="space-between center" class="delete">
-      <mat-icon (click)="delete(label.id)" fxFlex=10 mat-icon-button>delete</mat-icon>
-      </div>
-  <div  >{{label.label}}</div>
-  <div fxLayout="row"  fxLayoutAlign="space-between center" class="edit">
-      <mat-icon (click)="editLabel(label.id)" fxFlex=10 mat-icon-button>edit</mat-icon>
-      </div>
-</div>
-  <button mat-button  class="button" (click)="onClose()">Done</button> 
-  
-
-
-
-
-
-
-
-
-
-
-
-

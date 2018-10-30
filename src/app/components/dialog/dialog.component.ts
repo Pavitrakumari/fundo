@@ -12,7 +12,6 @@
 *  @since          : 20-10-2018
 *
 *************************************************************************************************/
-
 /**component has imports , decorator & class */
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -64,15 +63,13 @@ export class DialogComponent implements OnInit {
       console.log("update changes successfully", data);/**if no errors then display the data */
       this.snackBar.open("update change success", "success", {/**snackbar to display the result */
         duration: 10000,/**duaration of the snackbar to be opened */
-
-      
       });
     }),
-      error => {
-        console.log("error in update", error);/**if error exists then display the error */
-        this.snackBar.open("update change failed", "error", {/**snackbar to display the result */
-          duration: 10000,
-        });
-      }
+    error => {
+      console.log("error in update", error);/**if error exists then display the error */
+      this.snackBar.open("update change failed", "error", {/**snackbar to display the result */
+        duration: 10000,
+      });
+    }
   }
 }

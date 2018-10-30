@@ -12,7 +12,6 @@
 *  @since          : 20-10-2018
 *
 *************************************************************************************************/
-
 /**component has imports , decorator & class */
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 
@@ -28,13 +27,22 @@ import { AddlabelComponent } from '../addlabel/addlabel.component';
   styleUrls: ['./moreicon.component.css']/**It is used to provide style of components */
 })
 export class MoreiconComponent implements OnInit {
+  public labelarray=[];
+clicklist=false;
+  disabled = false;
+
   token=localStorage.getItem('token');
   @Output() moreevent = new EventEmitter<any>();
+    @Output() checkevent = new EventEmitter<any>();
+
 /**Input and Output are two decorators in Angular responsible for communication between two components*/
 
 @Input() arrayofnotes:any
   constructor(public dialog: MatDialog,public httpService: HttpService,public snackBar: MatSnackBar) { }
-ngOnInit() {}
+ngOnInit() {
+  // this.getLabels();
+
+}
 deletecard(){/**method to delete the cards */
   console.log(this.arrayofnotes);
   var model={
@@ -50,14 +58,69 @@ deletecard(){/**method to delete the cards */
     this.moreevent.emit();/**to emit an event to the parent */
   })
 }
-addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
+addlabel() 
+{/**addlabel() method to open the add-label dialog box when it is clicked */
   this.dialog.open(AddlabelComponent, {/**open dialog  */
-    data: {
-      
-      panelClass: 'myapp-no-padding-dialog'
-
-    }
+    width: '550px',
+    height:'auto',
+    panelClass: 'myapp-no-padding-dialog'
   });
 }
+getLabels()
+{
+  this.httpService.getcard("noteLabels/getNoteLabelList",this.token)
+  .subscribe(response=>{
+      this.labelarray=[];
+      console.log(response['data'].details);
+      for(var i=0;i<(response['data'].details).length;i++)
+      {
+        if(response['data'].details[i].isDeleted == false)
+        {
+               this.labelarray.push(response['data'].details[i])
+        }
+      }
+      console.log(this.labelarray,"Label array printing success");
+    }),
+    error=>{
+      console.log("error in get LABELS",error);
+    }
+}
+getlabellist(labelid){
+  console.log("selected label is : ",labelid.isChecked);
+  
+  console.log([this.arrayofnotes['id']]);
+console.log(labelid);
+var url="notes/"+[this.arrayofnotes['id']]+"/addLabelToNotes/"+labelid+"/add";
+if(this.arrayofnotes!=null && labelid.isChecked==null)
+{
+  console.log("add function .......");
+  this.httpService.postdeletecard(url,{},this.token).subscribe(data=>{
+  console.log("success in get label list",data);
+  this.moreevent.emit();/**to emit an event to the parent */
+
+}),
+error=>{
+  console.log("error in get label list",error);
+  
+}}
+if(this.arrayofnotes != null && labelid.isChecked==true){
+  this.httpService.postdeletecard("notes/"+this.arrayofnotes['id']+"/addLabelToNotes/"+labelid+"/remove",null,this.token)
+  .subscribe(data=>{
+    console.log("success in remove label",data);
+    
+  }),
+  error=>{
+    console.log("error in remove",error);
+    
+  }
+}
+
+
+}
+
+
+
+
+
 
 }

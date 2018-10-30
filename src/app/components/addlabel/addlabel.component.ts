@@ -10,6 +10,7 @@ export interface DialogData {
   styleUrls: ['./addlabel.component.css']
 })
 export class AddlabelComponent implements OnInit {
+  disabled = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 

@@ -31,6 +31,7 @@ import {MatSnackBar} from '@angular/material';
 })
 /**To use components in other modules , we have to export them */
 export class ToolbarComponent implements OnInit {
+    labelarray;
 name='';
 firstchar='';
 raw_data;
@@ -50,6 +51,8 @@ token;
     this.firstchar=array[0];/**first character of the name is passed to 'firstchar' variable */
     console.log(this.firstchar);
     console.log(this.token);/**display the token & firstchar */
+    this.getLabels();
+  
   }
   logout(){/**logout() function */
     this.httpService.postlogout("user/logout",this.token)
@@ -72,5 +75,28 @@ token;
       }
     });
   }
+  getLabels()
+{
+  this.httpService.getcard("noteLabels/getNoteLabelList",this.token)
+  .subscribe(response=>{
+      this.labelarray=[];
+      console.log(response['data'].details);
+      for(var i=0;i<(response['data'].details).length;i++)
+      {
+        if(response['data'].details[i].isDeleted == false)
+        {
+               this.labelarray.push(response['data'].details[i])
+        }
+      }
+      console.log(this.labelarray,"Label array printing success");
+    }),
+    error=>{
+      console.log("error in get LABELS",error);
+    }
+}
+
+
+
+
 }
 

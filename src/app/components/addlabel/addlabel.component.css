@@ -1,9 +1,9 @@
 .inputTitle {
     border: none;
     outline: none;
-    width: 150px;
+    /* width: 150px; */
     font-size: 16px;
-    margin-top:-20px;
+    /* margin-top:-20px; */
     font-style: oblique;
     font-weight: normal;
 }
@@ -14,3 +14,7 @@ div[contenteditable=true]:empty::before {
 h1{
     font-style: italic;
 }
+.example-margin {
+    margin: 0 10px;
+  }
+  

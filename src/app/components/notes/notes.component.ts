@@ -28,6 +28,8 @@ export class NotesComponent implements OnInit {
   colorChange="#ffffff";
   expression1=true;
 expression2=false;
+expression3=true;
+
 public title;
 public note;
 public pinned=false;
@@ -41,19 +43,28 @@ public clicked=false;
 /**it is a interface */
 /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
 }
+show: boolean = true;
+
 display(){/**display() method to show & hide the card based on click of close button */
   this.expression1=false;
 this.expression2=true;
+
 }
+
+
 color(event){
   if(event){/**if event occurs then change the color */
     this.colorChange=event;
     console.log(this.colorChange);
    }
 }
+
 close(){/**method that need to perform while clicking the close button */
   this.expression1=true;
 this.expression2=false;
+this.expression3=true;
+
+
 // }
 // click(){
   /**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */

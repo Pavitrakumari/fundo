@@ -1,4 +1,3 @@
-
 <div fxLayoutWrap fxLayoutAlign="start start" fxFlex fxLayout="row wrap" fxLayoutGap="20px">
   <mat-card fxFlex.lg="28" fxFlex.sm="100" fxFlex.md="100" fxFlex.xs="100" class="example-card" *ngFor='let index of myData' [ngStyle]="{'background-color':index.color}">
   <div (click)="openDialog(index)">
@@ -10,6 +9,20 @@
     <div></div>
   </mat-card-content>
 </div>
+
+
+
+
+<div *ngFor="let item of index.noteLabels">
+  <mat-chip-list selected>
+    <mat-chip>
+      {{item.label}}
+    </mat-chip>
+  </mat-chip-list>
+</div>
+
+
+
 <mat-card-actions>
   <span class="invisible">
     <app-icon1></app-icon1>
@@ -17,7 +30,7 @@
     <app-coloricon (resp)="color($event)" [newcolor]="index.id"></app-coloricon>
     <app-imageicon></app-imageicon>
     <app-archiveicon (archiveevent)="archive($event)" [noteid]="index.id"></app-archiveicon>
-    <app-moreicon (moreevent)="receive($event)"[arrayofnotes]="index"></app-moreicon>
+    <app-moreicon (moreevent)="receive($event)" [arrayofnotes]="index"></app-moreicon>
   </span>
 </mat-card-actions>
 </mat-card></div>
