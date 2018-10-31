@@ -33,6 +33,8 @@ public labelarray=[];
 ngOnInit() {
   this.getLabels();
 }
+public search:any = '';
+
 editClick;
 editable;
 editLabel;
@@ -49,6 +51,7 @@ onClose():void{
 public label;
 changeText=false
 addLabel(){
+try{
   // console.log(this.myDiv.nativeElement.innerHTML);
   this.httpservice.postdeletecard("noteLabels",{
     "label":this.label,
@@ -56,36 +59,52 @@ addLabel(){
     "userId":localStorage.getItem('userId')
   },this.token).subscribe(response=>{
     console.log("success in createpostlabel",response)
-  },
-  error=>{
+  }),
+error=>{
     console.log("error in create/add postlabel",error)
-  })
+  }}
+  catch(error){
+    console.log(error);
+    
+  }
 }
 getLabels(){
+try{
   this.httpservice.getcard("noteLabels/getNoteLabelList",this.token).subscribe(
-    response=>{
+    data=>{
       this.labelarray=[];
-      console.log(response['data'].details);
-      for(var i=0;i<(response['data'].details).length;i++){
-        if(response['data'].details[i].isDeleted == false){
-        this.labelarray.push(response['data'].details[i])}
+      console.log(data['data'].details);
+      for(var i=0;i<(data['data'].details).length;i++){/**running for loop for the length of the array */
+        if(data['data'].details[i].isDeleted == false){/**if label is not deleted then get the labels */
+        this.labelarray.push(data['data'].details[i])}/**pushing labels into an array */
       }
       console.log(this.labelarray,"Label array printing successsss");
     }),
-    error=>{
+    error=>{/**if error exists then display the array */
       console.log("error in get LABELS",error);
     }
+  }
+catch(error){
+    console.log(error);
+    
+  }
   
 }
-delete(labelid){
+delete(labelid){/**delete() method to delete the labels from the list */
+try{
   console.log(labelid)
-  this.httpservice.deletedata("noteLabels/"+labelid+"/deleteNoteLabel")
-  .subscribe(response=>{
-    console.log("success in delete",response);
+  this.httpservice.deletedata("noteLabels/"+labelid+"/deleteNoteLabel")/**calling the api by passing url,token,labelid */
+  .subscribe(response=>{/** In angular subscribe is used with Observable*/
+
+    console.log("success in delete",response);/**if success exists then display the success */
     this.getLabels();
-  },error=>{
+  }),error=>{/**if error exists then display the error */
     console.log("erroe in deelete",error);
-  })
+  }}
+catch(error){
+    console.log(error);
+    
+  }
 }
 edit(label){
   this.editClick=true;
@@ -95,14 +114,15 @@ edit(label){
   this.editable=true;
   console.log(this.editClick)
  }
-editDone(label){
+editlabel(label){/**editlabel() method to edit the labels */
+try{
   this.editDoneIcon = true;
   this.editClick=false;
   this.editable=false;
-   var url = "noteLabels/" + label.id +"/updateNoteLabel"
-  this.httpservice.postdeletecard(url,{
+   var url = "noteLabels/" + label.id +"/updateNoteLabel"/**setting the url */
+  this.httpservice.postdeletecard(url,{/**calling the api by passing url,token,labelid */
     "label": this.myDiv.nativeElement.innerHTML,
-    "isDeleted": false,
+    "isDeleted": false,/**attributes */
     "id":label.id,
     "userId":localStorage.getItem('userId')
   },localStorage.getItem('token')).subscribe(response=>{
@@ -112,9 +132,9 @@ editDone(label){
     console.log("error in edit label...........",error)
   }
 }
-
-
-
-
-
+catch(error){
+  console.log(error);
+  
+}
+}
 }

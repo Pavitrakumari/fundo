@@ -34,6 +34,7 @@ export class NotescardComponent implements OnInit {
   @Output() archiveevent= new EventEmitter<any>();
   @Output() updateevent= new EventEmitter<any>();
   @Input() myData
+  token=localStorage.getItem('token')
   constructor(public httpService: HttpService,public dialog: MatDialog) { }
 /**Input and Output are two decorators in Angular responsible for communication between two components*/
 /**myData is a varaible */
@@ -62,6 +63,20 @@ openDialog(dialogdata): void {
     this.updateevent.emit();/**emit an event to the parent */
   });
 }
+removelabel(label,note){/**passing the label id & note id */
+  try{
+console.log(note,label);/**displaying the id's */
+this.httpService.postdeletecard("notes/"+note+"/addLabelToNotes/"+label+"/remove",null,this.token)
+  .subscribe(data=>{/**using the observabel subscribe using callbackk */
+console.log("success in remove label",data);/**if success then display the result */
+this.updateevent.emit();/**emit an event to the parent */
 
-
+  }),
+  error=>{/**if error exists */
+    console.log("error in remove",error);/**then display the error */
+  }}
+  catch(error){
+    console.log(error);
+  }
+}
 }

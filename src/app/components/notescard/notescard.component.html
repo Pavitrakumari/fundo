@@ -12,14 +12,15 @@
 
 
 
-
+<div fxLayout="row" fxLayoutAlign="start start" class="row-height" fxLayoutGap="5px">
 <div *ngFor="let item of index.noteLabels">
   <mat-chip-list selected>
     <mat-chip>
       {{item.label}}
+      <mat-icon matChipRemove (click)="removelabel(item.id,index.id)">cancel</mat-icon>
     </mat-chip>
   </mat-chip-list>
-</div>
+</div></div>
 
 
 

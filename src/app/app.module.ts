@@ -51,6 +51,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import {MatDialogModule} from '@angular/material';
 import { AddlabelComponent } from './components/addlabel/addlabel.component';
 import {MatChipsModule} from '@angular/material/chips';
+import { SearchPipe } from './search.pipe';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import {MatChipsModule} from '@angular/material/chips';
     NotesComponent,CreatenewlabelComponent, ArchiveComponent,TrashComponent, SettingsComponent,RemindersComponent,
     FeedbackComponent,HelpComponent,AppdownloadsComponent,KeyboardshortcutsComponent,Icon1Component,CollaboratoriconComponent,
     ColoriconComponent,ImageiconComponent,ArchiveiconComponent,MoreiconComponent,UndoiconComponent,RedoiconComponent,
-    NotescardComponent,NotesparentComponent, DialogComponent,AddlabelComponent,
+    NotescardComponent,NotesparentComponent, DialogComponent,AddlabelComponent, SearchPipe,
 ],
 imports: [
     BrowserModule,AppRoutingModule,BrowserAnimationsModule,MatFormFieldModule,

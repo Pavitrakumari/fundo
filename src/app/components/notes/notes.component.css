@@ -66,6 +66,10 @@ text-align: left;
       }
       .hiddenDiv {
         padding: 10px;
+        border-radius: 20px;
+    }
+    .cardd{
+        border-radius: 20px;
     }
     .inputTitle {
         border: none;

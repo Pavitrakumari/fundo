@@ -12,7 +12,6 @@
 *  @since          : 20-10-2018
 *
 *************************************************************************************************/
-
 /**component has imports , decorator & class */
 import { Component, OnInit,Input,Output,EventEmitter } from '@angular/core';
 import { HttpService } from '../../services/http.service'
@@ -50,15 +49,12 @@ display(){/**display() method to show & hide the card based on click of close bu
 this.expression2=true;
 
 }
-
-
 color(event){
   if(event){/**if event occurs then change the color */
     this.colorChange=event;
     console.log(this.colorChange);
    }
 }
-
 close(){/**method that need to perform while clicking the close button */
   this.expression1=true;
 this.expression2=false;
@@ -68,7 +64,7 @@ this.expression3=true;
 // }
 // click(){
   /**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */
-  try{
+try{
   this.title=document.getElementById('title').innerHTML;/**innerHTML property setys or returns HTML content of an element */
   this.note=document.getElementById('note').innerHTML;/**returns an element of specified id */
   /**document.getElementById() method returns the element of specified id */
@@ -94,7 +90,7 @@ this.expression3=true;
       });
       this.colorChange="#ffffff"
     }
-    catch(error){
+  catch(error){
       console.log(error);
       
     }

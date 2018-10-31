@@ -28,9 +28,11 @@ import { AddlabelComponent } from '../addlabel/addlabel.component';
 })
 export class MoreiconComponent implements OnInit {
   public labelarray=[];
-clicklist=false;
+  public search:any = '';
+  clicklist=false;
   disabled = false;
-
+notearray=[];
+isChecked;
   token=localStorage.getItem('token');
   @Output() moreevent = new EventEmitter<any>();
     @Output() checkevent = new EventEmitter<any>();
@@ -41,9 +43,15 @@ clicklist=false;
   constructor(public dialog: MatDialog,public httpService: HttpService,public snackBar: MatSnackBar) { }
 ngOnInit() {
   // this.getLabels();
+// console.log("pavii");
+// console.log(this.arrayofnotes);
+// console.log(this.arrayofnotes.noteLabels);
 
 }
 deletecard(){/**method to delete the cards */
+try{
+  console.log("pichii");
+  
   console.log(this.arrayofnotes);
   var model={
     "isDeleted":true,/**attributes to be passed to hit the api trashNotes */
@@ -56,7 +64,11 @@ deletecard(){/**method to delete the cards */
       duration:10000,
     });
     this.moreevent.emit();/**to emit an event to the parent */
-  })
+  })}
+catch(error){
+    console.log(error);
+    
+  }
 }
 addlabel() 
 {/**addlabel() method to open the add-label dialog box when it is clicked */
@@ -66,61 +78,71 @@ addlabel()
     panelClass: 'myapp-no-padding-dialog'
   });
 }
+/**getLabels() method to get the labels */
 getLabels()
 {
-  this.httpService.getcard("noteLabels/getNoteLabelList",this.token)
-  .subscribe(response=>{
-      this.labelarray=[];
-      console.log(response['data'].details);
-      for(var i=0;i<(response['data'].details).length;i++)
+try{
+  console.log(this.arrayofnotes.noteLabels);
+  console.log("hellyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+  
+  this.notearray=this.arrayofnotes.noteLabels;/**assigning noteLabels to note array */
+  this.httpService.getcard("noteLabels/getNoteLabelList",this.token)/**hitting the api by passing the url & token */
+  .subscribe(data=>{/** In angular subscribe is used with Observable*/
+      this.labelarray=[];/**reinitializing the array */
+      console.log(data['data'].details);/** displaying the details from the data object */
+      for(var i=0;i<(data['data'].details).length;i++)/**run the for loop for the length of the array */
       {
-        if(response['data'].details[i].isDeleted == false)
+        if(data['data'].details[i].isDeleted == false)/**checking if it is not deleted or not  */
         {
-               this.labelarray.push(response['data'].details[i])
+               this.labelarray.push(data['data'].details[i])/**then pushing those details into the label array */
         }
       }
-      console.log(this.labelarray,"Label array printing success");
+      console.log(this.labelarray,"label array after pushingggg");
+      
+      for(var i=0;i<this.labelarray.length;i++)/**running the label array for the entire length */
+      {
+      for(var j=0;j<this.notearray.length;j++)/**running the note array for the complete length of the array */
+      {
+          if(this.labelarray[i].id == this.notearray[j].id)/**comparing if both the id's of labelarray & notearray are equal or not */
+          {
+            this.labelarray[i].isChecked=true;/**if both id's are same then assign isChecked as true */
+               console.log(this.labelarray[i].isChecked,"ischecked became true");
+          }
+          console.log("noooooooooooooooooooooooooooooooooooooooooo");
+        }
+    }
+      
+      console.log(this.labelarray,"Label array printing success");/**displaying the labelarray */
     }),
-    error=>{
+    error=>{/**if error exists then display the error */
       console.log("error in get LABELS",error);
+    }}
+    catch(error){
+      console.log(error);
+      
     }
 }
-getlabellist(labelid){
-  console.log("selected label is : ",labelid.isChecked);
-  
+getlabellist(label){/**adding labels to notes */
+try{
+  console.log("selected label is : ",label.isChecked);
   console.log([this.arrayofnotes['id']]);
-console.log(labelid);
-var url="notes/"+[this.arrayofnotes['id']]+"/addLabelToNotes/"+labelid+"/add";
-if(this.arrayofnotes!=null && labelid.isChecked==null)
-{
-  console.log("add function .......");
-  this.httpService.postdeletecard(url,{},this.token).subscribe(data=>{
-  console.log("success in get label list",data);
-  this.moreevent.emit();/**to emit an event to the parent */
-
-}),
-error=>{
+  console.log(label);
+  var url="notes/"+[this.arrayofnotes['id']]+"/addLabelToNotes/"+label+"/add";/**setting the url path */
+  {
+    console.log("add function .......");
+    /**hitting the api by passing the url & token & empty body*/
+    this.httpService.postdeletecard(url,{},this.token).subscribe(data=>{/** In angular subscribe is used with Observable*/
+      console.log("success in get label list",data);/**if success then display the data */
+      this.moreevent.emit();/**to emit an event to the parent */
+    }),
+    error=>{/**if error exists then display the errror */
   console.log("error in get label list",error);
-  
 }}
-if(this.arrayofnotes != null && labelid.isChecked==true){
-  this.httpService.postdeletecard("notes/"+this.arrayofnotes['id']+"/addLabelToNotes/"+labelid+"/remove",null,this.token)
-  .subscribe(data=>{
-    console.log("success in remove label",data);
-    
-  }),
-  error=>{
-    console.log("error in remove",error);
-    
-  }
-}
-
 
 }
-
-
-
-
-
-
+catch(error){
+  console.log(error);
+  
+}
+}
 }

@@ -6,6 +6,12 @@
     /* width: 200px; */
 
 }
+.row-height{
+    /* height:19%; */
+    margin-top:10%;
+  }
+
+
  /* mat-card{
     opacity: 0;
     width:200px;
@@ -30,4 +36,12 @@ mat-card-content{
 }
 .invisible:hover{
     opacity: 1;
+}
+.mat-chip.mat-standard-chip .mat-chip-remove {
+    color: rgba(0,0,0,.87);
+    opacity: 0;
+}
+.mat-chip.mat-standard-chip .mat-chip-remove:hover {
+    color: rgba(0,0,0,.87);
+    opacity: 0.4;
 }
