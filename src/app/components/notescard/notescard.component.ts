@@ -12,7 +12,6 @@
 *  @since          : 20-10-2018
 *
 *************************************************************************************************/
-
 /**component has imports , decorator & class */
 import { Component,Input, EventEmitter,OnInit, Output } from '@angular/core';
 import { HttpService } from '../../services/http.service'
@@ -34,6 +33,7 @@ export class NotescardComponent implements OnInit {
   @Output() archiveevent= new EventEmitter<any>();
   @Output() updateevent= new EventEmitter<any>();
   @Input() myData
+  @Input() searchInput
   token=localStorage.getItem('token')
   constructor(public httpService: HttpService,public dialog: MatDialog) { }
 /**Input and Output are two decorators in Angular responsible for communication between two components*/
@@ -79,4 +79,5 @@ this.updateevent.emit();/**emit an event to the parent */
     console.log(error);
   }
 }
+
 }

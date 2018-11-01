@@ -1,5 +1,5 @@
 <div fxLayoutWrap fxLayoutAlign="start start" fxFlex fxLayout="row wrap" fxLayoutGap="20px">
-  <mat-card fxFlex.lg="28" fxFlex.sm="100" fxFlex.md="100" fxFlex.xs="100" class="example-card" *ngFor='let index of myData' [ngStyle]="{'background-color':index.color}">
+  <mat-card fxFlex.lg="28" fxFlex.sm="100" fxFlex.md="100" fxFlex.xs="100" class="example-card" *ngFor='let index of myData | LockFilter:searchInput' [ngStyle]="{'background-color':index.color}">
   <div (click)="openDialog(index)">
     <mat-card-header>
     <mat-card-title ><div class="inputTitle" contenteditable="false"aria-multiline="true" role="textbox"[innerHTML]="index.title"></div></mat-card-title> 

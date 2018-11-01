@@ -2,16 +2,15 @@
     margin-top:20px;
     border-radius: 25px;
 
-    /* height:auto; */
-    /* width: 200px; */
-
 }
 .row-height{
     /* height:19%; */
     margin-top:10%;
   }
 
-
+mat-card{
+    border-radius: 50px;;
+}
  /* mat-card{
     opacity: 0;
     width:200px;
@@ -21,8 +20,8 @@ mat-card-title{
     height:auto;
     word-wrap: break-word;
     /* background-color: rgb(214, 143, 138); */
-
-    font-weight: bold
+font-size: 500px;
+    font-weight: bolder;
 }
 mat-card-content{
     width:200px;

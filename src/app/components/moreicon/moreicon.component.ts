@@ -78,50 +78,70 @@ addlabel()
     panelClass: 'myapp-no-padding-dialog'
   });
 }
+
+getLabels1()
+{
+  this.httpService.getcard("noteLabels/getNoteLabelList",this.token)
+  .subscribe(response=>{
+      this.labelarray=[];
+      console.log(response['data'].details);
+      for(var i=0;i<(response['data'].details).length;i++)
+      {
+        if(response['data'].details[i].isDeleted == false)
+        {
+               this.labelarray.push(response['data'].details[i])
+        }
+      }
+      console.log(this.labelarray,"Label array printing success");
+    }),
+    error=>{
+      console.log("error in get LABELS",error);
+    }
+}
+
 /**getLabels() method to get the labels */
 getLabels()
+
 {
-try{
   console.log(this.arrayofnotes.noteLabels);
   console.log("hellyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
   
-  this.notearray=this.arrayofnotes.noteLabels;/**assigning noteLabels to note array */
-  this.httpService.getcard("noteLabels/getNoteLabelList",this.token)/**hitting the api by passing the url & token */
-  .subscribe(data=>{/** In angular subscribe is used with Observable*/
-      this.labelarray=[];/**reinitializing the array */
-      console.log(data['data'].details);/** displaying the details from the data object */
-      for(var i=0;i<(data['data'].details).length;i++)/**run the for loop for the length of the array */
+  this.notearray=this.arrayofnotes.noteLabels;
+  this.httpService.getcard("noteLabels/getNoteLabelList",this.token)
+  .subscribe(response=>{
+      this.labelarray=[];
+      console.log(response['data'].details);
+      for(var i=0;i<(response['data'].details).length;i++)
       {
-        if(data['data'].details[i].isDeleted == false)/**checking if it is not deleted or not  */
+        if(response['data'].details[i].isDeleted == false)
         {
-               this.labelarray.push(data['data'].details[i])/**then pushing those details into the label array */
+               this.labelarray.push(response['data'].details[i])
         }
       }
       console.log(this.labelarray,"label array after pushingggg");
       
-      for(var i=0;i<this.labelarray.length;i++)/**running the label array for the entire length */
+      for(var i=0;i<this.labelarray.length;i++)
       {
-      for(var j=0;j<this.notearray.length;j++)/**running the note array for the complete length of the array */
+      for(var j=0;j<this.notearray.length;j++)
       {
-          if(this.labelarray[i].id == this.notearray[j].id)/**comparing if both the id's of labelarray & notearray are equal or not */
+          if(this.labelarray[i].id == this.notearray[j].id)
           {
-            this.labelarray[i].isChecked=true;/**if both id's are same then assign isChecked as true */
+               this.labelarray[i].isChecked=true;
                console.log(this.labelarray[i].isChecked,"ischecked became true");
           }
           console.log("noooooooooooooooooooooooooooooooooooooooooo");
-        }
+          
+      }
     }
       
-      console.log(this.labelarray,"Label array printing success");/**displaying the labelarray */
+      console.log(this.labelarray,"Label array printing success");
     }),
-    error=>{/**if error exists then display the error */
+    error=>{
       console.log("error in get LABELS",error);
-    }}
-    catch(error){
-      console.log(error);
-      
     }
 }
+
+
 getlabellist(label){/**adding labels to notes */
 try{
   console.log("selected label is : ",label.isChecked);
@@ -137,10 +157,9 @@ try{
     }),
     error=>{/**if error exists then display the errror */
   console.log("error in get label list",error);
-}}
-
-}
+}}}
 catch(error){
+
   console.log(error);
   
 }

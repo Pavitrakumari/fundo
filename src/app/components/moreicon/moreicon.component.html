@@ -1,7 +1,10 @@
 <mat-icon class="icon2" mat-icon-button style="margin-bottom:30px;user-select: none;" [matMenuTriggerFor]="menu"  matTooltip="More">more_vert</mat-icon>&nbsp;
 <mat-menu  style="padding-top:30px;"class="menu" #menu="matMenu" [overlapTrigger]="false">
     <button mat-menu-item (click)="deletecard(arrayofnotes.id)"><span>Delete Note</span></button>
-    <button mat-menu-item [matMenuTriggerFor]="addlabel" (click)="getLabels()"><span>Add label</span></button>
+    <button mat-menu-item [matMenuTriggerFor]="addlabel" (click)="getLabels1()" ><span>Add label</span></button>
+  
+  
+  
     <mat-menu [overlapTrigger]="false" (click)="$event.stopPropagation();"  #addlabel="matMenu"><div class="title">Label note</div>
         <br><div fxLayout="row" (click)="$event.stopPropagation();"><mat-icon fxFlex="30">search</mat-icon>
             <input  class="inputTitle" contenteditable="true" placeholder="Enter label name" [(ngModel)]="query"></div><br>

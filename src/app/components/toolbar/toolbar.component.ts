@@ -21,6 +21,8 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router} from '@angular/router';
+import { DataService } from '../../services/data.service';
+
 import{HttpService} from '../../services/http.service';
 import {MatSnackBar} from '@angular/material';
 /**A componenet can be reused throughout the application & even in other applications */
@@ -36,14 +38,17 @@ name='';
 firstchar='';
 raw_data;
 token;
+message:string;
+searchInput;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
+.pipe(
       map(result => result.matches)
     );
-    constructor(public dialog: MatDialog,public snackBar: MatSnackBar,private breakpointObserver: BreakpointObserver,public httpService:HttpService,public router:Router) {}
+    constructor(private dataservice: DataService,public dialog: MatDialog,public snackBar: MatSnackBar,private breakpointObserver: BreakpointObserver,public httpService:HttpService,public router:Router) {}
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
-  ngOnInit(){
+ngOnInit(){
+
     this.raw_data=localStorage.getItem('name');/**get the name from local storahe */
     this.token=localStorage.getItem('token');/**get the token from local storage */
     console.log(this.raw_data);
@@ -52,21 +57,31 @@ token;
     console.log(this.firstchar);
     console.log(this.token);/**display the token & firstchar */
     this.getLabels();
+    // this.dataservice.currentMessage.subscribe(message => this.message = message)
+
   
   }
-  logout(){/**logout() function */
+logout(){/**logout() function */
+    
+console.log("logoutt running");
+
     this.httpService.postlogout("user/logout",this.token)
     .subscribe(data=>{/**registers handlers for events emitted by the instance */
-      console.log(data);
+      console.log("success in logouttttt",data);
       localStorage.removeItem('email');/**remove email from local storage when logout */
       localStorage.removeItem('token');/**remove token from local storage when logout */
-      this.router.navigate(['login']);/**when logout() is performed then navigate the page to login */
+      this.router.navigate(['/login']);/**when logout() is performed then navigate the page to login */
       this.snackBar.open("successfully logout", "LOGOUT", {/**snackbar to display the result */
       duration:10000,/**for a duration of 10 seconds */
     });
-  },
-  )}
-  addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
+  }),error=>{
+    console.log("error in logout",error);
+    this.snackBar.open("unsuccess logout", "LOGOUT", {/**snackbar to display the result */
+      duration:10000,/**for a duration of 10 seconds */
+    });
+  }
+  }
+addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
     this.dialog.open(CreatenewlabelComponent, {/**open dialog  */
       data: {
         
@@ -75,7 +90,7 @@ token;
       }
     });
   }
-  getLabels()
+getLabels()
 {
   this.httpService.getcard("noteLabels/getNoteLabelList",this.token)
   .subscribe(response=>{
@@ -94,8 +109,12 @@ token;
       console.log("error in get LABELS",error);
     }
 }
-
-
+searchbutton(){
+  this.router.navigate(['home/search']);
+}
+passmessage(){
+  this.dataservice.changeMessage(this.searchInput);
+}
 
 
 }

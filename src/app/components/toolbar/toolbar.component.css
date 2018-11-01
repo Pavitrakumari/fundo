@@ -5,8 +5,14 @@
 }
 .sidenav-container {
   height: 90%;
-  background:gainsboro;
+  background:rgb(252, 249, 249);
 
+}
+.color:hover{
+  border-radius: 0px 70px 70px 0px;
+    white-space: nowrap;
+
+  background-color: rgb(236, 230, 169);
 }
 .row-height{
   height:100%;
@@ -15,13 +21,16 @@
 .sidenav {
   width: 300px;
   margin-top:70px;
-  background:gainsboro;
+  background:rgb(252, 250, 250);
 
+  }
+  .labels{
+    font-weight: lighter;
   }
 
 .mat-toolbar.mat-primary {
   position: sticky;
-  background:#fb0 ;
+  background:rgb(250, 250, 249) ;
   color: black;
 
   top: 0;
@@ -31,7 +40,7 @@
   box-shadow: none;
 } */
 .search{
-background-color:#fb0;
+background-color:rgb(247, 245, 241);
 overflow: hidden;
 
 
@@ -40,10 +49,11 @@ overflow: hidden;
 
 .search input{
   border:none;
+  border-radius: 25px 25px 25px 25px;
   font-size:15px;
   height:40px;
   outline: none;
-  background-color:#fb0;
+  background-color:rgb(245, 239, 218);
   min-width:100px;
   /* width:700%; */
   overflow: hidden;
@@ -64,7 +74,21 @@ overflow: hidden;
 .note{
   opacity: 0.75;
 }
+::placeholder {
+  color: rgb(160, 148, 12);
+  opacity: 1; /* Firefox */
+  padding-left:30px;
 
+}
+.top1{
+  opacity: 1;
+}
+.top{
+  opacity: 0.5;
+}
+.top:hover{
+  opacity: 1;
+}
 .notes{
   margin-left: 30px;
   

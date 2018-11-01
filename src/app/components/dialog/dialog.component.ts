@@ -57,7 +57,8 @@ export class DialogComponent implements OnInit {
     var body = {
       "noteId": [id],/**attributes to be passed to change the color of notes */
       "title": this.title,
-      "description": this.note
+      "description": this.note,
+      // "noteLabels":''
     }
     this.httpService.postpassword("notes/updateNotes", body, this.token).subscribe(data => {
       console.log("update changes successfully", data);/**if no errors then display the data */
@@ -72,4 +73,6 @@ export class DialogComponent implements OnInit {
       });
     }
   }
+
+
 }

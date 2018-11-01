@@ -3,16 +3,16 @@
 <button type="button"aria-label="Toggle sidenav"mat-icon-button (click)="drawer.toggle()">
   <mat-icon style="color:black" aria-label="Side nav toggle icon">menu</mat-icon></button>
   <div  class="title"><span fxFlex="20"  ngStyle.lg="font-size:20" ngStyle.xl="font-size:20px"  ngStyle.xs="font-size:10px"ngStyle.sm="font-size:10px">fundoo</span></div>      
-  <form fxFlex class="search"><button mat-icon-button type="submit" ><mat-icon style="color:black">search</mat-icon></button>
-    <input fxFlex type="text" placeholder="Search"></form>
+  <form fxFlex class="search" ><button mat-icon-button type="submit"><mat-icon style="color:black">search</mat-icon></button>
+    <input fxFlex type="text" placeholder="Search here" name="something" [(ngModel)]="searchInput" (click)="searchbutton()" (keydown)="passmessage()"></form>
     <div fxFlex></div>
-    <button mat-icon-button><mat-icon  fxFlex="40px"  style="color:black" aria-label="Side nav toggle icon" matTooltip="Refresh">refresh</mat-icon></button>
-    <button mat-icon-button><mat-icon fxFlex="40px"  style="color:black" aria-label="Side nav toggle icon" matTooltip="List view">view_stream</mat-icon></button>
-    <button mat-icon-button><mat-icon fxF lex="40px" style="color:black"  aria-label="Side nav toggle icon" matTooltip=" Notifications">notifications_none</mat-icon></button>
-    <button mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:white;color:black" matTooltip="Fundoo Account">{{firstchar | titlecase}}</button>
+    <button class="top" mat-icon-button><mat-icon  fxFlex="40px" aria-label="Side nav toggle icon" matTooltip="Refresh">refresh</mat-icon></button>
+    <button class="top" mat-icon-button><mat-icon fxFlex="40px"  aria-label="Side nav toggle icon" matTooltip="List view">view_stream</mat-icon></button>
+    <button class="top" mat-icon-button><mat-icon fxF lex="40px" aria-label="Side nav toggle icon" matTooltip=" Notifications">notifications_none</mat-icon></button>
+    <button class="top" mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:white;color:black" matTooltip="Fundoo Account">{{firstchar | titlecase}}</button>
     <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
       <button mat-menu-item routerLink="/signup">Add account</button>
-      <button mat-menu-item  (click)="logout()">Log out </button>
+      <button mat-menu-item (click)="logout()">Log out</button>
     </mat-menu>
   </mat-toolbar>
   <mat-sidenav-container class="sidenav-container">
@@ -22,17 +22,35 @@
   [mode]="(isHandset$ | async) ? 'over' : 'side'"
   [opened]="!(isHandset$ | async)">
   <mat-nav-list>
-    <a mat-list-item routerLink="/home/notes"><img class="note"src="../../../assets/images/image1.svg"><span class="notes">Notes</span></a>
-    <a mat-list-item routerLink="/home/reminders"><img class="note"src="../../../assets/images/image2.svg"><span class="notes2">Reminders</span></a><hr>
-    <div class="labels">Labels<a mat-button routerLink="." style="margin-left:130px;">Edit</a></div>
-    <a mat-list-item (click)="addlabel()"><img class="note"src="../../../assets/images/image3.svg"><span class="notes3">Create new label</span></a><hr>
-    <a mat-list-item routerLink="/home/archive"><mat-icon class="note">archive</mat-icon><span class="notes4"></span>Archive</a>
-    <a mat-list-item routerLink="/home/trash"><mat-icon class="note">delete</mat-icon><span class="notes5"></span>Trash</a><hr>
-    <a mat-list-item routerLink="/home/notes6"><mat-icon class="note">settings</mat-icon><span class="notes6"></span>Settings</a>
-    <a mat-list-item routerLink="/home/notes7"><mat-icon class="note">feedback</mat-icon><span class="notes7"></span>Send feedback</a>
-    <a mat-list-item routerLink="/home/notes8"><mat-icon class="note">help</mat-icon><span class="notes8"></span>Help</a>
-    <a mat-list-item routerLink="/home/notes9"><img class="note"src="../../../assets/images/image4.svg"><span class="notes9">App downloads</span></a>
-    <a mat-list-item routerLink="/home/notes10"><img class="note"src="../../../assets/images/image5.svg"><span class="notes10">Keyboard shortcuts</span></a>
+    <a class="color"mat-list-item routerLink="/home/notes"><img class="note"src="../../../assets/images/image1.svg"><span class="notes">Notes</span></a>
+    <a class="color"mat-list-item routerLink="/home/reminders"><img class="note"src="../../../assets/images/image2.svg"><span class="notes2">Reminders</span></a><hr>
+    <div class="labels">Labels<a mat-button routerLink="." style="margin-left:130px;"></a></div>
+    
+    
+   
+   
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="200px" *ngFor="let index of labelarray">
+      <a class="color" mat-list-item><hr>
+        <mat-icon>label_outline</mat-icon>&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a routerLink="/home/labels/{{index.label}}">{{index.label}}
+        
+      </a>&nbsp;
+   </a></div>
+    
+   
+   
+   
+   
+   <a class="color" mat-list-item (click)="addlabel()"><mat-icon>edit</mat-icon><span class="notes3">Edit labels</span></a><hr>
+    <a class="color"mat-list-item routerLink="/home/archive"><mat-icon class="note">archive</mat-icon><span class="notes4"></span>Archive</a>
+    <a class="color"mat-list-item routerLink="/home/trash"><mat-icon class="note">delete</mat-icon><span class="notes5"></span>Trash</a>
+    
+    <!-- <a mat-list-item routerLink="/home/notes6"><mat-icon class="note">settings</mat-icon><span class="notes6"></span>Settings</a> -->
+    <!-- <a mat-list-item routerLink="/home/notes7"><mat-icon class="note">feedback</mat-icon><span class="notes7"></span>Send feedback</a> -->
+    <!-- <a mat-list-item routerLink="/home/notes8"><mat-icon class="note">help</mat-icon><span class="notes8"></span>Help</a> -->
+    <!-- <a mat-list-item routerLink="/home/notes9"><img class="note"src="../../../assets/images/image4.svg"><span class="notes9">App downloads</span></a> -->
+    <!-- <a mat-list-item routerLink="/home/notes10"><img class="note"src="../../../assets/images/image5.svg"><span class="notes10">Keyboard shortcuts</span></a> -->
   </mat-nav-list>
 </mat-sidenav>
 <mat-sidenav-content>

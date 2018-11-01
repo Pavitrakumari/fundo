@@ -11,17 +11,49 @@
         <div fxLayout="row" class="hiddenDiv">
             <div  class="inputTitle" contenteditable="true"   id="title"placeholder="Title"></div>
             <div><img class="pin" src="../../../assets/images/pin.svg" matTooltip="Pin Note"alt=""></div></div>
+            
+            <!-- <div fxLayout="row" fxLayoutAlign="start start" class="row-height" fxLayoutGap="5px"> -->
+                    <div *ngFor="let label of selectarray2">
+                      <mat-chip-list selected  style="margin-top:15px;">
+                        <mat-chip>
+                          {{label}}
+                          <!-- <mat-icon matChipRemove (click)="removelabel(item.id,item.id)">cancel</mat-icon> -->
+                        </mat-chip>
+                      </mat-chip-list>
+                    </div>
+
+            
             <div  *ngIf="expression3"     class="inputNote" contenteditable="true" id="note"placeholder="Take a note..." autofocus #description></div><br>
             <div fxLayoutAlign="space-between">
                 <mat-icon *ngIf="!expression3" >add</mat-icon><div fxFlex="60" *ngIf="!expression3" class="inputNote1" contenteditable="true" id="note"placeholder="checkbox list" autofocus #description></div>
             </div>
+
+                    
+
+
             <span>
                 <app-icon1></app-icon1>
                <app-collaboratoricon></app-collaboratoricon>
                 <app-coloricon (response)="color($event)"></app-coloricon>
                 <app-imageicon></app-imageicon>
                 <app-archiveicon></app-archiveicon>
-                <app-moreicon (moreevent)="receive($event)"></app-moreicon>
+                <!-- <app-moreicon (moreevent)="receive($event)"></app-moreicon> -->
+                <mat-icon class="icon2" mat-icon-button style="margin-bottom:30px;user-select: none;" [matMenuTriggerFor]="menu"  matTooltip="More">more_vert</mat-icon>&nbsp;
+<mat-menu  style="padding-top:30px;"class="menu" #menu="matMenu" [overlapTrigger]="false">
+    <button mat-menu-item [matMenuTriggerFor]="addlabel" (click)="getLabels1()" ><span>Add label</span></button>
+  
+  
+  
+    <mat-menu [overlapTrigger]="false" (click)="$event.stopPropagation();"  #addlabel="matMenu"><div class="title">Label note</div>
+        <br><div fxLayout="row" (click)="$event.stopPropagation();"><mat-icon fxFlex="30">search</mat-icon>
+            <input  class="inputTitle" contenteditable="true" placeholder="Enter label name" [(ngModel)]="query"></div><br>
+        <div *ngFor="let label of labelarray | LockFilter: query">
+            <mat-checkbox (click)="$event.stopPropagation();" (click)="clickFunc(label)"class="example-margin">{{label.label}}</mat-checkbox>
+        </div>
+    </mat-menu>
+    <button mat-menu-item><span>Add drawing</span></button>
+</mat-menu>
+
                 <app-undoicon></app-undoicon>
                 <app-redoicon></app-redoicon>
                 <button mat-button  (click)="close()">CLOSE</button>

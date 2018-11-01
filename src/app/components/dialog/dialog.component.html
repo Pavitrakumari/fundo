@@ -5,6 +5,18 @@
                 <div class="inputTitle" contenteditable="true" id="title" [innerHTML]="data.title" placeholder="Title">{{data.title}}</div>
                 <div><img class="pin" src="../../../assets/images/pin.svg" matTooltip="Pin Note"alt=""></div></div>
                 <div class="inputNote" contenteditable="true" id="note" [innerHTML]="data.description"placeholder="Note" autofocus>{{data.description}}</div><br>
+                
+                <div fxLayout="row" fxLayoutAlign="start start" class="row-height" fxLayoutGap="5px">
+                    <div *ngFor="let item of data.noteLabels">
+                      <mat-chip-list selected>
+                        <mat-chip>
+                          {{item.label}}
+                          <mat-icon matChipRemove (click)="removelabel(item.id,data.id)">cancel</mat-icon>
+                        </mat-chip>
+                      </mat-chip-list>
+                    </div></div>
+                          
+                
                 <div fxLayout="row wrap"> <div class="one" fxLayoutAlign="space-between">
                     <app-icon1></app-icon1>
                     <app-collaboratoricon></app-collaboratoricon>
