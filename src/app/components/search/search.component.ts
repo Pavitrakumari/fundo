@@ -20,6 +20,7 @@ this.dataservice.currentMessage.subscribe(message=>{
   this.searchInput=message
   console.log(this.searchInput,"search component running ");
   this.getCard();
+  // this.searchInput='';
   })
 }
 getCard(){
@@ -45,5 +46,4 @@ getCard(){
                 console.log("error",error);
               }
             }
-  
-}
+          }

@@ -22,7 +22,6 @@ import {  Router } from '@angular/router';
   templateUrl: './notes.component.html',/**External templating process to define html tags in component */
   styleUrls: ['./notes.component.css']/**It is used to provide style of components */
 })
-
 /**To use components in other modules , we have to export them */
 export class NotesComponent implements OnInit {
   colorChange="#ffffff";
@@ -49,8 +48,7 @@ show: boolean = true;
 
 display(){/**display() method to show & hide the card based on click of close button */
   this.expression1=false;
-this.expression2=true;
-
+  this.expression2=true;
 }
 color(event){
   if(event){/**if event occurs then change the color */
@@ -60,13 +58,10 @@ color(event){
 }
 close(){/**method that need to perform while clicking the close button */
   this.expression1=true;
-this.expression2=false;
-this.expression3=true;
-this.selectarray2=[];
-
-// }
-// click(){
-  /**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */
+  this.expression2=false;
+  this.expression3=true;
+  this.selectarray2=[];
+/**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */
 try{
   this.title=document.getElementById('title').innerHTML;/**innerHTML property setys or returns HTML content of an element */
   this.note=document.getElementById('note').innerHTML;/**returns an element of specified id */
@@ -97,9 +92,8 @@ try{
       });
       
     }
-  catch(error){
+catch(error){
       console.log(error);
-      
     }
 }
 
@@ -126,17 +120,13 @@ clickFunc(temp){
   if (!this.selectarray2.some((data) => data == temp.label))
   {
     this.selectarray1.push(temp.id);
-  this.selectarray2.push(temp.label);
+    this.selectarray2.push(temp.label);
   }
   else{
-  
-  const index = this.selectarray2.indexOf(temp.label, 0);
-  if (index > -1) {
-    this.selectarray2.splice(index, 1);
-  }
+    const index = this.selectarray2.indexOf(temp.label, 0);
+    if (index > -1) {
+      this.selectarray2.splice(index, 1);
     }
-   
   }
-  
-
+}
 }

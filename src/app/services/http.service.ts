@@ -70,7 +70,7 @@ postlogout(url,token){
       'Authorization': token
     })
   };
-  return this.http.post(url,httpAuthOptions2);/**passing the input & calling the  getFormUrlEncoded()*/
+  return this.http.post(url,{},httpAuthOptions2);/**passing the input & calling the  getFormUrlEncoded()*/
 }
 getcard(url,token){
   console.log(token);

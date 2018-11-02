@@ -16,7 +16,6 @@
 }
 .row-height{
   height:100%;
-  
 }
 .sidenav {
   width: 300px;
@@ -49,7 +48,7 @@ overflow: hidden;
 
 .search input{
   border:none;
-  border-radius: 25px 25px 25px 25px;
+  border-radius: 10px 10px 10px 10px;
   font-size:15px;
   height:40px;
   outline: none;
@@ -72,13 +71,22 @@ overflow: hidden;
   margin-top: 45px;
 }
 .note{
-  opacity: 0.75;
+  opacity: 0.5;
+}
+.note:hover{
+  opacity: 1;
 }
 ::placeholder {
   color: rgb(160, 148, 12);
   opacity: 1; /* Firefox */
   padding-left:30px;
 
+}
+.side{
+  opacity: 0.5;
+}
+.side:hover{
+  opacity: 1;
 }
 .top1{
   opacity: 1;

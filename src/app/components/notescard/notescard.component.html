@@ -1,4 +1,4 @@
-<div fxLayoutWrap fxLayoutAlign="start start" fxFlex fxLayout="row wrap" fxLayoutGap="20px">
+<div fxLayoutWrap fxLayoutAlign="center center" fxFlex fxLayout="row wrap" fxLayoutGap="10px">
   <mat-card fxFlex.lg="28" fxFlex.sm="100" fxFlex.md="100" fxFlex.xs="100" class="example-card" *ngFor='let index of myData | LockFilter:searchInput' [ngStyle]="{'background-color':index.color}">
   <div (click)="openDialog(index)">
     <mat-card-header>
@@ -15,7 +15,7 @@
 <div fxLayout="row" fxLayoutAlign="start start" class="row-height" fxLayoutGap="5px">
 <div *ngFor="let item of index.noteLabels">
   <mat-chip-list selected>
-    <mat-chip>
+    <mat-chip *ngIf="item.isDeleted==false">
       {{item.label}}
       <mat-icon matChipRemove (click)="removelabel(item.id,index.id)">cancel</mat-icon>
     </mat-chip>

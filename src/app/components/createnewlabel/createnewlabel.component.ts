@@ -2,7 +2,6 @@
 *  Execution       :   1. default node         cmd> createnewlabel.ts 
 *        
 *  Purpose         : To create, 
-* 
 *  Description    
 * 
 *  @file           : dialog.ts
@@ -16,6 +15,7 @@
 import { Component, OnInit,Inject,Input,Output,EventEmitter, ViewChild,ElementRef } from '@angular/core';
 import {MatDialog,MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { HttpService } from '../../services/http.service';
+import { DataService } from '../../services/data.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-createnewlabel',
@@ -26,7 +26,10 @@ export class CreatenewlabelComponent implements OnInit {
 public labelarray=[];
 // public token=localStorage.getItem('token')
   constructor(public dialogRef: MatDialogRef<CreatenewlabelComponent>,
-@Inject(MAT_DIALOG_DATA) public data: any,public httpservice:HttpService) {}
+@Inject(MAT_DIALOG_DATA) public data: any,public httpservice:HttpService,public dataService:DataService) {
+}
+@Output() updateevent= new EventEmitter<any>();
+
 @ViewChild('myDiv') myDiv:ElementRef;
 /**it is a interface */
 /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
@@ -45,14 +48,31 @@ public editclick=false;
 public  token=localStorage.getItem('token')
 onClose():void{
   this.dialogRef.close();
+  // this.addLabel();
+  // this.getLabels();
+}
+clear(){
+  this.label='';
+}
+done(){
   this.addLabel();
   this.getLabels();
+  this.clear();
 }
 public label;
 changeText=false
 addLabel(){
 try{
-  // console.log(this.myDiv.nativeElement.innerHTML);
+var label=this.label;
+  console.log(this.labelarray);
+  
+for(var i=0;i<this.labelarray.length;i++){
+  if(this.labelarray[i].label==label){
+    alert("duplicate")
+return false;
+  }
+}
+
   this.httpservice.postdeletecard("noteLabels",{
     "label":this.label,
     "isDeleted":false,
@@ -79,6 +99,8 @@ try{
         this.labelarray.push(data['data'].details[i])}/**pushing labels into an array */
       }
       console.log(this.labelarray,"Label array printing successsss");
+      this.updateevent.emit();/**emit an event to the parent */
+
     }),
     error=>{/**if error exists then display the array */
       console.log("error in get LABELS",error);
@@ -97,7 +119,9 @@ try{
   .subscribe(response=>{/** In angular subscribe is used with Observable*/
 
     console.log("success in delete",response);/**if success exists then display the success */
+    this.dataService.changeMessage2(true)
     this.getLabels();
+
   }),error=>{/**if error exists then display the error */
     console.log("erroe in deelete",error);
   }}
@@ -127,14 +151,13 @@ try{
     "userId":localStorage.getItem('userId')
   },localStorage.getItem('token')).subscribe(response=>{
     console.log("success in edit labell ..........",response)
+    this.dataService.changeMessage2(true)
     this.getLabels();
-  }),error=>{
+    this.updateevent.emit();/**emit an event to the parent */
+}),error=>{
     console.log("error in edit label...........",error)
   }
 }
 catch(error){
   console.log(error);
-  
-}
-}
-}
+}}}

@@ -28,13 +28,18 @@ import { AddlabelComponent } from '../addlabel/addlabel.component';
 })
 export class MoreiconComponent implements OnInit {
   public labelarray=[];
-  public search:any = '';
+ 
+ selectarray1=[];
+ selectarray2=[];
+ public search:any = '';
   clicklist=false;
   disabled = false;
 notearray=[];
 isChecked;
   token=localStorage.getItem('token');
   @Output() moreevent = new EventEmitter<any>();
+  @Output() updateevent = new EventEmitter<any>();
+
     @Output() checkevent = new EventEmitter<any>();
 
 /**Input and Output are two decorators in Angular responsible for communication between two components*/
@@ -130,10 +135,8 @@ getLabels()
                console.log(this.labelarray[i].isChecked,"ischecked became true");
           }
           console.log("noooooooooooooooooooooooooooooooooooooooooo");
-          
+        }
       }
-    }
-      
       console.log(this.labelarray,"Label array printing success");
     }),
     error=>{
@@ -153,7 +156,9 @@ try{
     /**hitting the api by passing the url & token & empty body*/
     this.httpService.postdeletecard(url,{},this.token).subscribe(data=>{/** In angular subscribe is used with Observable*/
       console.log("success in get label list",data);/**if success then display the data */
-      this.moreevent.emit();/**to emit an event to the parent */
+      this.moreevent.emit(label);/**to emit an event to the parent */
+      this.updateevent.emit();/**emit an event to the parent */
+
     }),
     error=>{/**if error exists then display the errror */
   console.log("error in get label list",error);
@@ -164,4 +169,19 @@ catch(error){
   
 }
 }
+clickFunc(temp){
+  if (!this.selectarray2.some((data) => data == temp.label))
+  {
+    this.selectarray1.push(temp.id);
+    this.selectarray2.push(temp.label);
+    this.getlabellist(temp);
+  }
+  else{
+    const index = this.selectarray2.indexOf(temp.label, 0);
+    if (index > -1) {
+      this.selectarray2.splice(index,1);
+    }
+  }
+}
+
 }

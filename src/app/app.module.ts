@@ -5,23 +5,23 @@ import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule} from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatSnackBarModule, MatToolbarModule, MatSidenavModule, MatListModule } from "@angular/material";
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatCardModule} from '@angular/material/card';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatSelectModule} from '@angular/material/select';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCardModule} from '@angular/material/card';
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatRadioModule} from '@angular/material/radio';
+import { MatSelectModule} from '@angular/material/select';
+import { MatSliderModule} from '@angular/material/slider';
+import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FlexLayoutModule } from "@angular/flex-layout";
-import {MatIconModule} from '@angular/material/icon'
-import {MatButtonModule} from '@angular/material/button';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatIconModule} from '@angular/material/icon'
+import { MatButtonModule} from '@angular/material/button';
+import { MatTooltipModule} from '@angular/material/tooltip';
+import { MatMenuModule} from '@angular/material/menu';
 import { HttpClientModule }    from '@angular/common/http';
 import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 import { HomeComponent } from './components/home/home.component';
@@ -48,10 +48,13 @@ import { RedoiconComponent } from './components/redoicon/redoicon.component';
 import { NotescardComponent } from './components/notescard/notescard.component';
 import { NotesparentComponent } from './components/notesparent/notesparent.component';
 import { DialogComponent } from './components/dialog/dialog.component';
-import {MatDialogModule} from '@angular/material';
+import { MatDialogModule} from '@angular/material';
 import { AddlabelComponent } from './components/addlabel/addlabel.component';
 import {MatChipsModule} from '@angular/material/chips';
 import { SearchPipe } from './search.pipe';
+import { SearchComponent } from './components/search/search.component';
+import { DataService } from './services/data.service';
+import { LabelsComponent } from './components/labels/labels.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,7 @@ import { SearchPipe } from './search.pipe';
     NotesComponent,CreatenewlabelComponent, ArchiveComponent,TrashComponent, SettingsComponent,RemindersComponent,
     FeedbackComponent,HelpComponent,AppdownloadsComponent,KeyboardshortcutsComponent,Icon1Component,CollaboratoriconComponent,
     ColoriconComponent,ImageiconComponent,ArchiveiconComponent,MoreiconComponent,UndoiconComponent,RedoiconComponent,
-    NotescardComponent,NotesparentComponent, DialogComponent,AddlabelComponent, SearchPipe,
+    NotescardComponent,NotesparentComponent, DialogComponent,AddlabelComponent, SearchPipe, SearchComponent, LabelsComponent,
 ],
 imports: [
     BrowserModule,AppRoutingModule,BrowserAnimationsModule,MatFormFieldModule,
@@ -69,7 +72,7 @@ imports: [
     ReactiveFormsModule,FlexLayoutModule,MatIconModule,MatButtonModule,MatTooltipModule,
     LayoutModule, MatToolbarModule, MatSidenavModule, MatListModule,MatDialogModule,MatChipsModule
   ],
-    providers: [],
+    providers: [DataService],
     entryComponents:[DialogComponent,AddlabelComponent,CreatenewlabelComponent],
   bootstrap: [AppComponent]
 })

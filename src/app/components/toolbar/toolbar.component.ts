@@ -48,31 +48,26 @@ searchInput;
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
 ngOnInit(){
-
-    this.raw_data=localStorage.getItem('name');/**get the name from local storahe */
-    this.token=localStorage.getItem('token');/**get the token from local storage */
-    console.log(this.raw_data);
-    var array=this.raw_data.split("");/**split the name & pass it to a variable array */
-    this.firstchar=array[0];/**first character of the name is passed to 'firstchar' variable */
-    console.log(this.firstchar);
-    console.log(this.token);/**display the token & firstchar */
-    this.getLabels();
-    // this.dataservice.currentMessage.subscribe(message => this.message = message)
-
-  
-  }
-logout(){/**logout() function */
+  this.raw_data=localStorage.getItem('name');/**get the name from local storahe */
+  this.token=localStorage.getItem('token');/**get the token from local storage */
+  console.log(this.raw_data);
+  var array=this.raw_data.split("");/**split the name & pass it to a variable array */
+  this.firstchar=array[0];/**first character of the name is passed to 'firstchar' variable */
+  console.log(this.firstchar);
+  console.log(this.token);/**display the token & firstchar */
+  this.getLabels();
+  // this.dataservice.currentMessage.subscribe(message => this.message = message)
+}
+logout(){
     
 console.log("logoutt running");
-
-    this.httpService.postlogout("user/logout",this.token)
-    .subscribe(data=>{/**registers handlers for events emitted by the instance */
-      console.log("success in logouttttt",data);
-      localStorage.removeItem('email');/**remove email from local storage when logout */
-      localStorage.removeItem('token');/**remove token from local storage when logout */
-      this.router.navigate(['/login']);/**when logout() is performed then navigate the page to login */
-      this.snackBar.open("successfully logout", "LOGOUT", {/**snackbar to display the result */
-      duration:10000,/**for a duration of 10 seconds */
+this.httpService.postlogout("user/logout",this.token).subscribe(data=>{/**registers handlers for events emitted by the instance */
+  console.log("success in logouttttt",data);
+  localStorage.removeItem('email');/**remove email from local storage when logout */
+  localStorage.removeItem('token');/**remove token from local storage when logout */
+  this.router.navigate(['/login']);/**when logout() is performed then navigate the page to login */
+  this.snackBar.open("successfully logout", "LOGOUT", {/**snackbar to display the result */
+  duration:10000,/**for a duration of 10 seconds */
     });
   }),error=>{
     console.log("error in logout",error);
@@ -82,13 +77,13 @@ console.log("logoutt running");
   }
   }
 addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
-    this.dialog.open(CreatenewlabelComponent, {/**open dialog  */
-      data: {
-        
-        panelClass: 'myapp-no-padding-dialog'
-  
-      }
-    });
+   const dialogRef= this.dialog.open(CreatenewlabelComponent, {/**open dialog  */
+      data: 
+{panelClass: 'myapp-no-padding-dialog'}
+      });
+    dialogRef.afterClosed().subscribe(data=>{
+      this.getLabels();
+    })
   }
 getLabels()
 {
@@ -109,13 +104,12 @@ getLabels()
       console.log("error in get LABELS",error);
     }
 }
-searchbutton(){
+searchbutton(){/**navigate the page to a child component when the search is clicked */
   this.router.navigate(['home/search']);
+  /**The Angular Router enables navigation from one view to the next as users perform application tasks.*/
 }
 passmessage(){
   this.dataservice.changeMessage(this.searchInput);
 }
-
-
 }
 

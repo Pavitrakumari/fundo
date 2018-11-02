@@ -19,14 +19,12 @@ temp;
         this.labelName = params.id;
         this.getCard();
       }
-      
     })
    }
-
-  ngOnInit() {
+ngOnInit() {
     this.getCard();
   }
-  getCard(){
+getCard(){
     this.token=localStorage.getItem('token');/**get the token from the local storage */
       this.httpService.getcard("notes/getNotesList",this.token).subscribe(data=>{
         /**hitting the api by passing the url & token */
@@ -45,13 +43,12 @@ temp;
                   
                   this.arraynewdata.push(data['data'].data[i]);/**then push those cards into the array */
                 }
-                 
-               }
-                  
-                  }
-                }
+              }
+            }
+}
 
                 console.log(this.arraynewdata,"array of new data");/**display new array*/
+              
               }),
               error=>{/**if error occurs then display the error */
                 console.log("error",error);
