@@ -111,5 +111,8 @@ searchbutton(){/**navigate the page to a child component when the search is clic
 passmessage(){
   this.dataservice.changeMessage(this.searchInput);
 }
+onFileUpload(event){
+  const file=event.target.files;
+}
 }
 

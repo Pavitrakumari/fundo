@@ -30,6 +30,8 @@ expression2=false;
 expression3=true;
 labelarray;
 selectarray1=[];
+data;
+dataarray=[];
 selectarray2=[];
 public title;
 public note;
@@ -41,6 +43,7 @@ public clicked=false;
 @Output() onNewEntryAdded = new EventEmitter();
 /**EventEmitter:creates an instance of this class that can delliver events  */
   ngOnInit() {
+
 /**it is a interface */
 /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
 }
@@ -61,6 +64,7 @@ close(){/**method that need to perform while clicking the close button */
   this.expression2=false;
   this.expression3=true;
   this.selectarray2=[];
+  this.dataarray=[];
 /**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */
 try{
   this.title=document.getElementById('title').innerHTML;/**innerHTML property setys or returns HTML content of an element */
@@ -85,7 +89,7 @@ try{
         this.selectarray1=[];
         this.selectarray2=[];
         this.onNewEntryAdded.emit();
-        this.colorChange="#ffffff"
+        this.colorChange="#ffffff";
      
       },error=>{
         console.log("Error", error);/**if there exists error then display the error */
@@ -127,6 +131,44 @@ clickFunc(temp){
     if (index > -1) {
       this.selectarray2.splice(index, 1);
     }
+  }
+}
+public i=0;
+enter(){
+  this.i++;
+  if(this.data!=null){
+    console.log(event,"keydown");
+    var obj={
+      "index":this.i,
+      "data":this.data
+    }
+    this.dataarray.push(obj);
+    this.data=null
+    
+  }
+}
+ondelete(deletedObj){
+  console.log("ondelete fumction runnig");
+  for(var i=0;i<this.dataarray.length;i++){
+    if(deletedObj.index==this.dataarray[i].index){
+      this.dataarray.splice(i,1);
+      break;
+    }
+  }
+  console.log(this.dataarray);
+  
+}
+
+editing(event,edited){
+  if(event.code=="Enter"){
+    console.log("enter pressed");
+    for(var i=0;i<this.dataarray.length;i++){
+      if(edited.index==this.dataarray[i].index){
+        this.dataarray[i].data==edited.data
+      }
+    }
+    console.log(this.dataarray);
+    
   }
 }
 }

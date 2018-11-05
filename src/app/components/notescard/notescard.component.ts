@@ -33,6 +33,8 @@ export class NotescardComponent implements OnInit {
   @Output() colorevent= new EventEmitter<any>();
   @Output() archiveevent= new EventEmitter<any>();
   @Output() updateevent= new EventEmitter<any>();
+  @Output() deleted= new EventEmitter<any>();
+@Input() name;
   @Input() myData
   @Input() searchInput
   token=localStorage.getItem('token')
@@ -44,19 +46,23 @@ export class NotescardComponent implements OnInit {
       }
     })
 }
+checkicon=[];
 /**Input and Output are two decorators in Angular responsible for communication between two components*/
 /**myData is a varaible */
 /**it is a interface */
 /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
 ngOnInit() {}
-receive($event){/**callback will be invoked &data associated with the event will be given to us via $event property */
+receive(event){/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.noteevent.emit();
 }
-color($event){/**callback will be invoked &data associated with the event will be given to us via $event property */
+color(event){/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.colorevent.emit();
 }
-archive($event){/**callback will be invoked &data associated with the event will be given to us via $event property */
+archive(event){/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.archiveevent.emit();
+}
+trash(event){
+  this.deleted.emit();
 }
 openDialog(dialogdata): void {
   const dialogRef = this.dialog.open(DialogComponent, {
@@ -91,3 +97,9 @@ catch(error){
 }
 
 }
+
+
+
+
+
+

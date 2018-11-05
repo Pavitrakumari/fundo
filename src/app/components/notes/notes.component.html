@@ -9,7 +9,7 @@
     </mat-card>
     <mat-card class="cardd" [ngStyle]="{'background-color':colorChange}" fxFlex.lg="55%" fxFlex.md="100%" fxFlex.xs="100%" fxFlex.sm="100%"*ngIf="expression2" class="hiddencard">
         <div fxLayout="row" class="hiddenDiv">
-            <div  class="inputTitle" contenteditable="true"   id="title"placeholder="Title"></div>
+            <div  class="inputTitle" contenteditable="true"   id="title" placeholder="Title"></div>
             <div><img class="pin" src="../../../assets/images/pin.svg" matTooltip="Pin Note"alt=""></div></div>
             
             <!-- <div fxLayout="row" fxLayoutAlign="start start" class="row-height" fxLayoutGap="5px"> -->
@@ -23,11 +23,23 @@
                     </div>
 
             
-            <div  *ngIf="expression3"     class="inputNote" contenteditable="true" id="note"placeholder="Take a note..." autofocus #description></div><br>
-            <div fxLayoutAlign="space-between">
-                <mat-icon *ngIf="!expression3" >add</mat-icon><div fxFlex="60" *ngIf="!expression3" class="inputNote1" contenteditable="true" id="note"placeholder="checkbox list" autofocus #description></div>
+            <div  *ngIf="expression3"     class="inputNote" contenteditable="true" id="note"placeholder="Take a note..." autofocus #description></div>
+            
+            <div *ngIf="!expression3">
+                    <div class="check" *ngFor="let data of dataarray" fxLayout="row">
+                    <mat-checkbox fxFlex="5%"></mat-checkbox>
+                    <input fxFlex="90" *ngIf="!expression3" class="inputNote1"  [(ngModel)]=data.data (keydown)="editing($event.data)">
+           <mat-icon fxFlex="4%" (click)=ondelete(data) matTooltip="delete">cancel</mat-icon>
+                </div>
+            
+            <div class="check" fxLayout="row">
+                <mat-icon fxFlex="5%">add</mat-icon>
+                <input [(ngModel)]=data fxFlex="95%" class="inputNote" placeholder="list item" (keydown.enter)="enter()">
             </div>
-
+            
+            </div>
+                
+            
                     
 
 
@@ -40,7 +52,7 @@
                 <!-- <app-moreicon (moreevent)="receive($event)"></app-moreicon> -->
                 <mat-icon class="icon2" mat-icon-button style="margin-bottom:30px;user-select: none;" [matMenuTriggerFor]="menu"  matTooltip="More">more_vert</mat-icon>&nbsp;
 <mat-menu  style="padding-top:30px;"class="menu" #menu="matMenu" [overlapTrigger]="false">
-    <button mat-menu-item [matMenuTriggerFor]="addlabel" (click)="getLabels1()" ><span>Add label</span></button>
+    <button mat-menu-item [matMenuTriggerFor]="addlabel" (click)="getLabels1()" ><span>Add  label</span></button>
   
   
   

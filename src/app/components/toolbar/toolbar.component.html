@@ -11,6 +11,10 @@
     <button class="top" mat-icon-button><mat-icon fxF lex="40px" aria-label="Side nav toggle icon" matTooltip=" Notifications">notifications_none</mat-icon></button>
     <button class="top1" mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:white;color:black" matTooltip="Fundoo Account">{{firstchar | titlecase}}</button>
     <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+        
+      
+      <button (click)="selectFile.click()"class="top1" mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:white;color:black" matTooltip="Fundoo Account">{{firstchar | titlecase}}</button>
+<input class="image" type="file" (change)="onFileUpload($event)" #selectFile>
       <button mat-menu-item routerLink="/signup">Add account</button>
       <button mat-menu-item (click)="logout()">Log out</button>
     </mat-menu>

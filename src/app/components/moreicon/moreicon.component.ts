@@ -19,6 +19,7 @@ import { Component,Input,Output,EventEmitter, OnInit } from '@angular/core';
 import{HttpService} from '../../services/http.service'
 import {MatSnackBar} from '@angular/material';
 import { AddlabelComponent } from '../addlabel/addlabel.component';
+import{DeleteComponent} from '../delete/delete.component';
 /**A componenet can be reused throughout the application & even in other applications */
 
 @Component({
@@ -33,17 +34,18 @@ export class MoreiconComponent implements OnInit {
  selectarray2=[];
  public search:any = '';
   clicklist=false;
+  model;
   disabled = false;
 notearray=[];
 isChecked;
   token=localStorage.getItem('token');
   @Output() moreevent = new EventEmitter<any>();
   @Output() updateevent = new EventEmitter<any>();
-
+@Output() delevent=new EventEmitter<any>();
     @Output() checkevent = new EventEmitter<any>();
 
 /**Input and Output are two decorators in Angular responsible for communication between two components*/
-
+@Input() name;
 @Input() arrayofnotes:any
   constructor(public dialog: MatDialog,public httpService: HttpService,public snackBar: MatSnackBar) { }
 ngOnInit() {
@@ -184,4 +186,33 @@ clickFunc(temp){
   }
 }
 
+trashforever(){
+  const dialogRef=this.dialog.open(DeleteComponent,{
+    width:'500px',
+    panelClass:'myapp-no-paddding-dialog',
+    data:{name:'trash'}
+  });
+dialogRef.afterClosed().subscribe(data => {
+  console.log('The dialog was closed');
+  if(data){
+    this.model={
+        "isDeleted":true,
+        "noteIdList":[this.arrayofnotes['id']]
+            }
+      console.log(this.model,"model in trash");
+      
+      this.httpService.postdeletecard('notes/deleteForeverNotes',this.model,this.token).subscribe(data=>{
+        console.log(data,"success in trash");
+        
+        this.delevent.emit();
+        this.snackBar.open("note deleted  permanently", "trash", {
+          duration:10000,
+        });
+      }),
+      error=>{
+        console.log(error,"error in trashing");
+      }
+    }
+  });
+}
 }

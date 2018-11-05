@@ -31,7 +31,7 @@
     <app-coloricon (resp)="color($event)" [newcolor]="index.id"></app-coloricon>
     <app-imageicon></app-imageicon>
     <app-archiveicon (archiveevent)="archive($event)" [noteid]="index.id"></app-archiveicon>
-    <app-moreicon (moreevent)="receive($event)" [arrayofnotes]="index"></app-moreicon>
+    <app-moreicon [name]="name" (delevent)="trash($event)" (moreevent)="receive($event)" [arrayofnotes]="index"></app-moreicon>
   </span>
 </mat-card-actions>
 </mat-card></div>

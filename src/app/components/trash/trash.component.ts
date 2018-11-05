@@ -21,10 +21,14 @@ import { HttpService } from '../../services/http.service'
 })
 export class TrashComponent implements OnInit {
   token=localStorage.getItem('token'); 
-  myData=[]
+  myData=[];
+  name='trash';
   constructor(public httpService: HttpService) { }
   ngOnInit() 
   {
+    this.getcard();
+  }
+getcard(){
     this.httpService.getcard("notes/getNotesList",this.token).subscribe(data=>{
     /**hitting the api by passing the url & token*/
     console.log("get cards list successfull",data);
@@ -39,6 +43,10 @@ export class TrashComponent implements OnInit {
     }
     console.log(this.myData,"array of new data");
   })
+}
+carddel(event){
+  this.getcard();
+
 }
 }
 
