@@ -34,3 +34,9 @@ mat-card-content{
     color: rgba(0,0,0,.87);
     opacity: 0.4;
 }
+.viewgrid{
+    width:225px;
+}
+.viewlist{
+    width:500px;
+}

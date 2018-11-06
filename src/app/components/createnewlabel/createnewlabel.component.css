@@ -1,50 +1,42 @@
-.inputTitle {
+.inputTitle{
     border: none;
     outline: none;
     width: 150px;
     font-size: 16px;
-    /* margin-top:-20px; */
     font-style: oblique;
     font-weight: normal;
 }
 div[contenteditable=true]:empty::before {
     content: attr(placeholder);
-    opacity: 0.5;;
-    }
+    opacity: 0.5;
+}
 h1{
     font-style: italic;
 }
 .done{
     margin-left: -20px;
-
-    /* margin-bottom: -100px; */
 }
 .button{
     margin-top:50px;
     margin-left:100px;
     float: right;
 }
-
 .labelButton {
     float: right;
 }
-
 .name {
     font-family: 'Roboto',arial,sans-serif;
     font-size: 18px;
 }
-
 .input {
     margin-left: 8px;
     float: left;
     outline: none;
     border: none;
 }
-
 .divider {
     padding: 5px;
 }
-
 .labelNameEdit {
     outline: none;
 }

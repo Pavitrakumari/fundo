@@ -1,4 +1,3 @@
-
 .title{
   color:black;
   font-family:BURW Chancery L, cursive  
@@ -6,12 +5,10 @@
 .sidenav-container {
   height: 90%;
   background:rgb(252, 249, 249);
-
 }
 .color:hover{
   border-radius: 0px 70px 70px 0px;
-    white-space: nowrap;
-
+  white-space: nowrap;
   background-color: rgb(236, 230, 169);
 }
 .row-height{
@@ -21,31 +18,20 @@
   width: 300px;
   margin-top:70px;
   background:rgb(252, 250, 250);
-
-  }
-  .labels{
-    font-weight: lighter;
-  }
-
+}
+.labels{
+  font-weight: lighter;
+}
 .mat-toolbar.mat-primary {
   position: sticky;
   background:rgb(250, 250, 249) ;
   color: black;
-
   top: 0;
 }
-
-/* .mat-drawer:not(.mat-drawer-side) {
-  box-shadow: none;
-} */
 .search{
-background-color:rgb(247, 245, 241);
-overflow: hidden;
-
-
+ background-color:rgb(247, 245, 241);
+ overflow: hidden;
 }
-
-
 .search input{
   border:none;
   border-radius: 10px 10px 10px 10px;
@@ -54,21 +40,19 @@ overflow: hidden;
   outline: none;
   background-color:rgb(245, 239, 218);
   min-width:100px;
-  /* width:700%; */
   overflow: hidden;
-
 }
 .search input:focus{
   background-color:white
-
 }
-/* 
-.search input:hover{
-  background-color: white;
-} */
-
 .mat-select-panel {
   margin-top: 45px;
+}
+.image{
+  display: none;
+}
+.account{
+  font-size:10px;
 }
 .note{
   opacity: 0.5;
@@ -78,12 +62,8 @@ overflow: hidden;
 }
 ::placeholder {
   color: rgb(160, 148, 12);
-  opacity: 1; /* Firefox */
+  opacity: 1; 
   padding-left:30px;
-
-}
-.image{
-  /* display: none; */
 }
 .side{
   opacity: 0.5;

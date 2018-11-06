@@ -1,40 +1,36 @@
 .inputTitle{
     border: none;
     outline: none;
-
 }
 .menu{
     padding-top:50px;
-    }
+}
 .icon2{
     opacity: 0.5;
+    margin-bottom:30px;
+    user-select: none;
 }
 .icon2:hover{
 opacity: 1;
 }
-
 .title{
     font-weight: bold;
 }
-
 .scroll{
     width: 680px;
-
     overflow-y: hidden;
 }
 div[contenteditable=true]:empty::before {
     content: attr(placeholder);
     opacity: 0.5;;
-    }
-
-    .mat-menu-panel {
-        width: 680px;
-        overflow: hidden;
-        /* -webkit-overflow-scrolling: touch; */
-        max-height: calc(100vh - 48px);
-        border-radius: 2px;
-        outline: 0;
-    }
-    .mat-menu-panel {
-        background: #fff;
-    }
+}
+.mat-menu-panel {
+    width: 680px;
+    overflow: hidden;
+    max-height: calc(100vh - 48px);
+    border-radius: 2px;
+    outline: 0;
+}
+.mat-menu-panel {
+    background: #fff;
+}

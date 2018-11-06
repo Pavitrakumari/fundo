@@ -13,18 +13,17 @@
 *
 *************************************************************************************************/
 /**component has imports , decorator & class */
-import { Component,OnInit,Input,Output,EventEmitter } from '@angular/core';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { AddlabelComponent } from '../addlabel/addlabel.component';
 import { CreatenewlabelComponent } from '../createnewlabel/createnewlabel.component';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
-
-import{HttpService} from '../../services/http.service';
-import {MatSnackBar} from '@angular/material';
+import { HttpService } from '../../services/http.service';
+import { MatSnackBar } from '@angular/material';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-toolbar',/**A string value which represents the component on browser at execution time */
@@ -33,86 +32,113 @@ import {MatSnackBar} from '@angular/material';
 })
 /**To use components in other modules , we have to export them */
 export class ToolbarComponent implements OnInit {
-    labelarray;
-name='';
-firstchar='';
-raw_data;
-token;
-message:string;
-searchInput;
+  labelarray;
+  name = '';
+  number = 1;
+  firstchar = '';
+  raw_data;
+  token;
+  message: string;
+  searchInput;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-.pipe(
+    .pipe(
       map(result => result.matches)
     );
-    constructor(private dataservice: DataService,public dialog: MatDialog,public snackBar: MatSnackBar,private breakpointObserver: BreakpointObserver,public httpService:HttpService,public router:Router) {}
+  constructor(private dataservice: DataService, public dialog: MatDialog, public snackBar: MatSnackBar, private breakpointObserver: BreakpointObserver, public httpService: HttpService, public router: Router) { }
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
-ngOnInit(){
-  this.raw_data=localStorage.getItem('name');/**get the name from local storahe */
-  this.token=localStorage.getItem('token');/**get the token from local storage */
-  console.log(this.raw_data);
-  var array=this.raw_data.split("");/**split the name & pass it to a variable array */
-  this.firstchar=array[0];/**first character of the name is passed to 'firstchar' variable */
-  console.log(this.firstchar);
-  console.log(this.token);/**display the token & firstchar */
-  this.getLabels();
-  // this.dataservice.currentMessage.subscribe(message => this.message = message)
-}
-logout(){
-    
-console.log("logoutt running");
-this.httpService.postlogout("user/logout",this.token).subscribe(data=>{/**registers handlers for events emitted by the instance */
-  console.log("success in logouttttt",data);
-  localStorage.removeItem('email');/**remove email from local storage when logout */
-  localStorage.removeItem('token');/**remove token from local storage when logout */
-  this.router.navigate(['/login']);/**when logout() is performed then navigate the page to login */
-  this.snackBar.open("successfully logout", "LOGOUT", {/**snackbar to display the result */
-  duration:10000,/**for a duration of 10 seconds */
-    });
-  }),error=>{
-    console.log("error in logout",error);
-    this.snackBar.open("unsuccess logout", "LOGOUT", {/**snackbar to display the result */
-      duration:10000,/**for a duration of 10 seconds */
-    });
+  ngOnInit() {
+    this.raw_data = localStorage.getItem('name');/**get the name from local storahe */
+    this.token = localStorage.getItem('token');/**get the token from local storage */
+    console.log(this.raw_data);
+    var array = this.raw_data.split("");/**split the name & pass it to a variable array */
+    this.firstchar = array[0];/**first character of the name is passed to 'firstchar' variable */
+    console.log(this.firstchar);
+    console.log(this.token);/**display the token & firstchar */
+    this.getLabels();
   }
-  }
-addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
-   const dialogRef= this.dialog.open(CreatenewlabelComponent, {/**open dialog  */
-      data: 
-{panelClass: 'myapp-no-padding-dialog'}
+  logout() {
+    console.log("logoutt running");
+    this.httpService.postlogout("user/logout", this.token).subscribe(data => {/**registers handlers for events emitted by the instance */
+      console.log("success in logouttttt", data);
+      localStorage.removeItem('email');/**remove email from local storage when logout */
+      localStorage.removeItem('token');/**remove token from local storage when logout */
+      this.router.navigate(['/login']);/**when logout() is performed then navigate the page to login */
+      this.snackBar.open("successfully logout", "LOGOUT", {/**snackbar to display the result */
+        duration: 10000,/**for a duration of 10 seconds */
       });
-    dialogRef.afterClosed().subscribe(data=>{
+    }), error => {
+      console.log("error in logout", error);
+      this.snackBar.open("unsuccess logout", "LOGOUT", {/**snackbar to display the result */
+        duration: 10000,/**for a duration of 10 seconds */
+      });
+    }
+  }
+  addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
+    const dialogRef = this.dialog.open(CreatenewlabelComponent, {/**open dialog  */
+      data: { panelClass: 'myapp-no-padding-dialog' }
+    });
+    dialogRef.afterClosed().subscribe(data => {
       this.getLabels();
     })
   }
-getLabels()
-{
-  this.httpService.getcard("noteLabels/getNoteLabelList",this.token)
-  .subscribe(response=>{
-      this.labelarray=[];
-      console.log(response['data'].details);
-      for(var i=0;i<(response['data'].details).length;i++)
-      {
-        if(response['data'].details[i].isDeleted == false)
-        {
-               this.labelarray.push(response['data'].details[i])
+  getLabels() {
+    this.httpService.getcard("noteLabels/getNoteLabelList", this.token)
+      .subscribe(response => {
+        this.labelarray = [];
+        console.log(response['data'].details);
+        for (var i = 0; i < (response['data'].details).length; i++) {
+          if (response['data'].details[i].isDeleted == false) {
+            this.labelarray.push(response['data'].details[i])
+          }
         }
+        console.log(this.labelarray, "Label array printing success");
+      }),
+      error => {
+        console.log("error in get LABELS", error);
       }
-      console.log(this.labelarray,"Label array printing success");
-    }),
-    error=>{
-      console.log("error in get LABELS",error);
-    }
-}
-searchbutton(){/**navigate the page to a child component when the search is clicked */
-  this.router.navigate(['home/search']);
-  /**The Angular Router enables navigation from one view to the next as users perform application tasks.*/
-}
-passmessage(){
-  this.dataservice.changeMessage(this.searchInput);
-}
-onFileUpload(event){
-  const file=event.target.files;
-}
-}
+  }
+  searchbutton() {/**navigate the page to a child component when the search is clicked */
+    this.router.navigate(['home/search']);
+    /**The Angular Router enables navigation from one view to the next as users perform application tasks.*/
+  }
+  passmessage() {
+    this.dataservice.changeMessage(this.searchInput);
+  }
+  onFileUpload(event) {
+    const file = event.target.files;
+  }
+  listview() {
+    this.number = 0;
+    this.dataservice.changeMessage3(false)
+  }
+  gridview() {
+    this.number = 1;
+    this.dataservice.changeMessage3(true);
+  }
+
+  selectedFile = null;
+  public image2=localStorage.getItem('imageUrl');
+ img="http://34.213.106.173/"+this.image2;
+ onImageUpload(event){
+this.selectedFile=event.path[0].files[0];
+const uploadData = new FormData();
+uploadData.append('file', this.selectedFile, this.selectedFile.name);
+ this.httpService.imageupload('user/uploadProfileImage',uploadData,this.token).subscribe(res=>{
+   console.log(res);
+   
+   console.log("url: ", res['status'].imageUrl )
+   this.img="http://34.213.106.173/"+res['status'].imageUrl;
+   
+   
+  // this.ProfilePath.push(res['status'])
+  //  console.log(this.ProfilePath);
+ },error=>{
+   console.log(error);
+   
+ })
+
+
+ }}
+
 

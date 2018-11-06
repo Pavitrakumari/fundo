@@ -3,7 +3,6 @@ import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 export interface DialogData {
   animal: 'panda' | 'unicorn' | 'lion';
 }
-
 @Component({
   selector: 'app-addlabel',
   templateUrl: './addlabel.component.html',
@@ -11,10 +10,6 @@ export interface DialogData {
 })
 export class AddlabelComponent implements OnInit {
   disabled = false;
-
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

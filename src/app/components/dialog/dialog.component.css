@@ -1,17 +1,12 @@
 .hiddencard {
     width: 400;
-    /* min-width:200px; */
-    /* height: auto; */
-    /* position: relative; */
-    
     left: 0;
     right: 0;
     margin: auto;
     margin-top: 0px;
     padding: 2px;
-    /* margin-bottom: 5px; */
-  }
-  .hiddenDiv {
+}
+.hiddenDiv {
     padding: 10px;
 }
 .inputTitle {

@@ -1,53 +1,100 @@
 <div class="row-height">
-<mat-toolbar  fxLayout="row"  color="primary">
-<button type="button"aria-label="Toggle sidenav"mat-icon-button (click)="drawer.toggle()">
-  <mat-icon style="color:black" aria-label="Side nav toggle icon">menu</mat-icon></button>
-  <div  class="title"><span fxFlex="20"  ngStyle.lg="font-size:20" ngStyle.xl="font-size:20px"  ngStyle.xs="font-size:10px"ngStyle.sm="font-size:10px">fundoo</span></div>      
-  <form fxFlex class="search" ><button mat-icon-button type="submit"><mat-icon style="color:black">search</mat-icon></button>
-    <input fxFlex type="text" placeholder="Search here" name="something" [(ngModel)]="searchInput" (click)="searchbutton()" (keydown)="passmessage()"></form>
+  <mat-toolbar fxLayout="row" color="primary">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+      <mat-icon style="color:black" aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <div class="title"><span fxFlex="20" ngStyle.lg="font-size:20" ngStyle.xl="font-size:20px" ngStyle.xs="font-size:10px"
+        ngStyle.sm="font-size:10px">fundoo</span></div>
+    <form fxFlex class="search"><button mat-icon-button type="submit">
+        <mat-icon style="color:black">search</mat-icon>
+      </button>
+      <input fxFlex type="text" placeholder="Search here" name="something" [(ngModel)]="searchInput" (click)="searchbutton()"
+        (keydown)="passmessage()"></form>
     <div fxFlex></div>
-    <button class="top" mat-icon-button><mat-icon  fxFlex="40px" aria-label="Side nav toggle icon" matTooltip="Refresh">refresh</mat-icon></button>
-    <button class="top" mat-icon-button><mat-icon fxFlex="40px"  aria-label="Side nav toggle icon" matTooltip="List view">view_stream</mat-icon></button>
-    <button class="top" mat-icon-button><mat-icon fxF lex="40px" aria-label="Side nav toggle icon" matTooltip=" Notifications">notifications_none</mat-icon></button>
-    <button class="top1" mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:white;color:black" matTooltip="Fundoo Account">{{firstchar | titlecase}}</button>
-    <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
-        
-      
-      <button (click)="selectFile.click()"class="top1" mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:white;color:black" matTooltip="Fundoo Account">{{firstchar | titlecase}}</button>
-<input class="image" type="file" (change)="onFileUpload($event)" #selectFile>
+    <button class="top" mat-icon-button>
+      <mat-icon fxFlex="40px" aria-label="Side nav toggle icon" matTooltip="Refresh">refresh</mat-icon>
+    </button>
+    <mat-icon fxFlex="40px" *ngIf="number==1" (click)="listview()" aria-label="Side nav toggle icon" matTooltip="list view">view_stream</mat-icon>
+    <mat-icon fxFlex="40px" *ngIf="number==0" (click)="gridview()" aria-label="Side nav toggle icon" matTooltip="grid view">apps</mat-icon>
+    <button class="top" mat-icon-button>
+      <mat-icon fxF lex="40px" aria-label="Side nav toggle icon" matTooltip=" Notifications">notifications_none</mat-icon>
+    </button>
+    <button class="top1" mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:white;color:black"
+      matTooltip="Fundoo Account">{{firstchar | titlecase}}</button>
+   
+   
+      <!-- <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
+      <button (click)="selectFile.click()" class="top1" mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:white;color:black"
+        matTooltip="Fundoo Account">{{firstchar | titlecase}}</button>
+      <input class="image" type="file" (change)="onFileUpload($event)" #selectFile>
       <button mat-menu-item routerLink="/signup">Add account</button>
       <button mat-menu-item (click)="logout()">Log out</button>
     </mat-menu>
+ -->
+
+
+
+ <mat-menu  #appMenu="matMenu" [overlapTrigger]="false">
+
+    <div fxLayoutAlign="row" >
+        <div fxFlex="10%">  
+           
+  <button (click) = "$event.stopPropagation()" [ngStyle]="{'float':'left','background-image':'url(' +img+ ')','background-size':'cover'}" 
+  (click)="selectFile.click()" matTooltip="fundoo Account" 
+  mat-mini-fab style="background-color:#fb0;float:right;color:white;text-transform:uppercase">
+         </button>
+         <input (click) = "$event.stopPropagation()" class="image" type="file" 
+         (change)="onImageUpload($event)" #selectFile>
+         
+        </div>
+
+    </div>
+    <mat-content fxFlex class="style">
+      
+    </mat-content><br>
+    <mat-content class="style" style="float:right;margin-top:-50px;">{{raw_data}}</mat-content><br>
+
+    <div fxLayoutAlign="row wrap"  class="add" fxLayoutGap=10px>
+
+    <button fxFlex="100" mat-menu-item routerLink="/signup">Add account</button>
+    <button fxFlex="50" mat-menu-item (click)="logout()">Log out</button>
+</div>
+ </mat-menu>
+
+
+
   </mat-toolbar>
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav"
-  fixedInViewport="true"
-  [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-  [mode]="(isHandset$ | async) ? 'over' : 'side'"
-  [opened]="!(isHandset$ | async)">
-  <mat-nav-list>
-    <a class="color"mat-list-item routerLink="/home/notes"><img class="note"src="../../../assets/images/image1.svg"><span class="notes">Notes</span></a>
-    <a class="color"mat-list-item routerLink="/home/reminders"><img class="note"src="../../../assets/images/image2.svg"><span class="notes2">Reminders</span></a><hr>
-    <div class="labels">Labels<a mat-button routerLink="." style="margin-left:130px;"></a></div>
-    
-    
-   
-   
-    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="200px" *ngFor="let index of labelarray">
-      <a class="color" mat-list-item><hr>
-        <mat-icon>label_outline</mat-icon>&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <a routerLink="/home/labels/{{index.label}}">{{index.label}}
-        
-      </a>&nbsp;
-   </a></div>
-   <a class="color" mat-list-item (click)="addlabel()"><mat-icon class="side">edit</mat-icon><span class="notes3">Edit labels</span></a><hr>
-   <a class="color"mat-list-item routerLink="/home/archive"><mat-icon class="note">archive</mat-icon><span class="notes4"></span>Archive</a>
-   <a class="color"mat-list-item routerLink="/home/trash"><mat-icon class="note">delete</mat-icon><span class="notes5"></span>Trash</a>
-  </mat-nav-list>
-</mat-sidenav>
-<mat-sidenav-content>
-  <router-outlet></router-outlet></mat-sidenav-content>
-</mat-sidenav-container>
- 
- 
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+      <mat-nav-list>
+        <a class="color" mat-list-item routerLink="/home/notes"><img class="note" src="../../../assets/images/image1.svg"><span
+            class="notes">Notes</span></a>
+        <a class="color" mat-list-item routerLink="/home/reminders"><img class="note" src="../../../assets/images/image2.svg"><span
+            class="notes2">Reminders</span></a>
+        <hr>
+        <div class="labels">Labels<a mat-button routerLink="." style="margin-left:130px;"></a></div>
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="200px" *ngFor="let index of labelarray">
+          <a class="color" mat-list-item>
+            <hr>
+            <mat-icon>label_outline</mat-icon>&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a routerLink="/home/labels/{{index.label}}">{{index.label}}
+            </a>&nbsp;
+          </a></div>
+        <a class="color" mat-list-item (click)="addlabel()">
+          <mat-icon class="side">edit</mat-icon><span class="notes3">Edit labels</span>
+        </a>
+        <hr>
+        <a class="color" mat-list-item routerLink="/home/archive">
+          <mat-icon class="note">archive</mat-icon><span class="notes4"></span>Archive
+        </a>
+        <a class="color" mat-list-item routerLink="/home/trash">
+          <mat-icon class="note">delete</mat-icon><span class="notes5"></span>Trash
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>

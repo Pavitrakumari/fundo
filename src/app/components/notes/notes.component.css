@@ -1,9 +1,7 @@
 .row-height{
-    /* height:19%; */
     margin-top:2%;
-  }
-  
-   .input {
+}
+.input {
     width: 80%;
     border: none;
     outline: none;
@@ -11,111 +9,97 @@
     margin-left: 10px;
     padding-top: 14px;
     font-family: cursive;
-    
-  } 
-  .card1{
+} 
+.card1{
   height:45px;
   width: 500px;   
    border: none;
   outline: none;
-
-  /* left: 0; */
-  /* right: 0; */
-  /* margin: auto; */
   padding: 2px;
   }
   .icon1{
-      opacity: 0.5;
+    opacity: 0.5;
     margin-top:-19px;
   }
   .icon1:hover{
     opacity: 1.5;
-  margin-top:-19px;
+    margin-top:-19px;
 }
-  
-  .input2{
+.input2{
     font-weight: normal;
     font-size: 20px;
-text-align: left;
-      border:none;
-      outline:none;
+    text-align: left;
+    border:none;
+    outline:none;
   }
-  .input3{
-    /* margin-left: 10px; */
-
+.input3{
       float:left;
       border:none;
       outline:none;
   }
-  div[contenteditable=true]:empty::before {
+div[contenteditable=true]:empty::before {
     content: attr(placeholder);
     opacity: 0.5;;
     }
-    .hiddencard {
-        width: 400;
-        /* min-width:200px; */
-        /* height: auto; */
-        /* position: relative; */
-        font-weight: bolder;
-        /* font-size: 50px; */
-        left: 0;
-        right: 0;
-        margin: auto;
-        margin-top: 20px;
-        padding: 2px;
-        /* margin-bottom: 5px; */
-      }
-      .hiddenDiv {
-        padding: 10px;
-        border-radius: 20px;
+.hiddencard {
+    width: 400;
+    font-weight: bolder;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 20px;
+    padding: 2px;
+}
+.hiddenDiv {
+    padding: 10px;
+    border-radius: 20px;
+}
+.cardd{
+     border-radius: 20px;
     }
-    .cardd{
-        border-radius: 20px;
+.inputTitle {
+    border: none;
+    outline: none;
+    width: 450px;
+    font-size: 16px;
+    font-weight: 600;
     }
-    .inputTitle {
-        border: none;
-        outline: none;
-        width: 450px;
-        font-size: 16px;
-        font-weight: 600;
-    }
-    .inputNote1{
-        border: none;
-        outline: none;
-        font-size: 20px;
-        float: left;
-        text-align: left;
-        margin-right:160px;
-        /* margin-bottom: 30px; */
-    }
-    .inputNote {
-        border: none;
-        outline: none;
-        padding-left: 10px;
-        padding-top: 10px;
-        font-size: 14px;
-    }
-    .pin {
-        margin-top:0px;
-        float: right;
-        opacity: 0.5;
-    }
-    .pin:hover{
-        opacity: 1;
-    }
-    .app-icon1{
-        opacity: 0.5;
-    }
-    .closeButton{
+.inputNote1{
+    border: none;
+    outline: none;
+    font-size: 20px;
+    float: left;
+    text-align: left;
+    margin-right:160px;
+}
+.inputNote {
+    border: none;
+    outline: none;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 14px;
+}
+.pin {
+    margin-top:0px;
+    float: right;
     opacity: 0.5;
-    }
-    .closeButton:hover{
+}
+.pin:hover{
     opacity: 1;
-    }
-   .check{
-       margin-top:3px;
-   }
-    
+}
+.app-icon1{
+    opacity: 0.5;
+}
+.closeButton{
+   opacity: 0.5;
+}
+.closeButton:hover{
+    opacity: 1;
+}
+.check{
+    margin-top:3px;
+}
+
     
     
       

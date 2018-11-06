@@ -20,33 +20,30 @@ import { HttpService } from '../../services/http.service'
   styleUrls: ['./trash.component.css']
 })
 export class TrashComponent implements OnInit {
-  token=localStorage.getItem('token'); 
-  myData=[];
-  name='trash';
+  token = localStorage.getItem('token');
+  myData = [];
+  name = 'trash';
   constructor(public httpService: HttpService) { }
-  ngOnInit() 
-  {
+  ngOnInit() {
     this.getcard();
   }
-getcard(){
-    this.httpService.getcard("notes/getNotesList",this.token).subscribe(data=>{
-    /**hitting the api by passing the url & token*/
-    console.log("get cards list successfull",data);
-    this.myData=data['data'].data.reverse();/**reverse() method in typescript to display the data in reverse order */
-    this.myData=[];
-    for(var i=0;i<data['data'].data.length-1;i++)
-    {
-      if(data['data'].data[i].isDeleted == true) 
-      {
-               this.myData.push(data['data'].data[i]);
+  getcard() {
+    this.httpService.getcard("notes/getNotesList", this.token).subscribe(data => {
+      /**hitting the api by passing the url & token*/
+      console.log("get cards list successfull", data);
+      this.myData = data['data'].data.reverse();/**reverse() method in typescript to display the data in reverse order */
+      this.myData = [];
+      for (var i = 0; i < data['data'].data.length - 1; i++) {
+        if (data['data'].data[i].isDeleted == true) {
+          this.myData.push(data['data'].data[i]);
+        }
       }
-    }
-    console.log(this.myData,"array of new data");
-  })
-}
-carddel(event){
-  this.getcard();
+      console.log(this.myData, "array of new data");
+    })
+  }
+  carddel(event) {
+    this.getcard();
 
-}
+  }
 }
 

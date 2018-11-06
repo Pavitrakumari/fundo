@@ -1,1 +1,4 @@
-&nbsp;<mat-icon class="icon2"mat-icon-button matTooltip="Archive"(click)=archive()>archive</mat-icon>&nbsp;
+&nbsp;<mat-icon class="icon2" *ngIf="noteid.isArchived == false" (click)="archive()" aria-label="false" mat-icon-button
+    matTooltip="Archive">archive</mat-icon>&nbsp;
+<mat-icon class="icon2" *ngIf="noteid.isArchived == true" (click)="unarchive()" aria-label="false" mat-icon-button
+    matTooltip="unarchive">unarchive</mat-icon>
