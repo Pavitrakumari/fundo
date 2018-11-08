@@ -84,12 +84,11 @@ export class HttpService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': token
-
       })
     };
     return this.http.post(url, model, httpAuthOptions4);
   }
-  imageupload(nexturl,body,token){
+  imageupload(url,body,token){/** */
     console.log(token);
     var http={
       headers:new HttpHeaders({
@@ -97,7 +96,7 @@ export class HttpService {
        'Authorization':token
       })
     };
-    return this.http.post(this.url+"/"+nexturl,body,http)
+    return this.http.post(this.url+"/"+url,body,http)
   }
 
 }

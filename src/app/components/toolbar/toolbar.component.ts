@@ -110,30 +110,27 @@ export class ToolbarComponent implements OnInit {
   }
   listview() {
     this.number = 0;
-    this.dataservice.changeMessage3(false)
+    this.dataservice.changeMessage3(false);
   }
   gridview() {
     this.number = 1;
     this.dataservice.changeMessage3(true);
   }
-
-  selectedFile = null;
-  public image2=localStorage.getItem('imageUrl');
- img="http://34.213.106.173/"+this.image2;
- onImageUpload(event){
-this.selectedFile=event.path[0].files[0];
-const uploadData = new FormData();
+selectedFile = null;/**initially the file is assigned as null */
+public image2=localStorage.getItem('imageUrl');/**get the image url from the local storage */
+img="http://34.213.106.173/"+this.image2;/** */
+onImageUpload(event){/**a method to upload the image by triggering the event */
+this.selectedFile=event.path[0].files[0];/**assihning the path & files of event to the selected file */
+const uploadData = new FormData();/**it is used to transmit keyed data */
+/**FormData.append():Appends a new value onto an existing key inside a FormData object,
+ * or adds the key if it does not already exist.*/
 uploadData.append('file', this.selectedFile, this.selectedFile.name);
- this.httpService.imageupload('user/uploadProfileImage',uploadData,this.token).subscribe(res=>{
-   console.log(res);
+ this.httpService.imageupload('user/uploadProfileImage',uploadData,this.token).subscribe(response=>{
+   console.log(response,"success in image upload");
+   console.log("url: ", response['status'].imageUrl )/**to */
+   this.img="http://34.213.106.173/"+response['status'].imageUrl;
    
-   console.log("url: ", res['status'].imageUrl )
-   this.img="http://34.213.106.173/"+res['status'].imageUrl;
-   
-   
-  // this.ProfilePath.push(res['status'])
-  //  console.log(this.ProfilePath);
- },error=>{
+    },error=>{
    console.log(error);
    
  })

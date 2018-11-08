@@ -19,53 +19,29 @@
     <button class="top" mat-icon-button>
       <mat-icon fxF lex="40px" aria-label="Side nav toggle icon" matTooltip=" Notifications">notifications_none</mat-icon>
     </button>
-    <button class="top1" mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:white;color:black"
-      matTooltip="Fundoo Account">{{firstchar | titlecase}}</button>
-   
-   
-      <!-- <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
-      <button (click)="selectFile.click()" class="top1" mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:white;color:black"
-        matTooltip="Fundoo Account">{{firstchar | titlecase}}</button>
-      <input class="image" type="file" (change)="onFileUpload($event)" #selectFile>
-      <button mat-menu-item routerLink="/signup">Add account</button>
-      <button mat-menu-item (click)="logout()">Log out</button>
-    </mat-menu>
- -->
-
-
-
- <mat-menu  #appMenu="matMenu" [overlapTrigger]="false">
-
-    <div fxLayoutAlign="row" >
-        <div fxFlex="10%">  
-           
-  <button (click) = "$event.stopPropagation()" [ngStyle]="{'float':'left','background-image':'url(' +img+ ')','background-size':'cover'}" 
-  (click)="selectFile.click()" matTooltip="fundoo Account" 
-  mat-mini-fab style="background-color:#fb0;float:right;color:white;text-transform:uppercase">
+      <button (click) = "$event.stopPropagation()"
+      [ngStyle]="{'float':'left','background-image':'url(' +img+ ')','background-size':'cover'}"
+       matTooltip="fundoo Account" mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:#fb0;float:right;color:white;text-transform:uppercase">
+      </button>
+      <mat-menu  #appMenu="matMenu" [overlapTrigger]="false">
+        <div fxLayoutAlign="row" >
+        <div fxFlex="10%">
+          <button (click) = "$event.stopPropagation()" [ngStyle]="{'float':'left','background-image':'url(' +img+ ')','background-size':'cover'}" (click)="selectFile.click()" matTooltip="fundoo Account" mat-mini-fab style="background-color:#fb0;float:right;color:white;text-transform:uppercase">
          </button>
          <input (click) = "$event.stopPropagation()" class="image" type="file" 
          (change)="onImageUpload($event)" #selectFile>
-         
         </div>
-
-    </div>
-    <mat-content fxFlex class="style">
-      
-    </mat-content><br>
+      </div>
+    <mat-content fxFlex class="style"></mat-content><br>
     <mat-content class="style" style="float:right;margin-top:-50px;">{{raw_data}}</mat-content><br>
-
     <div fxLayoutAlign="row wrap"  class="add" fxLayoutGap=10px>
-
-    <button fxFlex="100" mat-menu-item routerLink="/signup">Add account</button>
-    <button fxFlex="50" mat-menu-item (click)="logout()">Log out</button>
-</div>
- </mat-menu>
-
-
-
-  </mat-toolbar>
-  <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      <button fxFlex="100" mat-menu-item routerLink="/signup">Add account</button>
+      <button fxFlex="50" mat-menu-item (click)="logout()">Log out</button>
+    </div>
+  </mat-menu>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
       <mat-nav-list>
         <a class="color" mat-list-item routerLink="/home/notes"><img class="note" src="../../../assets/images/image1.svg"><span

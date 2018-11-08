@@ -160,23 +160,23 @@ export class MoreiconComponent implements OnInit {
       }
     }
   }
-  trashforever() {
-    const dialogRef = this.dialog.open(DeleteComponent, {
+  trashforever() {/**method to delete the cards permanently from the trash */
+    const dialogRef = this.dialog.open(DeleteComponent, {/**open the dialogref */
       width: '500px',
       panelClass: 'myapp-no-paddding-dialog',
-      data: { name: 'trash' }
+      data: { name: 'trash' }/**assigning the data with name as trash */
     });
     dialogRef.afterClosed().subscribe(data => {
       console.log('The dialog was closed');
-      if (data) {
-        this.model = {
+      if (data) {/**if data exists then */
+        this.model = {/**passing the model attributes */
           "isDeleted": true,
-          "noteIdList": [this.arrayofnotes['id']]
+          "noteIdList": [this.arrayofnotes['id']]/**passing the noteidlist from the cards */
         }
-        console.log(this.model, "model in trash");
+        console.log(this.model, "model in trash");/**display the model */
         this.httpService.postdeletecard('notes/deleteForeverNotes', this.model, this.token).subscribe(data => {
-          console.log(data, "success in trash");
-          this.delevent.emit();
+          console.log(data, "success in trash");/**success in trash */
+          this.delevent.emit();/**emit the event to */
           this.snackBar.open("note deleted  permanently", "trash", {
             duration: 10000,
           });
