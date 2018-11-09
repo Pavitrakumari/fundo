@@ -1,5 +1,5 @@
-<div fxLayoutWrap fxLayoutAlign="center center" fxFlex.xs="95%" fxFlex fxLayout="row wrap" fxLayoutGap="10px">
-  <mat-card [ngClass]="{'viewgrid':condition,'viewlist':!condition}" class="example-card" *ngFor='let index of myData | LockFilter:searchInput'
+<div fxLayoutWrap fxLayoutAlign="center center"  fxFlex fxLayout="row wrap" fxLayoutGap="10px">
+  <mat-card  [ngClass]="{'viewgrid':condition,'viewlist':!condition}" class="example-card" *ngFor='let index of myData | LockFilter:searchInput'
     [ngStyle]="{'background-color':index.color}">
     <div (click)="openDialog(index)">
       <mat-card-header>
@@ -23,9 +23,27 @@
         </mat-chip-list>
       </div>
     </div>
+
+
+
+
+<div fxLayout="row" fxLayoutAlign="start start" class="row-height" fxLayoutGap="5px">
+      <div *ngFor="let item of index.reminder">
+        <mat-chip-list selected>
+          <mat-chip>
+              {{item}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+
+            <!-- <mat-icon >cancel</mat-icon> -->
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+
+
     <mat-card-actions>
       <span class="invisible">
-        <app-icon1></app-icon1>
+        <app-icon1 [reminders]="index"></app-icon1>
         <app-collaboratoricon></app-collaboratoricon>
         <app-coloricon (resp)="color($event)" [newcolor]="index.id"></app-coloricon>
         <app-imageicon></app-imageicon>

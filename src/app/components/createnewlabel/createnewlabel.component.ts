@@ -14,8 +14,8 @@
 /**component has imports , decorator & class */
 import { Component, OnInit, Inject, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { HttpService } from '../../services/http.service';
-import { DataService } from '../../services/data.service';
+import { HttpService } from '../../core/services/http/http.service';
+import { DataService } from '../../core/services/data/data.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-createnewlabel',

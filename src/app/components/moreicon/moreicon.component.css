@@ -6,6 +6,8 @@
     padding-top:50px;
 }
 .icon2{
+    margin-bottom:30px;
+    user-select: none;
     opacity: 0.5;
     margin-bottom:30px;
     user-select: none;

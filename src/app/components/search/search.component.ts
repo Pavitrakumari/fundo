@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../services/http.service';
-import { DataService } from '../../services/data.service';
+import { HttpService } from '../../core/services/http/http.service';
+import { DataService } from '../../core/services/data/data.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-search',
@@ -18,7 +18,6 @@ export class SearchComponent implements OnInit {
       this.searchInput = message
       console.log(this.searchInput, "search component running ");
       this.getCard();
-      // this.searchInput='';
     })
   }
   getCard() {

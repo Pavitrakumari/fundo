@@ -1,7 +1,7 @@
 /**component has imports , decorator & class */
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { HttpService } from '/home/administrator/fundo/src/app/services/http.service'
+import { HttpService } from '../../core/services/http/http.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 /**A componenet can be reused throughout the application & even in other applications */
@@ -53,9 +53,8 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', data['id']);
         localStorage.setItem('userId', data['userId']);
         localStorage.setItem('imageUrl',data['imageUrl']);
-        console.log("raam");
         console.log(data['id']);
-        this.snackBar.open("successfully login", "login", {
+        this.snackBar.open("successfully login","login", {
           duration: 10000,
         });
       },

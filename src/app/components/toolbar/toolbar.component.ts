@@ -21,9 +21,11 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { DataService } from '../../services/data.service';
-import { HttpService } from '../../services/http.service';
+import { DataService } from '../../core/services/data/data.service';
+import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
+import { LoggerService } from '../../core/services/logger/logger.service'
+import { ImageCroppedEvent } from 'ngx-image-cropper/src/image-cropper.component';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-toolbar',/**A string value which represents the component on browser at execution time */
@@ -47,7 +49,7 @@ export class ToolbarComponent implements OnInit {
   constructor(private dataservice: DataService, public dialog: MatDialog, public snackBar: MatSnackBar, private breakpointObserver: BreakpointObserver, public httpService: HttpService, public router: Router) { }
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
-  ngOnInit() {
+ngOnInit() {
     this.raw_data = localStorage.getItem('name');/**get the name from local storahe */
     this.token = localStorage.getItem('token');/**get the token from local storage */
     console.log(this.raw_data);
@@ -57,7 +59,7 @@ export class ToolbarComponent implements OnInit {
     console.log(this.token);/**display the token & firstchar */
     this.getLabels();
   }
-  logout() {
+logout() {
     console.log("logoutt running");
     this.httpService.postlogout("user/logout", this.token).subscribe(data => {/**registers handlers for events emitted by the instance */
       console.log("success in logouttttt", data);
@@ -74,7 +76,7 @@ export class ToolbarComponent implements OnInit {
       });
     }
   }
-  addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
+addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
     const dialogRef = this.dialog.open(CreatenewlabelComponent, {/**open dialog  */
       data: { panelClass: 'myapp-no-padding-dialog' }
     });
@@ -82,7 +84,7 @@ export class ToolbarComponent implements OnInit {
       this.getLabels();
     })
   }
-  getLabels() {
+getLabels() {
     this.httpService.getcard("noteLabels/getNoteLabelList", this.token)
       .subscribe(response => {
         this.labelarray = [];
@@ -92,7 +94,9 @@ export class ToolbarComponent implements OnInit {
             this.labelarray.push(response['data'].details[i])
           }
         }
-        console.log(this.labelarray, "Label array printing success");
+        // console.log(this.labelarray, "Label array printing success bujji so sweet of you");
+        LoggerService.log(this.labelarray+"Label array printing success bujji so sweet of you" );
+
       }),
       error => {
         console.log("error in get LABELS", error);
@@ -116,10 +120,19 @@ export class ToolbarComponent implements OnInit {
     this.number = 1;
     this.dataservice.changeMessage3(true);
   }
+
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  
+
+
 selectedFile = null;/**initially the file is assigned as null */
 public image2=localStorage.getItem('imageUrl');/**get the image url from the local storage */
 img="http://34.213.106.173/"+this.image2;/** */
-onImageUpload(event){/**a method to upload the image by triggering the event */
+onImageUpload(event){
+  this.imageChangedEvent = event;
+
+  /**a method to upload the image by triggering the event */
 this.selectedFile=event.path[0].files[0];/**assihning the path & files of event to the selected file */
 const uploadData = new FormData();/**it is used to transmit keyed data */
 /**FormData.append():Appends a new value onto an existing key inside a FormData object,
@@ -129,13 +142,23 @@ uploadData.append('file', this.selectedFile, this.selectedFile.name);
    console.log(response,"success in image upload");
    console.log("url: ", response['status'].imageUrl )/**to */
    this.img="http://34.213.106.173/"+response['status'].imageUrl;
-   
-    },error=>{
+   localStorage.setItem('imageUrl',response['status'].imageUrl);
+   },error=>{
    console.log(error);
-   
- })
+  })
+}
 
 
- }}
+imageCropped(event: ImageCroppedEvent) {
+  this.croppedImage = event.base64;
+}
+imageLoaded() {
+  // show cropper
+}
+loadImageFailed() {
+  // show message
+}
+
+}
 
 

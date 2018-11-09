@@ -14,7 +14,7 @@
 *************************************************************************************************/
 /**component has imports , decorator & class */
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { HttpService } from '../../services/http.service'
+import { HttpService } from '../../core/services/http/http.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-notesparent',/**A string value which represents the component on browser at execution time */

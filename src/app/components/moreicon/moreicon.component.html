@@ -1,6 +1,6 @@
-<mat-icon class="icon2" mat-icon-button style="margin-bottom:30px;user-select: none;" [matMenuTriggerFor]="menu"
+<mat-icon class="icon2" mat-icon-button [matMenuTriggerFor]="menu"
     matTooltip="More">more_vert</mat-icon>&nbsp;
-<mat-menu style="padding-top:30px;" class="menu" #menu="matMenu" [overlapTrigger]="false">
+<mat-menu  class="menu" #menu="matMenu" [overlapTrigger]="false">
     <button *ngIf="name == 'trash' " mat-menu-item (click)="trashforever()">
         <span>Delete Forever</span></button>
     <button *ngIf="name == 'trash' " mat-menu-item (click)="restore()">
@@ -17,7 +17,7 @@
             <input class="inputTitle" contenteditable="true" placeholder="Enter label name" [(ngModel)]="query">
         </div><br>
         <div *ngFor="let label of labelarray | LockFilter: query">
-            <mat-checkbox (click)="$event.stopPropagation();" [(ngModel)]="label.isChecked" (click)="clickFunc(label)"
+            <mat-checkbox (click)="$event.stopPropagation();" [checked]="func(label)" (click)="clickFunc(label)"
                 (click)="getlabellist(label.id)" class="example-margin">{{label.label}}</mat-checkbox>
         </div>
     </mat-menu>

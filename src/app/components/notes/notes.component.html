@@ -13,9 +13,7 @@
         <div fxLayout="row" class="hiddenDiv">
             <div class="inputTitle" contenteditable="true" id="title" placeholder="Title"></div>
             <div><img class="pin" src="../../../assets/images/pin.svg" matTooltip="Pin Note" alt=""></div>
-        </div>
-        <div *ngFor="let label of selectarray2">
-            <mat-chip-list selected style="margin-top:15px;">
+                     </div><div *ngFor="let label of selectarray2"><mat-chip-list selected style="margin-top:15px;">
                 <mat-chip>
                     {{label}}
                 </mat-chip>
@@ -46,7 +44,7 @@
             <app-moreicon (moreevent)="receive($event)"></app-moreicon>
             <mat-icon class="icon2" mat-icon-button style="margin-bottom:30px;user-select: none;" [matMenuTriggerFor]="menu"
                 matTooltip="More">more_vert</mat-icon>&nbsp;
-            <mat-menu style="padding-top:30px;" class="menu" #menu="matMenu" [overlapTrigger]="false">
+            <mat-menu  class="menu" #menu="matMenu" [overlapTrigger]="false">
                 <button mat-menu-item [matMenuTriggerFor]="addlabel" (click)="getLabels1()"><span>Add label</span></button>
                 <mat-menu [overlapTrigger]="false" (click)="$event.stopPropagation();" #addlabel="matMenu">
                     <div class="title">Label note</div><br>
@@ -60,8 +58,6 @@
                 </mat-menu>
                 <button mat-menu-item><span>Add drawing</span></button>
             </mat-menu>
-            <!-- <app-undoicon></app-undoicon> -->
-            <!-- <app-redoicon></app-redoicon> -->
             <button mat-button (click)="close()">CLOSE</button>
         </span>
     </mat-card>

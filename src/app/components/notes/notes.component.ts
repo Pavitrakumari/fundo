@@ -14,9 +14,11 @@
 *************************************************************************************************/
 /**component has imports , decorator & class */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { HttpService } from '../../services/http.service'
+import { HttpService } from '../../core/services/http/http.service';
 import { Router } from '@angular/router';
+
 import { error } from '@angular/compiler/src/util';
+import { LoggerService } from '../../core/services/logger/logger.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-notes',/**A string value which represents the component on browser at execution time */
@@ -76,15 +78,8 @@ export class NotesComponent implements OnInit {
       console.log(this.pinned);
       console.log(this.selectarray1, "selecttttt");
      for(var i=0;i<this.dataarray.length;i++){
-
-
-
-
-
-    }
-
-
-      var body = {
+}
+ var body = {
         "title": this.title,
         "description": this.note,/**attributes to call the api */
         "labelIdList": JSON.stringify(this.selectarray1),
@@ -96,7 +91,7 @@ export class NotesComponent implements OnInit {
       console.log(this.colorChange);
       this.httpService.postpassword("notes/addnotes", body, this.token).subscribe( /**registers handlers for events emitted by this instance */
         data => {
-          console.log("successfull add notes", data);/**if success then display the data */
+          LoggerService.log("successfull add notes bujji ", data);/**if success then display the data */
           this.selectarray1 = [];
           this.selectarray2 = [];
           this.onNewEntryAdded.emit();
@@ -120,7 +115,9 @@ export class NotesComponent implements OnInit {
             this.labelarray.push(response['data'].details[i])
           }
         }
-        console.log(this.labelarray, "Label array printing success");
+        LoggerService.log('Label array printing success bujji soo sweet of you'
+        ,this.labelarray);
+
       }),
       error => {
         console.log("error in get LABELS", error);

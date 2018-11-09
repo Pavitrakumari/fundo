@@ -14,10 +14,10 @@
 *************************************************************************************************/
 /**component has imports , decorator & class */
 import { Component, Input, EventEmitter, OnInit, Output } from '@angular/core';
-import { HttpService } from '../../services/http.service'
+import { HttpService } from '../../core/services/http/http.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
-import { DataService } from '../../services/data.service';
+import { DataService } from '../../core/services/data/data.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({

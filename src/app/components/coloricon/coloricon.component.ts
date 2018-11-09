@@ -14,7 +14,7 @@
 *************************************************************************************************/
 /**component has imports , decorator & class */
 import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
-import { HttpService } from '../../services/http.service'
+import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({

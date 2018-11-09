@@ -99,6 +99,8 @@ div[contenteditable=true]:empty::before {
 .check{
     margin-top:3px;
 }
+.menu{
+    padding-top:30px;}
 
     
     

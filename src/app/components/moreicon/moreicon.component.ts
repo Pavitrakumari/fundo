@@ -15,7 +15,7 @@
 /**component has imports , decorator & class */
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { HttpService } from '../../services/http.service'
+import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
 import { AddlabelComponent } from '../addlabel/addlabel.component';
 import { DeleteComponent } from '../delete/delete.component';
@@ -68,6 +68,27 @@ export class MoreiconComponent implements OnInit {
       console.log(error);
     }
   }
+  restore() {/**method to delete the cards */
+    try {
+      console.log("pichii");
+      console.log(this.arrayofnotes);
+      var model = {
+        "isDeleted": false,/**attributes to be passed to hit the api trashNotes */
+        "noteIdList": [this.arrayofnotes.id]
+      }/**hitting the api by passing the url & token */
+      this.httpService.postdeletecard("notes/trashNotes", model, this.token).subscribe(data => {
+        console.log("deleted card successfully", data);/**if error doesnot exist the display the result */
+        this.snackBar.open("successfully deleted notes", "deleted", {
+          duration: 10000,
+        });
+        this.delevent.emit();/**to emit an event to the parent */
+      })
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
   addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
     this.dialog.open(AddlabelComponent, {/**open dialog  */
       width: '550px',
@@ -160,6 +181,16 @@ export class MoreiconComponent implements OnInit {
       }
     }
   }
+  func(labelOption){
+    if (this.arrayofnotes.noteLabels.some((data) => data.label == labelOption.label)) {
+    return true;
+    }
+    else {
+
+     return false;
+  }
+  }
+
   trashforever() {/**method to delete the cards permanently from the trash */
     const dialogRef = this.dialog.open(DeleteComponent, {/**open the dialogref */
       width: '500px',
