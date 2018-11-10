@@ -13,7 +13,8 @@
   <div fxFlex="80%" [innerHTML]="label.label" class="label" contenteditable="true" *ngIf="editable && label.label==editLabel"
     #myDiv></div>
   <div fxFlex="10%">
-    <mat-icon fxLayout="row" (click)=edit(label) *ngIf="editDoneIcon || label.id!=editId">edit</mat-icon>
+    <mat-icon fxLayout="row" (click)=edit(label) *ngIf="editDoneIcon || label.id!=editId">
+      edit</mat-icon>
     <mat-icon (click)=editlabel(label) *ngIf="editClick && label.id==editId">done</mat-icon>
   </div>
 </div>
