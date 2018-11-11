@@ -32,15 +32,22 @@ export class NotesComponent implements OnInit {
   expression2 = false;
   expression3 = true;
   labelarray;
+  public check=false;
+  public status="open"
+  public dataArrayApi=[];
+  public isChecked=false;
+
   selectarray1 = [];
   data;
   noteid={'isArchived':false}
   dataarray = [];
   selectarray2 = [];
   public title;
+  
   public note;
   public pinned = false;
   token = localStorage.getItem('token');/**get the token from localstorage */
+  adding: boolean;
   constructor(public httpService: HttpService, public router: Router) { }
   public clicked = false;
   /**Input and Output are two decorators in Angular responsible for communication between two components*/
@@ -50,6 +57,9 @@ export class NotesComponent implements OnInit {
     /**it is a interface */
     /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
   }
+  public body:any={}
+  public isPinned = false;
+public isArchived=false;
   show: boolean = true;
   display() {/**display() method to show & hide the card based on click of close button */
     this.expression1 = false;
@@ -61,46 +71,103 @@ export class NotesComponent implements OnInit {
       console.log(this.colorChange);
     }
   }
+  close1(){
+    this.dataarray=[];
+  }
   close() {/**method that need to perform while clicking the close button */
     this.expression1 = true;
     this.expression2 = false;
-    this.expression3 = true;
+this.enter(event);
     this.selectarray2 = [];
-    this.dataarray = [];
     // this.dataarray[0]=[];
     /**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */
     try {
       this.title = document.getElementById('title').innerHTML;/**innerHTML property setys or returns HTML content of an element */
-      this.note = document.getElementById('note').innerHTML;/**returns an element of specified id */
       /**document.getElementById() method returns the element of specified id */
       console.log(this.title);
       console.log(this.note);
       console.log(this.pinned);
       console.log(this.selectarray1, "selecttttt");
-     for(var i=0;i<this.dataarray.length;i++){
-}
- var body = {
+if(this.expression3 == true ){
+  this.note = document.getElementById('note').innerHTML;/**returns an element of specified id */
+
+console.log("madavi checklist");
+
+ this.body = {
         "title": this.title,
         "description": this.note,/**attributes to call the api */
         "labelIdList": JSON.stringify(this.selectarray1),
         "checklist": "",
-        "isPined": this.pinned,
+        "isPined": "",
         "color": ""
       }
-      body.color = this.colorChange;
+    }
+    else{
+      console.log("else................................... part");
+      console.log(this.dataarray,"data array of checklists................");
+      
+      for(var i=0;i<this.dataarray.length;i++){
+        if(this.dataarray[i].isChecked == true)
+        {
+          console.log(this.dataarray[i],"data array in checklists for loop");
+          
+         this.status="close"
+        }
+        var apiObj={
+          "itemName":this.dataarray[i].data,
+          "status":this.status
+        }
+        this.dataArrayApi.push(apiObj)
+        this.status="open"
+
+      }
+      console.log(this.dataArrayApi,"data arrayapiiiiiiiiii");
+      console.log("executing   VIJAY WARDADA checklistt.............");
+
+      this.body={
+        "title": this.title,
+        "checklist":JSON.stringify(this.dataArrayApi),
+        "isPined": this.isPinned,
+        "color": "",
+        "isArchived": this.isArchived,
+        "labelIdList": JSON.stringify(this.selectarray1)
+       }
+    }
+    
+      this.body.color = this.colorChange;
       console.log(this.colorChange);
-      this.httpService.postpassword("notes/addnotes", body, this.token).subscribe( /**registers handlers for events emitted by this instance */
+      if (this.title != "") 
+{
+console.log("executing PRANEE checklistt.............");
+
+      this.httpService.postpassword("notes/addnotes", this.body, this.token).subscribe( /**registers handlers for events emitted by this instance */
         data => {
           LoggerService.log("successfull add notes bujji ", data);/**if success then display the data */
           this.selectarray1 = [];
+          this.expression3 = true;
+
           this.selectarray2 = [];
+          this.dataArrayApi=[];
+          this.dataarray=[];
+          this.adding=false;
           this.onNewEntryAdded.emit();
+          this.close1();
+
           this.colorChange = "#ffffff";
 
         }, error => {
           console.log("Error", error);/**if there exists error then display the error */
         });
-    }
+
+      }
+
+
+
+
+
+
+
+      }
     catch (error) {
       console.log(error);
     }
@@ -135,18 +202,39 @@ export class NotesComponent implements OnInit {
       }
     }
   }
+  // public data;
+  // public i=0;
+  // public adding=false;
+  public addCheck=false;
+ 
   public i = 0;
-  enter() {
+  enter(event) {
+    if(this.data!=""){
+      this.adding=true;
+    }
+    else{
+      this.adding=false;
+    }
     this.i++;
-    if (this.data != null) {
+    this.isChecked=this.addCheck
+
+    if (this.data != null && event.code=="Enter") {
       console.log(event, "keydown");
       var obj = {
         "index": this.i,
-        "data": this.data
+        "data": this.data,
+        "isChecked":this.isChecked
+
+
       }
       this.dataarray.push(obj);
-      this.data = null;
-    }
+      console.log(this.dataarray,"data array in enter functionn...............");
+      
+      this.data=null;
+      this.adding=false;
+      this.isChecked=false;
+        this.addCheck = false;
+      }
   }
   ondelete(deletedObj) {
     console.log("ondelete function runnig");
@@ -157,33 +245,5 @@ export class NotesComponent implements OnInit {
       }
     }
     console.log(this.dataarray);
-  }
-  editing(event, edited) {
-    if (event.code == "Enter") {
-      console.log("enter pressed");
-      for (var i = 0; i < this.dataarray.length; i++) {
-        if (edited.index == this.dataarray[i].index) {
-          this.dataarray[i].data == edited.data
-        }
-      }
-      console.log(this.dataarray);
-    }
-  }
-  public description;
-  addchecklist() {
-    var body = {
-      "title": this.title,
-      "description": this.note,/**attributes to call the api */
-      "labelIdList": JSON.stringify(this.selectarray1),
-      "checklist": "",
-      "isPined": this.pinned,
-      "color": ""
-    }
-    this.httpService.postdeletecard("notes/addnotes", body, this.token).subscribe(data => {
-      console.log(data, " data in checklist");
-    }),
-      error => {
-        console.log(error, "error in checklist");
-      }
   }
 }

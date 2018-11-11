@@ -55,3 +55,7 @@ div[contenteditable=true]:empty::before {
     content: attr(placeholder);
     opacity: 0.5;;
     }
+    .note{
+        border:none;
+        outline: none;
+    }

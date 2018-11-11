@@ -14,7 +14,7 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
 import { HelpComponent } from './components/help/help.component';
 import { AppdownloadsComponent } from './components/appdownloads/appdownloads.component';
 import { KeyboardshortcutsComponent } from './components/keyboardshortcuts/keyboardshortcuts.component';
-import { AuthGuard as AuthGuard } from '../app/auth/auth.guard';
+import { AuthGuard as AuthGuard } from '../app/core/services/auth/authGuard/auth.guard';
 import { NotesparentComponent } from './components/notesparent/notesparent.component';
 import { SearchComponent } from './components/search/search.component';
 import { LabelsComponent } from './components/labels/labels.component';

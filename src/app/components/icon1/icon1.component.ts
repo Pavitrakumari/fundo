@@ -1,4 +1,4 @@
-import { Component,Input,OnInit } from '@angular/core';
+import { Component,Input,OnInit,Output,EventEmitter } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -38,17 +38,22 @@ export interface Food {
 
 export class Icon1Component implements OnInit {
   foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Morning'},
-    {value: 'pizza-1', viewValue: 'Afternoon'},
-    {value: 'tacos-2', viewValue: 'Evening'}
+    // {value: 'steak-0', viewValue: 'Morning'},
+    // {value: 'pizza-1', viewValue: 'Afternoon'},
+    // {value: 'tacos-2', viewValue: 'Evening'}
   ];
   constructor(public snackBar:MatSnackBar,public httpService:HttpService) { }
   token = localStorage.getItem('token')
   @Input() reminders;
   body = {};
+  @Output() reminderevent = new EventEmitter<any>()
+
+  reminder(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
+    this.reminderevent.emit();
+  }
 
 ngOnInit() {
-  this.getReminder();
+  // this.getReminder();
 }
 date = new FormControl(moment());
 
@@ -56,12 +61,15 @@ date = new FormControl(moment());
 getReminder() {
   this.httpService.getcard('/notes/getReminderNotesList', this.token)
     .subscribe(data => {
-      console.log("success in get reminders ",data)
+      console.log("success in get reminders ",data);
+      // this.updateevent.emit();
+      this.reminderevent.emit();
     })
   error => {
     console.log("error in get reminders",error)
   }
 }
+
 
 todayReminder() {
   let currentDate = new Date()
@@ -72,10 +80,12 @@ todayReminder() {
     }
   this.httpService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
     .subscribe(data => {
-      console.log(data);
+      console.log("success in today reminders",data);
+      this.reminderevent.emit();
+
     },
       error => {
-        console.log(error)
+        console.log("error in today reminders",error)
       })
 }
 tomorrowReminder() {
@@ -87,10 +97,12 @@ tomorrowReminder() {
     }
   this.httpService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
     .subscribe(data => {
-      console.log(data);
+      console.log("success in tomorroe reminders",data);
+      this.reminderevent.emit();
+
     },
       error => {
-        console.log(error)
+        console.log("error in tomorrow reminders",error)
       })
 }
 weekReminder() {
@@ -102,10 +114,12 @@ weekReminder() {
     }
   this.httpService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
     .subscribe(data => {
-      console.log(data);
+      console.log("success in week reminder",data);
+      this.reminderevent.emit();
+
     },
       error => {
-        console.log(error)
+        console.log("error in week reminder",error)
       })
     }
   

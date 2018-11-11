@@ -1,5 +1,5 @@
 <mat-icon class="icon2" mat-icon-button style="margin-bottom:30px;user-select: none;" [matMenuTriggerFor]="menu"
-    matTooltip="Remind me">touch_app</mat-icon>&nbsp;
+    (click)="$event.stopPropagation();" matTooltip="Remind me">touch_app</mat-icon>&nbsp;
 <mat-menu (click)="$event.stopPropagation();" class="menu" #menu="matMenu" [overlapTrigger]="false">
     <button (click)="$event.stopPropagation();" mat-menu-item><span>Reminder : </span></button>
     <button (click)="$event.stopPropagation();" mat-menu-item>

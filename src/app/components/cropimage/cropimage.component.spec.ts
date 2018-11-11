@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CropimageComponent } from './cropimage.component';
+import { CropImageComponent } from './cropimage.component';
 
 describe('CropimageComponent', () => {
-  let component: CropimageComponent;
-  let fixture: ComponentFixture<CropimageComponent>;
+  let component: CropImageComponent;
+  let fixture: ComponentFixture<CropImageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CropimageComponent ]
+      declarations: [ CropImageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CropimageComponent);
+    fixture = TestBed.createComponent(CropImageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -17,9 +17,42 @@
                     </mat-chip-list>
                 </div>
             </div>
+            <div class="note" *ngFor="let check of tempArray" fxLayout="row">
+                <mat-checkbox fxFlex="10%" *ngIf="check.status=='open'&& !check.isDeleted" (click)=checkBox(check)></mat-checkbox>
+                <input [(ngModel)]=check.itemName fxFlex="80%" class="note" (keydown)=editing(check,$event)
+                [ngStyle]="{'background-color':data.color}" *ngIf="!check.isDeleted && check.status=='open'">
+                <mat-icon fxFlex="10%" class="clearIcon" (click)=removeList(check) *ngIf="!check.isDeleted && check.status=='open'">clear</mat-icon>
+            </div>
+            <hr *ngIf="checklist">
+            <div fxLayout="row" *ngIf="checklist">
+                <mat-icon fxFlex="5%" *ngIf="!adding">add</mat-icon>
+                <mat-checkbox *ngIf="adding" [(ngModel)]=addCheck color="primary"></mat-checkbox>
+                <input fxFlex="95%" class="note" placeholder="List Item" [style.backgroundColor]="bgcolor" [(ngModel)]=newList
+                    (keydown)=addList($event) />
+            </div>
+            <hr *ngIf="checklist">
+            <div class="note" *ngFor="let check of tempArray" fxLayout="row">
+                <mat-checkbox fxFlex="10%" checked=true *ngIf="check.status=='close'&& !check.isDeleted" (click)=checkBox(check)></mat-checkbox>
+                <input  [ngStyle]="{'background-color':data.color}" [(ngModel)]=check.itemName class="note" style="text-decoration: line-through;" fxFlex="80%"
+                    *ngIf="check.status=='close' && !check.isDeleted" (keydown)=editing(check,$event)>
+                <mat-icon fxFlex="10%" class="clearIcon" (click)=removeList(check) *ngIf="!check.isDeleted && check.status=='close'">clear</mat-icon>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" class="row-height" fxLayoutGap="5px">
+                <div *ngFor="let item of selectarray2">
+                    <mat-chip-list selected>
+                        <mat-chip>
+                            <mat-icon>access_time</mat-icon>
+                            {{item | date:"medium"}}
+                            <mat-icon (click)="removereminder(item,data.id)" matChipRemove>cancel</mat-icon>
+
+                            <!-- <mat-icon >cancel</mat-icon> -->
+                        </mat-chip>
+                    </mat-chip-list>
+                </div>
+            </div>
             <div fxLayout="row wrap">
                 <div class="one" fxLayoutAlign="space-between">
-                    <app-icon1></app-icon1>
+                    <app-icon1 (reminderevent)="reminder($event)" [reminders]="index"></app-icon1>
                     <app-collaboratoricon></app-collaboratoricon>
                     <app-coloricon (updateevent)="color($event)" [newcolor]="data.id"></app-coloricon>
                     <app-imageicon></app-imageicon>

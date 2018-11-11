@@ -14,6 +14,9 @@ export class DataService {
   private messageSource3 = new Subject<boolean>();
   currentMessage3 = this.messageSource3.asObservable();
 
+  private currentProfile = new  BehaviorSubject(false);
+  imageprofile = this.currentProfile.asObservable();
+
   constructor() { }
   changeMessage(message: string) {
     this.messageSource.next(message);
@@ -23,5 +26,9 @@ export class DataService {
 }
 changeMessage3(message: boolean) {
   this.messageSource3.next(message);
+}
+
+changeProfile(message: boolean) {
+  this.currentProfile.next(message);
 }
 }

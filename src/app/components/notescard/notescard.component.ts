@@ -33,6 +33,8 @@ export class NotescardComponent implements OnInit {
   @Output() archiveevent = new EventEmitter<any>();
   @Output() unarchiveevent = new EventEmitter<any>();
   @Output() updateevent = new EventEmitter<any>();
+  @Output() reminderevent = new EventEmitter<any>();
+
   @Output() deleted = new EventEmitter<any>();
   @Input() name;
   @Input() myData;
@@ -59,12 +61,17 @@ export class NotescardComponent implements OnInit {
   receive(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.noteevent.emit();
   }
+  public checked=false;
   color(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.colorevent.emit();
   }
   archive(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.archiveevent.emit();
   }
+  reminder(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
+    this.reminderevent.emit();
+  }
+
   unarchive(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.unarchiveevent.emit();
   }
@@ -86,9 +93,9 @@ export class NotescardComponent implements OnInit {
       this.updateevent.emit();/**emit an event to the parent */
     });
   }
-  removelabel(label, note) {/**passing the label id & note id */
+  removelabel(label,note) {/**passing the label id & note id */
     try {
-      console.log(note, label);/**displaying the id's */
+      console.log(note,label);/**displaying the id's */
       this.httpService.postdeletecard("notes/" + note + "/addLabelToNotes/" + label + "/remove", null, this.token)
         .subscribe(data => {/**using the observabel subscribe using callbackk */
           console.log("success in remove label", data);/**if success then display the result */
@@ -102,10 +109,64 @@ export class NotescardComponent implements OnInit {
       console.log(error);
     }
   }
+  removereminder(noteid) {
+    var body={
+      "noteIdList":[noteid],
+
+    }
+    this.httpService.postdeletecard('/notes/removeReminderNotes', body,this.token)
+      .subscribe(data => {
+        console.log("success in remove reminders ",data);
+        this.updateevent.emit();
+      })
+    error => {
+      console.log("error in remove reminders",error)
+    }
+  }
+
+  getReminder() {
+    this.httpService.getcard('/notes/getReminderNotesList', this.token)
+      .subscribe(data => {
+        console.log("success in get reminders ",data);
+        // this.updateevent.emit();
+        this.reminderevent.emit();
+      })
+    error => {
+      console.log("error in get reminders",error)
+    }
+  }
+  public modifiedCheckList
+  checkBox(checklist,index) {
+
+    if (checklist.status == "open") {
+      checklist.status = "close"
+    }
+    else {
+      checklist.status = "open"
+    }
+    console.log(checklist);
+    this.modifiedCheckList = checklist;
+    this.updatelist(index);
+  }
+  updatelist(id){
+    var checklistData = {
+      "itemName": this.modifiedCheckList.itemName,
+      "status": this.modifiedCheckList.status
+    }
+    var url = "notes/" + id + "/checklist/" + this.modifiedCheckList.id + "/update";
+    this.httpService.postdeletecard(url, JSON.stringify(checklistData),this.token).subscribe(response => {
+      console.log("success in update checklists",response);
+
+    }),
+    error=>{
+      console.log("errror in update checklists............",);
+      
+    }
+  }
+
+
+
 }
-
-
-
 
 
 

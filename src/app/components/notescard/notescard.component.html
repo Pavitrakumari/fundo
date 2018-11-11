@@ -1,6 +1,12 @@
-<div fxLayoutWrap fxLayoutAlign="center center"  fxFlex fxLayout="row wrap" fxLayoutGap="10px">
-  <mat-card  [ngClass]="{'viewgrid':condition,'viewlist':!condition}" class="example-card" *ngFor='let index of myData | LockFilter:searchInput'
-    [ngStyle]="{'background-color':index.color}">
+<div  fxLayoutWrap fxLayoutAlign="center center"  fxFlex fxLayout="row wrap" fxLayoutGap="10px">
+  <mat-card   
+  ngStyle.sm="width:30%;height:180px" 
+  ngStyle.md="width:100%;height:220px"
+   ngStyle.xs="width:95%;height:150px" 
+   [ngClass]="{'viewgrid':condition,'viewlist':!condition}" 
+   class="example-card" 
+  *ngFor='let index of myData | LockFilter:searchInput'  
+  [ngStyle]="{'background-color':index.color}">
     <div (click)="openDialog(index)">
       <mat-card-header>
         <mat-card-title>
@@ -8,13 +14,38 @@
         </mat-card-title>
       </mat-card-header>
       <mat-card-content class="content">
-        <div contenteditable="false" role="textbox" aria-multiline="true" layout-align="end center" class="content"
-          [innerHTML]="index.description"></div>
-        <div></div>
+        <div contenteditable="false" role="textbox" aria-multiline="true" layout-align="end center"
+         class="content"
+          [innerHTML]="index.description">{{index.description}}</div>
+ <div></div>
       </mat-card-content>
-    </div>
+      
+   </div>   
+      
+      
+      
+      <div class="note" *ngFor="let checklist of index.noteCheckLists" fxLayout="row">
+          <mat-checkbox fxFlex="10%" checked=true 
+          *ngIf="checklist.status=='open' && !checklist.isDeleted"
+        (click)=checkBox(checklist,index.id)></mat-checkbox>
+        <input *ngIf="!checklist.isDeleted && checklist.status=='open' " 
+              [(ngModel)]=checklist.itemName fxFlex="90%" class="note"
+                (click)="openDialog(index)" [style.backgroundColor]="index.color"></div>
+
+
+    
+        <div class="note" *ngFor="let checklist of index.noteCheckLists" fxLayout="row">
+            <mat-checkbox fxFlex="10%" checked=true *ngIf="checklist.status=='close'&& !checklist.isDeleted"
+            (click)=checkBox(checklist,index.id)></mat-checkbox>
+            <del *ngIf="!checklist.isDeleted && checklist.status=='close'" class="note"
+            (click)="openDialog(index)">{{checklist.itemName}}</del>
+            </div>
+      
+  
+
     <div fxLayout="row" fxLayoutAlign="start start" class="row-height" fxLayoutGap="5px">
       <div *ngFor="let item of index.noteLabels">
+        
         <mat-chip-list selected>
           <mat-chip *ngIf="item.isDeleted==false">
             {{item.label}}
@@ -22,7 +53,7 @@
           </mat-chip>
         </mat-chip-list>
       </div>
-    </div>
+    </div><br>
 
 
 
@@ -31,8 +62,9 @@
       <div *ngFor="let item of index.reminder">
         <mat-chip-list selected>
           <mat-chip>
-              {{item}}
-              <mat-icon matChipRemove>cancel</mat-icon>
+            <mat-icon >access_time</mat-icon>
+              {{item | date:"medium"}}
+              <mat-icon (click)="removereminder(index.id)" matChipRemove>cancel</mat-icon>
 
             <!-- <mat-icon >cancel</mat-icon> -->
           </mat-chip>
@@ -43,12 +75,14 @@
 
     <mat-card-actions>
       <span class="invisible">
-        <app-icon1 [reminders]="index"></app-icon1>
+        <app-icon1  (click)="getReminder()" (reminderevent)="reminder($event)"  [reminders]="index" ></app-icon1>
         <app-collaboratoricon></app-collaboratoricon>
         <app-coloricon (resp)="color($event)" [newcolor]="index.id"></app-coloricon>
         <app-imageicon></app-imageicon>
-        <app-archiveicon (unarchiveevent)="unarchive($event)" (archiveevent)="archive($event)" [noteid]="index"></app-archiveicon>
-        <app-moreicon [name]="name" (delevent)="trash($event)" (moreevent)="receive($event)" [arrayofnotes]="index"></app-moreicon>
+        <app-archiveicon (unarchiveevent)="unarchive($event)" (archiveevent)="archive($event)"
+        [noteid]="index"></app-archiveicon>
+        <app-moreicon [name]="name" (delevent)="trash($event)" (moreevent)="receive($event)" 
+        [arrayofnotes]="index"></app-moreicon>
       </span>
     </mat-card-actions>
   </mat-card>

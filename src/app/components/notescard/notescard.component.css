@@ -1,9 +1,9 @@
 .example-card{
-    margin-top:20px;
+    margin-top:25px;
     border-radius: 15px;
 }
 .row-height{
-    margin-top:10%;
+    margin-top:0%;
   }
 mat-card{
     border-radius: 15px;
@@ -38,5 +38,9 @@ mat-card-content{
     width:270px;
 }
 .viewlist{
-    width:500px;
+    width:600px;
+}
+.note{
+    border:none;
+    outline: none;
 }

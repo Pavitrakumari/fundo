@@ -5,24 +5,36 @@ import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBarModule, MatToolbarModule, MatSidenavModule, MatListModule } from "@angular/material";
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatCardModule } from '@angular/material/card';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { MatIconModule } from '@angular/material/icon'
-import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatMenuModule } from '@angular/material/menu';
+// import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import * as _moment from 'moment';
+// import {default as _rollupMoment} from 'moment';
+// import { MatMomentDateModule } from '@angular/material-moment-adapter'
+import { MatSnackBarModule,
+         MatToolbarModule, 
+         MatSidenavModule, 
+         MatListModule ,
+         MatFormFieldModule,
+         MatInputModule,
+         MatAutocompleteModule,
+         MatCheckboxModule,
+         MatCardModule,
+         MatDatepickerModule,
+         MatRadioModule,
+         MatSelectModule,
+         MatSliderModule,
+         MatSlideToggleModule,
+         MatIconModule,
+         MatNativeDateModule,
+         MatButtonModule,
+         MatTooltipModule,
+         MatMenuModule,
+         MatDialogModule,MAT_DATE_LOCALE,
+         MatChipsModule,
+         MAT_DATE_FORMATS,
+         NativeDateModule,} from "@angular/material";
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from "@angular/flex-layout";
 import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 import { HomeComponent } from './components/home/home.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
@@ -37,7 +49,7 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
 import { HelpComponent } from './components/help/help.component';
 import { AppdownloadsComponent } from './components/appdownloads/appdownloads.component';
 import { KeyboardshortcutsComponent } from './components/keyboardshortcuts/keyboardshortcuts.component';
-import { Icon1Component } from './components/icon1/icon1.component';
+// import { Icon1Component } from "./components/icon1/moment";
 import { CollaboratoriconComponent } from './components/collaboratoricon/collaboratoricon.component';
 import { ColoriconComponent } from './components/coloricon/coloricon.component';
 import { ImageiconComponent } from './components/imageicon/imageicon.component';
@@ -48,34 +60,73 @@ import { RedoiconComponent } from './components/redoicon/redoicon.component';
 import { NotescardComponent } from './components/notescard/notescard.component';
 import { NotesparentComponent } from './components/notesparent/notesparent.component';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { MatDialogModule } from '@angular/material';
 import { AddlabelComponent } from './components/addlabel/addlabel.component';
-import { MatChipsModule } from '@angular/material/chips';
-import { SearchPipe } from './search.pipe';
+import { SearchPipe } from '../app/core/pipes/search.pipe';
 import { SearchComponent } from './components/search/search.component';
-import { DataService } from './services/data.service';
+import { DataService } from '../app/core/services/data/data.service';
+import {LoggerService} from '../app/core/services/logger/logger.service';
 import { LabelsComponent } from './components/labels/labels.component';
 import { DeleteComponent } from './components/delete/delete.component';
-
+import { Icon1Component } from './components/icon1/icon1.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { CropImageComponent } from './components/cropimage/cropimage.component';
 @NgModule({
   declarations: [
-    AppComponent, SignupComponent, LoginComponent, ForgotpasswordComponent, HomeComponent, ToolbarComponent,
-    NotesComponent, CreatenewlabelComponent, ArchiveComponent, TrashComponent, SettingsComponent, RemindersComponent,
-    FeedbackComponent, HelpComponent, AppdownloadsComponent, KeyboardshortcutsComponent, Icon1Component, CollaboratoriconComponent,
-    ColoriconComponent, ImageiconComponent, ArchiveiconComponent, MoreiconComponent, UndoiconComponent, RedoiconComponent,
-    NotescardComponent, NotesparentComponent, DialogComponent, AddlabelComponent, SearchPipe, SearchComponent, LabelsComponent, DeleteComponent,
+    AppComponent, 
+    SignupComponent, 
+    LoginComponent, 
+    ForgotpasswordComponent, 
+    HomeComponent, 
+    ToolbarComponent,
+    NotesComponent,
+    CreatenewlabelComponent, 
+    ArchiveComponent, 
+    TrashComponent, 
+    SettingsComponent,
+    RemindersComponent,
+    FeedbackComponent,
+    HelpComponent,
+     AppdownloadsComponent,
+    KeyboardshortcutsComponent,
+    Icon1Component,
+    CollaboratoriconComponent,
+    ColoriconComponent,
+    ImageiconComponent, 
+    ArchiveiconComponent, 
+    MoreiconComponent, 
+    UndoiconComponent, 
+    RedoiconComponent,
+    NotescardComponent, 
+    NotesparentComponent, 
+    DialogComponent, 
+    AddlabelComponent, 
+    SearchPipe, 
+    SearchComponent, 
+    LabelsComponent,
+    DeleteComponent,
+    CropImageComponent,
+    
+
+
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   imports: [
+    MatDatepickerModule,
+     NativeDateModule,        ImageCropperModule,
+
     BrowserModule, AppRoutingModule, BrowserAnimationsModule, MatFormFieldModule,
     MatInputModule, MatAutocompleteModule, MatCheckboxModule, MatDatepickerModule,
-    MatRadioModule, MatSelectModule, MatMenuModule, MatSliderModule,
+    MatRadioModule,
+    MatSelectModule, MatMenuModule, MatSliderModule,FormsModule,
     MatSlideToggleModule, MatCardModule, HttpClientModule, FormsModule, MatSnackBarModule,
     ReactiveFormsModule, FlexLayoutModule, MatIconModule, MatButtonModule, MatTooltipModule,
-    LayoutModule, MatToolbarModule, MatSidenavModule, MatListModule, MatDialogModule, MatChipsModule
+    LayoutModule, MatNativeDateModule,MatToolbarModule, MatSidenavModule, MatListModule, MatDialogModule, MatChipsModule
   ],
-  providers: [DataService],
-  entryComponents: [DialogComponent, DeleteComponent, AddlabelComponent, CreatenewlabelComponent],
+  providers: [
+    // {provide: MAT_DATE_FORMATS, useValue: NATIVE_DATE_FORMATS},
+
+    DataService,LoggerService],
+  entryComponents: [DialogComponent,CropImageComponent,ToolbarComponent, DeleteComponent, AddlabelComponent, CreatenewlabelComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

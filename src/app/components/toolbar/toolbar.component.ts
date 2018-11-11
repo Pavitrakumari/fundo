@@ -26,6 +26,8 @@ import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
 import { LoggerService } from '../../core/services/logger/logger.service'
 import { ImageCroppedEvent } from 'ngx-image-cropper/src/image-cropper.component';
+import { CropImageComponent } from '../cropimage/cropimage.component';
+import { environment } from '../../../environments/environment';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-toolbar',/**A string value which represents the component on browser at execution time */
@@ -137,27 +139,29 @@ this.selectedFile=event.path[0].files[0];/**assihning the path & files of event 
 const uploadData = new FormData();/**it is used to transmit keyed data */
 /**FormData.append():Appends a new value onto an existing key inside a FormData object,
  * or adds the key if it does not already exist.*/
-uploadData.append('file', this.selectedFile, this.selectedFile.name);
- this.httpService.imageupload('user/uploadProfileImage',uploadData,this.token).subscribe(response=>{
-   console.log(response,"success in image upload");
-   console.log("url: ", response['status'].imageUrl )/**to */
-   this.img="http://34.213.106.173/"+response['status'].imageUrl;
-   localStorage.setItem('imageUrl',response['status'].imageUrl);
-   },error=>{
-   console.log(error);
-  })
+
+ uploadData.append('file', this.selectedFile, this.selectedFile.name);
+ this.openDialogCrop(event);
 }
 
 
-imageCropped(event: ImageCroppedEvent) {
-  this.croppedImage = event.base64;
-}
-imageLoaded() {
-  // show cropper
-}
-loadImageFailed() {
-  // show message
-}
+public pic;
+  openDialogCrop(data): void {
+    const dialogRefcrop = this.dialog.open(CropImageComponent, {
+      width: '500px',
+
+      data: data
+
+    });
+/**variable declared in changeprofile method of dataservice */
+    dialogRefcrop.afterClosed().subscribe(response => {
+      this.dataservice.imageprofile.subscribe(message => this.pic = message)
+      if (this.pic == true) {
+        this.image2 = localStorage.getItem('imageUrl');
+        this.img = environment.profileUrl + this.image2;
+      }
+    });
+  }
 
 }
 

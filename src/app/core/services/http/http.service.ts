@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 /**importing http client */
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import { environment } from './../../environments/environment';
+import { environment } from '../../../../environments/environment';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ const httpOptions = {
 /**exporting the http service */
 export class HttpService {
   constructor(private http: HttpClient) { }
-  url = 'http://34.213.106.173/api/';/**url */
+  url = environment.baseUrl;/**url */
   getDataService(url)/**get() method  to get he data using service*/ {
     url = this.url + url;
     return this.http.get(url);/**returning the output */

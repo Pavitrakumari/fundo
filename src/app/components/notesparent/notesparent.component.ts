@@ -56,4 +56,6 @@ export class NotesparentComponent implements OnInit {
         console.log("error", error);
       }
   }
+
+  
 }
