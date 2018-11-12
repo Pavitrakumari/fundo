@@ -129,5 +129,10 @@
       }
     }
   },
-  "defaultProject": "fundo"
+  "defaultProject": "fundo",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

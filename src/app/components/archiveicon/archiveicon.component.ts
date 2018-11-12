@@ -20,7 +20,7 @@ import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-archiveicon',
   templateUrl: './archiveicon.component.html',
-  styleUrls: ['./archiveicon.component.css']
+  styleUrls: ['./archiveicon.component.scss']
 })
 export class ArchiveiconComponent implements OnInit {
   @Input() noteid;

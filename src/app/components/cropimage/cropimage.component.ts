@@ -22,7 +22,7 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
 @Component({
     selector: 'app-cropimage',
     templateUrl: './cropimage.component.html',
-    styleUrls: ['./cropimage.component.css']
+    styleUrls: ['./cropimage.component.scss']
   })
   export class CropImageComponent implements OnInit {
   public croppedImage: ''

@@ -70,6 +70,7 @@ import { DeleteComponent } from './components/delete/delete.component';
 import { Icon1Component } from './components/icon1/icon1.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { CropImageComponent } from './components/cropimage/cropimage.component';
+import { PinComponent } from './components/pin/pin.component';
 @NgModule({
   declarations: [
     AppComponent, 
@@ -105,6 +106,7 @@ import { CropImageComponent } from './components/cropimage/cropimage.component';
     LabelsComponent,
     DeleteComponent,
     CropImageComponent,
+    PinComponent,
     
 
 

@@ -20,7 +20,7 @@ import { DataService } from '../../core/services/data/data.service';
 @Component({
   selector: 'app-createnewlabel',
   templateUrl: './createnewlabel.component.html',
-  styleUrls: ['./createnewlabel.component.css']
+  styleUrls: ['./createnewlabel.component.scss']
 })
 export class CreatenewlabelComponent implements OnInit {
   public labelarray = [];

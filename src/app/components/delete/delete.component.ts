@@ -6,7 +6,7 @@ export interface DialogData {
 @Component({
   selector: 'app-delete',
   templateUrl: './delete.component.html',
-  styleUrls: ['./delete.component.css']
+  styleUrls: ['./delete.component.scss']
 })
 export class DeleteComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DeleteComponent>,

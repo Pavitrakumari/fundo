@@ -25,7 +25,7 @@ import { DeleteComponent } from '../delete/delete.component';
   /**A string value which represents the component on browser at execution time */
   templateUrl: './moreicon.component.html',
   /**External templating process to define html tags in component */
-  styleUrls: ['./moreicon.component.css']
+  styleUrls: ['./moreicon.component.scss']
   /**It is used to provide style of components */
 })
 export class MoreiconComponent implements OnInit {

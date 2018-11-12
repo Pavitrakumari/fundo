@@ -22,7 +22,7 @@ import { MatSnackBar } from '@angular/material';
   /**A string value which represents the component on browser at execution time */
   templateUrl: './coloricon.component.html',
   /**External templating process to define html tags in component */
-  styleUrls: ['./coloricon.component.css']
+  styleUrls: ['./coloricon.component.scss']
   /**It is used to provide style of components */
 })
 /**To use components in other modules , we have to export them */

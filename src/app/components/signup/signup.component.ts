@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  styleUrls: ['./signup.component.scss']
 })
 /**To use components in other modules , we have to export them */
 export class SignupComponent implements OnInit {

@@ -17,7 +17,7 @@ import { HttpService } from '../../core/services/http/http.service';
 @Component({
   selector: 'app-trash',
   templateUrl: './trash.component.html',
-  styleUrls: ['./trash.component.css']
+  styleUrls: ['./trash.component.scss']
 })
 export class TrashComponent implements OnInit {
   token = localStorage.getItem('token');

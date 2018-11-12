@@ -23,7 +23,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-notescard',/**A string value which represents the component on browser at execution time */
   templateUrl: './notescard.component.html',/**External templating process to define html tags in component */
-  styleUrls: ['./notescard.component.css']/**It is used to provide style of components */
+  styleUrls: ['./notescard.component.scss']/**It is used to provide style of components */
 })
 /**To use components in other modules , we have to export them */
 export class NotescardComponent implements OnInit {

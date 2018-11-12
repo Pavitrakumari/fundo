@@ -25,7 +25,7 @@ export interface Food {
 @Component({
   selector: 'app-icon1',
   templateUrl: './icon1.component.html',
-  styleUrls: ['./icon1.component.css'],
+  styleUrls: ['./icon1.component.scss'],
   providers: [
     // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
     // application's root module. We provide it at the component level here, due to limitations of
@@ -57,18 +57,6 @@ ngOnInit() {
 }
 date = new FormControl(moment());
 
-
-getReminder() {
-  this.httpService.getcard('/notes/getReminderNotesList', this.token)
-    .subscribe(data => {
-      console.log("success in get reminders ",data);
-      // this.updateevent.emit();
-      this.reminderevent.emit();
-    })
-  error => {
-    console.log("error in get reminders",error)
-  }
-}
 
 
 todayReminder() {

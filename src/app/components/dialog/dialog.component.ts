@@ -14,7 +14,7 @@
 *************************************************************************************************/
 
 /**component has imports , decorator & class */
-import { Component, Output, EventEmitter, OnInit, Inject } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, Inject, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
@@ -30,7 +30,7 @@ export interface DialogData {
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.css']
+  styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent implements OnInit {
   public title;
@@ -59,6 +59,7 @@ export class DialogComponent implements OnInit {
       }
     })
   }
+  @Input() reminders;
   @Output() updateevent = new EventEmitter<any>();
   @Output() eventOne = new EventEmitter<boolean>();
   onNoClick(): void {

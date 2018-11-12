@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  styleUrls: ['./login.component.scss'],
 })
 /**To use components in other modules , we have to export them */
 export class LoginComponent implements OnInit {
