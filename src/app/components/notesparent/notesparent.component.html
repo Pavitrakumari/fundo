@@ -1,5 +1,19 @@
 <app-notes (onNewEntryAdded)="getCard($event)"></app-notes>
-<app-notescard  [myData]="arraynewdata"
+
+
+
+<app-notescard  [myData]="pinarraay" (newPin)="pinNew($event)"
+(reminderevent)="getCard($event)" (noteevent)="getCard($event)"
+(updateevent)="getCard($event)" (archiveevent)="getCard($event)"
+(colorevent)="getCard($event)" (reminderevent)="getCard($event)" 
+> </app-notescard>
+
+
+
+
+
+
+<app-notescard  [myData]="arraynewdata"(newPin)="pinNew($event)"
 (reminderevent)="getCard($event)" (noteevent)="getCard($event)"
 (updateevent)="getCard($event)" (archiveevent)="getCard($event)"
 (colorevent)="getCard($event)" (reminderevent)="getCard($event)" 

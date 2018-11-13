@@ -4,7 +4,7 @@
       <mat-icon style="color:black" aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
     <div class="title"><span fxFlex="20" ngStyle.lg="font-size:20" ngStyle.xl="font-size:20px" ngStyle.xs="font-size:10px"
-        ngStyle.sm="font-size:10px">fundoo</span></div>
+        ngStyle.sm="font-size:10px">{{value}}</span></div>
     <form fxFlex class="search"><button mat-icon-button type="submit">
         <mat-icon style="color:black">search</mat-icon>
       </button>
@@ -46,9 +46,9 @@
       [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
       <mat-nav-list>
         <a class="color" mat-list-item routerLink="/home/notes"><img class="note" src="../../../assets/images/image1.svg"><span
-            class="notes">Notes</span></a>
+            (click)="titlechange('fundoo Notes')" class="notes">Notes</span></a>
         <a class="color" mat-list-item routerLink="/home/reminders"><img class="note" src="../../../assets/images/image2.svg"><span
-            class="notes2">Reminders</span></a>
+          (click)="titlechange('Reminders')" class="notes2">Reminders</span></a>
         <hr>
         <div class="labels">Labels<a mat-button routerLink="." style="margin-left:130px;"></a></div>
         <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="200px" *ngFor="let index of labelarray">
@@ -56,18 +56,18 @@
             <hr>
             <mat-icon>label_outline</mat-icon>&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a routerLink="/home/labels/{{index.label}}">{{index.label}}
+            <a routerLink="/home/labels/{{index.label}}" (click)="labelheading(index)">{{index.label}}
             </a>&nbsp;
           </a></div>
         <a class="color" mat-list-item (click)="addlabel()">
           <mat-icon class="side">edit</mat-icon><span class="notes3">Edit labels</span>
         </a>
         <hr>
-        <a class="color" mat-list-item routerLink="/home/archive">
-          <mat-icon class="note">archive</mat-icon><span class="notes4"></span>Archive
+        <a class="color" (click)="titlechange('Archive')" mat-list-item routerLink="/home/archive">
+          <mat-icon  class="note">archive</mat-icon><span class="notes4"></span>Archive
         </a>
-        <a class="color" mat-list-item routerLink="/home/trash">
-          <mat-icon class="note">delete</mat-icon><span class="notes5"></span>Trash
+        <a class="color" (click)="titlechange('Trash')" mat-list-item routerLink="/home/trash">
+          <mat-icon  class="note">delete</mat-icon><span class="notes5"></span>Trash
         </a>
       </mat-nav-list>
     </mat-sidenav>

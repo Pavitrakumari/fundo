@@ -11,7 +11,7 @@ fxLayoutGap="10px">
     <div >
       <mat-card-header>
         <mat-card-title>
-          <app-pin [noteid]="index"  [Pin]="index.isPined"></app-pin>
+          <app-pin  (pinevent)="new($event)" [noteid]="index"></app-pin>
           <div class="inputTitle" contenteditable="false" aria-multiline="true" 
           role="textbox" [innerHTML]="index.title"></div>
         </mat-card-title>
@@ -46,13 +46,14 @@ fxLayoutGap="10px">
     
         <div fxLayout="row" fxLayoutAlign="start start" class="row-height" fxLayoutGap="5px">
           <div *ngFor="let item of index.noteLabels">
-            
+
             <mat-chip-list selected>
-              <mat-chip *ngIf="item.isDeleted==false">
+ 
+
+              <mat-chip appearance="outline" *ngIf="item.isDeleted==false">
                 {{item.label}}
                 <mat-icon matChipRemove (click)="removelabel(item.id,index.id)">cancel</mat-icon>
-              </mat-chip>
-            </mat-chip-list>
+              </mat-chip>           </mat-chip-list>
           </div>
         </div><br>
     
@@ -67,7 +68,6 @@ fxLayoutGap="10px">
                   {{item | date:"medium"}}
                   <mat-icon (click)="removereminder(index.id)" matChipRemove>cancel</mat-icon>
     
-                <!-- <mat-icon >cancel</mat-icon> -->
               </mat-chip>
             </mat-chip-list>
           </div>

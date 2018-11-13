@@ -1,3 +1,4 @@
+
 import { Component,Input,OnInit,Output,EventEmitter } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -38,14 +39,18 @@ export interface Food {
 
 export class Icon1Component implements OnInit {
   foods: Food[] = [
-    // {value: 'steak-0', viewValue: 'Morning'},
-    // {value: 'pizza-1', viewValue: 'Afternoon'},
-    // {value: 'tacos-2', viewValue: 'Evening'}
+    {value: 'steak-0', viewValue: 'Morning 8:00 AM'},
+    {value: 'pizza-1', viewValue: 'Afternoon 1:00 PM'},
+    {value: 'tacos-2', viewValue: 'Evening 6:00 PM'},
+    {value: 'tacos-2', viewValue: 'Night 8:00 PM'}
+
+
   ];
   constructor(public snackBar:MatSnackBar,public httpService:HttpService) { }
   token = localStorage.getItem('token')
   @Input() reminders;
   body = {};
+  public flag=true;
   @Output() reminderevent = new EventEmitter<any>()
 
   reminder(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
@@ -110,6 +115,25 @@ weekReminder() {
         console.log("error in week reminder",error)
       })
     }
-  
+  updateReminder(){
+    let currentDate = new Date();
+    this.body =
+    {
+      'noteIdList': [this.reminders.id],
+      'reminder': new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7, 8, 0, 0)
+    }
+    this.httpService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
+    .subscribe(data => {
+      console.log("success in week reminder",data);
+      this.reminderevent.emit();
+
+    }),
+      error => {
+        console.log("error in week reminder",error)
+      }
+
+
+
+  }
   
   }

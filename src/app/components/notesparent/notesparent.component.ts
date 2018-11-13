@@ -26,11 +26,14 @@ export class NotesparentComponent implements OnInit {
   token;
   temp = [];
   arraynewdata = [];
+  pinarraay=[];
   constructor(public httpService: HttpService) { }
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
   ngOnInit() {
     this.getCard();/**calling the getCard() to get the cards & display automatically when the component loads */
+    this.getpincards()
+
   }
   delete() {
     if (event) {
@@ -46,7 +49,9 @@ export class NotesparentComponent implements OnInit {
       // console.log(this.temp);
       this.arraynewdata = [];/**Reinitializing the array so that data gets updated */
       for (var i = 0; i < data['data'].data.length; i++)/**for loop to go through all cards*/ {
-        if (data['data'].data[i].isDeleted == false && data['data'].data[i].isArchived == false)/**if cards are not deleted  */ {
+        if (data['data'].data[i].isDeleted == false && 
+        data['data'].data[i].isArchived == false &&
+        data['data'].data[i].isPined == false)/**if cards are not deleted  */ {
           this.arraynewdata.push(data['data'].data[i]);/**then push those cards into the array */
         }
       }
@@ -56,6 +61,23 @@ export class NotesparentComponent implements OnInit {
         console.log("error", error);
       }
   }
-
-  
+getpincards(){
+  this.token=localStorage.getItem('token');
+  this.httpService.getcard("notes/getNotesList",this.token).subscribe(data=>{
+    this.pinarraay=[];
+    console.log("get pin catds list success",data);
+    // this.temp = data['data'].data.reverse();
+    for (var i = 0; i < data['data'].data.length; i++){
+      if(data['data'].data[i].isPined == true){
+        this.pinarraay.push(data['data'].data[i]);
+      }
+    }
+    console.log(this.pinarraay,"array of pin data");
+    
+  })
+}
+pinNew($event){
+  this.getCard();
+  this.getpincards();
+}
 }

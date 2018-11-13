@@ -1,8 +1,4 @@
-<span data-toggle="tooltip" title="{{!Pin ? 'Pin': 'Unpin'}}" class="tooltip">
-        <div mat-list-item  class="pin" (click)=pin(true)
-        *ngIf="!Pin && !isDeleted"><img class="pin" src="../../../assets/images/pin.svg" 
-        matTooltip="Pin Note"></div>
-        <div mat-list-item  class="pin" (click)=pin(false) 
-        *ngIf="Pin && !isDeleted"><img class="pin" src="../../../assets/images/pin.svg" 
-        matTooltip="Pin Note"></div>
-  </span>
+   <span *ngIf="!isDeleted" (click)="pin()">
+            <img class="pin1"  src="../../../assets/images/pin.svg" alt="" >
+         </span>
+         

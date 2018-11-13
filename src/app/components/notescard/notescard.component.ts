@@ -34,9 +34,11 @@ export class NotescardComponent implements OnInit {
   @Output() unarchiveevent = new EventEmitter<any>();
   @Output() updateevent = new EventEmitter<any>();
   @Output() reminderevent = new EventEmitter<any>();
+  @Output() newPin = new EventEmitter<any>();
 
   @Output() deleted = new EventEmitter<any>();
   @Input() name;
+  // @Inp[ut() pinevent]
   @Input() myData;
   condition = true;
   @Input() searchInput
@@ -75,6 +77,10 @@ export class NotescardComponent implements OnInit {
   unarchive(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.unarchiveevent.emit();
   }
+  new(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
+    this.newPin.emit();
+  }
+  
   trash(event) {
     this.deleted.emit();
   }

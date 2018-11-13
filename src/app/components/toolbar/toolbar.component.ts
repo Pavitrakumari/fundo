@@ -32,7 +32,7 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-toolbar',/**A string value which represents the component on browser at execution time */
   templateUrl: './toolbar.component.html',/**External templating process to define html tags in component */
-  styleUrls: ['./toolbar.component.css']/**It is used to provide style of components */
+  styleUrls: ['./toolbar.component.scss']/**It is used to provide style of components */
 })
 /**To use components in other modules , we have to export them */
 export class ToolbarComponent implements OnInit {
@@ -48,10 +48,13 @@ export class ToolbarComponent implements OnInit {
     .pipe(
       map(result => result.matches)
     );
+  value: any;
   constructor(private dataservice: DataService, public dialog: MatDialog, public snackBar: MatSnackBar, private breakpointObserver: BreakpointObserver, public httpService: HttpService, public router: Router) { }
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
 ngOnInit() {
+  this.value="fundoo Notes"
+
     this.raw_data = localStorage.getItem('name');/**get the name from local storahe */
     this.token = localStorage.getItem('token');/**get the token from local storage */
     console.log(this.raw_data);
@@ -60,6 +63,17 @@ ngOnInit() {
     console.log(this.firstchar);
     console.log(this.token);/**display the token & firstchar */
     this.getLabels();
+  }
+  titlechange(values){
+    console.log("hello title");
+    
+    this.value=values
+
+  }
+  labelheading(values){
+
+    this.value=values.label
+
   }
 logout() {
     console.log("logoutt running");
