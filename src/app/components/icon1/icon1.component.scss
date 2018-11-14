@@ -1,29 +1,12 @@
+::ng-deep.mat-menu-content:not(:empty) {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    width: 280px;
+    box-sizing: none;
+    outline: none;
+}
 
-.alarm{
-    margin-top:10px;
-}
-.icon2{
-    opacity: 0.5;
-}
-.icon2:hover{
-opacity: 1;
-}
-.menu{
-padding-top:50px;
-padding-top:30px;
-}
-.latertoday{
-    margin-left:90px;
-    /* text-align: right; */
-    font-weight: lighter;
-}
-.place{
-    margin-left:30px;
-    margin-bottom:50px;
+.icons{
+    opacity:0.75;
 
-
-}
-.place1{
-    margin-left:10px;
-    margin-bottom: 30px;
 }

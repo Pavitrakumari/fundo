@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input,Output,EventEmitter} from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
 
 @Component({
@@ -8,6 +8,7 @@ import { HttpService } from '../../core/services/http/http.service';
 })
 export class RemindersComponent implements OnInit {
   token;
+  @Output() removeremindevent = new EventEmitter<any>();
 
   temp2=[];
   constructor(public httpService:HttpService) { }
@@ -29,6 +30,7 @@ export class RemindersComponent implements OnInit {
   
         for(var i = 0; i < data['data'].data.length; i++){
           this.temp2.push(data['data'].data[i]);
+          this.removeremindevent.emit();
 
         }
       })
