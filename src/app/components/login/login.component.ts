@@ -4,6 +4,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { HttpService } from '../../core/services/http/http.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { LoggerService } from '../../core/services/logger/logger.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-login',
@@ -49,15 +50,41 @@ export class LoginComponent implements OnInit {
         var email1 = this.model1.emailid;
         console.log("login successfull");
         this.router.navigate(["/home"]);
+      
         localStorage.setItem('name', email1);
         localStorage.setItem('token', data['id']);
         localStorage.setItem('userId', data['userId']);
+        localStorage.setItem('firstName', data['firstName']);
+        var token=localStorage.getItem('token')
         localStorage.setItem('imageUrl',data['imageUrl']);
+        
         console.log(data['id']);
         this.snackBar.open("successfully login","login", {
           duration: 10000,
         });
-      },
+        var firstName=localStorage.getItem('firstName');
+        console.log("firstName IN LOGIN",firstName);
+
+        var pushToken=localStorage.getItem('pushToken')
+        console.log('pushtoken in login',pushToken);
+
+        var body={
+          "pushToken":pushToken
+        }
+        this.httpService.postdeletecard('user/registerPushToken',body,token).subscribe(
+          data=>{
+            LoggerService.log("post of pushToken is successful****************************",data)
+
+          }),
+          error=>{
+            console.log(error,"error in pushToken");
+            
+          }
+
+
+
+
+        },
       error => {/**if error exists then displays the error message using snackbar */
         console.log("Error", error);
         this.snackBar.open("Please enter correct details ", "login  FAILED", {

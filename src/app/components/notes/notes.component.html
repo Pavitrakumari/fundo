@@ -1,12 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="center center" class="row-height">
-    <mat-card  ngStyle.sm="width:30%;"
-    fxFlex="54" 
-    fxFlex.md="100%"
-     fxFlex.xs="100%"
-      fxFlex.sm="70%" 
-      class="card1" *ngIf="expression1">
-        <span><input   fxFlex="50" class="input" contenteditable="true" (click)="display()"
-             placeholder="Take a note..."></span>
+<!----------------------------------Mat-card----------------------------------->
+    <mat-card ngStyle.sm="width:30%;" fxFlex="54" fxFlex.md="100%" fxFlex.xs="100%" fxFlex.sm="70%" class="card1" *ngIf="expression1">
+        <span><input fxFlex="50" class="input" contenteditable="true" (click)="display()" placeholder="Take a note..."></span>
         <div fxLayoutGap="space-between" fxLayoutAlign="end">
             <mat-icon fxFlex="10" (click)="expression3=false" (click)="expression2=true" (click)="expression1=false"
                 class="icon1" matTooltip="New Note" mat-icon-button>format_list_bulleted</mat-icon>
@@ -14,73 +9,100 @@
             <mat-icon fxFlex="5" matTooltip="Drawing not available" class="icon1" mat-icon-button>brush</mat-icon>&nbsp;&nbsp;
         </div>
     </mat-card>
-    <mat-card class="cardd" [ngStyle]="{'background-color':colorChange}"
-    fxFlex="54" 
-    fxFlex.md="100%"
-     fxFlex.xs="100%"
-      fxFlex.sm="70%" 
-        *ngIf="expression2" class="hiddencard">
-        <div fxLayout="row" class="hiddenDiv">
+<!----------------------------------Hidden Mat-card----------------------------------->
+<mat-card class="cardd" [ngStyle]="{'background-color':colorChange}" fxFlex="54" fxFlex.md="100%" fxFlex.xs="100%"
+        fxFlex.sm="70%" *ngIf="expression2" class="hiddencard">
+        <div fxLayout="row wrap" class="hiddenDiv">
             <div class="inputTitle" contenteditable="true" id="title" placeholder="Title"></div>
             <div><img class="pin" src="../../../assets/images/pin.svg" matTooltip="Pin Note" alt=""></div>
-                     </div><div *ngFor="let label of selectarray2"><mat-chip-list selected style="margin-top:15px;">
+        </div>
+<!-----------------------------------------checklist content----------------------------------- -->
+<div *ngIf="expression3==false">
+        <div *ngFor="let data of dataarray" fxLayout="row">
+            <mat-checkbox fxFlex="5%" *ngIf="!data.isChecked" [(ngModel)]=data.isChecked (click)="this.isChecked = !this.isChecked;"></mat-checkbox>
+            <input [ngStyle]="{'background-color':colorChange}" fxFlex="90" class="inputNote3" [(ngModel)]=data.data *ngIf="!data.isChecked" (keydown)="editing($event.data)" >
+            <mat-icon fxFlex="4%" *ngIf="!data.isChecked" (click)=ondelete(data) matTooltip="delete">close</mat-icon>
+        </div>
+        <mat-divider></mat-divider>
+        <div fxLayout="row">
+            <mat-icon fxFlex="5%" *ngIf="!adding">add</mat-icon>
+            <mat-checkbox fxFlex="5%" *ngIf="adding" [(ngModel)]=addCheck (click)="isChecked=!isChecked"></mat-checkbox>   
+            <input [ngStyle]="{'background-color':colorChange}"[(ngModel)]=data fxFlex="95%" class="inputNote3" placeholder="list item"  (keydown)="enter($event)" (keydown.backspace)="ondelete()">
+        </div>
+        <mat-divider></mat-divider><br>
+        <div *ngFor="let data of dataarray" fxLayout="row">
+            <mat-checkbox fxFlex="5%" *ngIf="data.isChecked" [(ngModel)]=data.isChecked (click)="this.isChecked = !this.isChecked;"></mat-checkbox>
+            <input [ngStyle]="{'background-color':colorChange}" fxFlex="90" class="inputNote3" [(ngModel)]=data.data *ngIf="data.isChecked" (keydown)="editing($event.data)" >
+            <mat-icon fxFlex="4%" *ngIf="data.isChecked" (click)=ondelete(data) matTooltip="delete">close</mat-icon>
+        </div>
+    </div>
+    
+<!-----------------------------------------Labels----------------------------------- -->
+        <div *ngFor="let label of selectarray2">
+            <mat-chip-list selected style="margin-top:15px;">
                 <mat-chip>
                     {{label}}
                 </mat-chip>
             </mat-chip-list>
         </div>
-        <div *ngIf="expression3==true" class="inputNote" contenteditable="true" id="note" placeholder="Take a note..."autofocus #description></div>
-            <div *ngIf="expression3==false" >
-                <div *ngFor="let data of dataarray" fxLayout="row">
-    
-                    <mat-checkbox fxFlex="5%"   [(ngModel)]=data.isChecked 
-                    (click)="isChecked=!isChecked">
-    
-                    </mat-checkbox>
-                    <input fxFlex="90" *ngIf="!expression3" class="inputNote1" 
-                    [(ngModel)]=data.data
-                     (keydown)="editing($event.data)">
-                    <mat-icon fxFlex="4%" (click)=ondelete(data) 
-                    matTooltip="delete">clear</mat-icon>
-                </div>
-                <mat-divider></mat-divider>
-    
-                <div fxLayout="row">
-                    <mat-icon fxFlex="5%" *ngIf="!adding">add</mat-icon>
-                    <mat-checkbox fxFlex="5%" *ngIf="adding" [(ngModel)]=addCheck 
-                    (click)="isChecked=!isChecked"></mat-checkbox>   
-    
-                     <input [(ngModel)]=data fxFlex="95%"  class="inputNote" placeholder="List Item" 
-                     (keydown.enter)="enter($event)"
-                     (keydown.backspace)="ondelete()"/>
-    
-                </div>
-                <mat-divider></mat-divider>
-    
+<!-----------------------------------------Reminders----------------------------------- -->
+<div fxLayout="row" fxLayoutAlign="start start" class="row-height" fxLayoutGap="5px">
+    <div *ngFor="let item of array">
+        <mat-chip-list selected>
+            <div *ngIf='(todaydate | date:shortDate) == (item | date:shortDate )'>
+                <mat-chip [matMenuTriggerFor]="edit.menu">
+                    <app-icon1 style="opacity:0" (remm)="reminder($event)" #edit="menuInOtherComponent"></app-icon1>
+                    <mat-icon style="opacity:1"class="accesstime">access_time</mat-icon>
+                    Today {{item | date:"shortTime"}}
+                    <mat-icon (click)="removereminder()" matChipRemove>cancel</mat-icon>
+                </mat-chip>
             </div>
-            <span>
-            <app-icon1></app-icon1>
-            <app-collaboratoricon></app-collaboratoricon>
-            <app-coloricon (response)="color($event)"></app-coloricon>
-            <app-imageicon></app-imageicon>
-            <app-archiveicon [noteid]="noteid"></app-archiveicon>
-            <!-- <app-moreicon (moreevent)="receive($event)"></app-moreicon> -->
-            <mat-icon class="icon2" mat-icon-button style="margin-bottom:30px;user-select: none;" [matMenuTriggerFor]="menu"
-                matTooltip="More">more_vert</mat-icon>&nbsp;
-            <mat-menu  class="menu" #menu="matMenu" [overlapTrigger]="false">
-                <button mat-menu-item [matMenuTriggerFor]="addlabel" (click)="getLabels1()"><span>Add label</span></button>
-                <mat-menu [overlapTrigger]="false" (click)="$event.stopPropagation();" #addlabel="matMenu">
-                    <div class="title">Label note</div><br>
-                    <div fxLayout="row" (click)="$event.stopPropagation();">
-                        <mat-icon fxFlex="30">search</mat-icon>
-                        <input class="inputTitle" contenteditable="true" placeholder="Enter label name" [(ngModel)]="query">
-                    </div><br>
-                    <div *ngFor="let label of labelarray | LockFilter: query">
-                        <mat-checkbox (click)="$event.stopPropagation();" (click)="clickFunc(label)" class="example-margin">{{label.label}}</mat-checkbox>
-                    </div>
-                </mat-menu>
-                <button mat-menu-item><span>Add drawing</span></button>
-            </mat-menu>
-            <button mat-button (click)="close();expression3=true">CLOSE</button>
+            <div *ngIf='(tomorrow | date:shortDate) == (item | date:shortDate )'>
+                <mat-chip [matMenuTriggerFor]="edit.menu">
+                    <app-icon1 style="opacity:0" (remm)="reminder($event)" #edit="menuInOtherComponent"></app-icon1>
+                    <mat-icon class="accesstime">access_time</mat-icon>
+                    tomorrow {{item | date:"shortTime"}}
+                    <mat-icon (click)="removereminder()" matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </div>
+            <div *ngIf='(todaydate | date:shortDate) !==(item | date:shortDate ) && (tomorrow | date:shortDate) !== (item | date:shortDate )'>
+                <mat-chip [matMenuTriggerFor]="edit.menu">
+                    <app-icon1 style="opacity:0" (remm)="reminder($event)" #edit="menuInOtherComponent"></app-icon1>
+                    <mat-icon style="opacity:1" class="accesstime">access_time</mat-icon>{{item | date:"medium"}}
+                    <mat-icon (click)="removereminder()" matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </div>
+        </mat-chip-list>
+    </div>
+</div>
+<!-----------------------------------------Note content----------------------------------- -->
+<div *ngIf="expression3==true" class="inputNote" contenteditable="true" id="note" 
+        placeholder="Take a note..."
+            autofocus #description></div><br>
+<!----------------------------------Mat-card actions----------------------------------->
+<span>
+    <app-icon1 (remm)="reminder($event)" ></app-icon1>
+    <app-collaboratoricon></app-collaboratoricon>
+    <app-coloricon (response)="color($event)"></app-coloricon>
+    <app-imageicon></app-imageicon>
+    <app-archiveicon [noteid]="noteid"></app-archiveicon>
+    <mat-icon class="icon2" mat-icon-button style="margin-bottom:30px;user-select: none;" [matMenuTriggerFor]="menu"
+    matTooltip="More">more_vert</mat-icon>&nbsp;
+    <mat-menu class="menu" #menu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item [matMenuTriggerFor]="addlabel" (click)="getLabels1()"><span>Add label</span></button>
+        <mat-menu [overlapTrigger]="false" (click)="$event.stopPropagation();" #addlabel="matMenu">
+            <div class="title">Label note</div><br>
+            <div fxLayout="row" (click)="$event.stopPropagation();">
+                <mat-icon fxFlex="30">search</mat-icon>
+                <input class="inputTitle" contenteditable="true" placeholder="Enter label name" [(ngModel)]="query">
+            </div><br>
+            <div *ngFor="let label of labelarray | LockFilter: query">
+                <mat-checkbox (click)="$event.stopPropagation();" (click)="clickFunc(label)" class="example-margin">{{label.label}}</mat-checkbox>
+            </div>
+        </mat-menu>
+        <button mat-menu-item><span>Add drawing</span></button>
+    </mat-menu>
+<button class="" mat-button (click)="close();expression3=true">CLOSE</button>
         </span>
-    </mat-card></div>
+    </mat-card>
+</div>

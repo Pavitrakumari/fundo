@@ -5,7 +5,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 /**The BehaviorSubject holds the value that needs to be shared with other components. */
 @Injectable()
 export class DataService {
-  private messageSource = new BehaviorSubject('default message');
+  private messageSource = new BehaviorSubject('');
   currentMessage = this.messageSource.asObservable();
   
   private messageSource2 = new Subject<boolean>();
@@ -16,6 +16,9 @@ export class DataService {
 
   private currentProfile = new  BehaviorSubject(false);
   imageprofile = this.currentProfile.asObservable();
+
+  private currentlabel= new  BehaviorSubject('fundoo Notes');
+  label = this.currentlabel.asObservable();
 
   constructor() { }
   changeMessage(message: string) {
@@ -30,5 +33,8 @@ changeMessage3(message: boolean) {
 
 changeProfile(message: boolean) {
   this.currentProfile.next(message);
+}
+labelChange(message: string) {
+  this.currentlabel.next(message);
 }
 }

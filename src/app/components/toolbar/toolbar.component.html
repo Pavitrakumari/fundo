@@ -1,43 +1,93 @@
 <div class="row-height">
   <mat-toolbar fxLayout="row" color="primary">
     <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-      <mat-icon style="color:black" aria-label="Side nav toggle icon">menu</mat-icon>
+      <mat-icon fxFlex="25" style="color:black" aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
-    <div class="title"><span fxFlex="20" ngStyle.lg="font-size:20" ngStyle.xl="font-size:20px" ngStyle.xs="font-size:10px"
+    <div class="title"><span fxFlex="10" ngStyle.lg="font-size:20" ngStyle.xl="font-size:20px"
+       ngStyle.xs="font-size:10px"
         ngStyle.sm="font-size:10px">{{value}}</span></div>
-    <form fxFlex class="search"><button mat-icon-button type="submit">
-        <mat-icon style="color:black">search</mat-icon>
+                              <!--------------------- Search Globally-------------- -->
+
+        <form 
+        fxFlex.lg="80%"         
+        fxFlex.xl="80%"
+        fxFlex.md="80%"
+        fxFlex.sm="80%"
+        fxFlex.xs="100%"
+
+
+        fx.show=true
+        fx.show.xs=true
+   class="search" 
+    
+     ><button mat-icon-button type="submit">
+        <mat-icon >search</mat-icon>
       </button>
-      <input fxFlex type="text" placeholder="Search here" name="something" [(ngModel)]="searchInput" (click)="searchbutton()"
+      <input 
+      fxFlex.lg="80%"         
+        fxFlex.xl="80%"
+        fxFlex.md="80%"
+        fxFlex.sm="100%"
+        fxFlex.xs="100%"
+        fxFlex.xxs="100%"
+
+
+
+        fx.show=true
+        fx.show.xs=true
+
+       type="text" placeholder="Search here" 
+       ngStyle.lg="font-size:20;" ngStyle.xl="font-size:20px"
+       ngStyle.xs="font-size:10px"
+        ngStyle.sm="font-size:10px"
+      name="something" 
+      [(ngModel)]="searchInput"
+       (click)="searchbutton()"
         (keydown)="passmessage()"></form>
-    <div fxFlex></div>
+    
     <button class="top" mat-icon-button>
-      <mat-icon fxFlex="40px" aria-label="Side nav toggle icon" matTooltip="Refresh">refresh</mat-icon>
     </button>
     <mat-icon fxFlex="40px" *ngIf="number==1" (click)="listview()" aria-label="Side nav toggle icon" matTooltip="list view">view_stream</mat-icon>
     <mat-icon fxFlex="40px" *ngIf="number==0" (click)="gridview()" aria-label="Side nav toggle icon" matTooltip="grid view">apps</mat-icon>
-    <button class="top" mat-icon-button>
-      <mat-icon fxShow="true" fxShow.xs="false" fxShow.sm="false" fxShow.md="true" fxShow.lg="true" fxFlex="40px"
-        aria-label="Side nav toggle icon" matTooltip=" Notifications">notifications_none</mat-icon>
-    </button>
-    <button (click)="$event.stopPropagation()" [ngStyle]="{'float':'left','background-image':'url(' +img+ ')','background-size':'cover'}"
-      matTooltip="fundoo Account" mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:#fb0;float:right;color:white;text-transform:uppercase">
-    </button>
-    <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
-      <div fxLayoutAlign="row">
+    <!-- <button class="top" mat-icon-button> -->
+      <!-- <mat-icon fxShow="true" fxShow.xs="false" fxShow.sm="false" fxShow.md="true" fxShow.lg="true" fxFlex="40px" -->
+        <!-- aria-label="Side nav toggle icon" matTooltip=" Notifications">notifications_none</mat-icon> -->
+    <!-- </button> -->
+    <button *ngIf="image2!=''" (click)="$event.stopPropagation()"
+     [ngStyle]="{'float':'left','width':'35px','height':'35px','background-image':'url(' +img+ ')','background-size':'cover'}"
+      matTooltip="fundoo Account" 
+      mat-mini-fab [matMenuTriggerFor]="appMenu"
+       style="background-color:#fb0;float:right;color:white;text-transform:uppercase">
+         </button>
+    
+ <button *ngIf="image2==''" (click)="$event.stopPropagation()" 
+    matTooltip="fundoo Account" mat-mini-fab [matMenuTriggerFor]="appMenu" 
+    style="background-color:#fb0;float:right;color:white;text-transform:uppercase">{{firstchar | titlecase}}
+  </button>
+  <mat-menu  #appMenu="matMenu" [overlapTrigger]="false">
+      
+      <!-- <div class="firstName" fxFlex="60%">UserName:{{firstName}}</div> -->
+      <div fxLayoutAlign>
+
         <div fxFlex="10%">
-          <button (click)="$event.stopPropagation()" [ngStyle]="{'float':'left','background-image':'url(' +img+ ')','background-size':'cover'}"
+          <button (click)="$event.stopPropagation()"  [ngStyle]="{'margin-left':'8px','float':'left','width':'100px','height':'100px','background-image':'url(' +img+ ')','background-size':'cover'}"
             (click)="selectFile.click()" matTooltip="fundoo Account" mat-mini-fab style="background-color:#fb0;float:right;color:white;text-transform:uppercase">
+            <p class="change">change</p>
           </button>
           <input (click)="$event.stopPropagation()" class="image" type="file" (change)="onImageUpload($event)"
             #selectFile></div>
       </div>
-      <mat-content fxFlex class="style"></mat-content><br>
-      <mat-content class="style" style="float:right;margin-top:-50px;">{{raw_data}}
+      <mat-content fxFlex class="style" style="float:right;margin-right:50px;font-weight:bolder;margin-top:-60px;">{{firstName}}</mat-content><br>
+    
+      <br><mat-content class="style" style="float:right;margin-right:9px;margin-top:-50px;">
+        
+        
+        {{raw_data}}
       </mat-content><br>
-      <div fxLayoutAlign="row wrap" class="add" fxLayoutGap=10px>
-        <button fxFlex="100" mat-menu-item routerLink="/signup">Add account</button>
-        <button fxFlex="50" mat-menu-item (click)="logout()">Log out</button>
+      <div  style="margin-left:85px;" class="add">
+        <button mat-stroked-button color="accent" style="margin-left:85px;" (click)="logout()">Log out</button>
+        <!-- <button mat-fab color="accent">Accent</button> -->
+
       </div>
     </mat-menu>
   </mat-toolbar>

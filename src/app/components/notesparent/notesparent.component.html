@@ -1,19 +1,21 @@
 <app-notes (onNewEntryAdded)="getCard($event)"></app-notes>
 
-
-PINNED
-<app-notescard [myData]="pinarraay" (newPin)="pinNew($event)"
-(reminderevent)="getCard($event)" (noteevent)="getCard($event)"
-(updateevent)="getCard($event)" (archiveevent)="getCard($event)"
-(colorevent)="getCard($event)" (reminderevent)="getCard($event)" 
-> </app-notescard>
-
-
-
 OTHERS
 
 <app-notescard   [myData]="arraynewdata"(newPin)="pinNew($event)"
-(reminderevent)="getCard($event)" (noteevent)="getCard($event)"
+(remm)="getCard($event)" (noteevent)="getCard($event)"
 (updateevent)="getCard($event)" (archiveevent)="getCard($event)"
-(colorevent)="getCard($event)" (reminderevent)="getCard($event)" 
+(colorevent)="getCard($event)"  
 > </app-notescard>
+
+
+PINNED
+<app-notescard [myData]="pinarraay" (newPin)="pinNew($event)"
+(remm)="getCard($event)" (noteevent)="getCard($event)"
+(updateevent)="getCard($event)" (archiveevent)="getCard($event)"
+(colorevent)="getCard($event)"  (remm)="getCard($event)" 
+> </app-notescard>
+
+
+
+

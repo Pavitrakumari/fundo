@@ -25,6 +25,15 @@
     opacity: 1.5;
     margin-top:-19px;
 }
+.icon2{
+    opacity: 0.5;
+    // margin-top:-19px;
+  }
+  .icon2:hover{
+    opacity: 1;
+    // margin-top:-19px;
+}
+
 .input2{
     font-weight: normal;
     font-size: 20px;
@@ -78,6 +87,19 @@ div[contenteditable=true]:empty::before {
     padding-left: 10px;
     padding-top: 10px;
     font-size: 14px;
+}
+.inputNote3{
+    border: none;
+    outline: none;
+    font-size: 14px;
+    margin-left:5px;
+
+
+    
+}
+.accesstime{
+    margin-left:-35px;
+    margin-right: 4px;
 }
 .pin {
     margin-top:0px;

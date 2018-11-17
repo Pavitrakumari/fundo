@@ -1,13 +1,7 @@
-import { Component } from '@angular/core';
-// import { HostBinding } from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-  // ...
-} from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
+import { MessagingService } from './core/services/messaging/messaging.service';
+import { HostBinding } from '@angular/core';
+// import { Messa}
 
 @Component({
   selector: 'app-root',
@@ -18,6 +12,13 @@ import {
   ]
 
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'pavitra';
+  message;
+  constructor(private messageService:MessagingService){}
+  ngOnInit(){
+    this.messageService.getPermission();
+    this.messageService.receiveMessage();
+    
+  }
 }

@@ -50,21 +50,23 @@
                     </mat-chip-list>
                 </div>
             </div>
-            <div fxLayout="row wrap">
-                <div class="one" fxLayoutAlign="space-between">
+            <div fxLayout="space-between" fxLayout="row">
+                <div class="one">
                     <app-icon1   
                     [reminders]="data"></app-icon1>
                     <app-collaboratoricon></app-collaboratoricon>
-                    <app-coloricon (updateevent)="color($event)" [newcolor]="data.id"></app-coloricon>
+                    <app-coloricon  (updateevent)="color($event)" [newcolor]="data.id"></app-coloricon>
                     <app-imageicon></app-imageicon>
                     <app-archiveicon [noteid]="noteid" (archiveevent)="archive($event)" 
                     [noteid]="data.id"></app-archiveicon>
                     <app-moreicon (moreevent)="more($event)" 
-                    [arrayofnotes]="                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "></app-moreicon>
-                </div>
-                <div class="two">
+                    [arrayofnotes]="data.id"></app-moreicon>   
+                    <button  mat-button (click)="onNoClick()" (click)="close()">CLOSE</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+</div>
+                <!-- <div class="two">
                     <button mat-button (click)="onNoClick()" (click)="close()">CLOSE</button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

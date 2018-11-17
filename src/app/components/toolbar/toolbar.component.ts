@@ -41,6 +41,7 @@ export class ToolbarComponent implements OnInit {
   number = 1;
   firstchar = '';
   raw_data;
+  firstName;
   token;
   message: string;
   searchInput;
@@ -54,8 +55,11 @@ export class ToolbarComponent implements OnInit {
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
 ngOnInit() {
   this.value="fundoo Notes"
-
+this.dataservice.label.subscribe(message=>this.value=message)
     this.raw_data = localStorage.getItem('name');/**get the name from local storahe */
+    this.firstName=localStorage.getItem('firstName');
+
+    // this.name=localstorage.
     this.token = localStorage.getItem('token');/**get the token from local storage */
     console.log(this.raw_data);
     var array = this.raw_data.split("");/**split the name & pass it to a variable array */
@@ -94,7 +98,12 @@ logout() {
   }
 addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
     const dialogRef = this.dialog.open(CreatenewlabelComponent, {/**open dialog  */
-      data: { panelClass: 'myapp-no-padding-dialog' }
+      
+        width: '250px',
+        data:'',
+        // overflow:'scroll',
+        // word-wrap: break-word,
+         panelClass: 'myapp-no-padding-dialog' 
     });
     dialogRef.afterClosed().subscribe(data => {
       this.getLabels();
@@ -146,8 +155,8 @@ selectedFile = null;/**initially the file is assigned as null */
 public image2=localStorage.getItem('imageUrl');/**get the image url from the local storage */
 img="http://34.213.106.173/"+this.image2;/** */
 onImageUpload(event){
+  try{
   this.imageChangedEvent = event;
-
   /**a method to upload the image by triggering the event */
 this.selectedFile=event.path[0].files[0];/**assihning the path & files of event to the selected file */
 const uploadData = new FormData();/**it is used to transmit keyed data */
@@ -157,7 +166,11 @@ const uploadData = new FormData();/**it is used to transmit keyed data */
  uploadData.append('file', this.selectedFile, this.selectedFile.name);
  this.openDialogCrop(event);
 }
+catch(error){
+console.log(error);
 
+}
+}
 
 public pic;
   openDialogCrop(data): void {
@@ -178,5 +191,6 @@ public pic;
   }
 
 }
+
 
 

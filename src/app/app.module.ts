@@ -71,6 +71,7 @@ import { Icon1Component } from './components/icon1/icon1.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { CropImageComponent } from './components/cropimage/cropimage.component';
 import { PinComponent } from './components/pin/pin.component';
+import { MessagingService } from './core/services/messaging/messaging.service';
 @NgModule({
   declarations: [
     AppComponent, 
@@ -127,7 +128,7 @@ import { PinComponent } from './components/pin/pin.component';
   providers: [
     // {provide: MAT_DATE_FORMATS, useValue: NATIVE_DATE_FORMATS},
 
-    DataService,LoggerService],
+    DataService,LoggerService,MessagingService],
   entryComponents: [DialogComponent,CropImageComponent,ToolbarComponent, DeleteComponent, AddlabelComponent, CreatenewlabelComponent],
   bootstrap: [AppComponent]
 })

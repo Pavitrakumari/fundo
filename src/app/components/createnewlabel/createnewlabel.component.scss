@@ -40,3 +40,15 @@ h1{
 .labelNameEdit {
     outline: none;
 }
+.label{
+    // overflow: hidden;
+    // word-wrap: break-word;
+    border: none;
+    outline: none;
+    white-space: nowrap;
+   text-overflow: ellipsis;
+   overflow: hidden !important;
+
+
+
+}

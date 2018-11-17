@@ -1,21 +1,21 @@
-<h1 mat-dialog-title>Edit labels</h1>
-<div fxLayoutGap="space-between" fxLayoutAlign="row" mat-dialog-content>
+<h1  class="label"  mat-dialog-title>Edit labels</h1>
+<div fxLayoutGap="space-between" fxLayoutAlign="row wrap" mat-dialog-content>
   <mat-icon class="clear" fxFlex=10 mat-icon-button matTooltip="clear">clear</mat-icon>
-  <input class="input" [(ngModel)]="label" placeholder="Create new label">
+  <input class="label" [(ngModel)]="label" placeholder="Create new label">
   <mat-icon class="done" fxFlex=20 mat-icon-button (click)=done() matTooltip="Done">done</mat-icon>
 </div><br>
 <div fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let label of labelarray">
   <div fxLayout="row" fxLayoutAlign="space-between center" class="delete">
     <mat-icon (click)=delete(label.id) class="delete" mat-icon-button>delete</mat-icon>
   </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <div fxFlex="80%" [innerHTML]="label.label" class="label" *ngIf="!editable || label.label!=editLabel"></div>
+  <div fxFlex="80%" class="label" [innerHTML]="label.label"  *ngIf="!editable || label.label!=editLabel"></div>
   <br>
-  <div fxFlex="80%" [innerHTML]="label.label" class="label" contenteditable="true" *ngIf="editable && label.label==editLabel"
+  <div fxFlex="80%" class="label" [innerHTML]="label.label"  contenteditable="true" *ngIf="editable && label.label==editLabel"
     #myDiv></div>
   <div fxFlex="10%">
     <mat-icon fxLayout="row" (click)=edit(label) *ngIf="editDoneIcon || label.id!=editId">
       edit</mat-icon>
-    <mat-icon (click)=editlabel(label) *ngIf="editClick && label.id==editId">done</mat-icon>
+    <mat-icon (clicsk)=editlabel(label) *ngIf="editClick && label.id==editId">done</mat-icon>
   </div>
 </div>
 <div><button mat-button class="button" (click)="onClose()">Done</button></div>

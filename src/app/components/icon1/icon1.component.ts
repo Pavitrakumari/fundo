@@ -13,9 +13,11 @@
 *
 *************************************************************************************************/
 /**component has imports , decorator & class */
-import { Component,Input,OnInit,Output,EventEmitter } from '@angular/core';
+import { Component,Input,OnInit,Output,EventEmitter,ViewChild } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import * as _moment from 'moment'; 
+import { MatMenu } from '@angular/material';
+
 import { MatSnackBar } from '@angular/material';
 import { HttpService } from '../../core/services/http/http.service';
 /**A componenet can be reused throughout the application & even in other applications */
@@ -27,136 +29,220 @@ import { HttpService } from '../../core/services/http/http.service';
     templateUrl: './icon1.component.html',
     /**It is used to provide style of components */
     styleUrls: ['./icon1.component.scss'],
+    exportAs: 'menuInOtherComponent'
+
   
 })
 /**To use components in other modules , we have to export them */
 export class Icon1Component implements OnInit {
-remind: any[] = [
-    { value: 'morning', viewPeriod: 'Morning', viewTime: '08:00 AM'},
-    { value: 'afternoon', viewPeriod: 'Afternoon', viewTime: '01:00 PM' },
-    { value: 'evening', viewPeriod: 'Evening', viewTime: '06:00 PM' },
-    { value: 'night', viewPeriod: 'Night', viewTime: '09:00 PM'}];
+  @ViewChild(MatMenu) menu: MatMenu;
+
 
   constructor(public snackBar:MatSnackBar,public httpService:HttpService) { }
   token = localStorage.getItem('token')/**get the token from local storgae */
   @Input() reminders;
+  @Input() reminderShow;
+
   /**@Input decorator tells Angular that this property is public and
    *  available for binding by a parent component*/
   body = {};
+  dateflag=false;
   @Output() reminderevent = new EventEmitter<any>()
+  @Output() remm = new EventEmitter<any>()
+  public disableStatus;
+  remind: any[] = [
+    { value: 'morning', viewPeriod: 'Morning', viewTime: '08:00 PM',disableStatus:'false'},
+    { value: 'afternoon', viewPeriod: 'Afternoon', viewTime: '01:00 PM',disableStatus:'false' },
+    { value: 'evening', viewPeriod: 'Evening', viewTime: '06:00 PM',disableStatus:'false' },
+    { value: 'night', viewPeriod: 'Night', viewTime: '09:00 PM',disableStatus:'false'}];
 
   reminder(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.reminderevent.emit();
   }
   ngOnInit() {
+    console.log(this.setDate.getFullYear());
+
+    this.disabledates();
+
+    this.reminderShow= true;
+    // console.log(splitTime,"split time");
+
 }
-todayReminder() {
-  let currentDate = new Date();
-  this.body =
+public todaydate=new Date();
+public tomorrowdate;
+
+
+todayReminder() {/**function to get the reminder of present day */
+  debugger;
+  try{
+  let currentDate = new Date();/**assigning a variable to the new Date() instance */
+  var data=new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 0, 8, 0, 0)
+  this.remm.emit(data);/**emitting the event with the new date */
+  
+    if(this.reminders!=undefined){/**if remindrs is defined then execute the below code */
+      this.body =/**assigning the attributes to the body */
     {
       'noteIdList': [this.reminders.id],
-      'reminder': new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 0, 8, 0, 0)
+      'reminder': new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 0, 20, 0, 0)
     }
+  /**hit the api by passing the url,body & token */
   this.httpService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
-    .subscribe(data => {
+    .subscribe(data => {/** if there exits no error then post the data */
       console.log("success in today reminders",data);
-      this.reminderevent.emit();
+      this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
     },
-      error => {
+      error => {/**if error exists then display the error */
         console.log("error in today reminders",error)
       })
+}}
+catch(error){
+console.log(error);
 }
-tomorrowReminder() {
-  let currentDate = new Date()
+
+}
+tomorrowReminder() {/**function to get the reminder of next day */
+
+try{
+  let currentDate = new Date();/**assigning a variable to the new Date() instance */
+  var data=new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 8, 0, 0)
+  this.remm.emit(data);/**emitting the event with the new date */
+    if(this.reminders!=undefined){/**if remindrs is defined then execute the below code */
+/**assigning the attributes to the body */
   this.body =
     {
       'noteIdList': [this.reminders.id],
       'reminder': new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 8, 0, 0)
     }
+  /**hit the api by passing the url,body & token */
   this.httpService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
-    .subscribe(data => {
+    .subscribe(data => {/** if there exits no error then post the data */
       console.log("success in tomorroe reminders",data);
-      this.reminderevent.emit();
+      this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
     },
-      error => {
+      error => {/**if error exists then display the error */
         console.log("error in tomorrow reminders",error)
       })
+}}
+catch(error){
+  console.log(error);
 }
-weekReminder() {
+}
+weekReminder() {/**function to get the reminder of next week */
+try  {
   let currentDate = new Date()
-  this.body =
+  var data=new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() +  7, 8, 0, 0)
+  this.remm.emit(data);/**emitting the event with the new date */
+  if(this.reminders!=undefined){/**if remindrs is defined then execute the below code */
+    /**assigning the attributes to the body */
+    this.body =
     {
       'noteIdList': [this.reminders.id],
       'reminder': new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7, 8, 0, 0)
     }
-  this.httpService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
-    .subscribe(data => {
+      /**hit the api by passing the url,body & token */
+      this.httpService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
+    .subscribe(data => {/** if there exits no error then post the data */
       console.log("success in week reminder",data);
-      this.reminderevent.emit();
+      this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
 
     },
-      error => {
-        console.log("error in week reminder",error)
+      error => {/**if error exists then display the error */
+        console.log("error in week reminder",error);
       })
-    }
-    show = true;
-  datePickReminder() {
+    }}
+  
+  catch(error){
+    console.log(error);
+    
+  }}
+  show = true;
+  datePickReminder() {/**function to show & hide the mat-menu's */
     this.show = !this.show;
   }
   backPressDatepicker() {
     this.show = true;
   }
-  reminderBody={
+  reminderBody={/**attributes to be passed to the reminder body */
     "date": new FormControl(new Date()),
     "time":""
   }
-  addRemCustom(date,timing){
-    timing.match('^[0-2][0-3]:[0-5][0-9]$');
-    if(timing=='8:00 AM'){
-      this.body = {
-        "noteIdList": [this.reminders.id],
-        "reminder": new Date(date.getFullYear(), date.getMonth(), date.getDate(), 8, 0, 0, 0)
-      }
-    }
-  else if(timing=='1:00 PM'){
+public setDate=this.reminderBody.date.value;
 
-    this.body = {
-      "noteIdList": [this.reminders.id],
-      "reminder": new Date(date.getFullYear(), date.getMonth(), date.getDate(), 13, 0, 0, 0)
-    }
-  }
-  else if(timing=='6:00 PM'){
-    this.body = {
-      "noteIdList": [this.reminders.id],
-      "reminder": new Date(date.getFullYear(), date.getMonth(), date.getDate(), 18, 0, 0, 0)
-    }
-  }
-  else if(timing=='9:00 PM'){
-    this.body = {
-      "noteIdList": [this.reminders.id],
-      "reminder": new Date(date.getFullYear(), date.getMonth(), date.getDate(), 21, 0, 0, 0)
-    }
-  }
-  else if(timing==this.reminderBody.time){
-    var splitTime=this.reminderBody.time.split("",8);
-    var hour= Number(splitTime[0]+splitTime[1]);
-    var minute= Number(splitTime[3]+splitTime[4]);
+  addRemCustom(date,timing){/**function to add the custom remindrs */
+try{    
+    
+    timing.match('^[0-2][0-3]:[0-5][0-9]$');/**this is used to match the time */
+    if(timing==this.reminderBody.time){/**if condition is satisfied then  */
+    var splitTime=this.reminderBody.time.split("",8);/**split the time */
+    console.log(splitTime,"split time");
+    
+    var hour= Number(splitTime[0]+splitTime[1]);/**to split into hours */
+    var minute= Number(splitTime[3]+splitTime[4]);/**to split into minutes */
     var ampm = (splitTime[6]+splitTime[7]);
-   
     if(ampm=='AM' || ampm=='am'){
-      this.body = {
+      var data=new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minute, 0, 0)
+      if(this.reminders!=undefined){
+
+      this.body = {/**pass the attributes to the body according the condition given in if statement */
         "noteIdList": [this.reminders.id],
         "reminder": new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minute, 0, 0)
-      }
+      }}
+      
     }else if(ampm=='PM' || ampm=='pm'){
-      this.body = {
+      console.log(splitTime,"split time");
+
+      var data=new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour+12, minute, 0, 0)
+      if(this.reminders!=undefined){
+
+      this.body = {/**pass the attributes to the body according the condition given in else if statement */
         "noteIdList": [this.reminders.id],
         "reminder": new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour+12, minute, 0, 0)
-      }
+      }}
+
     }
   }
+  this.remm.emit(data);
+
   this.httpService.postdeletecard('notes/addUpdateReminderNotes',this.body,this.token).subscribe((result) => {
-      
     this.reminderevent.emit()
   })
-}}
+
+ }
+ catch(error){
+   console.log(error);
+   
+ }
+  }
+  disable(event)
+  {
+    this.dateflag=false;
+    var pattern=/^(2[0-3]|1[0-9]|[0][0-9]):[0-5][0-9] (AM|PM|pm|am|Pm|pM|Am|aM)$/;
+   if(pattern.test( this.reminderBody.time))
+   {
+    this.dateflag=true;
+   }
+   else
+   this.dateflag=false;
+  }
+  disabledates(){
+    if ((new Date(this.setDate).getFullYear()-new Date(this.todaydate).getFullYear()) === 0) {
+      if ((new Date(this.setDate).getMonth() - new Date(this.todaydate).getMonth()) === 0) {
+        if ((new Date(this.setDate).getDate() - new Date(this.todaydate).getDate()) === 0) {
+          if ((new Date(this.setDate).getHours()) > 8) {
+            this.remind[0].disableStatus = true;
+          } if ((new Date(this.setDate).getHours()) > 13) {
+            this.remind[1].disableStatus = true;
+          } if ((new Date(this.setDate).getHours()) > 18) {
+            this.remind[2].disableStatus = true;
+          } if ((new Date(this.setDate).getHours()) > 20) {
+            this.remind[3].disableStatus = true;
+          }
+        }
+        
+      }
+    }
+  
+  }
+  
+
+}

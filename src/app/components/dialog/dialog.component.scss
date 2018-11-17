@@ -26,9 +26,9 @@
 }
 .pin {
     margin-top:-10px;
-    margin-right:-20px;
+    margin-right:10px;
     float: right;
-    opacity: 0.5;
+    opacity: 1;
 }
 .pin:hover{
     opacity: 1;
@@ -46,16 +46,19 @@ opacity: 1;
 .one{
     width:250px;
 }
+.close{
+     
+}
 .two{
     margin-top:-60px;
-    float: right;
-    margin-left:270px;
+    // float: right;
+    margin-left:240px;
 }
 div[contenteditable=true]:empty::before {
     content: attr(placeholder);
     opacity: 0.5;;
     }
-    .note{
+.note{
         border:none;
         outline: none;
     }

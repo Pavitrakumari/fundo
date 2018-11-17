@@ -12,8 +12,8 @@ export class RemindersComponent implements OnInit {
 
   temp2=[];
   constructor(public httpService:HttpService) { }
-
-  ngOnInit() {
+  sortedItems :any
+    ngOnInit() {
     this.getReminder();
   }
   reminder(event) {
@@ -30,6 +30,11 @@ export class RemindersComponent implements OnInit {
   
         for(var i = 0; i < data['data'].data.length; i++){
           this.temp2.push(data['data'].data[i]);
+          // this.sortedItems=temp2;
+          this.sortedItems = this.temp2.sort((a: any, b: any) =>
+          new Date(a.reminder).getTime() - new Date(b.reminder).getTime()
+      );
+  
           this.removeremindevent.emit();
 
         }

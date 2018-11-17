@@ -15,6 +15,13 @@ mat-card-title{
     font-size: 500px;
     font-weight: bolder;
 }
+.main{
+    /* padding:5px; */
+    width:799px;
+    flex-wrap: wrap;
+    /* flex-basis: 100% */
+}
+
 mat-card-content{
     width:200px;
     height:auto;
@@ -35,7 +42,7 @@ mat-card-content{
     opacity: 0.4;
 }
 .viewgrid{
-    width:270px;
+    width:265px;
 }
 .viewlist{
     width:600px;
@@ -43,4 +50,12 @@ mat-card-content{
 .note{
     border:none;
     outline: none;
+}
+.accesstime{
+    margin-left:-35px;
+    margin-right: 4px;
+}
+.mat-chip-list-wrapper .mat-standard-chip,
+ .mat-chip-list-wrapper input.mat-input-element {
+    margin: 8px;
 }

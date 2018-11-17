@@ -91,16 +91,24 @@ export class SignupComponent implements OnInit {
       .subscribe(/**if no error then data is posted with the given message */
         data => {
           console.log("POST Request is successful ", data);
+          localStorage.setItem('firstName', data['firstName']);
+
           this.snackBar.open("successfully registered", "ACCOUNT CREATED", {
             duration: 10000,
+
           });
-        },
+          var firstName=localStorage.getItem('firstName');
+
+          console.log("firstname in signin",firstName);
+          
+        }),
         error => {/**if error exists then displays the error message using snackbar */
           console.log("Error", error);
           this.snackBar.open("All the details must be filled  ", "SIGNUP FAILED", {
             duration: 10000,
           });
-        })
+        }
+
     this.httpService.getdata("user")/**using the service to get the data that is posted into the server */
       .subscribe(
         (data) => {/**get the data if error doesnot exist */

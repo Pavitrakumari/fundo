@@ -19,6 +19,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DataService } from '../../core/services/data/data.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { state } from '@angular/animations';
+import { LoggerService } from '../../core/services/logger/logger.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-notescard',/**A string value which represents the component on browser at execution time */
@@ -33,8 +35,9 @@ export class NotescardComponent implements OnInit {
   @Output() archiveevent = new EventEmitter<any>();
   @Output() unarchiveevent = new EventEmitter<any>();
   @Output() updateevent = new EventEmitter<any>();
-  @Output() reminderevent = new EventEmitter<any>();
+  @Output() remm = new EventEmitter<any>();
   @Output() newPin = new EventEmitter<any>();
+  @Output() state = new EventEmitter<any>();
 
   @Output() deleted = new EventEmitter<any>();
   @Input() name;
@@ -71,7 +74,7 @@ export class NotescardComponent implements OnInit {
     this.archiveevent.emit();
   }
   reminder(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
-    this.reminderevent.emit();
+    this.remm.emit();
   }
 
   unarchive(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
@@ -80,10 +83,23 @@ export class NotescardComponent implements OnInit {
   new(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.newPin.emit();
   }
-  
+  funclabel(event){
+    this.dataService.labelChange(event)
+  }
   trash(event) {
     this.deleted.emit();
   }
+public todaydate=new Date();
+public tomorrow=new Date(this.todaydate.getFullYear(), this.todaydate.getMonth(), this.todaydate.getDate() + 1)
+checkReminder(date){/**function */
+  var savedReminder=new Date().getTime();
+  var value=new Date(date).getTime();
+  if(value > savedReminder){
+return true;
+  }
+  else false;
+}
+
   openDialog(dialogdata): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',/**width of the dialog box */
@@ -135,7 +151,7 @@ export class NotescardComponent implements OnInit {
       .subscribe(data => {
         console.log("success in get reminders ",data);
         // this.updateevent.emit();
-        this.reminderevent.emit();
+        this.remm.emit();
       })
     error => {
       console.log("error in get reminders",error)
@@ -165,7 +181,7 @@ export class NotescardComponent implements OnInit {
 
     }),
     error=>{
-      console.log("errror in update checklists............",);
+      LoggerService.log("errror in update checklists............",);
       
     }
   }

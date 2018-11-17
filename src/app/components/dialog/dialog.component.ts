@@ -18,6 +18,7 @@ import { Component, Output, EventEmitter, OnInit, Inject, Input } from '@angular
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
+import { LoggerService } from '../../core/services/logger/logger.service';
 import { DataService } from '../../core/services/data/data.service';
 /**A componenet can be reused throughout the application & even in other applications */
 export interface DialogData {
@@ -69,22 +70,17 @@ export class DialogComponent implements OnInit {
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized
    *  all data-bound properties of a directive. */
-  ngOnInit() {
-    console.log(this.data['noteLabels'], "maaaa");
+ngOnInit() {
+  LoggerService.log(this.data['noteLabels'], "maaaa");
     this.selectarray1 = this.data['noteLabels'];
     this.selectarray2 = this.data['reminder'];
-
     if (this.data['noteCheckLists'].length>0){
-      console.log(this.data['noteCheckLists'],"update check lists in dialog for checking............");
-      
+      LoggerService.log(this.data['noteCheckLists'],"update check lists in dialog for checking............");
       this.checklist=true;
     }
     this.tempArray=this.data['noteCheckLists'];
-
-console.log(this.selectarray2);
-console.log(this.tempArray,"temp araryyyyyy");
-
-
+    LoggerService.log("selectarray2",this.selectarray2);
+    LoggerService.log("temp araryyyyyy",this.tempArray);
   }
   more(label) {
     this.selectarray1.push(label);
@@ -94,8 +90,9 @@ console.log(this.tempArray,"temp araryyyyyy");
     /**calling the update method after entering the data & closing the card */
   }
   updateNotes() {
+    try{
     if(this.checklist==false){
-      console.log(this.data['id']);
+      LoggerService.log(this.data['id']);
     var id = this.data['id']
     /**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */
     this.title = document.getElementById('title').innerHTML;
@@ -113,27 +110,31 @@ console.log(this.tempArray,"temp araryyyyyy");
       });
     })
   }
-  else{
+  else{/**if add note is for checklist,then it executes the else part */
     console.log("runnin else.........just .............");
-    var apiData={
+    var apiData={/**Attributes to be passed for hitting the api */
       "itemName": this.modifiedCheckList.itemName,
       "status":this.modifiedCheckList.status
-  }
-  var url = "notes/" + this.data['id'] + "/checklist/" + this.modifiedCheckList.id + "/update";
-  this.httpService.postdeletecard(url, JSON.stringify(apiData), this.token).subscribe(response => {
-    console.log("else part.......................",response);
-  }),
-  error=>{
-    console.log("else paer errorrrrr",error);
     }
- }
-error => {
+    var url = "notes/" + this.data['id'] + "/checklist/" + this.modifiedCheckList.id + "/update";
+    this.httpService.postdeletecard(url, JSON.stringify(apiData), this.token).subscribe(response => {
+      console.log("else part.......................",response);
+    }),
+    error=>{/**if error exists,then display the error */
+      LoggerService.log("else paer errorrrrr",error);
+    }
+  }
+  error => {
         console.log("error in update", error);/**if error exists then display the error */
         this.snackBar.open("update change failed", "error", {/**snackbar to display the result */
           duration: 10000,
         });
       }
+    }
+  catch(error){
+    LoggerService.log(error);
   }
+}
 editing(editedList,event){
   console.log(editedList);
     if(event.code=="Enter"){
@@ -153,81 +154,74 @@ checkBox(checkList){
     this.updateNotes();
   }
   public removedList;
-  removeList(checklist){
+  removeList(checklist){/**method to remove the check lists */
     console.log(checklist)
-    this.removedList=checklist;
-    this.removeCheckList()
+    this.removedList=checklist;/**move them into the remove list */
+    this.removeCheckList()/**calling the removechecklist function */
   }
-  removeCheckList(){
+  removeCheckList(){/**function to remove the check lists */
+try{
     var url = "notes/" + this.data['id']+ "/checklist/" + this.removedList.id + "/remove";
-
+/**hit the api by passing the parameters url,body,token */
     this.httpService.postdeletecard(url,null,this.token).subscribe((response)=>{
       console.log(response);
-      for(var i=0;i<this.tempArray.length;i++){
-        if(this.tempArray[i].id==this.removedList.id){
-          this.tempArray.splice(i,1)
+      for(var i=0;i<this.tempArray.length;i++){/**run the for loop for the complete length of the temparray which consists of checklists */
+        if(this.tempArray[i].id==this.removedList.id){/**if they are matching  with id's */
+          this.tempArray.splice(i,1)/**then splice them from the array */
         }
       }
     })
   }
+catch(error){
+    console.log(error);
+  }
+}
   public adding=false;
   public addCheck=false;
   public status="open"
   addList(event){
-    if(this.newList!=""){
-      this.adding = true;
+try{
+    if(this.newList!=""){/**if newList[] is not empty then  */
+      this.adding = true;/**adding becomes true */
     }
-   else{
+   else{/**else adding becomes false */
       this.adding = false;
    }
-    if (event.code == "Enter") {
-      if(this.addCheck==true){
-        this.status="close";
+    if (event.code == "Enter") {/**if enter is pressed */
+      if(this.addCheck==true){/**if addingCheck variable is true */
+        this.status="close";/**then status is assigned as close */
       }
-      else{
+      else{/**else status is assigned as open */
         this.status="open"
       }
-      this.newData={
+      this.newData={/**attributes to be passed for  adding the checklists*/
         "itemName":this.newList,
         "status":this.status
       }
       console.log(this.newData,"newwwwwww dataaaaaaaaaaaa");
-      
-  var url = "notes/" + this.data['id'] + "/checklist/add";
-
-    this.httpService.postdeletecard(url, this.newData, this.token)
-    .subscribe(response => {
+      var url = "notes/" + this.data['id'] + "/checklist/add";
+      /**hit the api by passing the parameters url,newDta body,token*/
+      this.httpService.postdeletecard(url, this.newData, this.token)
+      .subscribe(response => {
       console.log(response);
       this.newList=null;
       this.addCheck=false;
       this.adding=false;
-      console.log(response['data'].details);
-      
+      console.log(response['data'].details);/**push the response into the tempArray */
       this.tempArray.push(response['data'].details)
-
       console.log(this.tempArray)
-
     })
   }
-  }
-
-  emit(event){
-
+}
+catch(error){
+  console.log(error);
+}
+}
+emit(event){
     this.bgcolor=event
-  }
-  
-
-
-
-
-
-
-
-
-
-
+}
   removelabel(label, note) {/**passing the label id & note id */
-    try {
+try {
       console.log(note, label);/**displaying the id's */
       this.httpService.postdeletecard("notes/" + note + "/addLabelToNotes/" + label.id + "/remove", null, this.token)
         .subscribe(data => {/**using the observabel subscribe using callbackk */
@@ -244,32 +238,33 @@ checkBox(checkList){
         console.log("error in remove", error);/**then display the error */
       }
     }
-    catch (error) {
+catch (error) {
       console.log(error);
     }
   }
-  removereminder(item,noteid) {
-    var body={
+removereminder(item,noteid) {/**function to remove reminders */
+try{
+    var body={/**passing the attributes to the body */
       "noteIdList":[noteid],
-
-    }
+    }/**hit the api by passing the parameters url,body,token */
     this.httpService.postdeletecard('/notes/removeReminderNotes', body,this.token)
       .subscribe(data => {
         console.log("success in remove reminders ",data);
-        this.eventOne.emit(true);
-
+        this.eventOne.emit(true);/**emitting the event */
         const index = this.selectarray2.indexOf(item,0);
-        console.log(item,"pivjiiii");
-        
-        if (index > -1) {
+        if (index > -1) {/**if index is greater than -1 then remove those index's from the selectarray2 */
           this.selectarray2.splice(index, 1);
         }
-        this.updateevent.emit();
-
-    })
-
-    error => {
-      console.log("error in remove reminders",error)
+        this.updateevent.emit();/**emitting the event */
+      })
+      error => {
+      console.log("error in remove reminders",error);
+    }}
+catch(error){/**if error exists then handle the errors
+   */
+      console.log(error);
+      
     }
   }
+
 }
