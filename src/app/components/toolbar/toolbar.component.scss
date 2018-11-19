@@ -9,8 +9,13 @@
   background:rgb(252, 253, 253);
 }
 .color:hover{
-  border-radius: 0px 70px 70px 0px;
   white-space: nowrap;
+   text-overflow: ellipsis;
+   overflow: hidden !important;
+
+  width:290px;
+  border-radius: 0px 70px 70px 0px;
+  // white-space: nowrap;
   background-color: rgb(236, 230, 169);
 }
 .change{

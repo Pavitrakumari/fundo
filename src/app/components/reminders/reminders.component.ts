@@ -1,5 +1,6 @@
 import { Component, OnInit ,Input,Output,EventEmitter} from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
+import { NoteService } from '../../core/services/http/note/note.service';
 
 @Component({
   selector: 'app-reminders',
@@ -11,7 +12,7 @@ export class RemindersComponent implements OnInit {
   @Output() removeremindevent = new EventEmitter<any>();
 
   temp2=[];
-  constructor(public httpService:HttpService) { }
+  constructor(private noteService:NoteService,public httpService:HttpService) { }
   sortedItems :any
     ngOnInit() {
     this.getReminder();
@@ -24,7 +25,7 @@ export class RemindersComponent implements OnInit {
   getReminder() {
     this.token = localStorage.getItem('token');/**get the token from the local storage */
 
-    this.httpService.getcard('/notes/getReminderNotesList', this.token)
+    this.noteService.getcard('/notes/getReminderNotesList', this.token)
       .subscribe(data => {
         console.log("success in get reminders ",data);
   

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { UserService } from '../../core/services/http/user/user.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-signup',
@@ -44,10 +45,10 @@ export class SignupComponent implements OnInit {
   public card = [];
   public arr = [];
   service;
-  constructor(public httpService: HttpService, public snackBar: MatSnackBar) { }
+  constructor(public httpService: HttpService,private userService:UserService, public snackBar: MatSnackBar) { }
   /**method to get the service for the user */
   ngOnInit() {
-    let obs = this.httpService.getDataService("user/service");
+    let obs = this.userService.getDataService("user/service");
     obs.subscribe((response) => {
       var data = response["data"];
       for (var i = 0; i < data.data.length; i++) {
@@ -75,7 +76,7 @@ export class SignupComponent implements OnInit {
     console.log(this.model.Lastname)
     console.log(this.model.Username)
     console.log(this.model.password)
-    this.httpService.postdata("user/userSignUp",
+    this.userService.postdata("user/userSignUp",
       {
         "firstName": this.model.Firstname,
         "lastName": this.model.Lastname,
@@ -109,7 +110,7 @@ export class SignupComponent implements OnInit {
           });
         }
 
-    this.httpService.getdata("user")/**using the service to get the data that is posted into the server */
+    this.userService.getDataService("user")/**using the service to get the data that is posted into the server */
       .subscribe(
         (data) => {/**get the data if error doesnot exist */
           console.log("data added into the server : ", data);

@@ -16,6 +16,7 @@ import { Component, OnInit, Inject, Input, Output, EventEmitter, ViewChild, Elem
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpService } from '../../core/services/http/http.service';
 import { DataService } from '../../core/services/data/data.service';
+import { NoteService } from '../../core/services/http/note/note.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-createnewlabel',
@@ -24,7 +25,7 @@ import { DataService } from '../../core/services/data/data.service';
 })
 export class CreatenewlabelComponent implements OnInit {
   public labelarray = [];
-  constructor(public dialogRef: MatDialogRef<CreatenewlabelComponent>,
+  constructor(private noteService:NoteService,public dialogRef: MatDialogRef<CreatenewlabelComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, public httpservice: HttpService, public dataService: DataService) {
   }
   @Output() updateevent = new EventEmitter<any>();
@@ -67,7 +68,7 @@ export class CreatenewlabelComponent implements OnInit {
           return false;
         }
       }
-      this.httpservice.postdeletecard("noteLabels", {
+      this.noteService.postdeletecard("noteLabels", {
         "label": this.label,
         "isDeleted": false,
         "userId": localStorage.getItem('userId')
@@ -84,7 +85,7 @@ export class CreatenewlabelComponent implements OnInit {
   }
   getLabels() {
     try {
-      this.httpservice.getcard("noteLabels/getNoteLabelList", this.token).subscribe(
+      this.noteService.getcard("noteLabels/getNoteLabelList", this.token).subscribe(
         data => {
           this.labelarray = [];
           console.log(data['data'].details);
@@ -109,7 +110,7 @@ export class CreatenewlabelComponent implements OnInit {
   delete(labelid) {/**delete() method to delete the labels from the list */
     try {
       console.log(labelid, "label     id");
-      this.httpservice.deletedata("noteLabels/" + labelid + "/deleteNoteLabel")
+      this.noteService.deletedata("noteLabels/" + labelid + "/deleteNoteLabel")
       /**calling the api by passing url,token,labelid */
         .subscribe(response => {
           /** In angular subscribe is used with Observable*/
@@ -140,7 +141,7 @@ export class CreatenewlabelComponent implements OnInit {
       this.editClick = false;
       this.editable = false;
       var url = "noteLabels/" + label.id + "/updateNoteLabel"/**setting the url */
-      this.httpservice.postdeletecard(url, {
+      this.noteService.postdeletecard(url, {
         /**calling the api by passing url,token,labelid */
         "label": this.myDiv.nativeElement.innerHTML,
         "isDeleted": false,/**attributes */

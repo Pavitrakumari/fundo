@@ -5,6 +5,8 @@ import { HttpService } from '../../core/services/http/http.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { LoggerService } from '../../core/services/logger/logger.service';
+import { UserService } from '../../core/services/http/user/user.service';
+import { NoteService } from '../../core/services/http/note/note.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-login',
@@ -18,7 +20,7 @@ export class LoginComponent implements OnInit {
     "password": ""
   };
   hide = true;
-  constructor(public httpService: HttpService, public router: Router, public snackBar: MatSnackBar) { }
+  constructor(private noteService:NoteService,public httpService: HttpService,private userService:UserService, public router: Router, public snackBar: MatSnackBar) { }
   ngOnInit() {
     var token;
     if (localStorage.getItem('token')) {
@@ -42,7 +44,7 @@ export class LoginComponent implements OnInit {
   next() {
     console.log(this.model1.emailid);
     console.log(this.model1.password);
-    this.httpService.postdata("user/login", {
+    this.userService.postdata("user/login", {
       "email": this.model1.emailid,
       "password": this.model1.password
     }).subscribe(
@@ -71,7 +73,7 @@ export class LoginComponent implements OnInit {
         var body={
           "pushToken":pushToken
         }
-        this.httpService.postdeletecard('user/registerPushToken',body,token).subscribe(
+        this.noteService.postdeletecard('user/registerPushToken',body,token).subscribe(
           data=>{
             LoggerService.log("post of pushToken is successful****************************",data)
 

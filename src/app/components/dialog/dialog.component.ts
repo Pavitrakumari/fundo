@@ -20,6 +20,7 @@ import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
 import { LoggerService } from '../../core/services/logger/logger.service';
 import { DataService } from '../../core/services/data/data.service';
+import { NoteService } from '../../core/services/http/note/note.service';
 /**A componenet can be reused throughout the application & even in other applications */
 export interface DialogData {
   "title": String,
@@ -48,6 +49,7 @@ export class DialogComponent implements OnInit {
   public checklist=false;
   public noteLabels;
   constructor(
+    private noteService:NoteService,
     public dialogRef: MatDialogRef<DialogComponent>,
     public dataService: DataService, public httpService: HttpService,
     public snackBar: MatSnackBar,
@@ -103,7 +105,7 @@ ngOnInit() {
       "title": this.title,
       "description": this.note,
     }
-    this.httpService.postpassword("notes/updateNotes", body, this.token).subscribe(data => {
+    this.noteService.postpassword("notes/updateNotes", body, this.token).subscribe(data => {
       console.log("update changes successfully", data);/**if no errors then display the data */
       this.snackBar.open("update change success", "success", {/**snackbar to display the result */
         duration: 10000,/**duaration of the snackbar to be opened */
@@ -117,7 +119,7 @@ ngOnInit() {
       "status":this.modifiedCheckList.status
     }
     var url = "notes/" + this.data['id'] + "/checklist/" + this.modifiedCheckList.id + "/update";
-    this.httpService.postdeletecard(url, JSON.stringify(apiData), this.token).subscribe(response => {
+    this.noteService.postdeletecard(url, JSON.stringify(apiData), this.token).subscribe(response => {
       console.log("else part.......................",response);
     }),
     error=>{/**if error exists,then display the error */
@@ -163,7 +165,7 @@ checkBox(checkList){
 try{
     var url = "notes/" + this.data['id']+ "/checklist/" + this.removedList.id + "/remove";
 /**hit the api by passing the parameters url,body,token */
-    this.httpService.postdeletecard(url,null,this.token).subscribe((response)=>{
+    this.noteService.postdeletecard(url,null,this.token).subscribe((response)=>{
       console.log(response);
       for(var i=0;i<this.tempArray.length;i++){/**run the for loop for the complete length of the temparray which consists of checklists */
         if(this.tempArray[i].id==this.removedList.id){/**if they are matching  with id's */
@@ -201,7 +203,7 @@ try{
       console.log(this.newData,"newwwwwww dataaaaaaaaaaaa");
       var url = "notes/" + this.data['id'] + "/checklist/add";
       /**hit the api by passing the parameters url,newDta body,token*/
-      this.httpService.postdeletecard(url, this.newData, this.token)
+      this.noteService.postdeletecard(url, this.newData, this.token)
       .subscribe(response => {
       console.log(response);
       this.newList=null;
@@ -223,7 +225,7 @@ emit(event){
   removelabel(label, note) {/**passing the label id & note id */
 try {
       console.log(note, label);/**displaying the id's */
-      this.httpService.postdeletecard("notes/" + note + "/addLabelToNotes/" + label.id + "/remove", null, this.token)
+      this.noteService.postdeletecard("notes/" + note + "/addLabelToNotes/" + label.id + "/remove", null, this.token)
         .subscribe(data => {/**using the observabel subscribe using callbackk */
           console.log("success in remove label", data);
           /**if success then display the result */
@@ -247,7 +249,7 @@ try{
     var body={/**passing the attributes to the body */
       "noteIdList":[noteid],
     }/**hit the api by passing the parameters url,body,token */
-    this.httpService.postdeletecard('/notes/removeReminderNotes', body,this.token)
+    this.noteService.postdeletecard('/notes/removeReminderNotes', body,this.token)
       .subscribe(data => {
         console.log("success in remove reminders ",data);
         this.eventOne.emit(true);/**emitting the event */

@@ -10,6 +10,18 @@
     padding-top: 14px;
     font-family: cursive;
 } 
+.matcard{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+}
+.matcard:hover{
+    box-shadow: 0 0 30px rgba(0,0,0,0.6);
+-moz-box-shadow: 0 0 30px rgba(0,0,0,0.6);
+-webkit-box-shadow: 0 0 30px rgba(0,0,0,0.6);
+-o-box-shadow: 0 0 30px rgba(0,0,0,0.6);
+
+}
 .card1{
   height:45px;
   width: 500px;   
@@ -113,9 +125,17 @@ div[contenteditable=true]:empty::before {
     opacity: 0.5;
 }
 .closeButton{
+    // margin-left:200px;
    opacity: 0.5;
+//    position:relative;
+   float:right;
+
 }
 .closeButton:hover{
+    // margin-left:200px;
+    // position:relative;
+    float:right;
+
     opacity: 1;
 }
 .check{

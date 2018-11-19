@@ -16,6 +16,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
+import { NoteService } from '../../core/services/http/note/note.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-archiveicon',
@@ -28,13 +29,13 @@ export class ArchiveiconComponent implements OnInit {
   @Output() unarchiveevent = new EventEmitter<any>()
 
   public body: any = {}
-  constructor(public httpService: HttpService, public snackBar: MatSnackBar) { }
+  constructor(private noteService:NoteService,public httpService: HttpService, public snackBar: MatSnackBar) { }
   token = localStorage.getItem('token');
   archive() {
     console.log(this.noteid, "noteidd");
     var array = [];
     array.push(this.noteid.id)
-    this.httpService.postdeletecard("notes/archiveNotes", this.body = {
+    this.noteService.postdeletecard("notes/archiveNotes", this.body = {
       "isArchived": true,
       "noteIdList": array
     }, this.token).subscribe((response) => {
@@ -55,7 +56,7 @@ export class ArchiveiconComponent implements OnInit {
     console.log(this.noteid.id);
     var array = [];
     array.push(this.noteid.id)
-    this.httpService.postdeletecard("notes/archiveNotes", this.body = {
+    this.noteService.postdeletecard("notes/archiveNotes", this.body = {
       "isArchived": false,
       "noteIdList": array
     }, this.token).subscribe((response) => {

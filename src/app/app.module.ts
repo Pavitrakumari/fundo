@@ -6,10 +6,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
-// import {default as _rollupMoment} from 'moment';
-// import { MatMomentDateModule } from '@angular/material-moment-adapter'
 import { MatSnackBarModule,
          MatToolbarModule, 
          MatSidenavModule, 
@@ -29,9 +26,8 @@ import { MatSnackBarModule,
          MatButtonModule,
          MatTooltipModule,
          MatMenuModule,
-         MatDialogModule,MAT_DATE_LOCALE,
+         MatDialogModule,
          MatChipsModule,
-         MAT_DATE_FORMATS,
          NativeDateModule,} from "@angular/material";
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -49,7 +45,6 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
 import { HelpComponent } from './components/help/help.component';
 import { AppdownloadsComponent } from './components/appdownloads/appdownloads.component';
 import { KeyboardshortcutsComponent } from './components/keyboardshortcuts/keyboardshortcuts.component';
-// import { Icon1Component } from "./components/icon1/moment";
 import { CollaboratoriconComponent } from './components/collaboratoricon/collaboratoricon.component';
 import { ColoriconComponent } from './components/coloricon/coloricon.component';
 import { ImageiconComponent } from './components/imageicon/imageicon.component';
@@ -64,7 +59,7 @@ import { AddlabelComponent } from './components/addlabel/addlabel.component';
 import { SearchPipe } from '../app/core/pipes/search.pipe';
 import { SearchComponent } from './components/search/search.component';
 import { DataService } from '../app/core/services/data/data.service';
-import {LoggerService} from '../app/core/services/logger/logger.service';
+import { LoggerService} from '../app/core/services/logger/logger.service';
 import { LabelsComponent } from './components/labels/labels.component';
 import { DeleteComponent } from './components/delete/delete.component';
 import { Icon1Component } from './components/icon1/icon1.component';
@@ -74,63 +69,91 @@ import { PinComponent } from './components/pin/pin.component';
 import { MessagingService } from './core/services/messaging/messaging.service';
 @NgModule({
   declarations: [
-    AppComponent, 
-    SignupComponent, 
-    LoginComponent, 
-    ForgotpasswordComponent, 
-    HomeComponent, 
-    ToolbarComponent,
-    NotesComponent,
-    CreatenewlabelComponent, 
-    ArchiveComponent, 
-    TrashComponent, 
-    SettingsComponent,
-    RemindersComponent,
-    FeedbackComponent,
-    HelpComponent,
-     AppdownloadsComponent,
-    KeyboardshortcutsComponent,
-    Icon1Component,
-    CollaboratoriconComponent,
-    ColoriconComponent,
-    ImageiconComponent, 
-    ArchiveiconComponent, 
-    MoreiconComponent, 
-    UndoiconComponent, 
-    RedoiconComponent,
-    NotescardComponent, 
-    NotesparentComponent, 
-    DialogComponent, 
-    AddlabelComponent, 
-    SearchPipe, 
-    SearchComponent, 
-    LabelsComponent,
-    DeleteComponent,
-    CropImageComponent,
-    PinComponent,
-    
-
-
+         AppComponent, 
+         SignupComponent, 
+         LoginComponent, 
+         ForgotpasswordComponent, 
+         HomeComponent, 
+         ToolbarComponent,
+         NotesComponent,
+         CreatenewlabelComponent, 
+         ArchiveComponent, 
+         TrashComponent, 
+         SettingsComponent,
+         RemindersComponent,
+         FeedbackComponent,
+         HelpComponent,
+         AppdownloadsComponent,
+         KeyboardshortcutsComponent,
+         Icon1Component,
+         CollaboratoriconComponent,
+         ColoriconComponent,
+         ImageiconComponent, 
+         ArchiveiconComponent, 
+         MoreiconComponent, 
+         UndoiconComponent, 
+         RedoiconComponent,
+         NotescardComponent, 
+         NotesparentComponent, 
+         DialogComponent, 
+         AddlabelComponent, 
+         SearchPipe, 
+         SearchComponent, 
+         LabelsComponent,
+         DeleteComponent,
+         CropImageComponent,
+         PinComponent,
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     MatDatepickerModule,
-     NativeDateModule,        ImageCropperModule,
-
-    BrowserModule, AppRoutingModule, BrowserAnimationsModule, MatFormFieldModule,
-    MatInputModule, MatAutocompleteModule, MatCheckboxModule, MatDatepickerModule,
-    MatRadioModule,
-    MatSelectModule, MatMenuModule, MatSliderModule,FormsModule,
-    MatSlideToggleModule, MatCardModule, HttpClientModule, FormsModule, MatSnackBarModule,
-    ReactiveFormsModule, FlexLayoutModule, MatIconModule, MatButtonModule, MatTooltipModule,
-    LayoutModule, MatNativeDateModule,MatToolbarModule, MatSidenavModule, MatListModule, MatDialogModule, MatChipsModule
+     NativeDateModule,
+     ImageCropperModule,
+     BrowserModule,
+     AppRoutingModule,
+     BrowserAnimationsModule,
+     MatFormFieldModule,
+     MatInputModule, 
+     MatAutocompleteModule, 
+     MatCheckboxModule, 
+     MatDatepickerModule,
+     MatRadioModule,
+     MatSelectModule, 
+     MatMenuModule, 
+     MatSliderModule,
+     FormsModule,
+     MatSlideToggleModule, 
+     MatCardModule, 
+     HttpClientModule, 
+     FormsModule, 
+     MatSnackBarModule,
+     ReactiveFormsModule, 
+     FlexLayoutModule, 
+     MatIconModule, 
+     MatButtonModule, 
+     MatTooltipModule,
+     LayoutModule, 
+     MatNativeDateModule,
+     MatToolbarModule,
+     MatSidenavModule, 
+     MatListModule, 
+     MatDialogModule, 
+     MatChipsModule
   ],
   providers: [
-    // {provide: MAT_DATE_FORMATS, useValue: NATIVE_DATE_FORMATS},
-
-    DataService,LoggerService,MessagingService],
-  entryComponents: [DialogComponent,CropImageComponent,ToolbarComponent, DeleteComponent, AddlabelComponent, CreatenewlabelComponent],
-  bootstrap: [AppComponent]
+    DataService,
+    LoggerService,
+    MessagingService
+  ],
+  entryComponents: [
+      DialogComponent,
+      CropImageComponent,
+      ToolbarComponent, 
+      DeleteComponent, 
+      AddlabelComponent, 
+      CreatenewlabelComponent
+   ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
 export class TooltipCustomClassExample { }

@@ -19,6 +19,7 @@ import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
 import { AddlabelComponent } from '../addlabel/addlabel.component';
 import { DeleteComponent } from '../delete/delete.component';
+import { NoteService } from '../../core/services/http/note/note.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-moreicon',
@@ -46,7 +47,7 @@ export class MoreiconComponent implements OnInit {
   /**Input and Output are two decorators in Angular responsible for communication between two components*/
   @Input() name;
   @Input() arrayofnotes: any
-  constructor(public dialog: MatDialog, public httpService: HttpService, public snackBar: MatSnackBar) { }
+  constructor(private noteService:NoteService,public dialog: MatDialog, public httpService: HttpService, public snackBar: MatSnackBar) { }
   ngOnInit() { }
   deletecard() {/**method to delete the cards */
     try {
@@ -56,7 +57,7 @@ export class MoreiconComponent implements OnInit {
         "isDeleted": true,/**attributes to be passed to hit the api trashNotes */
         "noteIdList": [this.arrayofnotes.id]
       }/**hitting the api by passing the url & token */
-      this.httpService.postdeletecard("notes/trashNotes", model, this.token).subscribe(data => {
+      this.noteService.postdeletecard("notes/trashNotes", model, this.token).subscribe(data => {
         console.log("deleted card successfully", data);/**if error doesnot exist the display the result */
         this.snackBar.open("successfully deleted notes", "deleted", {
           duration: 10000,
@@ -76,7 +77,7 @@ export class MoreiconComponent implements OnInit {
         "isDeleted": false,/**attributes to be passed to hit the api trashNotes */
         "noteIdList": [this.arrayofnotes.id]
       }/**hitting the api by passing the url & token */
-      this.httpService.postdeletecard("notes/trashNotes", model, this.token).subscribe(data => {
+      this.noteService.postdeletecard("notes/trashNotes", model, this.token).subscribe(data => {
         console.log("deleted card successfully", data);/**if error doesnot exist the display the result */
         this.snackBar.open("successfully deleted notes", "deleted", {
           duration: 10000,
@@ -97,7 +98,7 @@ export class MoreiconComponent implements OnInit {
     });
   }
   getLabels1() {
-    this.httpService.getcard("noteLabels/getNoteLabelList", this.token)
+    this.noteService.getcard("noteLabels/getNoteLabelList", this.token)
       .subscribe(response => {
         this.labelarray = [];
         console.log(response['data'].details);
@@ -117,7 +118,7 @@ export class MoreiconComponent implements OnInit {
     console.log(this.arrayofnotes.noteLabels);
     console.log("hellyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
     this.notearray = this.arrayofnotes.noteLabels;
-    this.httpService.getcard("noteLabels/getNoteLabelList", this.token)
+    this.noteService.getcard("noteLabels/getNoteLabelList", this.token)
       .subscribe(response => {
         this.labelarray = [];
         console.log(response['data'].details);
@@ -153,7 +154,7 @@ export class MoreiconComponent implements OnInit {
       {
         console.log("add function .......");
         /**hitting the api by passing the url & token & empty body*/
-        this.httpService.postdeletecard(url, {}, this.token).subscribe(data => {
+        this.noteService.postdeletecard(url, {}, this.token).subscribe(data => {
           /** In angular subscribe is used with Observable*/
           console.log("success in get label list", data);/**if success then display the data */
           this.moreevent.emit(label);/**to emit an event to the parent */
@@ -205,7 +206,7 @@ export class MoreiconComponent implements OnInit {
           "noteIdList": [this.arrayofnotes['id']]/**passing the noteidlist from the cards */
         }
         console.log(this.model, "model in trash");/**display the model */
-        this.httpService.postdeletecard('notes/deleteForeverNotes', this.model, this.token).subscribe(data => {
+        this.noteService.postdeletecard('notes/deleteForeverNotes', this.model, this.token).subscribe(data => {
           console.log(data, "success in trash");/**success in trash */
           this.delevent.emit();/**emit the event to */
           this.snackBar.open("note deleted  permanently", "trash", {

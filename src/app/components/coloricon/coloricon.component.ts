@@ -16,6 +16,7 @@
 import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
+import { NoteService } from '../../core/services/http/note/note.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-coloricon',
@@ -33,7 +34,7 @@ export class ColoriconComponent implements OnInit {
   @Input() newcolor;
   @Output() resp = new EventEmitter
   @Output() response = new EventEmitter<string>()
-  constructor(public httpService: HttpService, public snackBar: MatSnackBar) { }
+  constructor(private noteService:NoteService,public httpService: HttpService, public snackBar: MatSnackBar) { }
   token = localStorage.getItem('token');/**get the token from local storage */
   changecolor(paint)/**changecolor() method to change the color of notes */ {
     this.response.emit(paint);
@@ -42,7 +43,7 @@ export class ColoriconComponent implements OnInit {
       "noteIdList": [this.newcolor]
     }
     /**hitting the api by passing the url & token */
-    this.httpService.postdeletecard("notes/changesColorNotes", body, this.token).subscribe(
+    this.noteService.postdeletecard("notes/changesColorNotes", body, this.token).subscribe(
       data => {
         console.log("color changes successfully", this.newcolor);/**if error doesnot exist then display data */
         this.snackBar.open("color change success", "success", {/**snackbar to display the result */

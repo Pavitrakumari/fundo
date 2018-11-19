@@ -4,7 +4,6 @@ import * as firebase from 'firebase';
 @Injectable({
   providedIn: 'root'
 })
-
 export class MessagingService {
   messaging;
 
@@ -15,8 +14,7 @@ export class MessagingService {
     
     this.messaging = firebase.messaging();
   }
-
-  getPermission() {
+getPermission() {
     this.messaging.requestPermission()
     .then(() => {
       console.log('Notification permission granted.');

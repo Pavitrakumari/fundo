@@ -19,6 +19,7 @@ import { HttpService } from '../../core/services/http/http.service';
 // import { NavigationComponent } from '../navigation/navigation.component';
 import { DataService } from '../../core/services/data/data.service';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { NoteService } from '../../core/services/http/note/note.service';
 @Component({
     selector: 'app-cropimage',
     templateUrl: './cropimage.component.html',
@@ -29,6 +30,7 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 
   constructor(
+    private noteService:NoteService,
     private dialogRef1: MatDialogRef<ToolbarComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private httpService: HttpService,
@@ -46,7 +48,7 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
     var token = localStorage.getItem('token');
     const uploadData = new FormData();
     uploadData.append('file', this.croppedImage);
-    this.httpService.imageupload('user/uploadProfileImage', uploadData, token).subscribe(res => {
+    this.noteService.imageupload('user/uploadProfileImage', uploadData, token).subscribe(res => {
 
 
       console.log(res);

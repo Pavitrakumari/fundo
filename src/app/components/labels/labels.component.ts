@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from '../../core/services/http/http.service';
+import { NoteService } from '../../core/services/http/note/note.service';
 @Component({
   selector: 'app-labels',
   templateUrl: './labels.component.html',
@@ -11,7 +12,7 @@ export class LabelsComponent implements OnInit {
   labelName;
   arraynewdata = [];
   temp;
-  constructor(public httpService: HttpService, public route: ActivatedRoute) {
+  constructor(private noteService:NoteService,public httpService: HttpService, public route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       console.log(params);
       if (params) {
@@ -25,7 +26,7 @@ export class LabelsComponent implements OnInit {
   }
   getCard() {
     this.token = localStorage.getItem('token');/**get the token from the local storage */
-    this.httpService.getcard("notes/getNotesList", this.token).subscribe(data => {
+    this.noteService.getcard("notes/getNotesList", this.token).subscribe(data => {
       /**hitting the api by passing the url & token */
       this.arraynewdata = [];
       console.log("get cards list successfull", data);

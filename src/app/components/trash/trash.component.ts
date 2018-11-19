@@ -14,6 +14,7 @@
 *************************************************************************************************/
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
+import { NoteService } from '../../core/services/http/note/note.service';
 @Component({
   selector: 'app-trash',
   templateUrl: './trash.component.html',
@@ -23,12 +24,12 @@ export class TrashComponent implements OnInit {
   token = localStorage.getItem('token');
   myData = [];
   name = 'trash';
-  constructor(public httpService: HttpService) { }
+  constructor(private noteService:NoteService,public httpService: HttpService) { }
   ngOnInit() {
     this.getcard();
   }
   getcard() {
-    this.httpService.getcard("notes/getNotesList", this.token).subscribe(data => {
+    this.noteService.getcard("notes/getNotesList", this.token).subscribe(data => {
       /**hitting the api by passing the url & token*/
       console.log("get cards list successfull", data);
       this.myData = data['data'].data.reverse();/**reverse() method in typescript to display the data in reverse order */

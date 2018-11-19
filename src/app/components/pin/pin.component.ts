@@ -18,6 +18,7 @@ import { Component,Input,Output,OnInit,EventEmitter } from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoggerService } from '../../core/services/logger/logger.service';
+import { NoteService } from '../../core/services/http/note/note.service';
 
 @Component({
   selector: 'app-pin',
@@ -28,7 +29,7 @@ export class PinComponent implements OnInit {
   @Output() pinevent = new EventEmitter<any>();
 @Input()  noteid;
 
-  constructor(public httpService: HttpService,public snackBar: MatSnackBar ) { }
+  constructor(private noteService:NoteService,public httpService: HttpService,public snackBar: MatSnackBar ) { }
   // @Input() myData;
   
   public isDeleted = false;
@@ -63,7 +64,7 @@ public newPin=true;
           "isPined": this.newPin,
           "noteIdList": arr
         }
-        this.httpService.postdeletecard("notes/pinUnpinNotes",body , this.token).subscribe((data)=>{
+        this.noteService.postdeletecard("notes/pinUnpinNotes",body , this.token).subscribe((data)=>{
                 this.pinevent.emit();
                 LoggerService.log('data',data);
                 LoggerService.log(this.noteid)

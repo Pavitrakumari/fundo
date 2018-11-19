@@ -13,6 +13,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
+import { NoteService } from '../../core/services/http/note/note.service';
 @Component({
   selector: 'app-archive',
   templateUrl: './archive.component.html',
@@ -21,7 +22,7 @@ import { MatSnackBar } from '@angular/material';
 export class ArchiveComponent implements OnInit {
   token;
   temp1 = [];
-  constructor(public httpService: HttpService, public snackBar: MatSnackBar) { }
+  constructor(private noteService:NoteService,public httpService: HttpService, public snackBar: MatSnackBar) { }
   ngOnInit() {
     this.getarchive();
   }
@@ -30,7 +31,7 @@ export class ArchiveComponent implements OnInit {
   }
   getarchive() {
     this.token = localStorage.getItem('token');/**get the token from the local storage */
-    this.httpService.getcard("notes/getArchiveNotesList", this.token).subscribe(data => {
+    this.noteService.getcard("notes/getArchiveNotesList", this.token).subscribe(data => {
       /**hitting the api by passing the url & token */
       console.log("get cards list successfull", data);
       this.temp1 = data['data'].data.reverse();/**reverse() method in typescript to display the data in reverse order */

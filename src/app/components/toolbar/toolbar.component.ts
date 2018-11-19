@@ -28,6 +28,8 @@ import { LoggerService } from '../../core/services/logger/logger.service'
 import { ImageCroppedEvent } from 'ngx-image-cropper/src/image-cropper.component';
 import { CropImageComponent } from '../cropimage/cropimage.component';
 import { environment } from '../../../environments/environment';
+import { UserService } from '../../core/services/http/user/user.service';
+import { NoteService } from '../../core/services/http/note/note.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-toolbar',/**A string value which represents the component on browser at execution time */
@@ -50,7 +52,10 @@ export class ToolbarComponent implements OnInit {
       map(result => result.matches)
     );
   value: any;
-  constructor(private dataservice: DataService, public dialog: MatDialog, public snackBar: MatSnackBar, private breakpointObserver: BreakpointObserver, public httpService: HttpService, public router: Router) { }
+  constructor(private noteService:NoteService,private dataservice: DataService, public dialog: MatDialog, 
+    public snackBar: MatSnackBar,
+     private breakpointObserver: BreakpointObserver, 
+     public httpService: HttpService,public userService:UserService ,public router: Router) { }
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
 ngOnInit() {
@@ -81,7 +86,7 @@ this.dataservice.label.subscribe(message=>this.value=message)
   }
 logout() {
     console.log("logoutt running");
-    this.httpService.postlogout("user/logout", this.token).subscribe(data => {/**registers handlers for events emitted by the instance */
+    this.userService.postlogout("user/logout", this.token).subscribe(data => {/**registers handlers for events emitted by the instance */
       console.log("success in logouttttt", data);
       localStorage.removeItem('email');/**remove email from local storage when logout */
       localStorage.removeItem('token');/**remove token from local storage when logout */
@@ -110,7 +115,7 @@ addlabel() {/**addlabel() method to open the add-label dialog box when it is cli
     })
   }
 getLabels() {
-    this.httpService.getcard("noteLabels/getNoteLabelList", this.token)
+    this.noteService.getcard("noteLabels/getNoteLabelList", this.token)
       .subscribe(response => {
         this.labelarray = [];
         console.log(response['data'].details);

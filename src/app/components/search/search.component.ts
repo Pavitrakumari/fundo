@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
 import { DataService } from '../../core/services/data/data.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { NoteService } from '../../core/services/http/note/note.service';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -12,7 +13,7 @@ export class SearchComponent implements OnInit {
   temp = [];
   arraynewdata = [];
   public searchInput;
-  constructor(public httpService: HttpService, public dataservice: DataService) { }
+  constructor(private noteService:NoteService,public httpService: HttpService, public dataservice: DataService) { }
   ngOnInit() {
     this.dataservice.currentMessage.subscribe(message => {
       this.searchInput = message
@@ -22,7 +23,7 @@ export class SearchComponent implements OnInit {
   }
   getCard() {
     this.token = localStorage.getItem('token');/**get the token from the local storage */
-    this.httpService.getcard("notes/getNotesList", this.token).subscribe(data => {
+    this.noteService.getcard("notes/getNotesList", this.token).subscribe(data => {
       /**hitting the api by passing the url & token */
       this.arraynewdata = [];
       console.log("get cards list successfull", data);

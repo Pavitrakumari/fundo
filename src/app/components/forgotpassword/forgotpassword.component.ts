@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { HttpService } from '../../core/services/http/http.service';
+import { UserService } from '../../core/services/http/user/user.service';
 
 @Component({
   selector: 'app-forgotpassword',
@@ -19,7 +20,7 @@ export class ForgotpasswordComponent implements OnInit {
   model: any = {
     "email": ""
   }
-  constructor(private resetService: HttpService, public snackBar: MatSnackBar) { }
+  constructor(private userService:UserService,private resetService: HttpService, public snackBar: MatSnackBar) { }
   ngOnInit() {
   }
   reset() {
@@ -30,7 +31,7 @@ export class ForgotpasswordComponent implements OnInit {
       });
       return;
     }
-    this.resetService.postdata("user/reset", {
+    this.userService.postdata("user/reset", {
       "email": this.model.email
     }).subscribe(
       Response => {

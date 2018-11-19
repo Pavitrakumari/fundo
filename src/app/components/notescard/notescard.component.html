@@ -1,23 +1,62 @@
 <!------------------------------ Notes Collection--------------------------------- ----->
-<div fxLayoutWrap fxLayoutAlign="center center center" fxFlex fxLayout="row wrap" fxLayoutGap="10px">
-  <mat-card ngStyle.xl="width:10%;height:180px" ngStyle.sm="width:30%;height:180px" ngStyle.md="width:100%;height:auto"
-    ngStyle.xs="width:95%;height:auto" [ngClass]="{'viewgrid':condition,'viewlist':!condition}" class="example-card"
+<div fxlayout="row">
+    <div fxFlex.xs=0 fx.show="true" fxShow.xs="false" fxShow.sm="false" class="shrink" fxFlex>
+      </div>
+      <div fx.show="true" fxShow.sm="false" fxShow.md="false" fxShow.xs="false" class="grow" fxFlex="10">
+        </div>
+        <div fxLayoutAlign="start start" class="main" fxLayout="row wrap" fxLayoutWrap 
+        fxLayout.xs="column"
+        fxLayout.sm="100">
+    
+ <!-- <div fxFlex=20 style="border:solid"></div> -->
+ <!-- <div *ngIf="length!=0" style="width:100%" >{{string}}</div> -->
+  <mat-card 
+  ngStyle.sm="width:95%" 
+  ngStyle.xs="width:90%;margin-left:3px;margin-right:9px;"
+  ngStyle.xl="width:100px" 
+  ngStyle.1024-1366="width:0px" 
+  ngStyle.md="width:0px" 
+
+
+
+
+  ngstyle.gt-sm="width:100px"
+  ngStyle.md="width:200px"
+      [ngClass]="{'viewgrid':condition,'viewlist':!condition}" class="matcard"
     *ngFor='let index of myData | LockFilter:searchInput' [ngStyle]="{'background-color':index.color}">
     <div>
+        <mat-card-header>
+            <mat-card-title>
+                <app-pin (pinevent)="new($event)" [noteid]="index"></app-pin>
+
+
 <!------------------------------ Pin Component--------------------------------- ----->
-      <app-pin (pinevent)="new($event)" [noteid]="index"></app-pin>
 <!------------------------------ Matcard header------------------------------------ -->
-      <mat-card-header>
 <!------------------------------ Matcard title------------------------------------- -->
-        <mat-card-title>
-          <div class="inputTitle" contenteditable="false" aria-multiline="true" role="textbox" [innerHTML]="index.title"></div>
-        </mat-card-title>
+<div fxLayout="row" class="hiddenDiv">
+
+<div  dir="ltr" contenteditable="false" style="font-size:19px" 
+aria-multiline="true" role="textbox" role="textbox"
+ [innerHTML]="index.title">
+</div>
+ </div>
+
+
+</mat-card-title>
       </mat-card-header>
 <!------------------------------ Matcard content----------------------------------- -->
-      <div>
+      <div (click)="openDialog(index)">
         <mat-card-content class="content">
-          <div (click)="openDialog(index)" contenteditable="false" role="textbox" aria-multiline="true" layout-align="end center"
-            class="content" [innerHTML]="index.description">{{index.description}}</div>
+          <div  contenteditable="false" 
+          role="textbox" aria-multiline="true" 
+          layout-align="end center"
+            class="content" 
+            [innerHTML]="index.description">
+            {{index.description}}</div>
+          </mat-card-content>
+          </div>
+          </div>
+
 <!------------------------------ checklist--------------------------------- -->
           <div class="note" *ngFor="let checklist of index.noteCheckLists" fxLayout="row">
             <mat-checkbox fxFlex="10%" *ngIf="checklist.status=='open' && !checklist.isDeleted" (click)=checkBox(checklist,index.id)></mat-checkbox>
@@ -32,9 +71,9 @@
           <div fxLayout="row wrap" fxLayoutAlign="start" class="row-height" fxLayoutGap="5px">
             <div *ngFor="let item of index.noteLabels">
               <mat-chip-list selected>
-                <mat-chip class="top" routerLink="/home/labels/{{item.label}}" (click)="funclabel(item.label)"
+                <mat-chip class="labelmatchip" routerLink="/home/labels/{{item.label}}" (click)="funclabel(item.label)"
                   appearance="outline" *ngIf="item.isDeleted==false">
-                  {{item.label}}
+                  <span class="span" >{{item.label}}</span>
                   <mat-icon matChipRemove (click)="removelabel(item.id,index.id)">cancel</mat-icon>
                 </mat-chip><br>
               </mat-chip-list>
@@ -46,7 +85,7 @@
             <div *ngFor="let item of index.reminder">
               <mat-chip-list selected>
                 <div *ngIf='(todaydate | date:shortDate) == (item | date:shortDate )'>
-                  <mat-chip [matMenuTriggerFor]="edit.menu">
+                  <mat-chip class="top" [matMenuTriggerFor]="edit.menu">
                     <app-icon1 style="opacity:0" #edit="menuInOtherComponent" (click)="getReminder()" (reminderevent)="reminder($event)"
                       [reminders]="index"></app-icon1>
                     <mat-icon class="accesstime">access_time</mat-icon>
@@ -55,7 +94,7 @@
                   </mat-chip>
                 </div>
                 <div *ngIf='(tomorrow | date:shortDate) == (item | date:shortDate )'>
-                  <mat-chip [matMenuTriggerFor]="edit.menu">
+                  <mat-chip class="top" [matMenuTriggerFor]="edit.menu">
                     <app-icon1 style="opacity:0" #edit="menuInOtherComponent" (click)="getReminder()" (reminderevent)="reminder($event)"
                       [reminders]="index"></app-icon1>
                     <mat-icon class="accesstime">access_time</mat-icon>
@@ -66,11 +105,11 @@
                 </div>
                 <div *ngIf='(todaydate | date:shortDate) !==(item | date:shortDate ) && 
             (tomorrow | date:shortDate) !== (item | date:shortDate )'>
-                  <mat-chip [matMenuTriggerFor]="edit.menu">
+                  <mat-chip class="top" [matMenuTriggerFor]="edit.menu">
                     <app-icon1 style="opacity:0" #edit="menuInOtherComponent" (click)="getReminder()" (reminderevent)="reminder($event)"
                       [reminders]="index"></app-icon1>
                     <mat-icon class="accesstime">access_time</mat-icon>
-                    {{item | date:"medium"}}
+                    {{item | date:"short"}}
                     <mat-icon (click)="removereminder(index.id)" matChipRemove>cancel</mat-icon>
                   </mat-chip>
                 </div>
@@ -82,19 +121,18 @@
             fxLayoutGap="5px">
             <div *ngFor="let item of index.reminder">
               <mat-chip-list selected>
-                <mat-chip [matMenuTriggerFor]="edit.menu">
+                <mat-chip class="top" [matMenuTriggerFor]="edit.menu">
                   <app-icon1 style="opacity:0" #edit="menuInOtherComponent" (click)="getReminder()" (reminderevent)="reminder($event)"
                     [reminders]="index"></app-icon1>
                   <mat-icon class="accesstime">access_time</mat-icon>
-                  <del>{{item | date:"medium"}}</del>
+                  <del>{{item | date:"short"}}</del>
                   <mat-icon (click)="removereminder(index.id)" matChipRemove>cancel</mat-icon>
                 </mat-chip>
               </mat-chip-list>
             </div>
           </div>
-        </mat-card-content>
-      </div>
-    </div>
+      <!-- </div> -->
+    
 <!------------------------------mat-card icons ----------------------------------- -->
     <mat-card-actions>
       <span class="invisible">
@@ -106,5 +144,12 @@
         <app-moreicon [name]="name" (delevent)="trash($event)" (moreevent)="receive($event)" [arrayofnotes]="index"></app-moreicon>
       </span>
     </mat-card-actions>
-  </mat-card>
+  </mat-card></div>
+  <!-- <div style="border:solid" fxFlex=20></div> -->
+
+  <div fx.show="true"  fxShow.sm="false" fxShow.md="false" fxShow.xs="false" class="grow" fxFlex="10">
+    </div>
+    <div fxFlex.xs=0 fx.show="true" fxShow.md="false" fxShow.xs="false" fxShow.sm="false" 
+         class="shrink" fxFlex></div>
+  
 </div>

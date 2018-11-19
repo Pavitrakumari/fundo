@@ -20,6 +20,7 @@ import { MatMenu } from '@angular/material';
 
 import { MatSnackBar } from '@angular/material';
 import { HttpService } from '../../core/services/http/http.service';
+import { NoteService } from '../../core/services/http/note/note.service';
 /**A componenet can be reused throughout the application & even in other applications */
 
 @Component({
@@ -38,7 +39,7 @@ export class Icon1Component implements OnInit {
   @ViewChild(MatMenu) menu: MatMenu;
 
 
-  constructor(public snackBar:MatSnackBar,public httpService:HttpService) { }
+  constructor(private noteService:NoteService,public snackBar:MatSnackBar,public httpService:HttpService) { }
   token = localStorage.getItem('token')/**get the token from local storgae */
   @Input() reminders;
   @Input() reminderShow;
@@ -86,7 +87,7 @@ todayReminder() {/**function to get the reminder of present day */
       'reminder': new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 0, 20, 0, 0)
     }
   /**hit the api by passing the url,body & token */
-  this.httpService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
+  this.noteService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
     .subscribe(data => {/** if there exits no error then post the data */
       console.log("success in today reminders",data);
       this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
@@ -114,7 +115,7 @@ try{
       'reminder': new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 8, 0, 0)
     }
   /**hit the api by passing the url,body & token */
-  this.httpService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
+  this.noteService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
     .subscribe(data => {/** if there exits no error then post the data */
       console.log("success in tomorroe reminders",data);
       this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
@@ -140,7 +141,7 @@ try  {
       'reminder': new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7, 8, 0, 0)
     }
       /**hit the api by passing the url,body & token */
-      this.httpService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
+      this.noteService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
     .subscribe(data => {/** if there exits no error then post the data */
       console.log("success in week reminder",data);
       this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
@@ -203,7 +204,7 @@ try{
   }
   this.remm.emit(data);
 
-  this.httpService.postdeletecard('notes/addUpdateReminderNotes',this.body,this.token).subscribe((result) => {
+  this.noteService.postdeletecard('notes/addUpdateReminderNotes',this.body,this.token).subscribe((result) => {
     this.reminderevent.emit()
   })
 

@@ -15,6 +15,7 @@
 /**component has imports , decorator & class */
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
+import { NoteService } from '../../core/services/http/note/note.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-notesparent',/**A string value which represents the component on browser at execution time */
@@ -27,7 +28,7 @@ export class NotesparentComponent implements OnInit {
   temp = [];
   arraynewdata = [];
   pinarraay=[];
-  constructor(public httpService: HttpService) { }
+  constructor(private noteService:NoteService,public httpService: HttpService) { }
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
   ngOnInit() {
@@ -42,7 +43,7 @@ export class NotesparentComponent implements OnInit {
   }
   getCard() {
     this.token = localStorage.getItem('token');/**get the token from the local storage */
-    this.httpService.getcard("notes/getNotesList", this.token).subscribe(data => {
+    this.noteService.getcard("notes/getNotesList", this.token).subscribe(data => {
       /**hitting the api by passing the url & token */
       console.log("get cards list successfull", data);
       this.temp = data['data'].data.reverse();/**reverse() method in typescript to display the data in reverse order */
@@ -63,7 +64,7 @@ export class NotesparentComponent implements OnInit {
   }
 getpincards(){
   this.token=localStorage.getItem('token');
-  this.httpService.getcard("notes/getNotesList",this.token).subscribe(data=>{
+  this.noteService.getcard("notes/getNotesList",this.token).subscribe(data=>{
     this.pinarraay=[];
     console.log("get pin catds list success",data);
     // this.temp = data['data'].data.reverse();

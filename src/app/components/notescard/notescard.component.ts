@@ -21,6 +21,7 @@ import { DataService } from '../../core/services/data/data.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { state } from '@angular/animations';
 import { LoggerService } from '../../core/services/logger/logger.service';
+import { NoteService } from '../../core/services/http/note/note.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-notescard',/**A string value which represents the component on browser at execution time */
@@ -41,12 +42,15 @@ export class NotescardComponent implements OnInit {
 
   @Output() deleted = new EventEmitter<any>();
   @Input() name;
+  @Input() string;
+  @Input() length;
+
   // @Inp[ut() pinevent]
   @Input() myData;
   condition = true;
   @Input() searchInput
   token = localStorage.getItem('token')
-  constructor(public httpService: HttpService, public dialog: MatDialog, public dataService: DataService) {
+  constructor(private noteService:NoteService,public httpService: HttpService, public dialog: MatDialog, public dataService: DataService) {
     this.dataService.currentMessage2.subscribe(message => {
       console.log(message);
       if (message) {
@@ -118,7 +122,7 @@ return true;
   removelabel(label,note) {/**passing the label id & note id */
     try {
       console.log(note,label);/**displaying the id's */
-      this.httpService.postdeletecard("notes/" + note + "/addLabelToNotes/" + label + "/remove", null, this.token)
+      this.noteService.postdeletecard("notes/" + note + "/addLabelToNotes/" + label + "/remove", null, this.token)
         .subscribe(data => {/**using the observabel subscribe using callbackk */
           console.log("success in remove label", data);/**if success then display the result */
           this.updateevent.emit();/**emit an event to the parent */
@@ -136,7 +140,7 @@ return true;
       "noteIdList":[noteid],
 
     }
-    this.httpService.postdeletecard('/notes/removeReminderNotes', body,this.token)
+    this.noteService.postdeletecard('/notes/removeReminderNotes', body,this.token)
       .subscribe(data => {
         console.log("success in remove reminders ",data);
         this.updateevent.emit();
@@ -147,7 +151,7 @@ return true;
   }
 
   getReminder() {
-    this.httpService.getcard('/notes/getReminderNotesList', this.token)
+    this.noteService.getcard('/notes/getReminderNotesList', this.token)
       .subscribe(data => {
         console.log("success in get reminders ",data);
         // this.updateevent.emit();
@@ -176,7 +180,7 @@ return true;
       "status": this.modifiedCheckList.status
     }
     var url = "notes/" + id + "/checklist/" + this.modifiedCheckList.id + "/update";
-    this.httpService.postdeletecard(url, JSON.stringify(checklistData),this.token).subscribe(response => {
+    this.noteService.postdeletecard(url, JSON.stringify(checklistData),this.token).subscribe(response => {
       console.log("success in update checklists",response);
 
     }),

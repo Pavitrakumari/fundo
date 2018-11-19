@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 
 import { error } from '@angular/compiler/src/util';
 import { LoggerService } from '../../core/services/logger/logger.service';
+import { NoteService } from '../../core/services/http/note/note.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-notes',/**A string value which represents the component on browser at execution time */
@@ -51,7 +52,7 @@ export class NotesComponent implements OnInit {
   
   token = localStorage.getItem('token');/**get the token from localstorage */
   adding: boolean;
-  constructor(public httpService: HttpService, public router: Router) { }
+  constructor(private noteService:NoteService,public httpService: HttpService, public router: Router) { }
   public clicked = false;
   /**Input and Output are two decorators in Angular responsible for communication between two components*/
   @Output() onNewEntryAdded = new EventEmitter();
@@ -146,7 +147,7 @@ export class NotesComponent implements OnInit {
       if (this.title != "") 
       {
         console.log("executing PRANEE checklistt.............");
-        this.httpService.postpassword("notes/addnotes", this.body, this.token).subscribe( /**registers handlers for events emitted by this instance */
+        this.noteService.postpassword("notes/addnotes", this.body, this.token).subscribe( /**registers handlers for events emitted by this instance */
           data => {
           LoggerService.log("successfull add notes bujji ", data);/**if success then display the data */
           this.selectarray1 = [];
@@ -168,7 +169,7 @@ catch (error) {
 }
 }
 getLabels1() {
-    this.httpService.getcard("noteLabels/getNoteLabelList", this.token)
+    this.noteService.getcard("noteLabels/getNoteLabelList", this.token)
       .subscribe(response => {
         this.labelarray = [];
         console.log(response['data'].details);

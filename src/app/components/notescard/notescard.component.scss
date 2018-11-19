@@ -2,60 +2,137 @@
     margin-top:25px;
     border-radius: 15px;
 }
-.row-height{
-    margin-top:0%;
+// .row-height{
+//     margin-top:0%;
+//   }
+// mat-card{
+//     border-radius: 15px;
+// }
+.matcard{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+    margin: 10px;
+    /* height:auto; */
+     width:190px; 
+    border-radius: 10px 10px 10px 10px;
+  
+} 
+.matcard:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
+//     box-shadow: 0 0 30px rgba(0,0,0,0.6);
+// -moz-box-shadow: 0 0 30px rgba(0,0,0,0.6);
+// -webkit-box-shadow: 0 0 30px rgba(0,0,0,0.6);
+// -o-box-shadow: 0 0 30px rgba(0,0,0,0.6);
+
+    margin: 10px;
+    /* height:auto; */
+     width:190px; 
+    border-radius: 10px 10px 10px 10px;
+  
+} 
+
+
+
+mat-chip {
+    justify-content: space-between;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    overflow: hidden !important;
+    
   }
-mat-card{
-    border-radius: 15px;
-}
+ 
 mat-card-title{
-    width:200px;
+    font-family: 'Google Sans',Roboto,Arial,sans-serif;
+
+    width:180px;
     height:auto;
     word-wrap: break-word;
-    font-size: 500px;
+    font-size: 100px;
     font-weight: bolder;
 }
 .main{
     /* padding:5px; */
-    width:799px;
+    width:800px;
     flex-wrap: wrap;
     /* flex-basis: 100% */
 }
 
 mat-card-content{
-    width:200px;
+    width:180px;
     height:auto;
+    font-family: 'Google Sans',Roboto,Arial,sans-serif;
+    line-height: 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 400;
+
     word-wrap: break-word;
 }
 .invisible{
+    margin-bottom:0px;
     opacity: 0;
+    // border:solid;
 }
 .invisible:hover{
     opacity: 1;
+    width:280px;
+    margin-bottom:0px;
+    // border:solid;
+
+
 }
 .mat-chip.mat-standard-chip .mat-chip-remove {
     color: rgba(0,0,0,.87);
     opacity: 0;
+    word-wrap: break-word;
+
+    // width:40px;
 }
 .mat-chip.mat-standard-chip .mat-chip-remove:hover {
     color: rgba(0,0,0,.87);
     opacity: 0.4;
+    word-wrap: break-word;
+
+    // width:80px;
+
+}
+.span{
+    width:50px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden !important;
+ 
 }
 .viewgrid{
-    width:265px;
+    width:190px;
 }
 .viewlist{
-    width:600px;
+    width:700px;
 }
+
 .note{
     border:none;
     outline: none;
 }
 .accesstime{
-    margin-left:-35px;
-    margin-right: 4px;
+    margin-left:-45px;
+    margin-right: 0px;
 }
 .mat-chip-list-wrapper .mat-standard-chip,
  .mat-chip-list-wrapper input.mat-input-element {
     margin: 8px;
+    word-wrap: break-word;
+
+}
+.labelmatchip{
+    height:30px;
+    width:auto;
+    margin-top:50px;
+
+}
+.top{
+    height:30px;
+    width:auto;
 }
