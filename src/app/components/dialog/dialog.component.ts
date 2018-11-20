@@ -14,13 +14,17 @@
 *************************************************************************************************/
 
 /**component has imports , decorator & class */
-import { Component, Output, EventEmitter, OnInit, Inject, Input } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, Output, EventEmitter, OnInit, Inject, Input,OnDestroy } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
 import { LoggerService } from '../../core/services/logger/logger.service';
 import { DataService } from '../../core/services/data/data.service';
 import { NoteService } from '../../core/services/http/note/note.service';
+import { Notes } from '../../core/models/notes';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 /**A componenet can be reused throughout the application & even in other applications */
 export interface DialogData {
   "title": String,
@@ -34,17 +38,23 @@ export interface DialogData {
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
-export class DialogComponent implements OnInit {
+export class DialogComponent implements OnInit ,OnDestroy{
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
   public title;
   public note;
   public tempArray=[];
   public newList;
+  list:Notes[]=[]
+  list2:Notes[]=[]
+
   public newData:any={}
   public modifiedCheckList;
   public bgcolor=this.data.color;
   selectarray1 = [];
   selectarray2 = [];
   public id;
+  color;
   noteid={'isArchived':false}
   public checklist=false;
   public noteLabels;
@@ -68,7 +78,7 @@ export class DialogComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  token = localStorage.getItem('token');/**get the token from local storage */
+ 
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized
    *  all data-bound properties of a directive. */
@@ -76,6 +86,7 @@ ngOnInit() {
   LoggerService.log(this.data['noteLabels'], "maaaa");
     this.selectarray1 = this.data['noteLabels'];
     this.selectarray2 = this.data['reminder'];
+    this.color = this.data['color'];
     if (this.data['noteCheckLists'].length>0){
       LoggerService.log(this.data['noteCheckLists'],"update check lists in dialog for checking............");
       this.checklist=true;
@@ -105,29 +116,36 @@ ngOnInit() {
       "title": this.title,
       "description": this.note,
     }
-    this.noteService.postpassword("notes/updateNotes", body, this.token).subscribe(data => {
-      console.log("update changes successfully", data);/**if no errors then display the data */
+    // ,
+    this.noteService.updatenotes( body)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(data => {
+      LoggerService.log("update changes successfully", data);/**if no errors then display the data */
       this.snackBar.open("update change success", "success", {/**snackbar to display the result */
         duration: 10000,/**duaration of the snackbar to be opened */
       });
     })
   }
   else{/**if add note is for checklist,then it executes the else part */
-    console.log("runnin else.........just .............");
+    LoggerService.log("runnin else.........just .............");
     var apiData={/**Attributes to be passed for hitting the api */
       "itemName": this.modifiedCheckList.itemName,
       "status":this.modifiedCheckList.status
     }
-    var url = "notes/" + this.data['id'] + "/checklist/" + this.modifiedCheckList.id + "/update";
-    this.noteService.postdeletecard(url, JSON.stringify(apiData), this.token).subscribe(response => {
-      console.log("else part.......................",response);
+    // let url = this.url+"notes/" + id + "/checklist/" + modifiedid + "/update";
+
+    // var url = "notes/" + this.data['id'] + "/checklist/" + this.modifiedCheckList.id + "/update";
+    this.noteService.postUpdateChecklist(this.data['id'], this.modifiedCheckList.id ,JSON.stringify(apiData))
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(response => {
+      LoggerService.log("else part.......................",response);
     }),
     error=>{/**if error exists,then display the error */
       LoggerService.log("else paer errorrrrr",error);
     }
   }
   error => {
-        console.log("error in update", error);/**if error exists then display the error */
+    LoggerService.log("error in update", error);/**if error exists then display the error */
         this.snackBar.open("update change failed", "error", {/**snackbar to display the result */
           duration: 10000,
         });
@@ -138,7 +156,7 @@ ngOnInit() {
   }
 }
 editing(editedList,event){
-  console.log(editedList);
+  LoggerService.log(editedList);
     if(event.code=="Enter"){
     this.modifiedCheckList=editedList;
     this.updateNotes();
@@ -151,22 +169,23 @@ checkBox(checkList){
     else{
       checkList.status = "open"
     }
-    console.log(checkList);
+    LoggerService.log(checkList);
     this.modifiedCheckList=checkList;
     this.updateNotes();
   }
   public removedList;
   removeList(checklist){/**method to remove the check lists */
-    console.log(checklist)
+    LoggerService.log(checklist)
     this.removedList=checklist;/**move them into the remove list */
     this.removeCheckList()/**calling the removechecklist function */
   }
   removeCheckList(){/**function to remove the check lists */
 try{
-    var url = "notes/" + this.data['id']+ "/checklist/" + this.removedList.id + "/remove";
-/**hit the api by passing the parameters url,body,token */
-    this.noteService.postdeletecard(url,null,this.token).subscribe((response)=>{
-      console.log(response);
+    // var url = "notes/" + this.data['id']+ "/checklist/" + this.removedList.id + "/remove";
+    this.noteService.postChecklistRemove(this.data['id'],this.removedList.id ,null)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((response)=>{
+      LoggerService.log("response",response);
       for(var i=0;i<this.tempArray.length;i++){/**run the for loop for the complete length of the temparray which consists of checklists */
         if(this.tempArray[i].id==this.removedList.id){/**if they are matching  with id's */
           this.tempArray.splice(i,1)/**then splice them from the array */
@@ -175,7 +194,7 @@ try{
     })
   }
 catch(error){
-    console.log(error);
+  LoggerService.log(error);
   }
 }
   public adding=false;
@@ -200,23 +219,23 @@ try{
         "itemName":this.newList,
         "status":this.status
       }
-      console.log(this.newData,"newwwwwww dataaaaaaaaaaaa");
-      var url = "notes/" + this.data['id'] + "/checklist/add";
-      /**hit the api by passing the parameters url,newDta body,token*/
-      this.noteService.postdeletecard(url, this.newData, this.token)
+      LoggerService.log(this.newData,"newwwwwww dataaaaaaaaaaaa");
+      // var url = "notes/" + this.data['id'] + "/checklist/add";
+      this.noteService.postCheckListAdd(this.data['id'], this.newData)
+      .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
-      console.log(response);
+        LoggerService.log("response",response);
       this.newList=null;
       this.addCheck=false;
       this.adding=false;
-      console.log(response['data'].details);/**push the response into the tempArray */
-      this.tempArray.push(response['data'].details)
-      console.log(this.tempArray)
+      this.list=response['data'].details
+      LoggerService.log("response ",this.list);/**push the response into the tempArray */
+      this.tempArray.push(this.list)
     })
   }
 }
 catch(error){
-  console.log(error);
+  LoggerService.log(error);
 }
 }
 emit(event){
@@ -224,10 +243,11 @@ emit(event){
 }
   removelabel(label, note) {/**passing the label id & note id */
 try {
-      console.log(note, label);/**displaying the id's */
-      this.noteService.postdeletecard("notes/" + note + "/addLabelToNotes/" + label.id + "/remove", null, this.token)
-        .subscribe(data => {/**using the observabel subscribe using callbackk */
-          console.log("success in remove label", data);
+  LoggerService.log(note, label);/**displaying the id's */
+      this.noteService.postAddLabelnotesRemove(label.id ,note, null)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => {/**using the observabel subscribe using callbackk */
+          LoggerService.log("success in remove label", data);
           /**if success then display the result */
           this.eventOne.emit(true);
           const index = this.selectarray1.indexOf(label, 0);
@@ -237,21 +257,28 @@ try {
         }),
         this.updateevent.emit();
       error => {/**if error exists */
-        console.log("error in remove", error);/**then display the error */
+        LoggerService.log("error in remove", error);/**then display the error */
       }
     }
 catch (error) {
-      console.log(error);
+  LoggerService.log(error);
     }
+  }
+
+  changeColor(event) {
+
+    this.color = event;
+
   }
 removereminder(item,noteid) {/**function to remove reminders */
 try{
     var body={/**passing the attributes to the body */
       "noteIdList":[noteid],
     }/**hit the api by passing the parameters url,body,token */
-    this.noteService.postdeletecard('/notes/removeReminderNotes', body,this.token)
-      .subscribe(data => {
-        console.log("success in remove reminders ",data);
+    this.noteService.postRemoveReminders( body)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(data => {
+        LoggerService.log("success in remove reminders ",data);
         this.eventOne.emit(true);/**emitting the event */
         const index = this.selectarray2.indexOf(item,0);
         if (index > -1) {/**if index is greater than -1 then remove those index's from the selectarray2 */
@@ -260,13 +287,17 @@ try{
         this.updateevent.emit();/**emitting the event */
       })
       error => {
-      console.log("error in remove reminders",error);
+        LoggerService.log("error in remove reminders",error);
     }}
 catch(error){/**if error exists then handle the errors
    */
-      console.log(error);
+  LoggerService.log(error);
       
     }
   }
-
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Now let's also unsubscribe from the subject itself:
+    this.destroy$.unsubscribe();
+  }
 }

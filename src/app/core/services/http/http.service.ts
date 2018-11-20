@@ -16,7 +16,8 @@ const httpOptions = {
 /**exporting the http service */
 export class HttpService {
   constructor(private http: HttpClient) { }
-  url = environment.baseUrl;/**url */
+  url = environment.baseUrl;
+  /**url */
   // getDataService(url)
   // {
   //   url = this.url + url;

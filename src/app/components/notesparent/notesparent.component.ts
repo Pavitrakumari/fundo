@@ -13,9 +13,14 @@
 *
 *************************************************************************************************/
 /**component has imports , decorator & class */
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
 import { NoteService } from '../../core/services/http/note/note.service';
+import { Notes } from '../../core/models/notes';
+import { LoggerService } from '../../core/services/logger/logger.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-notesparent',/**A string value which represents the component on browser at execution time */
@@ -23,17 +28,23 @@ import { NoteService } from '../../core/services/http/note/note.service';
   styleUrls: ['./notesparent.component.scss']/**It is used to provide style of components */
 })
 /**To use components in other modules , we have to export them */
-export class NotesparentComponent implements OnInit {
+export class NotesparentComponent implements OnInit,OnDestroy {
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
   token;
   temp = [];
   arraynewdata = [];
   pinarraay=[];
+  // list:Notes[]=[];
+  list:Notes[]=[]
+
   constructor(private noteService:NoteService,public httpService: HttpService) { }
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
   ngOnInit() {
     this.getCard();/**calling the getCard() to get the cards & display automatically when the component loads */
-    this.getpincards()
+    this.getpincards();
+console.log("checking notes parent................");
 
   }
   delete() {
@@ -42,18 +53,21 @@ export class NotesparentComponent implements OnInit {
     }
   }
   getCard() {
+try{
     this.token = localStorage.getItem('token');/**get the token from the local storage */
-    this.noteService.getcard("notes/getNotesList", this.token).subscribe(data => {
-      /**hitting the api by passing the url & token */
+    this.noteService.getcard()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(data => {
       console.log("get cards list successfull", data);
-      this.temp = data['data'].data.reverse();/**reverse() method in typescript to display the data in reverse order */
+      this.list=data['data'].data
+      this.temp = this.list.reverse();/**reverse() method in typescript to display the data in reverse order */
       // console.log(this.temp);
       this.arraynewdata = [];/**Reinitializing the array so that data gets updated */
-      for (var i = 0; i < data['data'].data.length; i++)/**for loop to go through all cards*/ {
-        if (data['data'].data[i].isDeleted == false && 
-        data['data'].data[i].isArchived == false &&
-        data['data'].data[i].isPined == false)/**if cards are not deleted  */ {
-          this.arraynewdata.push(data['data'].data[i]);/**then push those cards into the array */
+      for (var i = 0; i < this.list.length; i++)/**for loop to go through all cards*/ {
+        if (this.list[i].isDeleted == false && 
+          this.list[i].isArchived == false &&
+          this.list[i].isPined == false)/**if cards are not deleted  */ {
+          this.arraynewdata.push(this.list[i]);/**then push those cards into the array */
         }
       }
       console.log(this.arraynewdata, "array of new data");/**display new array*/
@@ -61,24 +75,39 @@ export class NotesparentComponent implements OnInit {
       error => {/**if error occurs then display the error */
         console.log("error", error);
       }
+    }
+catch(error){
+      LoggerService.log(error)
+    }
   }
 getpincards(){
+try{
   this.token=localStorage.getItem('token');
-  this.noteService.getcard("notes/getNotesList",this.token).subscribe(data=>{
+  this.noteService.getcard()
+  .pipe(takeUntil(this.destroy$))
+  .subscribe(data=>{
     this.pinarraay=[];
     console.log("get pin catds list success",data);
-    // this.temp = data['data'].data.reverse();
-    for (var i = 0; i < data['data'].data.length; i++){
-      if(data['data'].data[i].isPined == true){
-        this.pinarraay.push(data['data'].data[i]);
+    for (var i = 0; i < this.list.length; i++){
+      if(this.list[i].isPined == true){
+        this.pinarraay.push(this.list[i]);
       }
     }
     console.log(this.pinarraay,"array of pin data");
     
   })
 }
+catch(error){
+  LoggerService.log(error)
+}
+}
 pinNew($event){
   this.getCard();
   this.getpincards();
+}
+ngOnDestroy() {
+  this.destroy$.next(true);
+  // Now let's also unsubscribe from the subject itself:
+  this.destroy$.unsubscribe();
 }
 }

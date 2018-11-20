@@ -13,13 +13,15 @@
 *
 *************************************************************************************************/
 /**component has imports , decorator & class */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter,OnDestroy } from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
 import { Router } from '@angular/router';
-
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { error } from '@angular/compiler/src/util';
 import { LoggerService } from '../../core/services/logger/logger.service';
 import { NoteService } from '../../core/services/http/note/note.service';
+import { Notes } from '../../core/models/notes';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-notes',/**A string value which represents the component on browser at execution time */
@@ -27,12 +29,14 @@ import { NoteService } from '../../core/services/http/note/note.service';
   styleUrls: ['./notes.component.scss']/**It is used to provide style of components */
 })
 /**To use components in other modules , we have to export them */
-export class NotesComponent implements OnInit {
+export class NotesComponent implements OnInit,OnDestroy {
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
   colorChange 
   = "#ffffff";
   expression1 = true;
 
-
+list:Notes[]=[]
   expression2 = false;
   expression3 = true;
   labelarray;
@@ -147,9 +151,11 @@ export class NotesComponent implements OnInit {
       if (this.title != "") 
       {
         console.log("executing PRANEE checklistt.............");
-        this.noteService.postpassword("notes/addnotes", this.body, this.token).subscribe( /**registers handlers for events emitted by this instance */
+        this.noteService.addnotes( this.body)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe( /**registers handlers for events emitted by this instance */
           data => {
-          LoggerService.log("successfull add notes bujji ", data);/**if success then display the data */
+          console.log("successfull add notes bujji ", data);/**if success then display the data */
           this.selectarray1 = [];
           this.expression3 = true;
           this.selectarray2 = [];
@@ -160,7 +166,7 @@ export class NotesComponent implements OnInit {
           this.close1();
           this.colorChange = "#ffffff";
         }, error => {
-          console.log("Error", error);/**if there exists error then display the error */
+          console.log("Error in add notes", error);/**if there exists error then display the error */
         });
       }
     }
@@ -168,14 +174,17 @@ catch (error) {
   console.log(error);
 }
 }
+
 getLabels1() {
-    this.noteService.getcard("noteLabels/getNoteLabelList", this.token)
-      .subscribe(response => {
+    this.noteService.getlabels()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(response => {
+        this.list=response['data'].details;
         this.labelarray = [];
-        console.log(response['data'].details);
-        for (var i = 0; i < (response['data'].details).length; i++) {
-          if (response['data'].details[i].isDeleted == false) {
-            this.labelarray.push(response['data'].details[i])
+        console.log(this.list);
+        for (var i = 0; i < (this.list).length; i++) {
+          if (this.list[i].isDeleted == false) {
+            this.labelarray.push(this.list[i])
           }
         }
         LoggerService.log('Label array printing success bujji soo sweet of you'
@@ -243,6 +252,11 @@ getLabels1() {
   }
   removereminder() {
     this.array=[];
+  }
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Now let's also unsubscribe from the subject itself:
+    this.destroy$.unsubscribe();
   }
   public todaydate=new Date();
   public tomorrow=new Date(this.todaydate.getFullYear(), this.todaydate.getMonth(), this.todaydate.getDate() + 1)

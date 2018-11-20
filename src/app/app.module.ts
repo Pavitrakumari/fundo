@@ -67,6 +67,9 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { CropImageComponent } from './components/cropimage/cropimage.component';
 import { PinComponent } from './components/pin/pin.component';
 import { MessagingService } from './core/services/messaging/messaging.service';
+import { InterceptorService} from './core/services/interceptor/interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 @NgModule({
   declarations: [
          AppComponent, 
@@ -106,44 +109,49 @@ import { MessagingService } from './core/services/messaging/messaging.service';
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   imports: [
-    MatDatepickerModule,
-     NativeDateModule,
-     ImageCropperModule,
-     BrowserModule,
-     AppRoutingModule,
-     BrowserAnimationsModule,
-     MatFormFieldModule,
-     MatInputModule, 
-     MatAutocompleteModule, 
-     MatCheckboxModule, 
-     MatDatepickerModule,
-     MatRadioModule,
-     MatSelectModule, 
-     MatMenuModule, 
-     MatSliderModule,
-     FormsModule,
-     MatSlideToggleModule, 
-     MatCardModule, 
-     HttpClientModule, 
-     FormsModule, 
-     MatSnackBarModule,
-     ReactiveFormsModule, 
-     FlexLayoutModule, 
-     MatIconModule, 
-     MatButtonModule, 
-     MatTooltipModule,
-     LayoutModule, 
-     MatNativeDateModule,
-     MatToolbarModule,
-     MatSidenavModule, 
-     MatListModule, 
-     MatDialogModule, 
-     MatChipsModule
+         MatDatepickerModule,
+         NativeDateModule,
+         ImageCropperModule,
+         BrowserModule,
+         AppRoutingModule,
+         BrowserAnimationsModule,
+         MatFormFieldModule,
+         MatInputModule, 
+         MatAutocompleteModule, 
+         MatCheckboxModule, 
+         MatDatepickerModule,
+         MatRadioModule,
+         MatSelectModule, 
+         MatMenuModule, 
+         MatSliderModule,
+         FormsModule,
+         MatSlideToggleModule, 
+         MatCardModule, 
+         HttpClientModule, 
+         FormsModule, 
+         MatSnackBarModule,
+         ReactiveFormsModule, 
+         FlexLayoutModule, 
+         MatIconModule, 
+         MatButtonModule, 
+         MatTooltipModule,
+         LayoutModule, 
+         MatNativeDateModule,
+         MatToolbarModule,
+         MatSidenavModule, 
+         MatListModule, 
+         MatDialogModule, 
+         MatChipsModule,
+         HttpClientModule
   ],
   providers: [
     DataService,
     LoggerService,
-    MessagingService
+    MessagingService,InterceptorService,{
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
+    }
   ],
   entryComponents: [
       DialogComponent,

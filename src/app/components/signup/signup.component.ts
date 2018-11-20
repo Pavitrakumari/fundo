@@ -1,9 +1,14 @@
 /**component has imports , decorator & class */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,OnDestroy} from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { Notes } from '../../core/models/notes';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 import { UserService } from '../../core/services/http/user/user.service';
+import { LoggerService } from '../../core/services/logger/logger.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-signup',
@@ -11,7 +16,9 @@ import { UserService } from '../../core/services/http/user/user.service';
   styleUrls: ['./signup.component.scss']
 })
 /**To use components in other modules , we have to export them */
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit,OnDestroy {
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
   firstname = new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z]*')]);
@@ -44,22 +51,25 @@ export class SignupComponent implements OnInit {
   }
   public card = [];
   public arr = [];
-  service;
-  constructor(public httpService: HttpService,private userService:UserService, public snackBar: MatSnackBar) { }
+  service; 
+  list:Notes[]=[]
+constructor(public httpService: HttpService,private userService:UserService, public snackBar: MatSnackBar) { }
   /**method to get the service for the user */
   ngOnInit() {
-    let obs = this.userService.getDataService("user/service");
-    obs.subscribe((response) => {
-      var data = response["data"];
-      for (var i = 0; i < data.data.length; i++) {
-        this.card.push(data.data[i]);
+    let obs = this.userService.getDataService1();
+    obs
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((response) => {
+     this.list = response["data"].data;
+      for (var i = 0; i <this.list .length; i++) {
+        this.card.push(this.list [i]);
       }
-      console.log(this.card);
+      // LoggerService.log(this.card);
     })
   }
   /**method used to respond the cards based on the selection of user */
   respond(card) {
-    console.log(card.name);
+    LoggerService.log(card.name);
     this.service = card.name;
     card.select = true;
     for (var i = 0; i < this.card.length; i++) {
@@ -72,11 +82,12 @@ export class SignupComponent implements OnInit {
   model: any = {};
   /**signup method to post the data when a particular user is signed in successfully */
   signup() {
-    console.log(this.model.Firstname)
-    console.log(this.model.Lastname)
-    console.log(this.model.Username)
-    console.log(this.model.password)
-    this.userService.postdata("user/userSignUp",
+try{
+    LoggerService.log(this.model.Firstname)
+    LoggerService.log(this.model.Lastname)
+    LoggerService.log(this.model.Username)
+    LoggerService.log(this.model.password)
+    this.userService.postsignup(
       {
         "firstName": this.model.Firstname,
         "lastName": this.model.Lastname,
@@ -89,9 +100,10 @@ export class SignupComponent implements OnInit {
         "emailVerified": true,
         "password": this.model.password
       })
+      .pipe(takeUntil(this.destroy$))
       .subscribe(/**if no error then data is posted with the given message */
         data => {
-          console.log("POST Request is successful ", data);
+          LoggerService.log("POST Request is successful ", data);
           localStorage.setItem('firstName', data['firstName']);
 
           this.snackBar.open("successfully registered", "ACCOUNT CREATED", {
@@ -100,25 +112,35 @@ export class SignupComponent implements OnInit {
           });
           var firstName=localStorage.getItem('firstName');
 
-          console.log("firstname in signin",firstName);
+          LoggerService.log("firstname in signin",firstName);
           
         }),
         error => {/**if error exists then displays the error message using snackbar */
-          console.log("Error", error);
+          LoggerService.log("Error", error);
           this.snackBar.open("All the details must be filled  ", "SIGNUP FAILED", {
             duration: 10000,
           });
         }
 
-    this.userService.getDataService("user")/**using the service to get the data that is posted into the server */
-      .subscribe(
+    this.userService.getDataService2()/**using the service to get the data that is posted into the server */
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(
         (data) => {/**get the data if error doesnot exist */
-          console.log("data added into the server : ", data);
+          LoggerService.log("data added into the server : ", data);
         },
         error => {/**displays the error if any */
-          console.log("error", error)
+          LoggerService.log("error", error)
         })
   }
+catch(error){
+    LoggerService.log(error)
+  }
+}
+ngOnDestroy() {
+  this.destroy$.next(true);
+  // Now let's also unsubscribe from the subject itself:
+  this.destroy$.unsubscribe();
+}
 }
 
 

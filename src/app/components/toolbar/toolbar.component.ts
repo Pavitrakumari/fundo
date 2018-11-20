@@ -13,11 +13,10 @@
 *
 *************************************************************************************************/
 /**component has imports , decorator & class */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
-import { AddlabelComponent } from '../addlabel/addlabel.component';
+import { Component, OnInit ,OnDestroy} from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { CreatenewlabelComponent } from '../createnewlabel/createnewlabel.component';
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -25,11 +24,14 @@ import { DataService } from '../../core/services/data/data.service';
 import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
 import { LoggerService } from '../../core/services/logger/logger.service'
-import { ImageCroppedEvent } from 'ngx-image-cropper/src/image-cropper.component';
 import { CropImageComponent } from '../cropimage/cropimage.component';
 import { environment } from '../../../environments/environment';
 import { UserService } from '../../core/services/http/user/user.service';
 import { NoteService } from '../../core/services/http/note/note.service';
+import { Notes } from '../../core/models/notes';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-toolbar',/**A string value which represents the component on browser at execution time */
@@ -37,7 +39,9 @@ import { NoteService } from '../../core/services/http/note/note.service';
   styleUrls: ['./toolbar.component.scss']/**It is used to provide style of components */
 })
 /**To use components in other modules , we have to export them */
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit,OnDestroy {
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
   labelarray;
   name = '';
   number = 1;
@@ -52,6 +56,7 @@ export class ToolbarComponent implements OnInit {
       map(result => result.matches)
     );
   value: any;
+  list:Notes[]=[]
   constructor(private noteService:NoteService,private dataservice: DataService, public dialog: MatDialog, 
     public snackBar: MatSnackBar,
      private breakpointObserver: BreakpointObserver, 
@@ -60,21 +65,22 @@ export class ToolbarComponent implements OnInit {
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
 ngOnInit() {
   this.value="fundoo Notes"
-this.dataservice.label.subscribe(message=>this.value=message)
+this.dataservice.label
+.pipe(takeUntil(this.destroy$))
+.subscribe(message=>this.value=message)
     this.raw_data = localStorage.getItem('name');/**get the name from local storahe */
     this.firstName=localStorage.getItem('firstName');
 
-    // this.name=localstorage.
     this.token = localStorage.getItem('token');/**get the token from local storage */
-    console.log(this.raw_data);
+    LoggerService.log(this.raw_data);
     var array = this.raw_data.split("");/**split the name & pass it to a variable array */
     this.firstchar = array[0];/**first character of the name is passed to 'firstchar' variable */
-    console.log(this.firstchar);
-    console.log(this.token);/**display the token & firstchar */
+    LoggerService.log(this.firstchar);
+    LoggerService.log(this.token);/**display the token & firstchar */
     this.getLabels();
   }
   titlechange(values){
-    console.log("hello title");
+    LoggerService.log("hello title");
     
     this.value=values
 
@@ -85,9 +91,12 @@ this.dataservice.label.subscribe(message=>this.value=message)
 
   }
 logout() {
-    console.log("logoutt running");
-    this.userService.postlogout("user/logout", this.token).subscribe(data => {/**registers handlers for events emitted by the instance */
-      console.log("success in logouttttt", data);
+  try{
+    LoggerService.log("logoutt running");
+    this.userService.postlogout()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(data => {/**registers handlers for events emitted by the instance */
+      LoggerService.log("success in logouttttt", data);
       localStorage.removeItem('email');/**remove email from local storage when logout */
       localStorage.removeItem('token');/**remove token from local storage when logout */
       this.router.navigate(['/login']);/**when logout() is performed then navigate the page to login */
@@ -95,11 +104,15 @@ logout() {
         duration: 10000,/**for a duration of 10 seconds */
       });
     }), error => {
-      console.log("error in logout", error);
+      LoggerService.log("error in logout", error);
       this.snackBar.open("unsuccess logout", "LOGOUT", {/**snackbar to display the result */
         duration: 10000,/**for a duration of 10 seconds */
       });
     }
+  }
+  catch(error){
+    LoggerService.log(error)
+  }
   }
 addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
     const dialogRef = this.dialog.open(CreatenewlabelComponent, {/**open dialog  */
@@ -110,17 +123,22 @@ addlabel() {/**addlabel() method to open the add-label dialog box when it is cli
         // word-wrap: break-word,
          panelClass: 'myapp-no-padding-dialog' 
     });
-    dialogRef.afterClosed().subscribe(data => {
+    dialogRef.afterClosed()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(data => {
       this.getLabels();
     })
   }
 getLabels() {
-    this.noteService.getcard("noteLabels/getNoteLabelList", this.token)
-      .subscribe(response => {
+try{
+    this.noteService.getlabels()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(response => {
         this.labelarray = [];
-        console.log(response['data'].details);
-        for (var i = 0; i < (response['data'].details).length; i++) {
-          if (response['data'].details[i].isDeleted == false) {
+        this.list=response['data'].details
+        // LoggerService.log(this.list);
+        for (var i = 0; i < (this.list).length; i++) {
+          if (this.list[i].isDeleted == false) {
             this.labelarray.push(response['data'].details[i])
           }
         }
@@ -129,8 +147,12 @@ getLabels() {
 
       }),
       error => {
-        console.log("error in get LABELS", error);
+        LoggerService.log("error in get LABELS", error);
       }
+    }
+catch(error){
+      LoggerService.log(error)
+    }
   }
   searchbutton() {/**navigate the page to a child component when the search is clicked */
     this.router.navigate(['home/search']);
@@ -160,7 +182,7 @@ selectedFile = null;/**initially the file is assigned as null */
 public image2=localStorage.getItem('imageUrl');/**get the image url from the local storage */
 img="http://34.213.106.173/"+this.image2;/** */
 onImageUpload(event){
-  try{
+try{
   this.imageChangedEvent = event;
   /**a method to upload the image by triggering the event */
 this.selectedFile=event.path[0].files[0];/**assihning the path & files of event to the selected file */
@@ -172,7 +194,7 @@ const uploadData = new FormData();/**it is used to transmit keyed data */
  this.openDialogCrop(event);
 }
 catch(error){
-console.log(error);
+LoggerService.log(error);
 
 }
 }
@@ -186,15 +208,23 @@ public pic;
 
     });
 /**variable declared in changeprofile method of dataservice */
-    dialogRefcrop.afterClosed().subscribe(response => {
-      this.dataservice.imageprofile.subscribe(message => this.pic = message)
+    dialogRefcrop.afterClosed()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(response => {
+      this.dataservice.imageprofile
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(message => this.pic = message)
       if (this.pic == true) {
         this.image2 = localStorage.getItem('imageUrl');
         this.img = environment.profileUrl + this.image2;
       }
     });
   }
-
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Now let's also unsubscribe from the subject itself:
+    this.destroy$.unsubscribe();
+  }
 }
 
 

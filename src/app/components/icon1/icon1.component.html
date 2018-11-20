@@ -1,8 +1,5 @@
-
-<button (click)="$event.stopPropagation()" class="remindicon" mat-icon-button [matMenuTriggerFor]="appMenu">
-    <mat-icon style="cursor:pointer" matTooltip="Remind Me "  class="icons">
+<mat-icon (click)="$event.stopPropagation()" mat-icon-button [matMenuTriggerFor]="appMenu" style="cursor:pointer" matTooltip="Remind Me "  class="icons">
         notifications</mat-icon>
-</button>
 <mat-menu (click)="$event.stopPropagation()" #appMenu="matMenu" yPosition="below" [overlapTrigger]="false" class="reminderMenu">
     <div *ngIf="show" class="reminderMenu">
         <div>

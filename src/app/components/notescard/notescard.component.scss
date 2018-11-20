@@ -2,12 +2,7 @@
     margin-top:25px;
     border-radius: 15px;
 }
-// .row-height{
-//     margin-top:0%;
-//   }
-// mat-card{
-//     border-radius: 15px;
-// }
+
 .matcard{
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
@@ -21,10 +16,6 @@
 .matcard:hover{
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 
-//     box-shadow: 0 0 30px rgba(0,0,0,0.6);
-// -moz-box-shadow: 0 0 30px rgba(0,0,0,0.6);
-// -webkit-box-shadow: 0 0 30px rgba(0,0,0,0.6);
-// -o-box-shadow: 0 0 30px rgba(0,0,0,0.6);
 
     margin: 10px;
     /* height:auto; */
@@ -54,10 +45,8 @@ mat-card-title{
     font-weight: bolder;
 }
 .main{
-    /* padding:5px; */
     width:800px;
     flex-wrap: wrap;
-    /* flex-basis: 100% */
 }
 
 mat-card-content{
@@ -73,13 +62,10 @@ mat-card-content{
 .invisible{
     margin-bottom:0px;
     opacity: 0;
-    // border:solid;
 }
 .invisible:hover{
     opacity: 1;
-    width:280px;
     margin-bottom:0px;
-    // border:solid;
 
 
 }
@@ -88,14 +74,12 @@ mat-card-content{
     opacity: 0;
     word-wrap: break-word;
 
-    // width:40px;
 }
 .mat-chip.mat-standard-chip .mat-chip-remove:hover {
     color: rgba(0,0,0,.87);
     opacity: 0.4;
     word-wrap: break-word;
 
-    // width:80px;
 
 }
 .span{
@@ -117,7 +101,7 @@ mat-card-content{
     outline: none;
 }
 .accesstime{
-    margin-left:-45px;
+    margin-left:-35px;
     margin-right: 0px;
 }
 .mat-chip-list-wrapper .mat-standard-chip,

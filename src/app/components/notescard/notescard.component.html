@@ -7,32 +7,25 @@
         <div fxLayoutAlign="start start" class="main" fxLayout="row wrap" fxLayoutWrap 
         fxLayout.xs="column"
         fxLayout.sm="100">
-    
- <!-- <div fxFlex=20 style="border:solid"></div> -->
- <!-- <div *ngIf="length!=0" style="width:100%" >{{string}}</div> -->
+        <div *ngIf="length!=0" style="width:100%" >{{string}}</div>
   <mat-card 
   ngStyle.sm="width:95%" 
   ngStyle.xs="width:90%;margin-left:3px;margin-right:9px;"
   ngStyle.xl="width:100px" 
   ngStyle.1024-1366="width:0px" 
   ngStyle.md="width:0px" 
-
-
-
-
   ngstyle.gt-sm="width:100px"
-  ngStyle.md="width:200px"
-      [ngClass]="{'viewgrid':condition,'viewlist':!condition}" class="matcard"
-    *ngFor='let index of myData | LockFilter:searchInput' [ngStyle]="{'background-color':index.color}">
-    <div>
-        <mat-card-header>
-            <mat-card-title>
-                <app-pin (pinevent)="new($event)" [noteid]="index"></app-pin>
-
-
-<!------------------------------ Pin Component--------------------------------- ----->
+  ngStyle.md="width:200px" [ngClass]="{'viewgrid':condition,'viewlist':!condition}" class="matcard"
+  *ngFor='let index of myData | LockFilter:searchInput' [ngStyle]="{'background-color':index.color}">
+  <div>
 <!------------------------------ Matcard header------------------------------------ -->
+<mat-card-header>
 <!------------------------------ Matcard title------------------------------------- -->
+<mat-card-title>
+<!------------------------------ Pin Component--------------------------------- ----->
+<app-pin (pinevent)="new($event)" [noteid]="index"></app-pin>
+
+
 <div fxLayout="row" class="hiddenDiv">
 
 <div  dir="ltr" contenteditable="false" style="font-size:19px" 
@@ -135,17 +128,16 @@ aria-multiline="true" role="textbox" role="textbox"
     
 <!------------------------------mat-card icons ----------------------------------- -->
     <mat-card-actions>
-      <span class="invisible">
+      <div fxLayoutAlign="space-between" class="invisible">
         <app-icon1 (click)="getReminder()" (reminderevent)="reminder($event)" [reminders]="index"></app-icon1>
         <app-collaboratoricon></app-collaboratoricon>
         <app-coloricon (resp)="color($event)" [newcolor]="index.id"></app-coloricon>
         <app-imageicon></app-imageicon>
         <app-archiveicon (unarchiveevent)="unarchive($event)" (archiveevent)="archive($event)" [noteid]="index"></app-archiveicon>
         <app-moreicon [name]="name" (delevent)="trash($event)" (moreevent)="receive($event)" [arrayofnotes]="index"></app-moreicon>
-      </span>
+      </div>
     </mat-card-actions>
   </mat-card></div>
-  <!-- <div style="border:solid" fxFlex=20></div> -->
 
   <div fx.show="true"  fxShow.sm="false" fxShow.md="false" fxShow.xs="false" class="grow" fxFlex="10">
     </div>

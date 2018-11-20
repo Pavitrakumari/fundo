@@ -1,5 +1,5 @@
 /**component has imports , decorator & class */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { HttpService } from '../../core/services/http/http.service';
 import { Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { MatSnackBar } from '@angular/material';
 import { LoggerService } from '../../core/services/logger/logger.service';
 import { UserService } from '../../core/services/http/user/user.service';
 import { NoteService } from '../../core/services/http/note/note.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-login',
@@ -14,7 +16,8 @@ import { NoteService } from '../../core/services/http/note/note.service';
   styleUrls: ['./login.component.scss'],
 })
 /**To use components in other modules , we have to export them */
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit,OnDestroy {
+  destroy$: Subject<boolean> = new Subject<boolean>();
   model1: any = {
     "email": " ",
     "password": ""
@@ -42,57 +45,69 @@ export class LoginComponent implements OnInit {
         'Minimum 8 characters required';
   }
   next() {
+    try{
     console.log(this.model1.emailid);
     console.log(this.model1.password);
-    this.userService.postdata("user/login", {
+    this.userService.postlogin( {
       "email": this.model1.emailid,
       "password": this.model1.password
-    }).subscribe(
+    })
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(
       data => {
         var email1 = this.model1.emailid;
-        console.log("login successfull");
+        LoggerService.log("login successfull");
         this.router.navigate(["/home"]);
       
         localStorage.setItem('name', email1);
         localStorage.setItem('token', data['id']);
         localStorage.setItem('userId', data['userId']);
         localStorage.setItem('firstName', data['firstName']);
-        var token=localStorage.getItem('token')
+      
         localStorage.setItem('imageUrl',data['imageUrl']);
         
-        console.log(data['id']);
+        LoggerService.log(data['id']);
         this.snackBar.open("successfully login","login", {
           duration: 10000,
         });
         var firstName=localStorage.getItem('firstName');
-        console.log("firstName IN LOGIN",firstName);
+        LoggerService.log("firstName IN LOGIN",firstName);
 
         var pushToken=localStorage.getItem('pushToken')
-        console.log('pushtoken in login',pushToken);
+        LoggerService.log('pushtoken in login',pushToken);
 
         var body={
           "pushToken":pushToken
         }
-        this.noteService.postdeletecard('user/registerPushToken',body,token).subscribe(
+        this.noteService.postRegisterPushToken(body)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
           data=>{
             LoggerService.log("post of pushToken is successful****************************",data)
 
           }),
           error=>{
-            console.log(error,"error in pushToken");
+            LoggerService.log(error,"error in pushToken");
             
           }
 
 
 
 
-        },
+        }),
       error => {/**if error exists then displays the error message using snackbar */
         console.log("Error", error);
         this.snackBar.open("Please enter correct details ", "login  FAILED", {
           duration: 10000,
         });
-      }
-    )
+      }}
+   catch(error){
+     LoggerService.log(error);
+   } 
+  }
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Now let's also unsubscribe from the subject itself:
+    this.destroy$.unsubscribe();
   }
 }

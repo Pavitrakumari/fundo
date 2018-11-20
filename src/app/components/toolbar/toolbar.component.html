@@ -37,7 +37,7 @@
         fxFlex.xs="100%"
         fxFlex.xxs="100%"
         fx.show=true
-        fx.show.xs=true type="text" placeholder="Search here" 
+        fx.show.xs=true type="text" placeholder="Search" 
         ngStyle.lg="font-size:20;" 
         ngStyle.xl="font-size:20px"
         ngStyle.xs="font-size:10px"
@@ -45,11 +45,11 @@
         [(ngModel)]="searchInput" (click)="searchbutton()" (keydown)="passmessage()">
     </form>
     <button class="top" mat-icon-button></button>
-    
+
 <!------------------------------------------Listview & Gridview ---------------------------------------------->
 
-<mat-icon fxFlex="40px" *ngIf="number==1" (click)="listview()" aria-label="Side nav toggle icon" matTooltip="list view">view_stream</mat-icon>
-<mat-icon fxFlex="40px" *ngIf="number==0" (click)="gridview()" aria-label="Side nav toggle icon" matTooltip="grid view">apps</mat-icon>
+<mat-icon fxShow="true" fxShow.xs="false" fxShow.sm="false" fxShow.md="true" fxShow.lg="true"  fxFlex="40px" *ngIf="number==1" (click)="listview()" aria-label="Side nav toggle icon" matTooltip="list view">view_stream</mat-icon>
+<mat-icon fxShow="true" fxShow.xs="false" fxShow.sm="false" fxShow.md="true" fxShow.lg="true"  fxFlex="40px" *ngIf="number==0" (click)="gridview()" aria-label="Side nav toggle icon" matTooltip="grid view">apps</mat-icon>
     <!-- <button class="top" mat-icon-button> -->
       <!-- <mat-icon fxShow="true" fxShow.xs="false" fxShow.sm="false" fxShow.md="true" fxShow.lg="true" fxFlex="40px" -->
         <!-- aria-label="Side nav toggle icon" matTooltip=" Notifications">notifications_none</mat-icon> -->
@@ -57,7 +57,7 @@
 
 <!-----------------------------------------Profile pic ---------------------------------------------->
 
-<button *ngIf="image2!=''" (click)="$event.stopPropagation()"
+<button  *ngIf="image2!=''" (click)="$event.stopPropagation()"
      [ngStyle]="{'float':'left','width':'35px','height':'35px','background-image':'url(' +img+ ')','background-size':'cover'}"
       matTooltip="fundoo Account" 
       mat-mini-fab [matMenuTriggerFor]="appMenu"

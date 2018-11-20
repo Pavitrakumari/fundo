@@ -12,19 +12,28 @@
 *
 *************************************************************************************************/
 /**component has imports , decorator & class */
-import { Component, OnInit, Inject, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Inject, Input,OnDestroy, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpService } from '../../core/services/http/http.service';
 import { DataService } from '../../core/services/data/data.service';
 import { NoteService } from '../../core/services/http/note/note.service';
+import { Notes } from '../../core/models/notes';
+import { LoggerService } from '../../core/services/logger/logger.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-createnewlabel',
   templateUrl: './createnewlabel.component.html',
   styleUrls: ['./createnewlabel.component.scss']
 })
-export class CreatenewlabelComponent implements OnInit {
+export class CreatenewlabelComponent implements OnInit,OnDestroy {
+  destroy$: Subject<boolean> = new Subject<boolean>();
+ 
   public labelarray = [];
+  list:Notes[]=[]
+
   constructor(private noteService:NoteService,public dialogRef: MatDialogRef<CreatenewlabelComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, public httpservice: HttpService, public dataService: DataService) {
   }
@@ -44,7 +53,7 @@ export class CreatenewlabelComponent implements OnInit {
   editDoneIcon;
   editDiv;
   public editclick = false;
-  public token = localStorage.getItem('token')
+ 
   onClose(): void {
     this.dialogRef.close();
   }
@@ -59,7 +68,7 @@ export class CreatenewlabelComponent implements OnInit {
   public label;
   changeText = false
   addLabel() {
-    try {
+try {
       var label = this.label;
       console.log(this.labelarray);
       for (var i = 0; i < this.labelarray.length; i++) {
@@ -68,63 +77,70 @@ export class CreatenewlabelComponent implements OnInit {
           return false;
         }
       }
-      this.noteService.postdeletecard("noteLabels", {
+      this.noteService.postNoteLabels( {
         "label": this.label,
         "isDeleted": false,
         "userId": localStorage.getItem('userId')
-      }, this.token).subscribe(response => {
-        console.log("success in createpostlabel", response)
+      })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(response => {
+        LoggerService.log("success in createpostlabel", response)
       }),
         error => {
-          console.log("error in create/add postlabel", error)
+          LoggerService.log("error in create/add postlabel", error)
         }
     }
-    catch (error) {
-      console.log(error);
+catch (error) {
+  LoggerService.log(error);
     }
   }
   getLabels() {
-    try {
-      this.noteService.getcard("noteLabels/getNoteLabelList", this.token).subscribe(
+try {
+      this.noteService.getlabels()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
         data => {
           this.labelarray = [];
-          console.log(data['data'].details);
-          for (var i = 0; i < (data['data'].details).length; i++) {
+          this.list=data['data'].details
+          LoggerService.log("data details",this.list);
+          for (var i = 0; i < (this.list).length; i++) {
             /**running for loop for the length of the array */
-            if (data['data'].details[i].isDeleted == false) {
+            if (this.list[i].isDeleted == false) {
               /**if label is not deleted then get the labels */
-              this.labelarray.push(data['data'].details[i])
+              this.labelarray.push(this.list[i])
             }/**pushing labels into an array */
           }
-          console.log(this.labelarray, "Label array printing successsss");
+          LoggerService.log( "Label array printing successsss",this.labelarray);
           this.updateevent.emit();/**emit an event to the parent */
         }),
         error => {/**if error exists then display the array */
-          console.log("error in get LABELS", error);
+          LoggerService.log("error in get LABELS", error);
         }
     }
-    catch (error) {
-      console.log(error);
+catch (error) {
+      
+      LoggerService.log(error);
     }
   }
   delete(labelid) {/**delete() method to delete the labels from the list */
-    try {
-      console.log(labelid, "label     id");
-      this.noteService.deletedata("noteLabels/" + labelid + "/deleteNoteLabel")
-      /**calling the api by passing url,token,labelid */
+try {
+      LoggerService.log(labelid, "label id");
+      this.noteService.deletedata( labelid)
+      .pipe(takeUntil(this.destroy$))
+
         .subscribe(response => {
           /** In angular subscribe is used with Observable*/
-          console.log("success in delete", response);
+          LoggerService.log("success in delete labels ", response);
           /**if success exists then display the success */
           this.dataService.changeMessage2(true)
           this.getLabels();
         }),
         error => {/**if error exists then display the error */
-          console.log("erroe in deelete", error);
+          LoggerService.log("erroe in deelete", error);
         }
     }
-    catch (error) {
-      console.log(error);
+catch (error) {
+      LoggerService.log(error);
     }
   }
   edit(label) {
@@ -133,32 +149,38 @@ export class CreatenewlabelComponent implements OnInit {
     this.editLabel = label.label;
     this.editDoneIcon = false;
     this.editable = true;
-    console.log(this.editClick)
+    LoggerService.log(this.editClick)
   }
   editlabel(label) {/**editlabel() method to edit the labels */
-    try {
+try {
       this.editDoneIcon = true;
       this.editClick = false;
       this.editable = false;
-      var url = "noteLabels/" + label.id + "/updateNoteLabel"/**setting the url */
-      this.noteService.postdeletecard(url, {
-        /**calling the api by passing url,token,labelid */
+      // var url = "noteLabels/" + label.id + "/updateNoteLabel"/**setting the url */
+      this.noteService.postUpdateNotelabel( label.id,
+        {
         "label": this.myDiv.nativeElement.innerHTML,
         "isDeleted": false,/**attributes */
         "id": label.id,
         "userId": localStorage.getItem('userId')
-      }, localStorage.getItem('token')).subscribe(response => {
-        console.log("success in edit labell ..........", response)
+      }).pipe(takeUntil(this.destroy$))
+      .subscribe(response => {
+        LoggerService.log("success in edit labell ..........", response)
         this.dataService.changeMessage2(true)
         this.getLabels();
         this.updateevent.emit();
         /**emit an event to the parent */
       }), error => {
-        console.log("error in edit label...........", error)
+        LoggerService.log("error in edit label...........", error)
       }
     }
-    catch (error) {
-      console.log(error);
+catch (error) {
+      LoggerService.log(error);
     }
+  }
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Now let's also unsubscribe from the subject itself:
+    this.destroy$.unsubscribe();
   }
 }

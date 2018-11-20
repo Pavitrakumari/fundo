@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { HttpService } from '../../core/services/http/http.service';
 import { UserService } from '../../core/services/http/user/user.service';
+import { LoggerService } from '../../core/services/logger/logger.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-forgotpassword',
   templateUrl: './forgotpassword.component.html',
   styleUrls: ['./forgotpassword.component.scss']
 })
-export class ForgotpasswordComponent implements OnInit {
+export class ForgotpasswordComponent implements OnInit,OnDestroy {
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
   email = new FormControl('', [Validators.required, Validators.email]);
   hide = true;
   getErrorMessage() {
@@ -24,29 +29,37 @@ export class ForgotpasswordComponent implements OnInit {
   ngOnInit() {
   }
   reset() {
-    console.log(this.model.email);
+    LoggerService.log(this.model.email);
     if (this.model.email.length == 0) {
       this.snackBar.open("FAILED", "PLEASE ENTER EMAIL", {
         duration: 10000,
       });
       return;
     }
-    this.userService.postdata("user/reset", {
+    this.userService.postreset(
+       {
       "email": this.model.email
-    }).subscribe(
+    })
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(
       Response => {
-        console.log("New  password link has been sent to your registered email,please check...");
+        LoggerService.log("New  password link has been sent to your registered email,please check...");
         this.snackBar.open("Check your email", "For password", {
           duration: 10000,
         });
         console.log(Response);
       }, (error) => {
-        console.log("login unsuccessful");
-        console.log(error);
+        LoggerService.log("login unsuccessful");
+        LoggerService.log("error",error);
         if (error.status == 404)
           this.snackBar.open("failed", "Email not found", {
             duration: 10000,
           });
       });
+  }
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Now let's also unsubscribe from the subject itself:
+    this.destroy$.unsubscribe();
   }
 }

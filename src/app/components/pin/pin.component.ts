@@ -14,22 +14,29 @@
 *************************************************************************************************/
 /**component has imports , decorator & class */
 
-import { Component,Input,Output,OnInit,EventEmitter } from '@angular/core';
+import { Component,Input,Output,OnInit,EventEmitter,OnDestroy } from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoggerService } from '../../core/services/logger/logger.service';
 import { NoteService } from '../../core/services/http/note/note.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-pin',
   templateUrl: './pin.component.html',
   styleUrls: ['./pin.component.scss']
 })
-export class PinComponent implements OnInit {
+export class PinComponent implements OnInit,OnDestroy {
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
   @Output() pinevent = new EventEmitter<any>();
 @Input()  noteid;
 
-  constructor(private noteService:NoteService,public httpService: HttpService,public snackBar: MatSnackBar ) { }
+  constructor(
+    private noteService:NoteService,
+    public httpService: HttpService,
+    public snackBar: MatSnackBar) { }
   // @Input() myData;
   
   public isDeleted = false;
@@ -52,19 +59,22 @@ public newPin=true;
    }
 
    pin(){
+try{
     if(this.noteid!=undefined){
       if (this.noteid.isPined == true){
         this.newPin = false;
       }
       var arr = []
       arr.push(this.noteid.id)
-      console.log(arr);
+      LoggerService.log("arr",arr);
       if (this.noteid.id != undefined) {
         var body={
           "isPined": this.newPin,
           "noteIdList": arr
         }
-        this.noteService.postdeletecard("notes/pinUnpinNotes",body , this.token).subscribe((data)=>{
+        this.noteService.postPinUnpin(body )
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data)=>{
                 this.pinevent.emit();
                 LoggerService.log('data',data);
                 LoggerService.log(this.noteid)
@@ -72,6 +82,15 @@ public newPin=true;
             }
           }
         }
+catch(error){
+          LoggerService.log(error)
+        }
+      }
+      ngOnDestroy() {
+        this.destroy$.next(true);
+        // Now let's also unsubscribe from the subject itself:
+        this.destroy$.unsubscribe();
+      }
       }
 /**
  * 

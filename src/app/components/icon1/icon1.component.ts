@@ -13,7 +13,7 @@
 *
 *************************************************************************************************/
 /**component has imports , decorator & class */
-import { Component,Input,OnInit,Output,EventEmitter,ViewChild } from '@angular/core';
+import { Component,Input,OnInit,Output,EventEmitter,ViewChild ,OnDestroy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import * as _moment from 'moment'; 
 import { MatMenu } from '@angular/material';
@@ -21,6 +21,10 @@ import { MatMenu } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 import { HttpService } from '../../core/services/http/http.service';
 import { NoteService } from '../../core/services/http/note/note.service';
+import { LoggerService } from '../../core/services/logger/logger.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 /**A componenet can be reused throughout the application & even in other applications */
 
 @Component({
@@ -35,12 +39,14 @@ import { NoteService } from '../../core/services/http/note/note.service';
   
 })
 /**To use components in other modules , we have to export them */
-export class Icon1Component implements OnInit {
+export class Icon1Component implements OnInit,OnDestroy {
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
   @ViewChild(MatMenu) menu: MatMenu;
 
 
   constructor(private noteService:NoteService,public snackBar:MatSnackBar,public httpService:HttpService) { }
-  token = localStorage.getItem('token')/**get the token from local storgae */
+
   @Input() reminders;
   @Input() reminderShow;
 
@@ -61,7 +67,7 @@ export class Icon1Component implements OnInit {
     this.reminderevent.emit();
   }
   ngOnInit() {
-    console.log(this.setDate.getFullYear());
+    LoggerService.log(this.setDate.getFullYear());
 
     this.disabledates();
 
@@ -75,7 +81,7 @@ public tomorrowdate;
 
 todayReminder() {/**function to get the reminder of present day */
   debugger;
-  try{
+try{
   let currentDate = new Date();/**assigning a variable to the new Date() instance */
   var data=new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 0, 8, 0, 0)
   this.remm.emit(data);/**emitting the event with the new date */
@@ -86,14 +92,15 @@ todayReminder() {/**function to get the reminder of present day */
       'noteIdList': [this.reminders.id],
       'reminder': new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 0, 20, 0, 0)
     }
-  /**hit the api by passing the url,body & token */
-  this.noteService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
-    .subscribe(data => {/** if there exits no error then post the data */
-      console.log("success in today reminders",data);
+
+  this.noteService.postAddUpdateReminderNOtes( this.body)
+  .pipe(takeUntil(this.destroy$))
+  .subscribe(data => {/** if there exits no error then post the data */
+      LoggerService.log("success in today reminders",data);
       this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
     },
       error => {/**if error exists then display the error */
-        console.log("error in today reminders",error)
+        LoggerService.log("error in today reminders",error)
       })
 }}
 catch(error){
@@ -114,18 +121,19 @@ try{
       'noteIdList': [this.reminders.id],
       'reminder': new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 8, 0, 0)
     }
-  /**hit the api by passing the url,body & token */
-  this.noteService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
-    .subscribe(data => {/** if there exits no error then post the data */
-      console.log("success in tomorroe reminders",data);
+ 
+  this.noteService.postAddUpdateReminderNOtes( this.body)
+  .pipe(takeUntil(this.destroy$))
+  .subscribe(data => {/** if there exits no error then post the data */
+      LoggerService.log("success in tomorroe reminders",data);
       this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
     },
       error => {/**if error exists then display the error */
-        console.log("error in tomorrow reminders",error)
+        LoggerService.log("error in tomorrow reminders",error)
       })
 }}
 catch(error){
-  console.log(error);
+  LoggerService.log(error);
 }
 }
 weekReminder() {/**function to get the reminder of next week */
@@ -140,20 +148,21 @@ try  {
       'noteIdList': [this.reminders.id],
       'reminder': new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 7, 8, 0, 0)
     }
-      /**hit the api by passing the url,body & token */
-      this.noteService.postdeletecard('/notes/addUpdateReminderNotes', this.body, this.token)
-    .subscribe(data => {/** if there exits no error then post the data */
-      console.log("success in week reminder",data);
+      
+      this.noteService.postAddUpdateReminderNOtes( this.body)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => {/** if there exits no error then post the data */
+      LoggerService.log("success in week reminder",data);
       this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
 
     },
       error => {/**if error exists then display the error */
-        console.log("error in week reminder",error);
+        LoggerService.log("error in week reminder",error);
       })
     }}
   
-  catch(error){
-    console.log(error);
+catch(error){
+    LoggerService.log(error);
     
   }}
   show = true;
@@ -175,7 +184,7 @@ try{
     timing.match('^[0-2][0-3]:[0-5][0-9]$');/**this is used to match the time */
     if(timing==this.reminderBody.time){/**if condition is satisfied then  */
     var splitTime=this.reminderBody.time.split("",8);/**split the time */
-    console.log(splitTime,"split time");
+    LoggerService.log("split time",splitTime);
     
     var hour= Number(splitTime[0]+splitTime[1]);/**to split into hours */
     var minute= Number(splitTime[3]+splitTime[4]);/**to split into minutes */
@@ -190,7 +199,7 @@ try{
       }}
       
     }else if(ampm=='PM' || ampm=='pm'){
-      console.log(splitTime,"split time");
+      LoggerService.log("split time",splitTime);
 
       var data=new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour+12, minute, 0, 0)
       if(this.reminders!=undefined){
@@ -204,13 +213,15 @@ try{
   }
   this.remm.emit(data);
 
-  this.noteService.postdeletecard('notes/addUpdateReminderNotes',this.body,this.token).subscribe((result) => {
+  this.noteService.postAddUpdateReminderNOtes(this.body)
+  .pipe(takeUntil(this.destroy$))
+  .subscribe((result) => {
     this.reminderevent.emit()
   })
 
  }
  catch(error){
-   console.log(error);
+   LoggerService.log(error);
    
  }
   }
@@ -244,6 +255,10 @@ try{
     }
   
   }
-  
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Now let's also unsubscribe from the subject itself:
+    this.destroy$.unsubscribe();
+  }
 
 }

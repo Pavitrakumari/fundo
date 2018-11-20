@@ -12,39 +12,60 @@
 *  @since          : 20-10-2018
 *
 *************************************************************************************************/
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { HttpService } from '../../core/services/http/http.service';
 import { NoteService } from '../../core/services/http/note/note.service';
+import { Notes } from '../../core/models/notes';
+import { LoggerService } from '../../core/services/logger/logger.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 @Component({
   selector: 'app-trash',
   templateUrl: './trash.component.html',
   styleUrls: ['./trash.component.scss']
 })
-export class TrashComponent implements OnInit {
+export class TrashComponent implements OnInit,OnDestroy {
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
   token = localStorage.getItem('token');
   myData = [];
   name = 'trash';
+  list:Notes[]=[]
   constructor(private noteService:NoteService,public httpService: HttpService) { }
   ngOnInit() {
     this.getcard();
   }
   getcard() {
-    this.noteService.getcard("notes/getNotesList", this.token).subscribe(data => {
+try{
+    this.noteService.getcard( )
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(data => {
       /**hitting the api by passing the url & token*/
-      console.log("get cards list successfull", data);
+      LoggerService.log("get cards list successfull", data);
+      this.list=data['data'].data
       this.myData = data['data'].data.reverse();/**reverse() method in typescript to display the data in reverse order */
       this.myData = [];
-      for (var i = 0; i < data['data'].data.length - 1; i++) {
-        if (data['data'].data[i].isDeleted == true) {
-          this.myData.push(data['data'].data[i]);
+      for (var i = 0; i < this.list.length - 1; i++) {
+        if (this.list[i].isDeleted == true) {
+          this.myData.push(this.list[i]);
         }
       }
-      console.log(this.myData, "array of new data");
+      LoggerService.log( "array of new data",this.myData);
     })
+  }
+catch(error){
+    LoggerService.log(error)
+  }
   }
   carddel(event) {
     this.getcard();
 
+  }
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    // Now let's also unsubscribe from the subject itself:
+    this.destroy$.unsubscribe();
   }
 }
 

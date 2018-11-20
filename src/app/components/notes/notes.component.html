@@ -1,6 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="center center" class="row-height">
 <!----------------------------------Mat-card----------------------------------->
-    <mat-card class="matcard" ngStyle.sm="width:30%;" fxFlex="54" fxFlex.md="100%" fxFlex.xs="100%" fxFlex.sm="70%" class="card1" *ngIf="expression1">
+    <mat-card class="matcard" ngStyle.sm="width:30%;" fxFlex="54" fxFlex.md="100%"
+     fxFlex.xs="95%" fxFlex.sm="70%" class="card1" *ngIf="expression1">
         <span><input class="matcard" fxFlex="50" class="input" contenteditable="true" (click)="display()" 
             placeholder="Take a note..."></span>
         <div fxLayoutGap="space-between" fxLayoutAlign="end">
@@ -11,7 +12,8 @@
         </div>
     </mat-card>
 <!----------------------------------Hidden Mat-card----------------------------------->
-<mat-card class="cardd" [ngStyle]="{'background-color':colorChange}" fxFlex="54" fxFlex.md="100%" fxFlex.xs="100%"
+<mat-card class="cardd" [ngStyle]="{'background-color':colorChange}" 
+fxFlex="54" fxFlex.md="100%" fxFlex.xs="95%"
         fxFlex.sm="70%" *ngIf="expression2" class="hiddencard">
         <div fxLayout="row" class="hiddenDiv">
             <div class="inputTitle" contenteditable="true" id="title" placeholder="Title"></div>
@@ -81,7 +83,7 @@
         placeholder="Take a note..."
             autofocus #description></div><br>
 <!----------------------------------Mat-card actions----------------------------------->
-<div fxLayout="row"  style="border:solid;height:40px;">
+<div fxLayoutAlign="space-between"  style="border:solid;height:40px;">
     <app-icon1 (remm)="reminder($event)" ></app-icon1>
     <app-collaboratoricon></app-collaboratoricon>
     <app-coloricon (response)="color($event)"></app-coloricon>
