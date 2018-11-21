@@ -7,7 +7,7 @@
         <div fxLayoutAlign="start start" class="main" fxLayout="row wrap" fxLayoutWrap 
         fxLayout.xs="column"
         fxLayout.sm="100">
-        <div *ngIf="length!=0" style="width:100%" >{{string}}</div>
+        <div *ngIf="length!=0" style="width:100%;font-weight:bold" >{{string}}</div>
   <mat-card 
   ngStyle.sm="width:95%" 
   ngStyle.xs="width:90%;margin-left:3px;margin-right:9px;"
@@ -23,9 +23,7 @@
 <!------------------------------ Matcard title------------------------------------- -->
 <mat-card-title>
 <!------------------------------ Pin Component--------------------------------- ----->
-<app-pin (pinevent)="new($event)" [noteid]="index"></app-pin>
-
-
+<app-pin (pinevent)="pinunpin($event)" [noteid]="index"></app-pin>
 <div fxLayout="row" class="hiddenDiv">
 
 <div  dir="ltr" contenteditable="false" style="font-size:19px" 
@@ -33,19 +31,12 @@ aria-multiline="true" role="textbox" role="textbox"
  [innerHTML]="index.title">
 </div>
  </div>
-
-
 </mat-card-title>
-      </mat-card-header>
+</mat-card-header>
 <!------------------------------ Matcard content----------------------------------- -->
-      <div (click)="openDialog(index)">
-        <mat-card-content class="content">
-          <div  contenteditable="false" 
-          role="textbox" aria-multiline="true" 
-          layout-align="end center"
-            class="content" 
-            [innerHTML]="index.description">
-            {{index.description}}</div>
+<div (click)="openDialog(index)">
+  <mat-card-content class="content">
+    <div  contenteditable="false" role="textbox" aria-multiline="true" layout-align="end center" class="content" [innerHTML]="index.description">{{index.description}}</div>
           </mat-card-content>
           </div>
           </div>
@@ -78,8 +69,8 @@ aria-multiline="true" role="textbox" role="textbox"
             <div *ngFor="let item of index.reminder">
               <mat-chip-list selected>
                 <div *ngIf='(todaydate | date:shortDate) == (item | date:shortDate )'>
-                  <mat-chip class="top" [matMenuTriggerFor]="edit.menu">
-                    <app-icon1 style="opacity:0" #edit="menuInOtherComponent" (click)="getReminder()" (reminderevent)="reminder($event)"
+                  <mat-chip class="top" >
+                    <app-icon1 style="opacity:0"  (click)="getReminder()" (reminderevent)="reminder($event)"
                       [reminders]="index"></app-icon1>
                     <mat-icon class="accesstime">access_time</mat-icon>
                     Today {{item | date:"shortTime"}}
@@ -87,8 +78,8 @@ aria-multiline="true" role="textbox" role="textbox"
                   </mat-chip>
                 </div>
                 <div *ngIf='(tomorrow | date:shortDate) == (item | date:shortDate )'>
-                  <mat-chip class="top" [matMenuTriggerFor]="edit.menu">
-                    <app-icon1 style="opacity:0" #edit="menuInOtherComponent" (click)="getReminder()" (reminderevent)="reminder($event)"
+                  <mat-chip class="top" >
+                    <app-icon1 style="opacity:0" (click)="getReminder()" (reminderevent)="reminder($event)"
                       [reminders]="index"></app-icon1>
                     <mat-icon class="accesstime">access_time</mat-icon>
 
@@ -98,8 +89,8 @@ aria-multiline="true" role="textbox" role="textbox"
                 </div>
                 <div *ngIf='(todaydate | date:shortDate) !==(item | date:shortDate ) && 
             (tomorrow | date:shortDate) !== (item | date:shortDate )'>
-                  <mat-chip class="top" [matMenuTriggerFor]="edit.menu">
-                    <app-icon1 style="opacity:0" #edit="menuInOtherComponent" (click)="getReminder()" (reminderevent)="reminder($event)"
+                  <mat-chip class="top" >
+                    <app-icon1 style="opacity:0"  (click)="getReminder()" (reminderevent)="reminder($event)"
                       [reminders]="index"></app-icon1>
                     <mat-icon class="accesstime">access_time</mat-icon>
                     {{item | date:"short"}}
@@ -114,8 +105,8 @@ aria-multiline="true" role="textbox" role="textbox"
             fxLayoutGap="5px">
             <div *ngFor="let item of index.reminder">
               <mat-chip-list selected>
-                <mat-chip class="top" [matMenuTriggerFor]="edit.menu">
-                  <app-icon1 style="opacity:0" #edit="menuInOtherComponent" (click)="getReminder()" (reminderevent)="reminder($event)"
+                <mat-chip class="top" >
+                  <app-icon1 style="opacity:0"  (click)="getReminder()" (reminderevent)="reminder($event)"
                     [reminders]="index"></app-icon1>
                   <mat-icon class="accesstime">access_time</mat-icon>
                   <del>{{item | date:"short"}}</del>
@@ -124,7 +115,6 @@ aria-multiline="true" role="textbox" role="textbox"
               </mat-chip-list>
             </div>
           </div>
-      <!-- </div> -->
     
 <!------------------------------mat-card icons ----------------------------------- -->
     <mat-card-actions>
@@ -134,7 +124,7 @@ aria-multiline="true" role="textbox" role="textbox"
         <app-coloricon (resp)="color($event)" [newcolor]="index.id"></app-coloricon>
         <app-imageicon></app-imageicon>
         <app-archiveicon (unarchiveevent)="unarchive($event)" (archiveevent)="archive($event)" [noteid]="index"></app-archiveicon>
-        <app-moreicon [name]="name" (delevent)="trash($event)" (moreevent)="receive($event)" [arrayofnotes]="index"></app-moreicon>
+        <app-moreicon [name]="name" (delevent)="trash($event)" (moreevent)="receive($event)" [arrayofnotes]="index.id" [array]="index.id"></app-moreicon>
       </div>
     </mat-card-actions>
   </mat-card></div>

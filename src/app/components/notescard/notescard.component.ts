@@ -40,6 +40,7 @@ export class NotescardComponent implements OnInit,OnDestroy {
   @Output() colorevent = new EventEmitter<any>();
   @Output() archiveevent = new EventEmitter<any>();
   @Output() unarchiveevent = new EventEmitter<any>();
+  @Output() pavitra = new EventEmitter<any>();
   @Output() updateevent = new EventEmitter<any>();
   @Output() remm = new EventEmitter<any>();
   @Output() newPin = new EventEmitter<any>();
@@ -48,8 +49,6 @@ export class NotescardComponent implements OnInit,OnDestroy {
   @Input() name;
   @Input() string;
   @Input() length;
-
-  // @Inp[ut() pinevent]
   @Input() myData;
   condition = true;
   @Input() searchInput;
@@ -77,24 +76,32 @@ export class NotescardComponent implements OnInit,OnDestroy {
   public checked=false;
   color(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.colorevent.emit();
+    this.pavitra.emit();
   }
   archive(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.archiveevent.emit();
   }
   reminder(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.remm.emit();
+    this.pavitra.emit();
   }
 
   unarchive(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.unarchiveevent.emit();
+    this.pavitra.emit();
+
   }
-  new(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
-    this.newPin.emit();
+  pinunpin(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
+    this.pavitra.emit();
   }
   funclabel(event){
-    this.dataService.labelChange(event)
+    this.dataService.labelChange(event);
+    this.pavitra.emit();
+
   }
   trash(event) {
+    this.pavitra.emit();
+
     this.deleted.emit();
   }
 public todaydate=new Date();
@@ -118,10 +125,13 @@ return true;
     const sub = dialogRef.componentInstance.eventOne.subscribe((data) => {
       console.log("sub", data);
       this.updateevent.emit();
-    })
+      this.pavitra.emit();
+  })
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.updateevent.emit();/**emit an event to the parent */
+      this.pavitra.emit();
+
     });
   }
   removelabel(label,note) {/**passing the label id & note id */
@@ -132,6 +142,8 @@ try {
       .subscribe(data => {/**using the observabel subscribe using callbackk */
           console.log("success in remove label", data);/**if success then display the result */
           this.updateevent.emit();/**emit an event to the parent */
+          this.pavitra.emit();
+
         }),
         error => {/**if error exists */
           console.log("error in remove", error);/**then display the error */
@@ -152,6 +164,8 @@ try{
     .subscribe(data => {
         console.log("success in remove reminders ",data);
         this.updateevent.emit();
+        this.pavitra.emit();
+
       })
     error => {
       console.log("error in remove reminders",error)
@@ -169,6 +183,8 @@ try{
         console.log("success in get reminders ",data);
         // this.updateevent.emit();
         this.remm.emit();
+        this.pavitra.emit();
+
       })
     error => {
       console.log("error in get reminders",error)
@@ -200,6 +216,8 @@ try{
     this.noteService.postUpdateChecklist(id,this.modifiedCheckList.id ,JSON.stringify(checklistData))
     .pipe(takeUntil(this.destroy$))
     .subscribe(response => {
+      this.pavitra.emit();
+
       console.log("success in update checklists",response);
 
     }),
