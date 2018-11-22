@@ -61,7 +61,7 @@ constructor(public httpService: HttpService,private userService:UserService, pub
     .pipe(takeUntil(this.destroy$))
     .subscribe((response) => {
      this.list = response["data"].data;
-      for (var i = 0; i <this.list .length; i++) {
+      for (let i = 0; i <this.list .length; i++) {
         this.card.push(this.list [i]);
       }
       // LoggerService.log(this.card);
@@ -72,7 +72,7 @@ constructor(public httpService: HttpService,private userService:UserService, pub
     LoggerService.log(card.name);
     this.service = card.name;
     card.select = true;
-    for (var i = 0; i < this.card.length; i++) {
+    for (let i = 0; i < this.card.length; i++) {
       if (card.name == this.card[i].name) {
         continue;
       }
@@ -110,7 +110,7 @@ try{
             duration: 10000,
 
           });
-          var firstName=localStorage.getItem('firstName');
+          let firstName=localStorage.getItem('firstName');
 
           LoggerService.log("firstname in signin",firstName);
           

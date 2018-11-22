@@ -121,13 +121,13 @@ list:Notes[]=[]
     else{
       console.log("else................................... part");
       console.log(this.dataarray,"data array of checklists................");
-      for(var i=0;i<this.dataarray.length;i++){
+      for(let i=0;i<this.dataarray.length;i++){
         if(this.dataarray[i].isChecked == true)
         {
           console.log(this.dataarray[i],"data array in checklists for loop");
           this.status="close"
         }
-        var apiObj={
+        let apiObj={
           "itemName":this.dataarray[i].data,
           "status":this.status
         }
@@ -182,7 +182,7 @@ getLabels1() {
         this.list=response['data'].details;
         this.labelarray = [];
         console.log(this.list);
-        for (var i = 0; i < (this.list).length; i++) {
+        for (let i = 0; i < (this.list).length; i++) {
           if (this.list[i].isDeleted == false) {
             this.labelarray.push(this.list[i])
           }
@@ -223,7 +223,7 @@ getLabels1() {
       // this.body.color = this.colorChange;
 
       console.log(event, "keydown");
-      var obj = {
+      let obj = {
         "index": this.i,
         "data": this.data,
         "isChecked":this.isChecked
@@ -237,10 +237,9 @@ getLabels1() {
       }
   }
   ondelete(deletedObj) {
-    // this.body.color = this.colorChange;
 
     console.log("ondelete function runnig");
-    for (var i = 0; i < this.dataarray.length; i++) {
+    for (let i = 0; i < this.dataarray.length; i++) {
       // this.body.color = this.colorChange;
 
       if (deletedObj.index == this.dataarray[i].index) {

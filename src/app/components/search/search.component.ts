@@ -41,7 +41,7 @@ try{
       this.temp =  this.list.reverse();/**reverse() method in typescript to display the data in reverse order */
       // console.log(this.temp);
       this.arraynewdata = [];/**Reinitializing the array so that data gets updated */
-      for (var i = 0; i <  this.list.length; i++)/**for loop to go through all cards*/ {
+      for (let i = 0; i <  this.list.length; i++)/**for loop to go through all cards*/ {
         if ( this.list[i].isDeleted == false && this.list[i].isArchived == false)/**if cards are not deleted  */ {
           this.arraynewdata.push( this.list[i]);/**then push those cards into the array */
         }

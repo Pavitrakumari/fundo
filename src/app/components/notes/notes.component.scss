@@ -1,63 +1,53 @@
+@import "../../../sass/_variable.scss";
+@import "../../../sass/_mixins.scss";
 .row-height{
     margin-top:2%;
 }
 .input {
     width: 80%;
-    border: none;
-    outline: none;
+    @include border;
     font-size: 16px;
     margin-left: 10px;
     padding-top: 14px;
     font-family: cursive;
 } 
 .matcard{
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-
+    @include box_shadow;
 }
 .matcard:hover{
-    box-shadow: 0 0 30px rgba(0,0,0,0.6);
--moz-box-shadow: 0 0 30px rgba(0,0,0,0.6);
--webkit-box-shadow: 0 0 30px rgba(0,0,0,0.6);
--o-box-shadow: 0 0 30px rgba(0,0,0,0.6);
-
+  @include box_shadow_hover;
 }
 .card1{
   height:45px;
   width: 500px;   
-   border: none;
-  outline: none;
+  @include border;
   padding: 2px;
   }
-  .icon1{
+  .icon1 {
     opacity: 0.5;
-    margin-top:-19px;
+    margin-top: -19px;
+    &:hover {
+      opacity: 1.5;
+      margin-top: -19px;
+    }
   }
-  .icon1:hover{
-    opacity: 1.5;
-    margin-top:-19px;
-}
-.icon2{
+  .icon2 {
     opacity: 0.5;
-    // margin-top:-19px;
+    &:hover {
+      opacity: 1;
+    }
   }
-  .icon2:hover{
-    opacity: 1;
-    // margin-top:-19px;
-}
-
 .input2{
     font-weight: normal;
     font-size: 20px;
     text-align: left;
-    border:none;
-    outline:none;
+    @include border;
+
   }
 .input3{
       float:left;
-      border:none;
-      outline:none;
-  }
+      @include border;
+}
 div[contenteditable=true]:empty::before {
     content: attr(placeholder);
     opacity: 0.5;;
@@ -77,37 +67,29 @@ div[contenteditable=true]:empty::before {
 }
 .cardd{
      border-radius: 20px;
-    }
+}
 .inputTitle {
-    border: none;
-    outline: none;
+    @include border;
     width: 450px;
     font-size: 16px;
     font-weight: 600;
-    }
+}
 .inputNote1{
-    border: none;
-    outline: none;
+    @include border;
     font-size: 20px;
-    float: left;
-    text-align: left;
+    @include notes_left;
     margin-right:160px;
 }
 .inputNote {
-    border: none;
-    outline: none;
+    @include border;
     padding-left: 10px;
     padding-top: 10px;
     font-size: 14px;
 }
 .inputNote3{
-    border: none;
-    outline: none;
+    @include border;
     font-size: 14px;
     margin-left:5px;
-
-
-    
 }
 .accesstime{
     margin-left:-35px;
@@ -124,25 +106,20 @@ div[contenteditable=true]:empty::before {
 .app-icon1{
     opacity: 0.5;
 }
-.closeButton{
-    // margin-left:200px;
-   opacity: 0.5;
-//    position:relative;
-   float:right;
-
-}
-.closeButton:hover{
-    // margin-left:200px;
-    // position:relative;
-    float:right;
-
-    opacity: 1;
+.closeButton {
+    opacity: 0.5;
+    float: right;
+    &:hover {
+      float: right;
+      opacity: 1;
+    }
 }
 .check{
     margin-top:3px;
 }
 .menu{
-    padding-top:30px;}
+    padding-top:30px;
+}
 
     
     

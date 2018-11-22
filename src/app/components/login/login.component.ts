@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit,OnDestroy {
   hide = true;
   constructor(private noteService:NoteService,public httpService: HttpService,private userService:UserService, public router: Router, public snackBar: MatSnackBar) { }
   ngOnInit() {
-    var token;
+    let token;
     if (localStorage.getItem('token')) {
       this.router.navigate(['/home']);
     }
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit,OnDestroy {
     .pipe(takeUntil(this.destroy$))
     .subscribe(
       data => {
-        var email1 = this.model1.emailid;
+        let email1 = this.model1.emailid;
         LoggerService.log("login successfull");
         this.router.navigate(["/home"]);
       
@@ -63,20 +63,21 @@ export class LoginComponent implements OnInit,OnDestroy {
         localStorage.setItem('token', data['id']);
         localStorage.setItem('userId', data['userId']);
         localStorage.setItem('firstName', data['firstName']);
-      
+        localStorage.setItem('lastName', data['lastName']);
+
         localStorage.setItem('imageUrl',data['imageUrl']);
         
         LoggerService.log(data['id']);
         this.snackBar.open("successfully login","login", {
           duration: 10000,
         });
-        var firstName=localStorage.getItem('firstName');
+        let firstName=localStorage.getItem('firstName');
         LoggerService.log("firstName IN LOGIN",firstName);
 
-        var pushToken=localStorage.getItem('pushToken')
+        let pushToken=localStorage.getItem('pushToken')
         LoggerService.log('pushtoken in login',pushToken);
 
-        var body={
+        let body={
           "pushToken":pushToken
         }
         this.noteService.postRegisterPushToken(body)

@@ -1,20 +1,20 @@
+@import "../../../sass/_variable.scss";
+@import "../../../sass/_mixins.scss";
 .inputTitle{
-    border: none;
-    outline: none;
+    @include border;
 }
 .menu{
     padding-top:50px;
 }
-.icon2{
-    margin-bottom:30px;
+.icon2 {
+    margin-bottom: 30px;
     user-select: none;
     opacity: 0.5;
-    margin-bottom:30px;
     user-select: none;
-}
-.icon2:hover{
-opacity: 1;
-}
+    &:hover {
+      opacity: 1;
+    }
+  }
 .title{
     font-weight: bold;
 }

@@ -1,3 +1,5 @@
+@import "../../../sass/_variable.scss";
+@import "../../../sass/_mixins.scss";
 .title{
   color:black;
   font-weight: bolder;
@@ -5,68 +7,57 @@
 }
 .sidenav-container {
   height: 90%;
-  // margin-top:-20px;
-  background:rgb(252, 253, 253);
+  background:$whitecolor;
 }
 .color:hover{
-  white-space: nowrap;
-   text-overflow: ellipsis;
-   overflow: hidden !important;
-
+  @include text-overflow-hide;
   width:290px;
   border-radius: 0px 70px 70px 0px;
-  // white-space: nowrap;
-  background-color: rgb(236, 230, 169);
+  background-color: $searchcolor;
 }
 .change{
   margin-top: 70px;
   opacity: 1;
 }
-// .change:hover{
-//   margin-top: 70px;
-//   opacity: 1;
-// }
 .row-height{
   height:100%;
 }
 .sidenav {
   width: 300px;
   margin-top:56px;
-  background:rgb(252, 250, 250);
+  background:$whitecolor;
 }
 .labels{
   font-weight: lighter;
 }
 .mat-toolbar.mat-primary {
   position: sticky;
-  background:rgb(250, 250, 249) ;
-  color: black;
+  background:$whitecolor ;
+  color: $blackcolor;
   top: 0;
 }
 .search{
- background-color:rgb(247, 245, 241);
- overflow: hidden;
-}
-.search input{
-  border:none;
-  border-radius: 10px 10px 10px 10px;
-  font-size:15px;
-  height:40px;
-  outline: none;
-  background-color:rgb(245, 239, 218);
-  // width:100px;
+  width:200px;
+  border-radius: $bor_rad_10;
+  background-color:$searchcolor;
   overflow: hidden;
 }
+.search input{
+  @include border;
+  border-radius: $bor_rad_10;
+  font-size:15px;
+  height:40px;
+  background-color:$searchcolor;
+}
 .search input:focus{
-  background-color:white
+  border-radius: $bor_rad_10;
+  background-color:$searchcolor;
 }
 .mat-select-panel {
   margin-top: 45px;
 }
 .image{
   display: none;
-  // height: 20PX;
-  // width: 20px;
 }
 .account{
   font-size:10px;
@@ -82,42 +73,21 @@
   opacity: 1; 
   padding-left:30px;
 }
-.side{
+.side {
   opacity: 0.5;
-}
-.side:hover{
-  opacity: 1;
+  &:hover {
+    opacity: 1;
+  }
 }
 .top1{
   opacity: 1;
 }
-.top{
+.top {
   opacity: 0.5;
-}
-.top:hover{
-  opacity: 1;
-}
-.notes{
-  margin-left: 30px;
-  
-}.notes2{
-  margin-left: 30px;
-}.notes3{
-  margin-left: 30px;
-}.notes4{
-  margin-left: 30px;
-}.notes5{
-  margin-left: 30px;
-}.notes6{
-  margin-left: 30px;
-}.notes7{
-  margin-left: 30px;
-}.notes8{
-  margin-left: 30px;
-}.notes9{
-  margin-left: 30px;
-}
-.notes10{
+  &:hover {
+    opacity: 1;
+  }
+}.notes{
   margin-left: 30px;
 }
 .firstName{

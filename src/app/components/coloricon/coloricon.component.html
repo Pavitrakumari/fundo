@@ -1,22 +1,15 @@
-<mat-icon class="icon2"mat-icon-button matTooltip="change color"  [matMenuTriggerFor]="menu" style="margin-bottom:30px;user-select: none;">color_lens</mat-icon>
-<mat-menu  matTooltip="change color"style="padding-top:30px;"class="menu" #menu="matMenu" [overlapTrigger]="false">
-    <div class="example-button-row">
-        <button mat-mini-fab class="white" (click)="changecolor('#ffffff')" matTooltip="white"></button>
-        <button mat-mini-fab class="red" (click)="changecolor('#ff6666')"matTooltip="red"></button>
-        <button mat-mini-fab class="orange" (click)="changecolor('#ffa500')" matTooltip="orange"></button>
-        <button mat-mini-fab class="yellow" (click)="changecolor('#ffff00')"matTooltip="yellow"></button>
-        </div>
-    <div class="row2">
-        <button mat-mini-fab class="green"(click)="changecolor('#8be57e')"matTooltip="Green"></button>
-        <button mat-mini-fab class="teal" (click)="changecolor('#008080')"matTooltip="Teal"></button>
-        <button mat-mini-fab class="blue" (click)="changecolor('#7e8ae5')"matTooltip="Blue"></button>
-        <button mat-mini-fab class="darkblue" (click)="changecolor('#4286f4')"matTooltip="Dark blue"></button>
-        </div>
-    <div class="row3">
-        <button mat-mini-fab class="purple"(click)="changecolor('#800080')"matTooltip="Green"></button>
-        <button mat-mini-fab class="pink" (click)="changecolor('#ffc0cb')"matTooltip="Teal"></button>
-        <button mat-mini-fab class="brown" (click)="changecolor('#a52a2a')"matTooltip="Blue"></button>
-        <button mat-mini-fab class="gray" (click)="changecolor('#bdc3c7')"matTooltip="Dark blue"></button>
-        </div>
+<mat-icon class="icon2"mat-icon-button matTooltip="change color"  [matMenuTriggerFor]="menu"
+ style="margin-bottom:30px;user-select: none;">color_lens</mat-icon>
+<mat-menu  matTooltip="change color"style="padding-top:30px;"class="menu" #menu="matMenu"
+ [overlapTrigger]="false">
+            <div class="colors" fxLayoutWrap>
+        
+                <div fxLayoutGap=10px fxLayout=row class="top" *ngFor='let colors of colorsObject'>
+                    <div *ngFor='let color of colors'>
+                        <button class="colorNew" [ngStyle]="{'background-color': color.color }" 
+                                (click)='changecolor(color.color)' matTooltip="{{color.tipname}}"
+                            mat-mini-fab></button>
+                    </div>
+                </div>
+            </div>
  </mat-menu>
-  

@@ -1,11 +1,16 @@
 <mat-card [ngStyle]="{'background-color':color}">
 <div >
     <div fxFlex="100" [ngStyle]="{'background-color':color}">
-        <div [ngStyle]="{'background-color':color}" fxFlex.lg="65%" fxFlex.md="100%" fxFlex.xs="100%" fxFlex.sm="100%" class="hiddencard">
+        <div [ngStyle]="{'background-color':color}" fxFlex.lg="65%" fxFlex.md="100%"
+         fxFlex.xs="100%" fxFlex.sm="100%" class="hiddencard">
             <div fxLayout="row" class="hiddenDiv">
-                <div class="inputTitle" contenteditable="true" id="title" [innerHTML]="data.title" placeholder="Title">{{data.title}}</div>
-                <div><img class="pin" src="../../../assets/images/pin.svg" matTooltip="Pin Note" alt=""></div>
+                <div class="inputTitle" contenteditable="true" id="title" [innerHTML]="data.title" placeholder="Title">
+                    {{data.title}}</div>
+                <!-- <div><img class="pin" src="../../../assets/images/pin.svg" matTooltip="Pin Note" alt=""></div> -->
+                <!-- <app-pin (pinevent)="pinunpin($event)" [noteid]="data"></app-pin> -->
+            
             </div>
+            
             <div *ngIf="!checklist" class="inputNote" contenteditable="true" id="note" 
             [innerHTML]="data.description" placeholder="Note"
                 autofocus>{{data.description}}</div><br>
@@ -51,7 +56,7 @@
                     </mat-chip-list>
                 </div>
             </div>
-            <div fxLayoutAlign="space-between"   style="border:solid;height:40px;"  >
+            <div fxLayoutAlign="space-between"   style="height:40px;"  >
                     <app-icon1 [reminders]="data"></app-icon1>
                     <app-collaboratoricon></app-collaboratoricon>
                     <app-coloricon (response)="changeColor($event)" (updateevent)="color($event)" [newcolor]="data.id"></app-coloricon>

@@ -34,8 +34,10 @@ export class CreatenewlabelComponent implements OnInit,OnDestroy {
   public labelarray = [];
   list:Notes[]=[]
 
-  constructor(private noteService:NoteService,public dialogRef: MatDialogRef<CreatenewlabelComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, public httpservice: HttpService, public dataService: DataService) {
+  constructor(private noteService:NoteService,public dialogRef:
+     MatDialogRef<CreatenewlabelComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, 
+    public httpservice: HttpService, public dataService: DataService) {
   }
   @Output() updateevent = new EventEmitter<any>();
   @ViewChild('myDiv') myDiv: ElementRef;
@@ -69,9 +71,9 @@ export class CreatenewlabelComponent implements OnInit,OnDestroy {
   changeText = false
   addLabel() {
 try {
-      var label = this.label;
+  let label = this.label;
       console.log(this.labelarray);
-      for (var i = 0; i < this.labelarray.length; i++) {
+      for (let i = 0; i < this.labelarray.length; i++) {
         if (this.labelarray[i].label == label) {
           alert("duplicate")
           return false;
@@ -103,11 +105,11 @@ try {
           this.labelarray = [];
           this.list=data['data'].details
           LoggerService.log("data details",this.list);
-          for (var i = 0; i < (this.list).length; i++) {
+          for (let i = 0; i < (this.list).length; i++) {
             /**running for loop for the length of the array */
             if (this.list[i].isDeleted == false) {
               /**if label is not deleted then get the labels */
-              this.labelarray.push(this.list[i])
+              this.labelarray.push(this.list[i]);
             }/**pushing labels into an array */
           }
           LoggerService.log( "Label array printing successsss",this.labelarray);
@@ -156,7 +158,6 @@ try {
       this.editDoneIcon = true;
       this.editClick = false;
       this.editable = false;
-      // var url = "noteLabels/" + label.id + "/updateNoteLabel"/**setting the url */
       this.noteService.postUpdateNotelabel( label.id,
         {
         "label": this.myDiv.nativeElement.innerHTML,

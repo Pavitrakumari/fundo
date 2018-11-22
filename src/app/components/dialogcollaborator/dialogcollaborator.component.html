@@ -1,0 +1,50 @@
+<div  class="collaborator">
+  <mat-card >
+    <div class="collab">Collaborators</div>
+    <hr>
+    <br>
+<mat-card-content>
+    <div fxLayout="row" fxLayoutGap="20px">
+      <button mat-mini-fab [ngStyle]="{'background-image':'url(' +img+ ')','background-size':'cover'}">
+      </button>
+      <mat-content fxFlex class="content">
+          {{firstName | titlecase}} {{lastName | titlecase}}<br>
+      </mat-content>
+    </div>
+    <div class="contentNew"><mat-content fxFlex>{{mail}}</mat-content></div>
+    
+       
+    <div class="person"><button mat-mini-fab disabled><mat-icon>person_add</mat-icon></button>
+    <input class="place" (keyup)="searchpeople(searchemail)" [matMenuTriggerFor]="menu"
+    [(ngModel)]="searchemail" placeholder="Person or email to share with...">
+    
+    </div>
+
+
+</mat-card-content><br><br>
+<mat-card-footer  class="footer">    
+  <div   class="buttons">
+        <a class="button" mat-button >Save</a>
+        <a class="button" mat-button >Close</a>
+      
+      </div> 
+    </mat-card-footer>
+
+
+  </mat-card>
+  
+</div>
+<mat-menu (click)="$event.stopPropagation()" #menu="matMenu" 
+  [overlapTrigger]="false">
+      <div  *ngFor='let colors of userlist'>
+        {{colors.firstName}}
+        {{colors.email}}
+
+
+ 
+        </div>
+
+
+
+</mat-menu>
+

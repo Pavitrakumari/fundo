@@ -17,7 +17,8 @@
             <input class="inputTitle" contenteditable="true" placeholder="Enter label name" [(ngModel)]="query">
         </div><br>
         <div *ngFor="let label of labelarray | LockFilter: query">
-            <mat-checkbox (click)="$event.stopPropagation();" [checked]="func(label)" (click)="clickFunc(label)"
+            <mat-checkbox (click)="$event.stopPropagation();" [checked]="func(label)" 
+            (click)="clickFunc(label)"
                 (click)="getlabellist(label.id)" class="example-margin">{{label.label}}</mat-checkbox>
         </div>
     </mat-menu>

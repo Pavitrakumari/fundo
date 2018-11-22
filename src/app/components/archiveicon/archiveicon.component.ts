@@ -41,7 +41,7 @@ export class ArchiveiconComponent implements OnInit ,OnDestroy{
   archive() {
 try{
     LoggerService.log(this.noteid, "noteidd");
-    var array = [];
+    let array = [];
     array.push(this.noteid.id);
     this.noteService.postArchivenotes( this.body = {
       "isArchived": true,
@@ -69,7 +69,7 @@ catch(error){
   unarchive() {
 try{
     LoggerService.log(this.noteid.id);
-    var array = [];
+    let array = [];
     array.push(this.noteid.id)
     this.noteService.postArchivenotes( this.body = {
       "isArchived": false,
@@ -78,7 +78,7 @@ try{
     .pipe(takeUntil(this.destroy$))
 
     .subscribe((response) => {
-      LoggerService.log("Unarchiveeeeeeeeeeeeeeeeeer changes successfully", response);
+      LoggerService.log("Unarchive changes successfully", response);
       this.snackBar.open("Unarchive success", "success", {
         duration: 10000,
       });

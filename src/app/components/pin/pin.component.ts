@@ -64,11 +64,11 @@ try{
       if (this.noteid.isPined == true){
         this.newPin = false;
       }
-      var arr = []
+      let arr = []
       arr.push(this.noteid.id)
       LoggerService.log("arr",arr);
       if (this.noteid.id != undefined) {
-        var body={
+        let body={
           "isPined": this.newPin,
           "noteIdList": arr
         }

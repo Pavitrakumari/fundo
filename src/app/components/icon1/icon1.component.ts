@@ -112,7 +112,7 @@ tomorrowReminder() {/**function to get the reminder of next day */
 
 try{
   let currentDate = new Date();/**assigning a variable to the new Date() instance */
-  var data=new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 8, 0, 0)
+  let data=new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 8, 0, 0)
   this.remm.emit(data);/**emitting the event with the new date */
     if(this.reminders!=undefined){/**if remindrs is defined then execute the below code */
 /**assigning the attributes to the body */
@@ -139,7 +139,7 @@ catch(error){
 weekReminder() {/**function to get the reminder of next week */
 try  {
   let currentDate = new Date()
-  var data=new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() +  7, 8, 0, 0)
+  let data=new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() +  7, 8, 0, 0)
   this.remm.emit(data);/**emitting the event with the new date */
   if(this.reminders!=undefined){/**if remindrs is defined then execute the below code */
     /**assigning the attributes to the body */
@@ -183,14 +183,14 @@ try{
     
     timing.match('^[0-2][0-3]:[0-5][0-9]$');/**this is used to match the time */
     if(timing==this.reminderBody.time){/**if condition is satisfied then  */
-    var splitTime=this.reminderBody.time.split("",8);/**split the time */
+      let splitTime=this.reminderBody.time.split("",8);/**split the time */
     LoggerService.log("split time",splitTime);
     
-    var hour= Number(splitTime[0]+splitTime[1]);/**to split into hours */
-    var minute= Number(splitTime[3]+splitTime[4]);/**to split into minutes */
-    var ampm = (splitTime[6]+splitTime[7]);
+    let hour= Number(splitTime[0]+splitTime[1]);/**to split into hours */
+    let minute= Number(splitTime[3]+splitTime[4]);/**to split into minutes */
+    let ampm = (splitTime[6]+splitTime[7]);
     if(ampm=='AM' || ampm=='am'){
-      var data=new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minute, 0, 0)
+      let data=new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minute, 0, 0)
       if(this.reminders!=undefined){
 
       this.body = {/**pass the attributes to the body according the condition given in if statement */
@@ -228,7 +228,7 @@ try{
   disable(event)
   {
     this.dateflag=false;
-    var pattern=/^(2[0-3]|1[0-9]|[0][0-9]):[0-5][0-9] (AM|PM|pm|am|Pm|pM|Am|aM)$/;
+    let pattern=/^(2[0-3]|1[0-9]|[0][0-9]):[0-5][0-9] (AM|PM|pm|am|Pm|pM|Am|aM)$/;
    if(pattern.test( this.reminderBody.time))
    {
     this.dateflag=true;

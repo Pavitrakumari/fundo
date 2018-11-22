@@ -1,3 +1,6 @@
+@import "../../../sass/_variable.scss";
+@import "../../../sass/_mixins.scss";
+
 .hiddencard {
     width: 400;
     left: 0;
@@ -5,61 +8,56 @@
     margin: auto;
     margin-top: 0px;
     padding: 2px;
-}
-.hiddenDiv {
+  }
+  .hiddenDiv {
     padding: 10px;
-}
-.inputTitle {
-    border: none;
-    outline: none;
+  }
+  
+  .inputTitle {
+    @include border;
     width: 450px;
     font-size: 16px;
     font-weight: 600;
-}
-.inputNote {
-    border: none;
-    outline: none;
+  }
+  
+  .inputNote {
+    @include border;
     padding-left: 10px;
     padding-top: 10px;
     font-size: 14px;
     font-weight: normal;
-}
-.pin {
-    margin-top:-10px;
-    margin-right:10px;
+  }
+  
+  .pin {
+    margin-top: -10px;
+    margin-right: 10px;
     float: right;
     opacity: 1;
-}
-.pin:hover{
-    opacity: 1;
-}
-.app-icon1{
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .app-icon1 {
     opacity: 0.5;
-}
-.closeButton{
-opacity: 0.5;
-margin-top:-30px;
-}
-.closeButton:hover{
-opacity: 1;
-}
-.one{
-    
-    width:200px;
-}
-.close{
-     
-}
-.two{
-    margin-top:-60px;
-    // float: right;
-    margin-left:240px;
-}
-div[contenteditable=true]:empty::before {
+  }
+  .closeButton {
+    opacity: 0.5;
+    margin-top: -30px;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .one {
+    width: 200px;
+  }
+  .two {
+    margin-top: -60px;
+    margin-left: 240px;
+  }
+  div[contenteditable=true]:empty::before {
     content: attr(placeholder);
-    opacity: 0.5;;
-    }
-.note{
-        border:none;
-        outline: none;
-    }
+    opacity: 0.5;
+  }
+  .note {
+    @include border;
+  }

@@ -63,7 +63,7 @@ try{
       this.temp = this.list.reverse();/**reverse() method in typescript to display the data in reverse order */
       // console.log(this.temp);
       this.arraynewdata = [];/**Reinitializing the array so that data gets updated */
-      for (var i = 0; i < this.list.length; i++)/**for loop to go through all cards*/ {
+      for (let i = 0; i < this.list.length; i++)/**for loop to go through all cards*/ {
         if (this.list[i].isDeleted == false && 
           this.list[i].isArchived == false &&
           this.list[i].isPined == false)/**if cards are not deleted  */ {
@@ -88,7 +88,7 @@ try{
   .subscribe(data=>{
     this.pinarraay=[];
     console.log("get pin catds list success",data);
-    for (var i = 0; i < this.list.length; i++){
+    for (let i = 0; i < this.list.length; i++){
       if(this.list[i].isPined == true){
         this.pinarraay.push(this.list[i]);
       }
@@ -101,9 +101,11 @@ catch(error){
   LoggerService.log(error)
 }
 }
-pinNew($event){
+pinNew(){
+  if(event){
   this.getCard();
   this.getpincards();
+  }
 }
 ngOnDestroy() {
   this.destroy$.next(true);

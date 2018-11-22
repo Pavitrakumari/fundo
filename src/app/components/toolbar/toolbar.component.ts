@@ -19,7 +19,7 @@ import { CreatenewlabelComponent } from '../createnewlabel/createnewlabel.compon
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DataService } from '../../core/services/data/data.service';
 import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
@@ -55,25 +55,44 @@ export class ToolbarComponent implements OnInit,OnDestroy {
     .pipe(
       map(result => result.matches)
     );
-  value: any;
+  value;
   list:Notes[]=[]
   constructor(private noteService:NoteService,private dataservice: DataService, public dialog: MatDialog, 
     public snackBar: MatSnackBar,
      private breakpointObserver: BreakpointObserver, 
-     public httpService: HttpService,public userService:UserService ,public router: Router) { }
+     public httpService: HttpService,public userService:UserService ,public route:ActivatedRoute,public router: Router) { }
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
 ngOnInit() {
-  this.value="fundoo Notes"
+  // this.value="fundoo Notes"
 this.dataservice.label
 .pipe(takeUntil(this.destroy$))
 .subscribe(message=>this.value=message)
+this.route.firstChild.paramMap.subscribe(
+  (params: ParamMap) => {
+
+    this.value = params['params'].id;
+
+  })
+if (this.router.url == "/home/notes") {
+  this.value = "fundooNotes"
+}
+if (this.router.url == "/home/archive") {
+  this.value = "Archive"
+}
+if (this.router.url == "/home/search") {
+  this.value = "Search"
+}
+if (this.router.url == "/home/reminders") {
+  this.value = "Reminders"
+}
+if (this.router.url == "/home/trash") {
+  this.value = "Trash"
+}
     this.raw_data = localStorage.getItem('name');/**get the name from local storahe */
     this.firstName=localStorage.getItem('firstName');
-
-    this.token = localStorage.getItem('token');/**get the token from local storage */
     LoggerService.log(this.raw_data);
-    var array = this.raw_data.split("");/**split the name & pass it to a variable array */
+    let array = this.raw_data.split("");/**split the name & pass it to a variable array */
     this.firstchar = array[0];/**first character of the name is passed to 'firstchar' variable */
     LoggerService.log(this.firstchar);
     LoggerService.log(this.token);/**display the token & firstchar */
@@ -89,6 +108,9 @@ this.dataservice.label
 
     this.value=values.label
 
+  }
+  refresh(){
+    location.reload();
   }
 logout() {
   try{
@@ -137,7 +159,7 @@ try{
         this.labelarray = [];
         this.list=response['data'].details
         // LoggerService.log(this.list);
-        for (var i = 0; i < (this.list).length; i++) {
+        for (let i = 0; i < (this.list).length; i++) {
           if (this.list[i].isDeleted == false) {
             this.labelarray.push(response['data'].details[i])
           }
@@ -180,7 +202,7 @@ catch(error){
 
 selectedFile = null;/**initially the file is assigned as null */
 public image2=localStorage.getItem('imageUrl');/**get the image url from the local storage */
-img="http://34.213.106.173/"+this.image2;/** */
+img=environment.profileUrl+this.image2;/** */
 onImageUpload(event){
 try{
   this.imageChangedEvent = event;

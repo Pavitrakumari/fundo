@@ -20,7 +20,7 @@ import { MatSnackBar } from '@angular/material';
 import { AddlabelComponent } from '../addlabel/addlabel.component';
 import { DeleteComponent } from '../delete/delete.component';
 import { NoteService } from '../../core/services/http/note/note.service';
-import { Notes } from '../../core/models/notes';
+import { Notes, Label } from '../../core/models/notes';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -51,17 +51,23 @@ export class MoreiconComponent implements OnInit,OnDestroy {
   @Output() checkevent = new EventEmitter<any>();
   /**Input and Output are two decorators in Angular responsible for communication between two components*/
   @Input() name;
-  @Input() arrayofnotes: any
-  list:Notes[]=[]
+  @Input() arrayofnotes;
+  @Input() array;
+
+  list:Label[]=[]
+  list1:Label[]=[]
   constructor(private noteService:NoteService,public dialog: MatDialog, public httpService: HttpService, public snackBar: MatSnackBar) { }
-  ngOnInit() { }
+  ngOnInit() { 
+    console.log(this.arrayofnotes,"moreeeee");
+
+  }
   deletecard() {/**method to delete the cards */
     try {
       console.log("pichii");
       console.log(this.arrayofnotes);
-      var model = {
+      let model = {
         "isDeleted": true,/**attributes to be passed to hit the api trashNotes */
-        "noteIdList": [this.arrayofnotes.id]
+        "noteIdList": [this.arrayofnotes]
       }/**hitting the api by passing the url & token */
       this.noteService.postTrashnotes( model)
       .pipe(takeUntil(this.destroy$))
@@ -81,9 +87,9 @@ export class MoreiconComponent implements OnInit,OnDestroy {
     try {
       console.log("pichii");
       console.log(this.arrayofnotes);
-      var model = {
+      let model = {
         "isDeleted": false,/**attributes to be passed to hit the api trashNotes */
-        "noteIdList": [this.arrayofnotes.id]
+        "noteIdList": [this.arrayofnotes]
       }/**hitting the api by passing the url & token */
       this.noteService.postTrashnotes( model)
       .pipe(takeUntil(this.destroy$))
@@ -111,11 +117,11 @@ export class MoreiconComponent implements OnInit,OnDestroy {
     this.noteService.getlabels()
       .subscribe(response => {
         this.labelarray = [];
-        this.list=response['data'].details
-        console.log(this.list);
-        for (var i = 0; i < (this.list).length; i++) {
-          if (this.list[i].isDeleted == false) {
-            this.labelarray.push(this.list[i])
+        this.list1=response['data'].details
+        console.log(this.list1);
+        for (let i = 0; i < (this.list1).length; i++) {
+          if (this.list1[i].isDeleted == false) {
+            this.labelarray.push(this.list1[i])
           }
         }
         console.log(this.labelarray, "Label array printing success");
@@ -135,15 +141,15 @@ export class MoreiconComponent implements OnInit,OnDestroy {
         this.labelarray = [];
         this.list=response['data'].details
         console.log(this.list);
-        for (var i = 0; i < (this.list).length; i++) {
+        for (let i = 0; i < (this.list).length; i++) {
           if (this.list[i].isDeleted == false) {
             this.labelarray.push(this.list[i])
           }
         }
         console.log(this.labelarray, "label array after pushingggg");
 
-        for (var i = 0; i < this.labelarray.length; i++) {
-          for (var j = 0; j < this.notearray.length; j++) {
+        for (let i = 0; i < this.labelarray.length; i++) {
+          for (let j = 0; j < this.notearray.length; j++) {
             if (this.labelarray[i].id == this.notearray[j].id) {
               this.labelarray[i].isChecked = true;
               console.log(this.labelarray[i].isChecked, "ischecked became true");
@@ -162,13 +168,17 @@ export class MoreiconComponent implements OnInit,OnDestroy {
       console.log("selected label is : ", label);
       console.log([this.arrayofnotes['id']]);
       console.log(label);
-      // var url = "notes/" + [this.arrayofnotes['id']] + "/addLabelToNotes/" + label + "/add";
       /**setting the url path */
       {
         console.log("add function .......");
-        /**hitting the api by passing the url & token & empty body*/
-      // var url = "notes/" + [this.arrayofnotes['id']] + "/addLabelToNotes/" + label + "/add";
-        this.noteService.postAddLabelnotesAdd([this.arrayofnotes['id']] ,label, null)
+        let noteDetails = {
+          "label": "string",
+          "isDeleted": false,
+          "userId": "string"
+
+        }/**hitting the api by passing the url & token & empty body*/
+      // let url = "notes/" + [this.arrayofnotes['id']] + "/addLabelToNotes/" + label + "/add";
+        this.noteService.postAddLabelnotesAdd([this.arrayofnotes],label, noteDetails)
         .pipe(takeUntil(this.destroy$))
         .subscribe(data => {
           /** In angular subscribe is used with Observable*/
@@ -187,6 +197,7 @@ export class MoreiconComponent implements OnInit,OnDestroy {
   }
   clickFunc(temp) {
     if (!this.selectarray2.some((data) => data == temp.label)) {
+  
       this.selectarray1.push(temp.id);
       this.selectarray2.push(temp.label);
       this.getlabellist(temp);
@@ -199,6 +210,8 @@ export class MoreiconComponent implements OnInit,OnDestroy {
     }
   }
   func(labelOption){
+    console.log(this.arrayofnotes);
+    
     if (this.arrayofnotes.noteLabels.some((data) => data.label == labelOption.label)) {
     return true;
     }
@@ -219,7 +232,7 @@ export class MoreiconComponent implements OnInit,OnDestroy {
       if (data) {/**if data exists then */
         this.model = {/**passing the model attributes */
           "isDeleted": true,
-          "noteIdList": [this.arrayofnotes['id']]/**passing the noteidlist from the cards */
+          "noteIdList": [this.arrayofnotes]/**passing the noteidlist from the cards */
         }
         console.log(this.model, "model in trash");/**display the model */
         this.noteService.postDeleteForeverNotes( this.model)

@@ -45,7 +45,7 @@ export class LabelsComponent implements OnInit,OnDestroy {
       this.temp = this.list.reverse();/**reverse() method in typescript to display the data in reverse order */
       // console.log(this.temp);
       this.arraynewdata = [];/**Reinitializing the array so that data gets updated */
-      for (var i = 0; i < this.list.length; i++)/**for loop to go through all cards*/ {
+      for (let i = 0; i < this.list.length; i++)/**for loop to go through all cards*/ {
         if (this.list[i].isDeleted == false && this.list[i].isArchived == false)/**if cards are not deleted  */ {
           for (let index = 0; index < this.list[i].noteLabels.length; index++) {
             if (this.list[i].noteLabels[index].label == this.labelName) {

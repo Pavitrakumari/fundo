@@ -15,7 +15,8 @@
   ngStyle.1024-1366="width:0px" 
   ngStyle.md="width:0px" 
   ngstyle.gt-sm="width:100px"
-  ngStyle.md="width:200px" [ngClass]="{'viewgrid':condition,'viewlist':!condition}" class="matcard"
+  ngStyle.md="width:200px" [ngClass]="{'viewgrid':condition,'viewlist':!condition}" 
+  class="matcard"
   *ngFor='let index of myData | LockFilter:searchInput' [ngStyle]="{'background-color':index.color}">
   <div>
 <!------------------------------ Matcard header------------------------------------ -->
@@ -36,7 +37,8 @@ aria-multiline="true" role="textbox" role="textbox"
 <!------------------------------ Matcard content----------------------------------- -->
 <div (click)="openDialog(index)">
   <mat-card-content class="content">
-    <div  contenteditable="false" role="textbox" aria-multiline="true" layout-align="end center" class="content" [innerHTML]="index.description">{{index.description}}</div>
+    <div  contenteditable="false" role="textbox" aria-multiline="true" 
+    layout-align="end center" class="content" [innerHTML]="index.description">{{index.description}}</div>
           </mat-card-content>
           </div>
           </div>

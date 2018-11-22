@@ -1,24 +1,16 @@
 <app-notes (onNewEntryAdded)="getCard($event)"></app-notes>
-
 <!-- OTHERS -->
-
-<app-notescard   [myData]="arraynewdata"(newPin)="pinNew($event)"
-(remm)="getCard($event)" (noteevent)="getCard($event)"
+<app-notescard   [myData]="arraynewdata"
+(remm)="getCard($event)" (noteevent)="getCard($event)" 
 (updateevent)="getCard($event)" (archiveevent)="getCard($event)"
-(colorevent)="getCard($event)"  [length]="pinarraay.length" [string]="'others'"
+(colorevent)="getCard($event)" (pavitra)="pinNew($event)"  [length]="pinarraay.length" [string]="'OTHERS'"
 > </app-notescard>
-
 
 <!-- PINNED -->
-<app-notescard [myData]="pinarraay" (newPin)="pinNew($event)"
+<app-notescard [myData]="pinarraay" (pavitra)="pinNew($event)"
 (remm)="getCard($event)" (noteevent)="getCard($event)"
 (updateevent)="getCard($event)" (archiveevent)="getCard($event)"
-(colorevent)="getCard($event)"  (remm)="getCard($event)"  [length]="pinarraay.length" [string]="'Pinned'"
+(colorevent)="getCard($event)"  (remm)="getCard($event)"  [length]="pinarraay.length" [string]="'PINNED'"
 > </app-notescard>
 
-
-<!-- 
-     <div *ngIf="length!=0" style="width:100%" >{{string}}</div>
-
- -->
 

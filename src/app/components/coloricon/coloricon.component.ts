@@ -42,10 +42,27 @@ export class ColoriconComponent implements OnInit,OnDestroy {
   @Output() response = new EventEmitter<string>()
   constructor(private noteService:NoteService,public httpService: HttpService, public snackBar: MatSnackBar) { }
   
+  colorsObject = [
+
+    [{ 'color': '#ccff90', 'tipname': 'Green' },
+    { 'color': '#cbf0f8', 'tipname': 'Blue' },
+    { 'color': '#a7ffeb', 'tipname': 'Teal' },
+    { 'color': '#aecbfa', 'tipname': 'Dark blue' }],
+
+    [{ 'color': '#d7aefb', 'tipname': 'Purple' },
+    { 'color': '#e6c9a8', 'tipname': 'Brown' },
+    { 'color': '#fdcfe8', 'tipname': 'Pink' },
+    { 'color': '#e8eaed', 'tipname': 'Gray' }],
+
+    [{ 'color': '#ffffff', 'tipname': 'White' },
+    { 'color': '#f28b82', 'tipname': 'Red' },
+    { 'color': '#fbbc04', 'tipname': 'Orange' },
+    { 'color': '#fff475', 'tipname': 'Yellow' }],]
+
   changecolor(paint)/**changecolor() method to change the color of notes */ {
 try{
     this.response.emit(paint);
-    var body = {
+    let body = {
       "color": paint,/**attributes to be passed to change the color of notes */
       "noteIdList": [this.newcolor]
     }

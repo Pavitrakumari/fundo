@@ -1,54 +1,46 @@
-.inputTitle{
-    border: none;
-    outline: none;
+@import "../../../sass/_variable.scss";
+@import "../../../sass/_mixins.scss";
+.inputTitle {
+    @include border;
     width: 150px;
     font-size: 16px;
     font-style: oblique;
     font-weight: normal;
-}
-div[contenteditable=true]:empty::before {
+  }
+  div[contenteditable=true]:empty::before {
     content: attr(placeholder);
     opacity: 0.5;
-}
-h1{
+  }
+  h1 {
     font-style: italic;
-}
-.done{
+  }
+  .done {
     margin-left: -20px;
-}
-.button{
-    margin-top:50px;
-    margin-left:100px;
+  }
+  .button {
+    margin-top: 50px;
+    margin-left: 100px;
     float: right;
-}
-.labelButton {
+  }
+  .labelButton {
     float: right;
-}
-.name {
+  }
+  .name {
     font-family: 'Roboto',arial,sans-serif;
     font-size: 18px;
-}
-.input {
+  }
+  .input {
     margin-left: 8px;
     float: left;
-    outline: none;
-    border: none;
-}
-.divider {
+    @include border;
+  }
+  .divider {
     padding: 5px;
-}
-.labelNameEdit {
-    outline: none;
-}
-.labels{
-    // overflow: hidden;
-    // word-wrap: break-word;
-    border: none;
-    outline: none;
-    white-space: nowrap;
-   text-overflow: ellipsis;
-   overflow: hidden !important;
-
-
-
-}
+  }
+  .labelNameEdit {
+    @include border;
+  }
+  .labels {
+    @include border;
+   @include text-overflow-hide;
+  }

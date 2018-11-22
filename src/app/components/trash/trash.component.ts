@@ -46,7 +46,7 @@ try{
       this.list=data['data'].data
       this.myData = data['data'].data.reverse();/**reverse() method in typescript to display the data in reverse order */
       this.myData = [];
-      for (var i = 0; i < this.list.length - 1; i++) {
+      for (let i = 0; i < this.list.length - 1; i++) {
         if (this.list[i].isDeleted == true) {
           this.myData.push(this.list[i]);
         }

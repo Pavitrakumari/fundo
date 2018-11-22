@@ -21,7 +21,7 @@ import { MatSnackBar } from '@angular/material';
 import { LoggerService } from '../../core/services/logger/logger.service';
 import { DataService } from '../../core/services/data/data.service';
 import { NoteService } from '../../core/services/http/note/note.service';
-import { Notes } from '../../core/models/notes';
+import { Notes, Checklists } from '../../core/models/notes';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -45,7 +45,7 @@ export class DialogComponent implements OnInit ,OnDestroy{
   public note;
   public tempArray=[];
   public newList;
-  list:Notes[]=[]
+  list:Checklists[]=[]
   list2:Notes[]=[]
 
   public newData:any={}
@@ -69,11 +69,15 @@ export class DialogComponent implements OnInit ,OnDestroy{
       console.log(message);
       if (message) {
         this.updateevent.emit();
+        // this.pavitra.emit();
+
       }
     })
   }
   @Input() reminders;
   @Output() updateevent = new EventEmitter<any>();
+  // @Output() pavitra = new EventEmitter<boolean>();
+
   @Output() eventOne = new EventEmitter<boolean>();
   onNoClick(): void {
     this.dialogRef.close();
@@ -83,6 +87,8 @@ export class DialogComponent implements OnInit ,OnDestroy{
   /**OnInit is a lifecycle hook that is called after Angular has initialized
    *  all data-bound properties of a directive. */
 ngOnInit() {
+  // this.pavitra.emit();
+
   LoggerService.log(this.data['noteLabels'], "maaaa");
     this.selectarray1 = this.data['noteLabels'];
     this.selectarray2 = this.data['reminder'];
@@ -93,20 +99,26 @@ ngOnInit() {
     }
     this.tempArray=this.data['noteCheckLists'];
     LoggerService.log("selectarray2",this.selectarray2);
-    LoggerService.log("temp araryyyyyy",this.tempArray);
+    LoggerService.log("temp arary",this.tempArray);
   }
   more(label) {
     this.selectarray1.push(label);
+    // this.pavitra.emit();
+
   }
   close() {
     this.updateNotes();
-    /**calling the update method after entering the data & closing the card */
+    // this.pavitra.emit();
+
   }
+  // pinunpin(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
+  //   // this.pavitra.emit();
+  // }
   updateNotes() {
     try{
     if(this.checklist==false){
       LoggerService.log(this.data['id']);
-    var id = this.data['id']
+      let id = this.data['id']
     /**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */
     this.title = document.getElementById('title').innerHTML;
     this.note = document.getElementById('note').innerHTML;
@@ -114,28 +126,35 @@ ngOnInit() {
     var body = {
       "noteId": [id],/**attributes to be passed to change the color of notes */
       "title": this.title,
-      "description": this.note,
+      "description": this.note
     }
-    // ,
-    this.noteService.updatenotes( body)
+    console.log("dialoooooooooooooooooooooooogg");
+    
+    this.noteService.updatenotes(body)
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
       LoggerService.log("update changes successfully", data);/**if no errors then display the data */
       this.snackBar.open("update change success", "success", {/**snackbar to display the result */
         duration: 10000,/**duaration of the snackbar to be opened */
       });
-    })
+    }),
+    error => {
+      LoggerService.log("error in update", error);/**if error exists then display the error */
+          this.snackBar.open("update change failed", "error", {/**snackbar to display the result */
+            duration: 10000,
+          });
+        }
   }
   else{/**if add note is for checklist,then it executes the else part */
     LoggerService.log("runnin else.........just .............");
-    var apiData={/**Attributes to be passed for hitting the api */
+    let apiData={/**Attributes to be passed for hitting the api */
       "itemName": this.modifiedCheckList.itemName,
       "status":this.modifiedCheckList.status
     }
     // let url = this.url+"notes/" + id + "/checklist/" + modifiedid + "/update";
 
-    // var url = "notes/" + this.data['id'] + "/checklist/" + this.modifiedCheckList.id + "/update";
-    this.noteService.postUpdateChecklist(this.data['id'], this.modifiedCheckList.id ,JSON.stringify(apiData))
+    this.noteService.postUpdateChecklist(this.data['id'], this.modifiedCheckList.id ,
+    JSON.stringify(apiData))
     .pipe(takeUntil(this.destroy$))
     .subscribe(response => {
       LoggerService.log("else part.......................",response);
@@ -144,12 +163,7 @@ ngOnInit() {
       LoggerService.log("else paer errorrrrr",error);
     }
   }
-  error => {
-    LoggerService.log("error in update", error);/**if error exists then display the error */
-        this.snackBar.open("update change failed", "error", {/**snackbar to display the result */
-          duration: 10000,
-        });
-      }
+  
     }
   catch(error){
     LoggerService.log(error);
@@ -181,12 +195,12 @@ checkBox(checkList){
   }
   removeCheckList(){/**function to remove the check lists */
 try{
-    // var url = "notes/" + this.data['id']+ "/checklist/" + this.removedList.id + "/remove";
-    this.noteService.postChecklistRemove(this.data['id'],this.removedList.id ,null)
+  let body={}
+    this.noteService.postChecklistRemove(this.data['id'],this.removedList.id ,body)
     .pipe(takeUntil(this.destroy$))
     .subscribe((response)=>{
       LoggerService.log("response",response);
-      for(var i=0;i<this.tempArray.length;i++){/**run the for loop for the complete length of the temparray which consists of checklists */
+      for(let i=0;i<this.tempArray.length;i++){/**run the for loop for the complete length of the temparray which consists of checklists */
         if(this.tempArray[i].id==this.removedList.id){/**if they are matching  with id's */
           this.tempArray.splice(i,1)/**then splice them from the array */
         }
@@ -220,17 +234,18 @@ try{
         "status":this.status
       }
       LoggerService.log(this.newData,"newwwwwww dataaaaaaaaaaaa");
-      // var url = "notes/" + this.data['id'] + "/checklist/add";
+      console.log("9603273",this.newData);
+      
       this.noteService.postCheckListAdd(this.data['id'], this.newData)
-      .pipe(takeUntil(this.destroy$))
+      // .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
         LoggerService.log("response",response);
       this.newList=null;
       this.addCheck=false;
       this.adding=false;
       this.list=response['data'].details
-      LoggerService.log("response ",this.list);/**push the response into the tempArray */
-      this.tempArray.push(this.list)
+      LoggerService.log("response ",response['data'].details);/**push the response into the tempArray */
+      this.tempArray.push(response['data'].details)
     })
   }
 }
@@ -256,6 +271,8 @@ try {
           }
         }),
         this.updateevent.emit();
+        // this.pavitra.emit();
+
       error => {/**if error exists */
         LoggerService.log("error in remove", error);/**then display the error */
       }
@@ -264,7 +281,7 @@ catch (error) {
   LoggerService.log(error);
     }
   }
-
+ 
   changeColor(event) {
 
     this.color = event;
@@ -272,7 +289,7 @@ catch (error) {
   }
 removereminder(item,noteid) {/**function to remove reminders */
 try{
-    var body={/**passing the attributes to the body */
+  let body={/**passing the attributes to the body */
       "noteIdList":[noteid],
     }/**hit the api by passing the parameters url,body,token */
     this.noteService.postRemoveReminders( body)
@@ -285,6 +302,8 @@ try{
           this.selectarray2.splice(index, 1);
         }
         this.updateevent.emit();/**emitting the event */
+        // this.pavitra.emit();
+
       })
       error => {
         LoggerService.log("error in remove reminders",error);

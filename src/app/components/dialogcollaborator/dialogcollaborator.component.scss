@@ -1,0 +1,40 @@
+@import "../../../sass/_variable.scss";
+@import "../../../sass/_mixins.scss";
+
+.collab{
+    width:200px;
+    // margin:10px 10px 15px 20px;
+    font-weight: bold;
+    font-family:cursive;
+    font-size:1.2em;
+}
+.collaborator{
+    border-radius:60px 20px 20px 20px;
+}
+.content{
+    font-weight: bold;
+}
+.contentNew{
+    font-weight:lighter;
+    font-family:cursive;
+    margin-left:58px;
+    margin-top:-20px;
+}
+.person{
+    margin-top:20px;
+}
+.buttons{
+    background-color: gainsboro;
+}
+.button{
+    margin-top:10px;
+    float:right;
+}
+.place{
+    margin-left:20px;
+    @include border;
+}
+.footer{
+    height: 50px;
+background-color: gainsboro;
+}

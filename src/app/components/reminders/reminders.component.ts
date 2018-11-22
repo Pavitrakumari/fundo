@@ -34,12 +34,12 @@ export class RemindersComponent implements OnInit,OnDestroy {
     try{
     this.token = localStorage.getItem('token');/**get the token from the local storage */
 
-    this.noteService.getcard()
+    this.noteService.getreminders()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
         LoggerService.log("success in get reminders ",data);
   this.list= data['data'].data
-        for(var i = 0; i <this.list.length; i++){
+        for(let i = 0; i <this.list.length; i++){
           this.temp2.push(this.list[i]);
           // this.sortedItems=temp2;
           this.sortedItems = this.temp2.sort((a: any, b: any) =>

@@ -34,7 +34,7 @@
         <div flexLayout="row" fxFlexLayout="center">
           <div fxFlex.lg="100" *ngFor="let data of card">
             <mat-card mat-button (click)="respond(data)" [ngClass]="data.select? 'selected': 'notselected'" style="height:70px;width:100px">
-              <mat-card-title style="font-size:20px;width:30px;padding-top:-50px;margin-bottom:2px;margin-top:-10px">
+              <mat-card-title class="mat_card_title" >
                 {{data.name}}</mat-card-title>
               <mat-card-content style="font-size:12px">{{data.description}}</mat-card-content>
             </mat-card>
@@ -47,9 +47,8 @@
           </button>
           <button mat-flat-button color="primary" id="pichi" (click)=signup()>
             Sign up</button>
-
-        </div>
-      </mat-card-content>
-    </form>
-  </mat-card>
-</div>
+          </div>
+        </mat-card-content>
+      </form>
+    </mat-card>
+  </div>

@@ -107,8 +107,8 @@ export class NotescardComponent implements OnInit,OnDestroy {
 public todaydate=new Date();
 public tomorrow=new Date(this.todaydate.getFullYear(), this.todaydate.getMonth(), this.todaydate.getDate() + 1)
 checkReminder(date){/**function */
-  var savedReminder=new Date().getTime();
-  var value=new Date(date).getTime();
+  let savedReminder=new Date().getTime();
+  let value=new Date(date).getTime();
   if(value > savedReminder){
 return true;
   }
@@ -134,6 +134,8 @@ return true;
 
     });
   }
+ 
+
   removelabel(label,note) {/**passing the label id & note id */
 try {
       console.log(note,label);/**displaying the id's */
@@ -155,7 +157,7 @@ catch (error) {
   }
   removereminder(noteid) {
 try{
-    var body={
+  let body={
       "noteIdList":[noteid],
 
     }
@@ -209,7 +211,7 @@ catch(error){
   }
   updatelist(id){
 try{
-    var checklistData = {
+  let checklistData = {
       "itemName": this.modifiedCheckList.itemName,
       "status": this.modifiedCheckList.status
     }
