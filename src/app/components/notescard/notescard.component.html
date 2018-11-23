@@ -122,11 +122,13 @@ aria-multiline="true" role="textbox" role="textbox"
     <mat-card-actions>
       <div fxLayoutAlign="space-between" class="invisible">
         <app-icon1 (click)="getReminder()" (reminderevent)="reminder($event)" [reminders]="index"></app-icon1>
-        <app-collaboratoricon></app-collaboratoricon>
+        <app-collaboratoricon [noteid]="index"></app-collaboratoricon>
         <app-coloricon (resp)="color($event)" [newcolor]="index.id"></app-coloricon>
         <app-imageicon></app-imageicon>
-        <app-archiveicon (unarchiveevent)="unarchive($event)" (archiveevent)="archive($event)" [noteid]="index"></app-archiveicon>
-        <app-moreicon [name]="name" (delevent)="trash($event)" (moreevent)="receive($event)" [arrayofnotes]="index.id" [array]="index.id"></app-moreicon>
+        <app-archiveicon (unarchiveevent)="unarchive($event)" (archiveevent)="archive($event)"
+         [noteid]="index"></app-archiveicon>
+        <app-moreicon [name]="name" (delevent)="trash($event)" (moreevent)="receive($event)"
+         [arrayofnotes]="index.id" [array]="index.id"></app-moreicon>
       </div>
     </mat-card-actions>
   </mat-card></div>

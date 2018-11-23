@@ -11,20 +11,22 @@ export class GeneralService {
 
   constructor(private http: HttpClient) {}
 public httpPost(url,body){
-  var httpAuthOptions2 = {
+  console.log('url in post',url);
+  console.log('body in post',body);
+  let httpAuthOptions2 = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      // 'Authorization': token
+      'Content-Type': 'application/json'
+      // 'Authorization': localStorage.getItem('token')
     })
   };
-  return this.http.post(url, body, httpAuthOptions2);/**passing the input & calling the  getFormUrlEncoded()*/
+  return this.http.post(url,body, httpAuthOptions2);/**passing the input & calling the  getFormUrlEncoded()*/
 }
 public httpget(url){
   console.log("token in general service");
   
-  var httpAuthOptions3 = {
+  let httpAuthOptions3 = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
       // 'Authorization': token
     })
 
@@ -34,7 +36,10 @@ public httpget(url){
 }
 
 public httppostpassword(url,body){
-var httpAuthOptions1 = {
+  console.log('url in post',url);
+  console.log('body in post',body);
+
+  let httpAuthOptions1 = {
   headers: new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
     // 'Authorization': token
@@ -52,7 +57,7 @@ getFormUrlEncoded(toConvert) {/**a method that encodes the token*/
   return formBody.join('&');
 }
 public httpImage(url,body,token){
-var http={
+  let http={
   headers:new HttpHeaders({
    
    'Authorization':token

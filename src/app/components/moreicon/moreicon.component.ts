@@ -105,7 +105,6 @@ export class MoreiconComponent implements OnInit,OnDestroy {
       console.log(error);
     }
   }
-
   addlabel() {/**addlabel() method to open the add-label dialog box when it is clicked */
     this.dialog.open(AddlabelComponent, {/**open dialog  */
       width: '550px',
@@ -147,7 +146,6 @@ export class MoreiconComponent implements OnInit,OnDestroy {
           }
         }
         console.log(this.labelarray, "label array after pushingggg");
-
         for (let i = 0; i < this.labelarray.length; i++) {
           for (let j = 0; j < this.notearray.length; j++) {
             if (this.labelarray[i].id == this.notearray[j].id) {
@@ -212,13 +210,13 @@ export class MoreiconComponent implements OnInit,OnDestroy {
   func(labelOption){
     console.log(this.arrayofnotes);
     
-    if (this.arrayofnotes.noteLabels.some((data) => data.label == labelOption.label)) {
-    return true;
-    }
-    else {
+  //   if (this.arrayofnotes.noteLabels.some((data) => data.label == labelOption.label)) {
+  //   return true;
+  //   }
+  //   else {
 
-     return false;
-  }
+  //    return false;
+  // }
   }
 
   trashforever() {/**method to delete the cards permanently from the trash */

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from '@angular/core';
 import { AppComponent } from './app.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { LoginComponent } from './components/login/login.component';
@@ -69,6 +69,8 @@ import { PinComponent } from './components/pin/pin.component';
 import { MessagingService } from './core/services/messaging/messaging.service';
 import { InterceptorService} from './core/services/interceptor/interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorsHandler } from './core/services/errorhandler/error-handler';
+import { DialogcollaboratorComponent } from './components/dialogcollaborator/dialogcollaborator.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +108,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
          DeleteComponent,
          CropImageComponent,
          PinComponent,
+         DialogcollaboratorComponent,
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -151,6 +154,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
       multi: true
+    },
+    {
+      provide: ErrorHandler,
+      useClass: ErrorsHandler,
     }
   ],
   entryComponents: [
@@ -159,7 +166,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
       ToolbarComponent, 
       DeleteComponent, 
       AddlabelComponent, 
-      CreatenewlabelComponent
+      CreatenewlabelComponent,
+      DialogcollaboratorComponent
    ],
     bootstrap: [AppComponent]
 })

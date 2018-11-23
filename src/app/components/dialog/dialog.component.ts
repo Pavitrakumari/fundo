@@ -236,7 +236,7 @@ try{
       LoggerService.log(this.newData,"newwwwwww dataaaaaaaaaaaa");
       console.log("9603273",this.newData);
       
-      this.noteService.postCheckListAdd(this.data['id'], this.newData)
+      this.noteService.postCheckListAdd(this.data, this.newData)
       // .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
         LoggerService.log("response",response);

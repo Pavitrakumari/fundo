@@ -21,6 +21,8 @@ import { LabelsComponent } from './components/labels/labels.component';
 
 
 const appRoutes: Routes = [
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgotpassword', component: ForgotpasswordComponent },
@@ -28,6 +30,7 @@ const appRoutes: Routes = [
     path: 'home', component: HomeComponent, canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: 'notes', pathMatch: 'full' },
+      { path: 'labels/:id', component: LabelsComponent },
       { path: 'notes', component: NotesparentComponent, },
       { path: 'reminders', component: RemindersComponent },
       { path: 'newlabel', component: CreatenewlabelComponent },
@@ -39,10 +42,9 @@ const appRoutes: Routes = [
       { path: 'appdownloads', component: AppdownloadsComponent },
       { path: 'keyboardshortcuts', component: KeyboardshortcutsComponent },
       { path: 'search', component: SearchComponent },
-      { path: 'labels/:id', component: LabelsComponent }
     ]
   },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  // { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],

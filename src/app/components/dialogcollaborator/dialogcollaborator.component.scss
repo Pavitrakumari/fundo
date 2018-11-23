@@ -1,9 +1,7 @@
 @import "../../../sass/_variable.scss";
 @import "../../../sass/_mixins.scss";
-
 .collab{
     width:200px;
-    // margin:10px 10px 15px 20px;
     font-weight: bold;
     font-family:cursive;
     font-size:1.2em;
@@ -13,12 +11,16 @@
 }
 .content{
     font-weight: bold;
+    font-family:cursive;
 }
 .contentNew{
     font-weight:lighter;
     font-family:cursive;
     margin-left:58px;
     margin-top:-20px;
+}
+.names{
+    margin-top:15px;
 }
 .person{
     margin-top:20px;
@@ -29,12 +31,25 @@
 .button{
     margin-top:10px;
     float:right;
+    font-family:cursive;
+}
+.matmenu{
+    cursor: pointer;
+}
+.done{
+    float:right;
+    cursor: pointer;
 }
 .place{
-    margin-left:20px;
     @include border;
+    font-family:cursive;
+    font-size:15px;
 }
 .footer{
     height: 50px;
-background-color: gainsboro;
+    background-color: gainsboro;
+}
+::ng-deep.mat-menu-panel{
+    overflow-x:hidden!important;
+    max-width: 390px!important;
 }

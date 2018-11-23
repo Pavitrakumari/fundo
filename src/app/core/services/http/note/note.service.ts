@@ -24,7 +24,7 @@ export class NoteService {
 
   }
 updatenotes(input){
-    console.log(input);
+    console.log("input in note service",input);
     let url = this.url + "notes/updateNotes";
     return this.service.httppostpassword(url, input);/**passing the input & calling the  getFormUrlEncoded()*/
  }
@@ -74,26 +74,21 @@ postRemoveReminders(model) {
   return this.service.httpPost(url,model);
 }
 postAddLabelnotesRemove(label,note,{}) {
-    let token=localStorage.getItem('token');
 
     let url = this.url +"notes/"+ note+"/addLabelToNotes/"+ label +"/remove";;
     return this.service.httpPost(url,{});
 }
 postUpdateChecklist(id,modifiedid,body) {
-    let token=localStorage.getItem('token');
 
     let url = this.url+"notes/" + id + "/checklist/" + modifiedid + "/update";
     return this.service.httpPost(url,body);
 }
 postAddLabelnotesAdd(arrayofnotesid,label,body) {
-    let token=localStorage.getItem('token');
-      // var url = "notes/" + [this.arrayofnotes['id']] + "/addLabelToNotes/" + label + "/add";
 
-    let url = this.url+"notes/" + arrayofnotesid +"/addLabelToNotes/"  + label +"/add";
+    let url = this.url+"notes/"+arrayofnotesid+"/addLabelToNotes/"+label+"/add";
     return this.service.httpPost(url,body);
 }
 postTrashnotes(body){
-    // let token=localStorage.getItem('token');
 
     let url = this.url +"notes/trashNotes";
     return this.service.httpPost(url,body);
@@ -105,25 +100,21 @@ postDeleteForeverNotes(body){
     return this.service.httpPost(url,body);
 }
 postRegisterPushToken (body){
-    // let token=localStorage.getItem('token');
 
     let url = this.url +'user/registerPushToken';
     return this.service.httpPost(url,body);
 }
 postAddUpdateReminderNOtes (body){
-    let token=localStorage.getItem('token');
 
     let url = this.url +'/notes/addUpdateReminderNotes';
     return this.service.httpPost(url,body);
 }
 postUpdateNotelabel(labelid,body){
-    let token=localStorage.getItem('token');
 
   let url = this.url +"noteLabels/" + labelid + "/updateNoteLabel";
   return this.service.httpPost(url,body);
 }
 postNoteLabels(body){
-    // let token=localStorage.getItem('token');
 
   let url = this.url +"noteLabels";
   return this.service.httpPost(url,body);
@@ -131,13 +122,13 @@ postNoteLabels(body){
 postChecklistRemove(dataid,removeid,body){
     // let token=localStorage.getItem('token');
 
-  var url = "notes/" + dataid + "/checklist/" + removeid + "/remove";
+    let url =this.url + "notes/" + dataid + "/checklist/" + removeid + "/remove";
   return this.service.httpPost(url,body);
 }
 postCheckListAdd(dataid,body){
     // let token=localStorage.getItem('token');
 
-var url = "notes/" + dataid + "/checklist/add";
+    let url =this.url + "notes/" + dataid + "/checklist/add";
 return this.service.httpPost(url,body);
 }
 imageupload(body){/** */
@@ -145,5 +136,13 @@ imageupload(body){/** */
 
     let url = this.url +'/user/uploadProfileImage';
     return this.service.httpImage(url,body,token)
+  }
+  searchuserlist(body){
+      let url=this.url+'user/searchUserList';
+      return this.service.httpPost(url,body);
+  }
+  addcollaboratorNotes(dataid,body){
+      let url=this.url+"notes/"+dataid+"/AddcollaboratorsNotes";
+      return this.service.httpPost(url,body)
   }
 }

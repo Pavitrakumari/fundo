@@ -23,9 +23,7 @@ import { LoggerService } from '../../core/services/logger/logger.service';
 import { NoteService } from '../../core/services/http/note/note.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-
 /**A componenet can be reused throughout the application & even in other applications */
-
 @Component({
   selector: 'app-notescard',/**A string value which represents the component on browser at execution time */
   templateUrl: './notescard.component.html',/**External templating process to define html tags in component */
@@ -114,8 +112,7 @@ return true;
   }
   else false;
 }
-
-  openDialog(dialogdata): void {
+openDialog(dialogdata): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',/**width of the dialog box */
       // height:'350px',
@@ -127,16 +124,13 @@ return true;
       this.updateevent.emit();
       this.pavitra.emit();
   })
-    dialogRef.afterClosed().subscribe(result => {
+  dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.updateevent.emit();/**emit an event to the parent */
       this.pavitra.emit();
-
     });
   }
- 
-
-  removelabel(label,note) {/**passing the label id & note id */
+removelabel(label,note) {/**passing the label id & note id */
 try {
       console.log(note,label);/**displaying the id's */
       this.noteService.postAddLabelnotesRemove(label,note,null)
@@ -166,8 +160,7 @@ try{
     .subscribe(data => {
         console.log("success in remove reminders ",data);
         this.updateevent.emit();
-        this.pavitra.emit();
-
+        // this.pavitra.emit();
       })
     error => {
       console.log("error in remove reminders",error)

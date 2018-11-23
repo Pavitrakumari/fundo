@@ -1,4 +1,4 @@
-import { Component, Inject,OnInit } from '@angular/core';
+import { Component, Inject,OnInit,Input } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DataService } from '../../core/services/data/data.service';
 import { DialogcollaboratorComponent } from '../dialogcollaborator/dialogcollaborator.component';
@@ -11,6 +11,7 @@ import { DialogcollaboratorComponent } from '../dialogcollaborator/dialogcollabo
 export class CollaboratoriconComponent implements OnInit {
 
   constructor(private dialog:MatDialog) {}
+  @Input() noteid;
 
   ngOnInit() {
   }
@@ -18,7 +19,7 @@ export class CollaboratoriconComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
       
       width: '500px',
-      data:'',
+      data:this.noteid,
       height:'auto',
        panelClass: 'myapp-no-padding-dialog' 
   });
