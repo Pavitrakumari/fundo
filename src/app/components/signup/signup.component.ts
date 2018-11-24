@@ -25,14 +25,14 @@ export class SignupComponent implements OnInit,OnDestroy {
   getErrorMessageFirstName() {/**validation for firstname of user */
     return this.firstname.hasError('required') ? 'first name is required' :
       this.firstname.hasError('firstname') ? 'Not a valid first name' :
-        'Not a valid first name';
+        'Invalid lastname';
   }
   /**validation for firstname of user */
   lastname = new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z]*')]);
   getErrorMessageLastName() {
     return this.lastname.hasError('required') ? 'last name is required' :
       this.firstname.hasError('firstname') ? 'Not a valid last name' :
-        'Not a valid last name';
+        'Invalid last name';
   }
   /**validation for firstname of user */
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -69,7 +69,6 @@ constructor(public httpService: HttpService,private userService:UserService, pub
   }
   /**method used to respond the cards based on the selection of user */
   respond(card) {
-    LoggerService.log(card.name);
     this.service = card.name;
     card.select = true;
     for (let i = 0; i < this.card.length; i++) {
@@ -83,10 +82,6 @@ constructor(public httpService: HttpService,private userService:UserService, pub
   /**signup method to post the data when a particular user is signed in successfully */
   signup() {
 try{
-    LoggerService.log(this.model.Firstname)
-    LoggerService.log(this.model.Lastname)
-    LoggerService.log(this.model.Username)
-    LoggerService.log(this.model.password)
     this.userService.postsignup(
       {
         "firstName": this.model.Firstname,
@@ -103,33 +98,23 @@ try{
       .pipe(takeUntil(this.destroy$))
       .subscribe(/**if no error then data is posted with the given message */
         data => {
-          LoggerService.log("POST Request is successful ", data);
           localStorage.setItem('firstName', data['firstName']);
 
           this.snackBar.open("successfully registered", "ACCOUNT CREATED", {
             duration: 10000,
 
           });
-          let firstName=localStorage.getItem('firstName');
 
-          LoggerService.log("firstname in signin",firstName);
           
         }),
-        error => {/**if error exists then displays the error message using snackbar */
-          LoggerService.log("Error", error);
-          this.snackBar.open("All the details must be filled  ", "SIGNUP FAILED", {
-            duration: 10000,
-          });
-        }
+        
 
     this.userService.getDataService2()/**using the service to get the data that is posted into the server */
     .pipe(takeUntil(this.destroy$))
     .subscribe(
         (data) => {/**get the data if error doesnot exist */
-          LoggerService.log("data added into the server : ", data);
         },
         error => {/**displays the error if any */
-          LoggerService.log("error", error)
         })
   }
 catch(error){

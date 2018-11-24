@@ -9,20 +9,16 @@ import { DialogcollaboratorComponent } from '../dialogcollaborator/dialogcollabo
   styleUrls: ['./collaboratoricon.component.scss']
 })
 export class CollaboratoriconComponent implements OnInit {
-
-  constructor(private dialog:MatDialog) {}
+constructor(private dialog:MatDialog) {}
   @Input() noteid;
-
   ngOnInit() {
   }
   opencollaborator(){
-    const dialogRef = this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
-      
+     this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
       width: '500px',
+      // height:'500px',
       data:this.noteid,
       height:'auto',
        panelClass: 'myapp-no-padding-dialog' 
-  });
-  
-  }
+  });}
 }

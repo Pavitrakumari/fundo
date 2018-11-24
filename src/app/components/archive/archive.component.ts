@@ -18,7 +18,6 @@ import { Notes } from '../../core/models/notes';
 import { LoggerService } from '../../core/services/logger/logger.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-
 @Component({
   selector: 'app-archive',
   templateUrl: './archive.component.html',
@@ -26,11 +25,9 @@ import { Subject } from 'rxjs';
 })
 export class ArchiveComponent implements OnInit,OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
-
   token;
   temp1 = [];
   list:Notes[]=[]
-
   constructor(private noteService:NoteService,public httpService: HttpService, public snackBar: MatSnackBar) { }
   ngOnInit() {
     this.getarchive();
@@ -43,21 +40,13 @@ try{
     this.noteService.getarchive()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {/**calling the noteservice method */
-      LoggerService.log("get cards list successfull", data);
-      this.list=data['data'].data/**passing the response body to an object list */
-      this.temp1 = this.list.reverse();/**reverse() method in typescript to display the data in reverse order */
+      this.temp1 = data['data'].data.reverse();/**reverse() method in typescript to display the data in reverse order */
     })
-    error => {/**if error exists in hitting the api */
-      LoggerService.log("error in get archive",error)/**displays the error */
-     }
-  }
+    }
 catch(error){
-    LoggerService.log(error);
-  }
-  }
+  }}
   ngOnDestroy() {
     this.destroy$.next(true);
     // Now let's also unsubscribe from the subject itself:
     this.destroy$.unsubscribe();
-  }
-}
+  }}

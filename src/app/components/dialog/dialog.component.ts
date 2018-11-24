@@ -128,29 +128,29 @@ ngOnInit() {
       "title": this.title,
       "description": this.note
     }
-    console.log("dialoooooooooooooooooooooooogg");
-    
+console.log("bodyyyyyy updatee  ",body);
+
     this.noteService.updatenotes(body)
-    .pipe(takeUntil(this.destroy$))
+    // .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
-      LoggerService.log("update changes successfully", data);/**if no errors then display the data */
+      console.log("success in normal update",data);
+      
       this.snackBar.open("update change success", "success", {/**snackbar to display the result */
         duration: 10000,/**duaration of the snackbar to be opened */
-      });
-    }),
-    error => {
-      LoggerService.log("error in update", error);/**if error exists then display the error */
-          this.snackBar.open("update change failed", "error", {/**snackbar to display the result */
-            duration: 10000,
-          });
-        }
+      }),
+      error=>{
+        console.log("error in normal update",error);
+        
+      }
+    })
+    
   }
   else{/**if add note is for checklist,then it executes the else part */
-    LoggerService.log("runnin else.........just .............");
     let apiData={/**Attributes to be passed for hitting the api */
       "itemName": this.modifiedCheckList.itemName,
       "status":this.modifiedCheckList.status
     }
+    // this.color=#ffffff;
     // let url = this.url+"notes/" + id + "/checklist/" + modifiedid + "/update";
 
     this.noteService.postUpdateChecklist(this.data['id'], this.modifiedCheckList.id ,
@@ -158,10 +158,8 @@ ngOnInit() {
     .pipe(takeUntil(this.destroy$))
     .subscribe(response => {
       LoggerService.log("else part.......................",response);
-    }),
-    error=>{/**if error exists,then display the error */
-      LoggerService.log("else paer errorrrrr",error);
-    }
+    })
+    
   }
   
     }
@@ -170,7 +168,6 @@ ngOnInit() {
   }
 }
 editing(editedList,event){
-  LoggerService.log(editedList);
     if(event.code=="Enter"){
     this.modifiedCheckList=editedList;
     this.updateNotes();
@@ -183,13 +180,11 @@ checkBox(checkList){
     else{
       checkList.status = "open"
     }
-    LoggerService.log(checkList);
     this.modifiedCheckList=checkList;
     this.updateNotes();
   }
   public removedList;
   removeList(checklist){/**method to remove the check lists */
-    LoggerService.log(checklist)
     this.removedList=checklist;/**move them into the remove list */
     this.removeCheckList()/**calling the removechecklist function */
   }
@@ -236,7 +231,7 @@ try{
       LoggerService.log(this.newData,"newwwwwww dataaaaaaaaaaaa");
       console.log("9603273",this.newData);
       
-      this.noteService.postCheckListAdd(this.data, this.newData)
+      this.noteService.postCheckListAdd(this.data['id'], this.newData)
       // .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
         LoggerService.log("response",response);
@@ -259,7 +254,7 @@ emit(event){
   removelabel(label, note) {/**passing the label id & note id */
 try {
   LoggerService.log(note, label);/**displaying the id's */
-      this.noteService.postAddLabelnotesRemove(label.id ,note, null)
+      this.noteService.postAddLabelnotesRemove(label.id ,note, {})
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {/**using the observabel subscribe using callbackk */
           LoggerService.log("success in remove label", data);
@@ -269,13 +264,11 @@ try {
           if (index > -1) {
             this.selectarray1.splice(index, 1);
           }
-        }),
+        })
         this.updateevent.emit();
         // this.pavitra.emit();
 
-      error => {/**if error exists */
-        LoggerService.log("error in remove", error);/**then display the error */
-      }
+      
     }
 catch (error) {
   LoggerService.log(error);
@@ -295,26 +288,20 @@ try{
     this.noteService.postRemoveReminders( body)
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
-        LoggerService.log("success in remove reminders ",data);
         this.eventOne.emit(true);/**emitting the event */
         const index = this.selectarray2.indexOf(item,0);
         if (index > -1) {/**if index is greater than -1 then remove those index's from the selectarray2 */
           this.selectarray2.splice(index, 1);
         }
         this.updateevent.emit();/**emitting the event */
-        // this.pavitra.emit();
-
       })
-      error => {
-        LoggerService.log("error in remove reminders",error);
-    }}
-catch(error){/**if error exists then handle the errors
-   */
-  LoggerService.log(error);
       
-    }
   }
-  ngOnDestroy() {
+catch(error){/**if error exists then handle the errors*/
+  LoggerService.log(error);
+}
+}
+ngOnDestroy() {
     this.destroy$.next(true);
     // Now let's also unsubscribe from the subject itself:
     this.destroy$.unsubscribe();

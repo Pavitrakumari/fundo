@@ -91,15 +91,11 @@ if (this.router.url == "/home/trash") {
 }
     this.raw_data = localStorage.getItem('name');/**get the name from local storahe */
     this.firstName=localStorage.getItem('firstName');
-    LoggerService.log(this.raw_data);
     let array = this.raw_data.split("");/**split the name & pass it to a variable array */
     this.firstchar = array[0];/**first character of the name is passed to 'firstchar' variable */
-    LoggerService.log(this.firstchar);
-    LoggerService.log(this.token);/**display the token & firstchar */
     this.getLabels();
   }
   titlechange(values){
-    LoggerService.log("hello title");
     
     this.value=values
 
@@ -114,23 +110,16 @@ if (this.router.url == "/home/trash") {
   }
 logout() {
   try{
-    LoggerService.log("logoutt running");
     this.userService.postlogout()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {/**registers handlers for events emitted by the instance */
-      LoggerService.log("success in logouttttt", data);
       localStorage.removeItem('email');/**remove email from local storage when logout */
       localStorage.removeItem('token');/**remove token from local storage when logout */
       this.router.navigate(['/login']);/**when logout() is performed then navigate the page to login */
       this.snackBar.open("successfully logout", "LOGOUT", {/**snackbar to display the result */
         duration: 10000,/**for a duration of 10 seconds */
       });
-    }), error => {
-      LoggerService.log("error in logout", error);
-      this.snackBar.open("unsuccess logout", "LOGOUT", {/**snackbar to display the result */
-        duration: 10000,/**for a duration of 10 seconds */
-      });
-    }
+    })
   }
   catch(error){
     LoggerService.log(error)
@@ -158,19 +147,15 @@ try{
     .subscribe(response => {
         this.labelarray = [];
         this.list=response['data'].details
-        // LoggerService.log(this.list);
         for (let i = 0; i < (this.list).length; i++) {
           if (this.list[i].isDeleted == false) {
             this.labelarray.push(response['data'].details[i])
           }
         }
         // console.log(this.labelarray, "Label array printing success bujji so sweet of you");
-        LoggerService.log(this.labelarray+"Label array printing success bujji so sweet of you" );
 
-      }),
-      error => {
-        LoggerService.log("error in get LABELS", error);
-      }
+      })
+      
     }
 catch(error){
       LoggerService.log(error)
@@ -183,9 +168,7 @@ catch(error){
   passmessage() {
     this.dataservice.changeMessage(this.searchInput);
   }
-  onFileUpload(event) {
-    const file = event.target.files;
-  }
+  
   listview() {
     this.number = 0;
     this.dataservice.changeMessage3(false);

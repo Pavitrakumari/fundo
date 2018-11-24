@@ -7,7 +7,15 @@
     font-size:1.2em;
 }
 .collaborator{
+    // overflow-y: scroll;  
+    //   overflow-x: scroll;
+
     border-radius:60px 20px 20px 20px;
+}
+.scroll{
+    max-height: 200px;
+    overflow-y:auto;
+    overflow-x:hidden !important;
 }
 .content{
     font-weight: bold;
@@ -21,6 +29,11 @@
 }
 .names{
     margin-top:15px;
+    cursor: pointer;
+
+}
+.clear{
+    cursor: pointer;
 }
 .person{
     margin-top:20px;

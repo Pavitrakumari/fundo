@@ -11,7 +11,7 @@
             
             </div>
             
-            <div *ngIf="!checklist" class="inputNote" contenteditable="true" id="note" 
+            <div [ngStyle]="{'background-color':color}" *ngIf="!checklist" class="inputNote" contenteditable="true" id="note" 
             [innerHTML]="data.description" placeholder="Note"
                 autofocus>{{data.description}}</div><br>
             <div fxLayout="row" fxLayoutAlign="start start" class="row-height" fxLayoutGap="5px">
@@ -24,21 +24,21 @@
                     </mat-chip-list>
                 </div>
             </div>
-            <div class="note" *ngFor="let check of tempArray" fxLayout="row">
+            <div [ngStyle]="{'background-color':color}" class="note" *ngFor="let check of tempArray" fxLayout="row">
                 <mat-checkbox fxFlex="10%" *ngIf="check.status=='open'&& !check.isDeleted" (click)=checkBox(check)></mat-checkbox>
                 <input [(ngModel)]=check.itemName fxFlex="80%" class="note" (keydown)=editing(check,$event)
                 [ngStyle]="{'background-color':data.color}" *ngIf="!check.isDeleted && check.status=='open'">
                 <mat-icon fxFlex="10%" class="clearIcon" (click)=removeList(check) *ngIf="!check.isDeleted && check.status=='open'">clear</mat-icon>
             </div>
             <hr *ngIf="checklist">
-            <div fxLayout="row" *ngIf="checklist">
+            <div [ngStyle]="{'background-color':color}" fxLayout="row" *ngIf="checklist">
                 <mat-icon fxFlex="5%" *ngIf="!adding">add</mat-icon>
                 <mat-checkbox *ngIf="adding" [(ngModel)]=addCheck color="primary"></mat-checkbox>
                 <input fxFlex="95%" class="note" placeholder="List Item" [style.backgroundColor]="bgcolor" [(ngModel)]=newList
                     (keydown)=addList($event) />
             </div>
             <hr *ngIf="checklist">
-            <div class="note" *ngFor="let check of tempArray" fxLayout="row">
+            <div [ngStyle]="{'background-color':color}" class="note" *ngFor="let check of tempArray" fxLayout="row">
                 <mat-checkbox fxFlex="10%" checked=true *ngIf="check.status=='close'&& !check.isDeleted" (click)=checkBox(check)></mat-checkbox>
                 <input  [ngStyle]="{'background-color':data.color}" [(ngModel)]=check.itemName class="note" style="text-decoration: line-through;" fxFlex="80%"
                     *ngIf="check.status=='close' && !check.isDeleted" (keydown)=editing(check,$event)>

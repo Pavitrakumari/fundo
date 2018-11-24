@@ -29,7 +29,6 @@ export class ForgotpasswordComponent implements OnInit,OnDestroy {
   ngOnInit() {
   }
   reset() {
-    LoggerService.log(this.model.email);
     if (this.model.email.length == 0) {
       this.snackBar.open("FAILED", "PLEASE ENTER EMAIL", {
         duration: 10000,
@@ -43,13 +42,11 @@ export class ForgotpasswordComponent implements OnInit,OnDestroy {
     .pipe(takeUntil(this.destroy$))
     .subscribe(
       Response => {
-        LoggerService.log("New  password link has been sent to your registered email,please check...");
         this.snackBar.open("Check your email", "For password", {
           duration: 10000,
         });
         console.log(Response);
       }, (error) => {
-        LoggerService.log("login unsuccessful");
         LoggerService.log("error",error);
         if (error.status == 404)
           this.snackBar.open("failed", "Email not found", {

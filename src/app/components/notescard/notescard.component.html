@@ -57,7 +57,8 @@ aria-multiline="true" role="textbox" role="textbox"
           <div fxLayout="row wrap" fxLayoutAlign="start" class="row-height" fxLayoutGap="5px">
             <div *ngFor="let item of index.noteLabels">
               <mat-chip-list selected>
-                <mat-chip class="labelmatchip" routerLink="/home/labels/{{item.label}}" (click)="funclabel(item.label)"
+                <mat-chip class="labelmatchip" routerLink="/home/labels/{{item.label}}" 
+                (click)="funclabel(item.label)"
                   appearance="outline" *ngIf="item.isDeleted==false">
                   <span class="span" >{{item.label}}</span>
                   <mat-icon matChipRemove (click)="removelabel(item.id,index.id)">cancel</mat-icon>
@@ -65,6 +66,14 @@ aria-multiline="true" role="textbox" role="textbox"
               </mat-chip-list>
             </div>
           </div><br>
+<!-------------------------------------------collaborators----------------------------------------->
+
+<div fxLayoutAlign="row" fxLayoutGap="3px" class="collaborators">
+    <div *ngFor="let value of index.collaborators">
+      <button (click)="open(index)" mat-mini-fab color="accent">
+        {{value.email | titlecase | slice:0:1}}</button>
+      </div>
+  </div>
 <!------------------------------ Reminders------------------------------------------ -->
           <div fxLayout="row" *ngIf="checkReminder(index.reminder[0])" fxLayoutAlign="start start" class="row-height"
             fxLayoutGap="5px">

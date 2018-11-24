@@ -44,7 +44,6 @@ try{
     .subscribe(res => {
 
 
-      LoggerService.log("result in crop image",res);
 
       localStorage.setItem('imageUrl', res['status'].imageUrl);
       this.dialogRef1.close();

@@ -23,6 +23,7 @@ import { LoggerService } from '../../core/services/logger/logger.service';
 import { NoteService } from '../../core/services/http/note/note.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { DialogcollaboratorComponent } from '../dialogcollaborator/dialogcollaborator.component';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-notescard',/**A string value which represents the component on browser at execution time */
@@ -110,7 +111,8 @@ checkReminder(date){/**function */
   if(value > savedReminder){
 return true;
   }
-  else false;
+  else 
+  return false;
 }
 openDialog(dialogdata): void {
     const dialogRef = this.dialog.open(DialogComponent, {
@@ -119,31 +121,25 @@ openDialog(dialogdata): void {
       data: dialogdata,/**paramaeter that we are passing */
       panelClass: 'myapp-no-padding-dialog'/**to change the padding in dialog box */
     });
-    const sub = dialogRef.componentInstance.eventOne.subscribe((data) => {
-      console.log("sub", data);
+     dialogRef.componentInstance.eventOne.subscribe((data) => {
       this.updateevent.emit();
       this.pavitra.emit();
   })
   dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       this.updateevent.emit();/**emit an event to the parent */
       this.pavitra.emit();
     });
   }
 removelabel(label,note) {/**passing the label id & note id */
 try {
-      console.log(note,label);/**displaying the id's */
-      this.noteService.postAddLabelnotesRemove(label,note,null)
+      this.noteService.postAddLabelnotesRemove(label,note,{})
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {/**using the observabel subscribe using callbackk */
-          console.log("success in remove label", data);/**if success then display the result */
           this.updateevent.emit();/**emit an event to the parent */
           this.pavitra.emit();
 
-        }),
-        error => {/**if error exists */
-          console.log("error in remove", error);/**then display the error */
-        }
+        })
+        
     }
 catch (error) {
       console.log(error);
@@ -158,13 +154,10 @@ try{
     this.noteService.postRemoveReminders( body)
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
-        console.log("success in remove reminders ",data);
         this.updateevent.emit();
         // this.pavitra.emit();
       })
-    error => {
-      console.log("error in remove reminders",error)
-    }
+    
   }
 catch(error){
   LoggerService.log(error)
@@ -175,15 +168,12 @@ try{
     this.noteService.getreminders()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
-        console.log("success in get reminders ",data);
         // this.updateevent.emit();
         this.remm.emit();
         this.pavitra.emit();
 
       })
-    error => {
-      console.log("error in get reminders",error)
-    }
+    
   }
 catch(error){
     LoggerService.log(error)
@@ -198,7 +188,6 @@ catch(error){
     else {
       checklist.status = "open"
     }
-    console.log(checklist);
     this.modifiedCheckList = checklist;
     this.updatelist(index);
   }
@@ -212,26 +201,25 @@ try{
     .pipe(takeUntil(this.destroy$))
     .subscribe(response => {
       this.pavitra.emit();
-
-      console.log("success in update checklists",response);
-
-    }),
-    error=>{
-      LoggerService.log("errror in update checklists............",);
-      
-    }
+})
+    
   }
 catch(error){
     LoggerService.log(error);
   }
 }
+open(note){
+  this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
+   width: '500px',
+   data:note,
+   height:'auto',
+    panelClass: 'myapp-no-padding-dialog' 
+});}
 ngOnDestroy() {
   this.destroy$.next(true);
   // Now let's also unsubscribe from the subject itself:
   this.destroy$.unsubscribe();
 }
-
-
 }
 
 

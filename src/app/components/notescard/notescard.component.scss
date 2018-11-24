@@ -14,12 +14,15 @@
 .matcard:hover{
     @include box_shadow_hover;
     margin: 10px;
-    // width:190px; 
     border-radius: $bor_rad_10;
 } 
 mat-chip {
     justify-content: space-between;
     @include text-overflow-hide;
+}
+.collaborators{
+    display:flex;
+    flex-wrap: wrap;
 }
 mat-card-title{
     font-family: 'Google Sans','Roboto',Arial,sans-serif;
@@ -47,7 +50,6 @@ mat-card-content{
     opacity: 0;
     &:hover {
       opacity: 1;
-      margin-bottom: 0px;
     }
   }
 .mat-chip.mat-standard-chip .mat-chip-remove {

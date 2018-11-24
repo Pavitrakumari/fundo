@@ -11,49 +11,38 @@ import { DialogData } from '../dialog/dialog.component';
   styleUrls: ['./dialogcollaborator.component.scss']
 })
 export class DialogcollaboratorComponent implements OnInit {
-userId=localStorage.getItem('')
+  newList= [];
   constructor(public dialogRef: MatDialogRef<DialogcollaboratorComponent>,
     private noteService:NoteService,@Inject(MAT_DIALOG_DATA)
     public data:DialogData) { }
     firstchar='';
     array=[];
+    searchemail;
 ngOnInit() {
-  console.log(this.data,"99999999999999999999collaborator");
-  
+  LoggerService.log("99999999999999999999collaborator",this.data);
   for(let i=0 ;i<this.data['collaborators'].length;i++){
-    this.receiverlist.push(this.data['collaborators'][i]);
-    }
-
-}
+    this.newList.push(this.data['collaborators'][i]);
+    }}
  userlist=[];
  receiverlist=[];
-
 private imageNew = localStorage.getItem('imageUrl');
 img = environment.profileUrl + this.imageNew;
 mail=localStorage.getItem('name');
-//  array = this.mail.split("");/**split the name & pass it to a variable array */
-// this.firstchar = array[0];/**first character of the name is passed to 'firstchar' variable */
-
 firstName=localStorage.getItem('firstName');
 lastName = localStorage.getItem('lastName');
+
 searchpeople(searchemail){
-  console.log("search email",searchemail);
+  LoggerService.log("search email",searchemail);
   var body={
     "searchWord":searchemail
   }
   this.noteService.searchuserlist(body).subscribe(data=>{
-    LoggerService.log("success in collaborator search",data)
     this.userlist=[];
     this.userlist=data['data'].details;
-    console.log("user id in collaborator",data['data'].details);
-    
-  }),
-  error=>{
-    LoggerService.log("error in collaborator search",error);
-  }
+    })
+  
 }
 addCollaboratorNotes(colors){
-  console.log("colors in collaborator",colors);
   var body={
     "firstName":colors.firstName,
     "lastName":colors.lastName,
@@ -61,12 +50,36 @@ addCollaboratorNotes(colors){
     "userId":colors.userId
   } 
   this.noteService.addcollaboratorNotes(this.data['id'],body).subscribe(data=>{
-    LoggerService.log("success in add collaborator to notes",data);
-
     this.receiverlist=data['data'].details
-  }),
-  error=>{
-    LoggerService.log("error in add collaborator",error);
-  }
+  })
+
 }
+removecollaborator(colors){
+this.noteService.removeCollaborator(this.data['id'],colors.userId).subscribe(data=>{
+  console.log("success in remove collaborators",data);
+  for(var i=0;i<this.newList.length;i++){
+    if(this.newList[i].userId==colors.userId){
+      this.newList.splice(i,1);
+    }
+  }
+})
+
+}
+onEnter(searchFriend){
+
+  for(let index=0;index<this.userlist.length;index++){
+    if(this.userlist[index].email==searchFriend){
+    this.newList.push(this.userlist[index]);
+  }
+  }
+  this.searchemail=[];
+
+  LoggerService.log('list',this.newList)
+
+}
+select(userMail){
+  this.searchemail=userMail;
+}
+
+
 }
