@@ -49,6 +49,7 @@ export class NotescardComponent implements OnInit,OnDestroy {
   @Input() string;
   @Input() length;
   @Input() myData;
+  collaborators=[];
   condition = true;
   @Input() searchInput;
    list:Notes[]=[];
@@ -68,7 +69,10 @@ export class NotescardComponent implements OnInit,OnDestroy {
   /**myData is a varaible */
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
-  ngOnInit() { }
+  ngOnInit() {
+
+
+   }
   receive(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.noteevent.emit();
   }

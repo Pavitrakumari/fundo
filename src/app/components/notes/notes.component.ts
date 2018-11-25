@@ -19,12 +19,12 @@ import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatDialog} from '@angular/material';
-
 import { error } from '@angular/compiler/src/util';
 import { LoggerService } from '../../core/services/logger/logger.service';
 import { NoteService } from '../../core/services/http/note/note.service';
 import { Notes } from '../../core/models/notes';
 import { DialogcollaboratorComponent } from '../dialogcollaborator/dialogcollaborator.component';
+import { environment } from '../../../environments/environment';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-notes',/**A string value which represents the component on browser at execution time */
@@ -35,8 +35,7 @@ import { DialogcollaboratorComponent } from '../dialogcollaborator/dialogcollabo
 export class NotesComponent implements OnInit,OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  colorChange 
-  = "#ffffff";
+  colorChange = "#ffffff";
   expression1 = true;
 collab=false;
 list:Notes[]=[]
@@ -51,12 +50,17 @@ list:Notes[]=[]
   data;
   noteid={'isArchived':false}
   dataarray = [];
+  collaborators=[];
   selectarray2 = [];
   selectarray3 = [];
   public title;
   public note;
   public pinned = false;
   adding: boolean;
+  searchInput: any;
+  searchResult: any;
+  collabReq=[];
+  initial: any;
   // dialog: any;
   constructor(private noteService:NoteService,public dialog: MatDialog,
     public httpService: HttpService, public router: Router) { }
@@ -66,9 +70,22 @@ list:Notes[]=[]
   @Output() updateevent = new EventEmitter<any>();
   /**EventEmitter:creates an instance of this class that can delliver events  */
   ngOnInit() {
+    console.log(this.data['collaberators'],"notes cARS...............................................................");
+
+    for(let i=0 ;i<this.data['collaberators'].length;i++){
+      this.collabReq.push(this.data['collaborators'][i]);
+      console.log(this.collabReq,"notes cARS...............................................................");
+      
+      }
     /**it is a interface */
     /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
   }
+  private imageNew = localStorage.getItem('imageUrl');
+img = environment.profileUrl + this.imageNew;
+mail=localStorage.getItem('name');
+firstName=localStorage.getItem('firstName');
+lastName = localStorage.getItem('lastName');
+
   public body:any={}
   public isPinned = false;
   public isArchived=false;
@@ -87,6 +104,9 @@ list:Notes[]=[]
     this.dataarray=[];
     this.array=[];
   }
+  closecollab(){
+    this.collab=!this.collab;
+  }
  public  array=[];remm
  reminder(event){
     console.log(event);
@@ -97,7 +117,9 @@ list:Notes[]=[]
     /**method that need to perform while clicking the close button */
     this.expression1 = true;
     this.expression2 = false;
+    this.collab=false;
     this.enter(event);
+    this.collabReq=[];
     this.selectarray2 = [];
     this.selectarray3 = [];
     /**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */
@@ -113,7 +135,8 @@ list:Notes[]=[]
         "checklist": "",
         "isPined": "",
         "color": "",
-        "reminder":this.array
+        "reminder":this.array,
+        "collaberators":JSON.stringify(this.collabReq)
       }
     }
     else{
@@ -136,7 +159,9 @@ list:Notes[]=[]
         "color": "",
         "isArchived": this.isArchived,
         "labelIdList": JSON.stringify(this.selectarray1),
-        "reminder":this.array
+        "reminder":this.array,
+        "collaberators":JSON.stringify(this.collabReq)
+
       }
     }
     this.body.color = this.colorChange;
@@ -154,6 +179,7 @@ list:Notes[]=[]
           this.adding=false;
           this.onNewEntryAdded.emit();
           this.close1();
+          this.collabReq=[];
           this.colorChange = "#ffffff";
         }, error => {
           LoggerService.log("Error in add notes", error);/**if there exists error then display the error */
@@ -165,7 +191,7 @@ catch (error) {
 }
 }
 opencololab(){
-  this.collab=true;
+  this.collab=!this.collab;
 }
 getLabels1() {
     this.noteService.getlabels()
@@ -236,6 +262,53 @@ getLabels1() {
   removereminder() {
     this.array=[];
   }
+  search() {
+    this.done=true;
+    if (this.searchInput !== "") {
+
+      let RequestBody = {
+        "searchWord": this.searchInput
+      }
+      this.noteService.searchuserlist(RequestBody).subscribe(response => {
+        this.searchResult = response['data'].details
+      }, error => {})
+    }
+  }
+  public done = false;
+  public selectedUser;
+  userSelected(user) {
+    this.selectedUser = user
+    this.searchInput = user.email;
+    this.done = true;
+  }
+  addCollabdone(){
+    this.collabReq.push(this.selectedUser)
+    this.searchInput = " "
+  }
+  addCollab() {
+    this.collab = !this.collab;
+    if(this.searchInput!==" "){
+   this.collabReq .push(this.selectedUser)
+    this.searchInput=" "
+    }
+  }
+  cancel(){
+    this.collabReq=[];
+    this.collab=!this.collab;
+  }
+  removeCollaborator(collab){
+    for(let i=0;i<this.collabReq.length;i++){
+      if(collab.userId===this.collabReq[i].userId){
+        this.collabReq.splice(i,1)
+      }
+    }
+  }
+  splice(firstName) {
+    this.initial = firstName[0];
+    this.initial = this.initial.toUpperCase()
+    return true;
+  }
+
   ngOnDestroy() {
     this.destroy$.next(true);
     // Now let's also unsubscribe from the subject itself:

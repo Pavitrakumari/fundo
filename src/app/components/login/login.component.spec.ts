@@ -29,6 +29,10 @@ describe('LoginComponent', () => {
     expect(component.model1.password.toEqual('pavitra123'));
     expect(component.model1.email).toBeTruthy();
     expect(component.model1.password).toBeTruthy();
+    expect(component.model1.password).toBe.toString();
+    expect(component.model1.email).toBe.toString();
+
+
     })
     
     it('Invalid Form'),async(()=>{

@@ -11,6 +11,75 @@
     padding-top: 14px;
     font-family: cursive;
 } 
+.collab{
+    width:200px;
+    font-weight: bold;
+    font-family:cursive;
+    font-size:1.2em;
+}
+.collaborator{
+    // overflow-y: scroll;  
+    //   overflow-x: scroll;
+
+    border-radius:60px 20px 20px 20px;
+}
+.scroll{
+    max-height: 200px;
+    overflow-y:auto;
+    overflow-x:hidden !important;
+}
+.content{
+    font-weight: bold;
+    font-family:cursive;
+}
+.contentNew{
+    font-weight:lighter;
+    font-family:cursive;
+    margin-left:58px;
+    margin-top:-20px;
+}
+.names{
+    margin-top:15px;
+    cursor: pointer;
+    font-weight: lighter;
+
+}
+.clear{
+    cursor: pointer;
+}
+.person{
+    margin-top:20px;
+}
+.buttons{
+    background-color: gainsboro;
+}
+.button{
+    margin-top:10px;
+    float:right;
+    font-family:cursive;
+}
+.matmenu{
+    cursor: pointer;
+}
+.done{
+    float:right;
+    cursor: pointer;
+}
+.place{
+    @include border;
+    font-family:cursive;
+    font-size:15px;
+}
+.footer{
+// margin-bottom:20px;
+    // width:600px;
+    height: 50px;
+    background-color: gainsboro;
+}
+::ng-deep.mat-menu-panel{
+    overflow-x:hidden!important;
+    max-width: 390px!important;
+}
 .matcard{
     @include box_shadow;
 }
