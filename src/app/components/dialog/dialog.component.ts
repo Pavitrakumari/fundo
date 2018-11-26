@@ -47,7 +47,7 @@ export class DialogComponent implements OnInit ,OnDestroy{
   public newList;
   list:Checklists[]=[]
   list2:Notes[]=[]
-
+  collaborators=[];
   public newData:any={}
   public modifiedCheckList;
   public bgcolor=this.data.color;
@@ -55,6 +55,8 @@ export class DialogComponent implements OnInit ,OnDestroy{
   selectarray2 = [];
   public id;
   color;
+  collab=false;
+collabReq=[];
   noteid={'isArchived':false}
   public checklist=false;
   public noteLabels;
@@ -87,6 +89,14 @@ export class DialogComponent implements OnInit ,OnDestroy{
   /**OnInit is a lifecycle hook that is called after Angular has initialized
    *  all data-bound properties of a directive. */
 ngOnInit() {
+  this.updateNotes();
+
+  for(let i=0 ;i<this.data['collaborators'].length;i++){
+    this.collaborators.push(this.data['collaborators'][i]);
+    console.log(this.collaborators,"notes cARS...............................................................");
+    
+    }
+
   // this.pavitra.emit();
 
   LoggerService.log(this.data['noteLabels'], "maaaa");
@@ -98,8 +108,6 @@ ngOnInit() {
       this.checklist=true;
     }
     this.tempArray=this.data['noteCheckLists'];
-    LoggerService.log("selectarray2",this.selectarray2);
-    LoggerService.log("temp arary",this.tempArray);
   }
   more(label) {
     this.selectarray1.push(label);
@@ -126,7 +134,9 @@ ngOnInit() {
     var body = {
       "noteId": [id],/**attributes to be passed to change the color of notes */
       "title": this.title,
-      "description": this.note
+      "description": this.note,
+      "reminder":this.array,
+      "collaberators":this.collaborators
     }
 console.log("bodyyyyyy updatee  ",body);
 
@@ -173,6 +183,23 @@ editing(editedList,event){
     this.updateNotes();
     }
     }
+    public array=[]
+    
+reminderevent(event)  {
+      var flag=false,index;
+       this.array=[];
+       if(event)
+       {
+           flag=true;
+           index=1;
+           this.array.push(event);
+           console.log("event in ========dialog",this.array);
+          }
+         if(flag==true){
+              this.array.splice(index,1)
+    }
+  }
+
 checkBox(checkList){
     if (checkList.status=="open"){
       checkList.status = "close"

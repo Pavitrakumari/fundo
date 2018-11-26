@@ -70,10 +70,9 @@ list:Notes[]=[]
   @Output() updateevent = new EventEmitter<any>();
   /**EventEmitter:creates an instance of this class that can delliver events  */
   ngOnInit() {
-    console.log(this.data['collaberators'],"notes cARS...............................................................");
 
-    for(let i=0 ;i<this.data['collaberators'].length;i++){
-      this.collabReq.push(this.data['collaborators'][i]);
+    for(var  i=0 ;i<this.data['collaberators'].length;i++){
+      this.collabReq.push(this.data['collaberators'][i]);
       console.log(this.collabReq,"notes cARS...............................................................");
       
       }
@@ -101,6 +100,8 @@ lastName = localStorage.getItem('lastName');
     }
   }
   close1(){
+        this.collabReq=[];
+
     this.dataarray=[];
     this.array=[];
   }
@@ -119,7 +120,7 @@ lastName = localStorage.getItem('lastName');
     this.expression2 = false;
     this.collab=false;
     this.enter(event);
-    this.collabReq=[];
+    // this.collabReq=[];
     this.selectarray2 = [];
     this.selectarray3 = [];
     /**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */
@@ -179,7 +180,7 @@ lastName = localStorage.getItem('lastName');
           this.adding=false;
           this.onNewEntryAdded.emit();
           this.close1();
-          this.collabReq=[];
+          // this.collabReq=[];
           this.colorChange = "#ffffff";
         }, error => {
           LoggerService.log("Error in add notes", error);/**if there exists error then display the error */
@@ -309,6 +310,14 @@ getLabels1() {
     return true;
   }
 
+  openCollaborator(note){
+    this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
+     width: '500px',
+     data:note,
+     height:'auto',
+      panelClass: 'myapp-no-padding-dialog' 
+  });}
+  
   ngOnDestroy() {
     this.destroy$.next(true);
     // Now let's also unsubscribe from the subject itself:

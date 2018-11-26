@@ -93,7 +93,7 @@ fxFlex="54" fxFlex.md="100%" fxFlex.xs="95%"
 <div fxLayout="row wrap" >
         <div  *ngFor="let person of  collabReq"  class="index" fxLayoutGap="40px">
 
-     <button  matTooltip="{{person.email}}" (click)="openCollaborator()"
+     <button  matTooltip="{{person.email}}" (click)="opencololab()"
      class="basic" mat-mini-fab color="accent">
         {{person.firstName | uppercase | slice : 0 : 1 }}
      </button>
@@ -133,8 +133,6 @@ fxFlex="54" fxFlex.md="100%" fxFlex.xs="95%"
 </div>
 
 <!-----------------------------------------collaborator----------------------------------- -->
-
-
 <div class="collaborator" fxLayout="row"  fxLayoutAlign="center center"  *ngIf="collab">
     <mat-card class="card" fxFlex="54" fxFlex.md="100%" fxFlex.xs="95%"
         fxFlex.sm="70%"  class="hiddencard">
@@ -152,24 +150,6 @@ fxFlex="54" fxFlex.md="100%" fxFlex.xs="95%"
         <div class="contentNew">
           <mat-content fxFlex>{{mail}}</mat-content>
         </div>
-  
-  <!-- 
-      <div class="scroll" >
-        <div fxLayout="row" mat-mini-fab *ngFor='let index of newList' fxLayoutGap="20px">
-          <div fxFlex="10%">
-            <button mat-mini-fab color="accent">
-              {{index.email | titlecase | slice:0:1}}
-            </button>
-          </div>
-          <div fxFlex="85%" class="names">{{index.email | titlecase}} </div>
-          <div fxFlex="5%">
-            <mat-icon (click)="removecollaborator(index)" class="clear" fxFlex="100">clear</mat-icon>
-          </div>
-        </div>
-      </div>
-
-   -->              
-
    <div class="scroll" >
         <div fxFlexLayout="row" mat-mini-fab *ngFor="let collab of collabReq" fxLayoutGap="20px" >
             <div fxFlex="10%" class="addicon" *ngIf="splice(collab.firstName)">
@@ -181,19 +161,8 @@ fxFlex="54" fxFlex.md="100%" fxFlex.xs="95%"
         <div fxFlex="85%" class="names">{{collab.email | titlecase}} </div>
         <div fxFlex="5%">
                 <mat-icon (click)="removeCollaborator(collab)" class="clear" fxFlex="100">clear</mat-icon>
-              </div>
-    
+              </div> </div>
           </div>
-          </div>
-      
-     
-      
-
-
-
-
-
-
           <div fxFlexLayout="row" class="person" fxLayoutGap="20px">
             <div fxFlex="10%"><button mat-mini-fab disabled>
                 <mat-icon> person_add</mat-icon></button>
@@ -212,21 +181,11 @@ fxFlex="54" fxFlex.md="100%" fxFlex.xs="95%"
                     </div>
                 </mat-menu>
             </div>
-          
-
-
-  
-      </mat-card-content><br><br>
+        </mat-card-content><br><br>
       <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="end end" class="buttons">
         <div class="button"  (click)=addCollab() mat-button>Save</div>
         <div class="button" (click)=cancel()  mat-button>Close</div>
       </div>
-      <!-- <mat-card-footer fxLayoutAlign="center center" class="footer">
-        <div class="buttons">
-          <a class="button" mat-button>Save</a>
-          <a class="button" (click)="closecollab()" mat-button>Close</a>
-        </div>
-      </mat-card-footer> -->
     </mat-card>
   </div>
   

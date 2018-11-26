@@ -2,15 +2,15 @@
 @import "../../../sass/_mixins.scss";
 
 .hiddencard {
-    width: 400;
+    width: aut;
+    height: auto;
     left: 0;
+    border-radius:60px 20px 20px 20px;
+
     right: 0;
     margin: auto;
     margin-top: 0px;
     padding: 2px;
-  }
-  .hiddenDiv {
-    padding: 10px;
   }
   
   .inputTitle {
@@ -61,3 +61,48 @@
   .note {
     @include border;
   }
+  .contentNew{
+    font-weight:lighter;
+    font-family:cursive;
+    margin-left:58px;
+    margin-top:-20px;
+}
+.scroll{
+  max-height: 200px;
+  overflow-y:auto;
+  overflow-x:hidden !important;
+}
+.names{
+  margin-top:15px;
+  cursor: pointer;
+  font-weight: lighter;
+
+}
+.clear{
+  cursor: pointer;
+}
+.person{
+  margin-top:20px;
+}
+.buttons{
+  background-color: gainsboro;
+}
+.button{
+  cursor: pointer;
+
+  margin-top:10px;
+  float:right;
+  font-family:cursive;
+}
+.maticon{
+  margin-bottom: 100px;
+}
+.matmenu{
+  cursor: pointer;
+}
+.done{
+  float:right;
+  cursor: pointer;
+}
+
+

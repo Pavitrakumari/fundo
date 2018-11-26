@@ -64,7 +64,7 @@ export class Icon1Component implements OnInit,OnDestroy {
     { value: 'night', viewPeriod: 'Night', viewTime: '09:00 PM',disableStatus:'false'}];
 
   reminder(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
-    this.reminderevent.emit();
+    this.reminderevent.emit({});
   }
   ngOnInit() {
     LoggerService.log(this.setDate.getFullYear());
@@ -96,7 +96,7 @@ try{
   .pipe(takeUntil(this.destroy$))
   .subscribe(data => {/** if there exits no error then post the data */
       LoggerService.log("success in today reminders",data);
-      this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
+      this.reminderevent.emit({});/**emitting the event to communicate with the other componenets */
     },
       error => {/**if error exists then display the error */
         LoggerService.log("error in today reminders",error)
@@ -125,7 +125,7 @@ try{
   .pipe(takeUntil(this.destroy$))
   .subscribe(data => {/** if there exits no error then post the data */
       LoggerService.log("success in tomorroe reminders",data);
-      this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
+      this.reminderevent.emit({});/**emitting the event to communicate with the other componenets */
     },
       error => {/**if error exists then display the error */
         LoggerService.log("error in tomorrow reminders",error)
@@ -152,7 +152,7 @@ try  {
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {/** if there exits no error then post the data */
       LoggerService.log("success in week reminder",data);
-      this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
+      this.reminderevent.emit({});/**emitting the event to communicate with the other componenets */
 
     },
       error => {/**if error exists then display the error */
@@ -208,7 +208,7 @@ try{
   this.noteService.postAddUpdateReminderNOtes(this.body)
   .pipe(takeUntil(this.destroy$))
   .subscribe((result) => {
-    this.reminderevent.emit()
+    this.reminderevent.emit({})
   })
 }
  catch(error){

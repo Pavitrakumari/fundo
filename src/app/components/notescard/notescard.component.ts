@@ -42,6 +42,9 @@ export class NotescardComponent implements OnInit,OnDestroy {
   @Output() pavitra = new EventEmitter<any>();
   @Output() updateevent = new EventEmitter<any>();
   @Output() remm = new EventEmitter<any>();
+  
+  @Output() testreminder = new EventEmitter<any>();
+
   @Output() newPin = new EventEmitter<any>();
   @Output() state = new EventEmitter<any>();
   @Output() deleted = new EventEmitter<any>();
@@ -53,7 +56,8 @@ export class NotescardComponent implements OnInit,OnDestroy {
   condition = true;
   @Input() searchInput;
    list:Notes[]=[];
-  constructor(private noteService:NoteService,public httpService: HttpService, public dialog: MatDialog, public dataService: DataService) {
+  constructor(private noteService:NoteService,public httpService: HttpService, 
+    public dialog: MatDialog, public dataService: DataService) {
     this.dataService.currentMessage2.subscribe(message => {
       console.log(message);
       if (message) {
@@ -84,9 +88,15 @@ export class NotescardComponent implements OnInit,OnDestroy {
   archive(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.archiveevent.emit();
   }
-  reminder(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
-    this.remm.emit();
+  reminder(event) {
+    /**callback will be invoked &data associated with the event will be given to us via $event property */
+   if(event){
+
+   
+    this.remm.emit(event);
     this.pavitra.emit();
+   }
+    // this.testreminder.emit(event)
   }
 
   unarchive(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
