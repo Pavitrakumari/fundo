@@ -1,22 +1,18 @@
 @import "../../../sass/_variable.scss";
 @import "../../../sass/_mixins.scss";
-
 .inputTitle {
     @include border;
     font-size: 16px;
     font-style: oblique;
     font-weight: normal;
   }
-  
   div[contenteditable=true]:empty::before {
     content: attr(placeholder);
     opacity: 0.5;
   }
-  
   h1 {
     font-style: italic;
   }
-  
   .example-margin {
     margin: 0 10px;
   }

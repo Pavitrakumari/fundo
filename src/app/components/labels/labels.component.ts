@@ -20,10 +20,8 @@ export class LabelsComponent implements OnInit,OnDestroy {
   arraynewdata = [];
   temp;
   list:Notes[]=[]
-
   constructor(private noteService:NoteService,public httpService: HttpService, public route: ActivatedRoute) {
     this.route.params.subscribe(params => {
-      LoggerService.log("params",params);
       if (params) {
         this.labelName = params.id;
         this.getCard();
@@ -34,16 +32,13 @@ export class LabelsComponent implements OnInit,OnDestroy {
     this.getCard();
   }
   getCard() {
-    this.token = localStorage.getItem('token');/**get the token from the local storage */
     this.noteService.getcard()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
       /**hitting the api by passing the url & token */
       this.arraynewdata = [];
-      LoggerService.log("get cards list successfull", data);
       this.list=data['data'].data
-      this.temp = this.list.reverse();/**reverse() method in typescript to display the data in reverse order */
-      // console.log(this.temp);
+      // this.temp = this.list.reverse();/**reverse() method in typescript to display the data in reverse order */
       this.arraynewdata = [];/**Reinitializing the array so that data gets updated */
       for (let i = 0; i < this.list.length; i++)/**for loop to go through all cards*/ {
         if (this.list[i].isDeleted == false && this.list[i].isArchived == false)/**if cards are not deleted  */ {
@@ -54,11 +49,8 @@ export class LabelsComponent implements OnInit,OnDestroy {
           }
         }
       }
-      LoggerService.log( "array of new data",this.arraynewdata);/**display new array*/
-    }),
-      error => {/**if error occurs then display the error */
-        LoggerService.log("error", error);
-      }
+    })
+      
   }
   ngOnDestroy() {
     this.destroy$.next(true);

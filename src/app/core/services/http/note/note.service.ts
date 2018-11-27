@@ -17,14 +17,12 @@ export class NoteService {
     return this.note.delete(url);/**returns the output */
   }
   addnotes(input)/**post() service to post the token which is generated */ {
-  console.log(input);
 
    let url = this.url + "notes/addnotes";
    return this.service.httppostpassword(url, input);/**passing the input & calling the  getFormUrlEncoded()*/
 
   }
 updatenotes(input){
-    console.log("input in note service",input);
     let url = this.url + "notes/updateNotes";
     return this.service.httppostpassword(url, input);/**passing the input & calling the  getFormUrlEncoded()*/
  }
@@ -32,7 +30,7 @@ getcard() {
     // console.log();
 
     let url = this.url + "notes/getNotesList";
-    return this.service.httpget(url);
+    return this.service.geturlencoded(url);
 }
 getlabels() {
 
@@ -73,10 +71,10 @@ postRemoveReminders(model) {
   let url = this.url +'/notes/removeReminderNotes';
   return this.service.httpPost(url,model);
 }
-postAddLabelnotesRemove(label,note,{}) {
+postAddLabelnotesRemove(label,note,body) {
 
     let url = this.url +"notes/"+ note+"/addLabelToNotes/"+ label +"/remove";;
-    return this.service.httpPost(url,{});
+    return this.service.httpPost(url,body);
 }
 postUpdateChecklist(id,modifiedid,body) {
 
@@ -94,7 +92,6 @@ postTrashnotes(body){
     return this.service.httpPost(url,body);
 }
 postDeleteForeverNotes(body){
-    let token=localStorage.getItem('token');
 
     let url = this.url +'notes/deleteForeverNotes';
     return this.service.httpPost(url,body);
@@ -144,5 +141,9 @@ imageupload(body){/** */
   addcollaboratorNotes(dataid,body){
       let url=this.url+"notes/"+dataid+"/AddcollaboratorsNotes";
       return this.service.httpPost(url,body)
+  }
+  removeCollaborator(dataid,userid){
+      let url=this.url+"notes/"+dataid+"/removeCollaboratorsNotes/"+userid;
+      return this.note.delete(url);
   }
 }

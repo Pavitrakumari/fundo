@@ -37,12 +37,11 @@ export class TrashComponent implements OnInit,OnDestroy {
     this.getcard();
   }
   getcard() {
-try{
-    this.noteService.getcard( )
+
+    this.noteService.getcard()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
       /**hitting the api by passing the url & token*/
-      LoggerService.log("get cards list successfull", data);
       this.list=data['data'].data
       this.myData = data['data'].data.reverse();/**reverse() method in typescript to display the data in reverse order */
       this.myData = [];
@@ -51,12 +50,9 @@ try{
           this.myData.push(this.list[i]);
         }
       }
-      LoggerService.log( "array of new data",this.myData);
     })
-  }
-catch(error){
-    LoggerService.log(error)
-  }
+  
+
   }
   carddel(event) {
     this.getcard();

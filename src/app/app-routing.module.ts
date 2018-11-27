@@ -18,6 +18,7 @@ import { AuthGuard as AuthGuard } from '../app/core/services/auth/authGuard/auth
 import { NotesparentComponent } from './components/notesparent/notesparent.component';
 import { SearchComponent } from './components/search/search.component';
 import { LabelsComponent } from './components/labels/labels.component';
+import { InternetLostComponent } from './components/internet-lost/internet-lost.component';
 
 
 const appRoutes: Routes = [
@@ -26,6 +27,8 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgotpassword', component: ForgotpasswordComponent },
+  { path: 'internet-lost', component: InternetLostComponent },
+
   {
     path: 'home', component: HomeComponent, canActivate: [AuthGuard],
     children: [

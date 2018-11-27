@@ -20,7 +20,6 @@ import { NoteService } from '../../core/services/http/note/note.service';
 import { LoggerService } from '../../core/services/logger/logger.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-coloricon',
@@ -31,7 +30,6 @@ import { Subject } from 'rxjs';
   /**It is used to provide style of components */
 })
 /**To use components in other modules , we have to export them */
-
 export class ColoriconComponent implements OnInit,OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -71,18 +69,14 @@ try{
     .pipe(takeUntil(this.destroy$))
     .subscribe(
       data => {
-        LoggerService.log("color changes successfully", this.newcolor);/**if error doesnot exist then display data */
         this.snackBar.open("color change success", "success", {/**snackbar to display the result */
           duration: 10000,
         });
         this.resp.emit();/**it emits an event containing a given value */
-      }),
-      error => {
-        LoggerService.log("error in coloring", error);
-      }
+      })
+      
     }
 catch(error){
-      LoggerService.log(error);
     }
   }
   /**it is a interface */

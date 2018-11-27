@@ -53,12 +53,10 @@ console.log("checking notes parent................");
     }
   }
   getCard() {
-try{
-    this.token = localStorage.getItem('token');/**get the token from the local storage */
+
     this.noteService.getcard()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
-      console.log("get cards list successfull", data);
       this.list=data['data'].data
       this.temp = this.list.reverse();/**reverse() method in typescript to display the data in reverse order */
       // console.log(this.temp);
@@ -70,36 +68,24 @@ try{
           this.arraynewdata.push(this.list[i]);/**then push those cards into the array */
         }
       }
-      console.log(this.arraynewdata, "array of new data");/**display new array*/
-    }),
-      error => {/**if error occurs then display the error */
-        console.log("error", error);
-      }
+    })
+      
     }
-catch(error){
-      LoggerService.log(error)
-    }
-  }
+  
 getpincards(){
-try{
-  this.token=localStorage.getItem('token');
+
   this.noteService.getcard()
   .pipe(takeUntil(this.destroy$))
   .subscribe(data=>{
     this.pinarraay=[];
-    console.log("get pin catds list success",data);
     for (let i = 0; i < this.list.length; i++){
       if(this.list[i].isPined == true){
         this.pinarraay.push(this.list[i]);
       }
     }
-    console.log(this.pinarraay,"array of pin data");
     
   })
-}
-catch(error){
-  LoggerService.log(error)
-}
+
 }
 pinNew(){
   if(event){

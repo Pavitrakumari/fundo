@@ -64,7 +64,7 @@ export class Icon1Component implements OnInit,OnDestroy {
     { value: 'night', viewPeriod: 'Night', viewTime: '09:00 PM',disableStatus:'false'}];
 
   reminder(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
-    this.reminderevent.emit();
+    this.reminderevent.emit({});
   }
   ngOnInit() {
     LoggerService.log(this.setDate.getFullYear());
@@ -80,7 +80,6 @@ public tomorrowdate;
 
 
 todayReminder() {/**function to get the reminder of present day */
-  debugger;
 try{
   let currentDate = new Date();/**assigning a variable to the new Date() instance */
   var data=new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 0, 8, 0, 0)
@@ -97,7 +96,7 @@ try{
   .pipe(takeUntil(this.destroy$))
   .subscribe(data => {/** if there exits no error then post the data */
       LoggerService.log("success in today reminders",data);
-      this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
+      this.reminderevent.emit({});/**emitting the event to communicate with the other componenets */
     },
       error => {/**if error exists then display the error */
         LoggerService.log("error in today reminders",error)
@@ -126,7 +125,7 @@ try{
   .pipe(takeUntil(this.destroy$))
   .subscribe(data => {/** if there exits no error then post the data */
       LoggerService.log("success in tomorroe reminders",data);
-      this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
+      this.reminderevent.emit({});/**emitting the event to communicate with the other componenets */
     },
       error => {/**if error exists then display the error */
         LoggerService.log("error in tomorrow reminders",error)
@@ -153,7 +152,7 @@ try  {
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {/** if there exits no error then post the data */
       LoggerService.log("success in week reminder",data);
-      this.reminderevent.emit();/**emitting the event to communicate with the other componenets */
+      this.reminderevent.emit({});/**emitting the event to communicate with the other componenets */
 
     },
       error => {/**if error exists then display the error */
@@ -183,48 +182,39 @@ try{
     
     timing.match('^[0-2][0-3]:[0-5][0-9]$');/**this is used to match the time */
     if(timing==this.reminderBody.time){/**if condition is satisfied then  */
-      let splitTime=this.reminderBody.time.split("",8);/**split the time */
-    LoggerService.log("split time",splitTime);
-    
+    let splitTime=this.reminderBody.time.split("",8);/**split the time */
     let hour= Number(splitTime[0]+splitTime[1]);/**to split into hours */
     let minute= Number(splitTime[3]+splitTime[4]);/**to split into minutes */
     let ampm = (splitTime[6]+splitTime[7]);
     if(ampm=='AM' || ampm=='am'){
       let data=new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minute, 0, 0)
       if(this.reminders!=undefined){
-
-      this.body = {/**pass the attributes to the body according the condition given in if statement */
+        this.body = {/**pass the attributes to the body according the condition given in if statement */
         "noteIdList": [this.reminders.id],
         "reminder": new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minute, 0, 0)
       }}
-      
-    }else if(ampm=='PM' || ampm=='pm'){
+      }
+      else if(ampm=='PM' || ampm=='pm'){
       LoggerService.log("split time",splitTime);
-
       var data=new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour+12, minute, 0, 0)
       if(this.reminders!=undefined){
-
-      this.body = {/**pass the attributes to the body according the condition given in else if statement */
+        this.body = {/**pass the attributes to the body according the condition given in else if statement */
         "noteIdList": [this.reminders.id],
         "reminder": new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour+12, minute, 0, 0)
       }}
-
     }
   }
   this.remm.emit(data);
-
   this.noteService.postAddUpdateReminderNOtes(this.body)
   .pipe(takeUntil(this.destroy$))
   .subscribe((result) => {
-    this.reminderevent.emit()
+    this.reminderevent.emit({})
   })
-
- }
+}
  catch(error){
    LoggerService.log(error);
-   
- }
-  }
+}
+}
   disable(event)
   {
     this.dateflag=false;
@@ -242,23 +232,26 @@ try{
         if ((new Date(this.setDate).getDate() - new Date(this.todaydate).getDate()) === 0) {
           if ((new Date(this.setDate).getHours()) > 8) {
             this.remind[0].disableStatus = true;
-          } if ((new Date(this.setDate).getHours()) > 13) {
+          } 
+          if ((new Date(this.setDate).getHours()) > 13)
+           {
             this.remind[1].disableStatus = true;
-          } if ((new Date(this.setDate).getHours()) > 18) {
+          }
+          if ((new Date(this.setDate).getHours()) > 18)
+            {
             this.remind[2].disableStatus = true;
-          } if ((new Date(this.setDate).getHours()) > 20) {
+          } 
+          if ((new Date(this.setDate).getHours()) > 20) 
+          {
             this.remind[3].disableStatus = true;
           }
         }
-        
       }
     }
-  
   }
   ngOnDestroy() {
     this.destroy$.next(true);
     // Now let's also unsubscribe from the subject itself:
     this.destroy$.unsubscribe();
   }
-
 }

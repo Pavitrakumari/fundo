@@ -58,13 +58,9 @@ export class MoreiconComponent implements OnInit,OnDestroy {
   list1:Label[]=[]
   constructor(private noteService:NoteService,public dialog: MatDialog, public httpService: HttpService, public snackBar: MatSnackBar) { }
   ngOnInit() { 
-    console.log(this.arrayofnotes,"moreeeee");
-
-  }
+}
   deletecard() {/**method to delete the cards */
     try {
-      console.log("pichii");
-      console.log(this.arrayofnotes);
       let model = {
         "isDeleted": true,/**attributes to be passed to hit the api trashNotes */
         "noteIdList": [this.arrayofnotes]
@@ -72,7 +68,6 @@ export class MoreiconComponent implements OnInit,OnDestroy {
       this.noteService.postTrashnotes( model)
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
-        console.log("deleted card successfully", data);/**if error doesnot exist the display the result */
         this.snackBar.open("successfully deleted notes", "deleted", {
           duration: 10000,
         });
@@ -85,8 +80,6 @@ export class MoreiconComponent implements OnInit,OnDestroy {
   }
   restore() {/**method to delete the cards */
     try {
-      console.log("pichii");
-      console.log(this.arrayofnotes);
       let model = {
         "isDeleted": false,/**attributes to be passed to hit the api trashNotes */
         "noteIdList": [this.arrayofnotes]
@@ -94,7 +87,6 @@ export class MoreiconComponent implements OnInit,OnDestroy {
       this.noteService.postTrashnotes( model)
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
-        console.log("deleted card successfully", data);/**if error doesnot exist the display the result */
         this.snackBar.open("successfully deleted notes", "deleted", {
           duration: 10000,
         });
@@ -117,58 +109,41 @@ export class MoreiconComponent implements OnInit,OnDestroy {
       .subscribe(response => {
         this.labelarray = [];
         this.list1=response['data'].details
-        console.log(this.list1);
         for (let i = 0; i < (this.list1).length; i++) {
           if (this.list1[i].isDeleted == false) {
             this.labelarray.push(this.list1[i])
           }
         }
-        console.log(this.labelarray, "Label array printing success");
-      }),
-      error => {
-        console.log("error in get LABELS", error);
-      }
+      })
+      
   }
   /**getLabels() method to get the labels */
   getLabels() {
-    console.log(this.arrayofnotes.noteLabels);
-    console.log("hellyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
     this.notearray = this.arrayofnotes.noteLabels;
     this.noteService.getlabels()
     .pipe(takeUntil(this.destroy$))
     .subscribe(response => {
         this.labelarray = [];
         this.list=response['data'].details
-        console.log(this.list);
         for (let i = 0; i < (this.list).length; i++) {
           if (this.list[i].isDeleted == false) {
             this.labelarray.push(this.list[i])
           }
         }
-        console.log(this.labelarray, "label array after pushingggg");
         for (let i = 0; i < this.labelarray.length; i++) {
           for (let j = 0; j < this.notearray.length; j++) {
             if (this.labelarray[i].id == this.notearray[j].id) {
               this.labelarray[i].isChecked = true;
-              console.log(this.labelarray[i].isChecked, "ischecked became true");
             }
-            console.log("noooooooooooooooooooooooooooooooooooooooooo");
           }
         }
-        console.log(this.labelarray, "Label array printing success");
-      }),
-      error => {
-        console.log("error in get LABELS", error);
-      }
+      })
+     
   }
   getlabellist(label) {/**adding labels to notes */
     try {
-      console.log("selected label is : ", label);
-      console.log([this.arrayofnotes['id']]);
-      console.log(label);
       /**setting the url path */
       {
-        console.log("add function .......");
         let noteDetails = {
           "label": "string",
           "isDeleted": false,
@@ -180,13 +155,10 @@ export class MoreiconComponent implements OnInit,OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe(data => {
           /** In angular subscribe is used with Observable*/
-          console.log("success in get label list", data);/**if success then display the data */
           this.moreevent.emit(label);/**to emit an event to the parent */
           this.updateevent.emit();/**emit an event to the parent */
-        }),
-          error => {/**if error exists then display the errror */
-            console.log("error in get label list", error);
-          }
+        })
+          
       }
     }
     catch (error) {
@@ -208,7 +180,6 @@ export class MoreiconComponent implements OnInit,OnDestroy {
     }
   }
   func(labelOption){
-    console.log(this.arrayofnotes);
     
   //   if (this.arrayofnotes.noteLabels.some((data) => data.label == labelOption.label)) {
   //   return true;
@@ -226,25 +197,20 @@ export class MoreiconComponent implements OnInit,OnDestroy {
       data: { name: 'trash' }/**assigning the data with name as trash */
     });
     dialogRef.afterClosed().subscribe(data => {
-      console.log('The dialog was closed');
       if (data) {/**if data exists then */
         this.model = {/**passing the model attributes */
           "isDeleted": true,
           "noteIdList": [this.arrayofnotes]/**passing the noteidlist from the cards */
         }
-        console.log(this.model, "model in trash");/**display the model */
         this.noteService.postDeleteForeverNotes( this.model)
         .pipe(takeUntil(this.destroy$))
         .subscribe(data => {
-          console.log(data, "success in trash");/**success in trash */
           this.delevent.emit();/**emit the event to */
           this.snackBar.open("note deleted  permanently", "trash", {
             duration: 10000,
           });
-        }),
-          error => {
-            console.log(error, "error in trashing");
-          }
+        })
+          
       }
     });
   }

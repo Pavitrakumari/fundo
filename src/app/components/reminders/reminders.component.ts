@@ -28,8 +28,6 @@ export class RemindersComponent implements OnInit,OnDestroy {
   reminder(event) {
     this.getReminder();
   }
-
-
   getReminder() {
     try{
     this.token = localStorage.getItem('token');/**get the token from the local storage */
@@ -45,14 +43,10 @@ export class RemindersComponent implements OnInit,OnDestroy {
           this.sortedItems = this.temp2.sort((a: any, b: any) =>
           new Date(a.reminder).getTime() - new Date(b.reminder).getTime()
       );
-  
-          this.removeremindevent.emit();
-
-        }
+      this.removeremindevent.emit();
+}
       })
-    error => {
-      LoggerService.log("error in get reminders",error)
-    }
+    
   }
   catch(error){
     LoggerService.log(error)

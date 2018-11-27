@@ -1,15 +1,11 @@
 <mat-icon class="icon2"mat-icon-button matTooltip="change color"  [matMenuTriggerFor]="menu"
  style="margin-bottom:30px;user-select: none;">color_lens</mat-icon>
-<mat-menu  matTooltip="change color"style="padding-top:30px;"class="menu" #menu="matMenu"
- [overlapTrigger]="false">
+<mat-menu  matTooltip="change color"style="padding-top:30px;"class="menu" #menu="matMenu"[overlapTrigger]="false">
             <div class="colors" fxLayoutWrap>
-        
                 <div fxLayoutGap=10px fxLayout=row class="top" *ngFor='let colors of colorsObject'>
                     <div *ngFor='let color of colors'>
                         <button class="colorNew" [ngStyle]="{'background-color': color.color }" 
                                 (click)='changecolor(color.color)' matTooltip="{{color.tipname}}"
                             mat-mini-fab></button>
-                    </div>
-                </div>
-            </div>
- </mat-menu>
+                        </div></div></div>
+                    </mat-menu>

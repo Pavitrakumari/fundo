@@ -2,8 +2,19 @@
 @import "../../../sass/_mixins.scss";
 .title{
   color:black;
+  // background-color: rgba(85, 106, 223, 0.945);
+
   font-weight: bolder;
   font-family:BURW Chancery L, cursive  
+}
+@media only screen and (min-width: 300px) and (max-width: 600px) {
+  .title {
+ @include text-overflow-hide;
+  width: 200px;
+  font-family:BURW Chancery L, cursive ; 
+  font-size:14px;
+  // background-color: lightgreen;
+}
 }
 .sidenav-container {
   height: 90%;
@@ -11,6 +22,13 @@
 }
 .color:hover{
   @include text-overflow-hide;
+  width:290px;
+  border-radius: 0px 70px 70px 0px;
+  background-color: $searchcolor;
+}
+.mat-nav-list .list{
+  @include text-overflow-hide;
+
   width:290px;
   border-radius: 0px 70px 70px 0px;
   background-color: $searchcolor;
@@ -62,12 +80,7 @@
 .account{
   font-size:10px;
 }
-.note{
-  opacity: 0.5;
-}
-.note:hover{
-  opacity: 1;
-}
+
 ::placeholder {
   color: rgb(160, 148, 12);
   opacity: 1; 
@@ -90,9 +103,8 @@
 }.notes{
   margin-left: 30px;
 }
-.firstName{
+.firstName
+{
   margin-left: 130px;
   padding-top:0px;
 }
-
-

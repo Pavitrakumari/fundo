@@ -6,22 +6,35 @@
 }
 
 .matcard{
+    cursor: pointer;
     @include box_shadow;
     margin: 10px;
     width:190px; 
     border-radius: $bor_rad_10;
   } 
+  .pin{
+      opacity: 0;
+  }
+  .pin:hover{
+      opacity:1;
+  }
 .matcard:hover{
+    cursor: pointer;
     @include box_shadow_hover;
     margin: 10px;
-    // width:190px; 
     border-radius: $bor_rad_10;
 } 
 mat-chip {
+    cursor: pointer;
     justify-content: space-between;
     @include text-overflow-hide;
 }
+.collaborators{
+    display:flex;
+    flex-wrap: wrap;
+}
 mat-card-title{
+    cursor: pointer;
     font-family: 'Google Sans','Roboto',Arial,sans-serif;
     width:180px;
     height:auto;
@@ -34,6 +47,7 @@ mat-card-title{
     flex-wrap: wrap;
 }
 mat-card-content{
+    cursor: pointer;
     width:180px;
     height:auto;
     font-family: 'Google Sans',Roboto,Arial,sans-serif;
@@ -47,7 +61,6 @@ mat-card-content{
     opacity: 0;
     &:hover {
       opacity: 1;
-      margin-bottom: 0px;
     }
   }
 .mat-chip.mat-standard-chip .mat-chip-remove {

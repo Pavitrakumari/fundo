@@ -18,10 +18,13 @@ import { HttpService } from '../../core/services/http/http.service';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { MatDialog} from '@angular/material';
 import { error } from '@angular/compiler/src/util';
 import { LoggerService } from '../../core/services/logger/logger.service';
 import { NoteService } from '../../core/services/http/note/note.service';
 import { Notes } from '../../core/models/notes';
+import { DialogcollaboratorComponent } from '../dialogcollaborator/dialogcollaborator.component';
+import { environment } from '../../../environments/environment';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-notes',/**A string value which represents the component on browser at execution time */
@@ -32,10 +35,9 @@ import { Notes } from '../../core/models/notes';
 export class NotesComponent implements OnInit,OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  colorChange 
-  = "#ffffff";
+  colorChange = "#ffffff";
   expression1 = true;
-
+collab=false;
 list:Notes[]=[]
   expression2 = false;
   expression3 = true;
@@ -48,24 +50,41 @@ list:Notes[]=[]
   data;
   noteid={'isArchived':false}
   dataarray = [];
+  collaborators=[];
   selectarray2 = [];
   selectarray3 = [];
   public title;
   public note;
   public pinned = false;
-  
-  token = localStorage.getItem('token');/**get the token from localstorage */
   adding: boolean;
-  constructor(private noteService:NoteService,public httpService: HttpService, public router: Router) { }
+  searchInput: any;
+  searchResult: any;
+  collabReq=[];
+  initial: any;
+  // dialog: any;
+  constructor(private noteService:NoteService,public dialog: MatDialog,
+    public httpService: HttpService, public router: Router) { }
   public clicked = false;
   /**Input and Output are two decorators in Angular responsible for communication between two components*/
   @Output() onNewEntryAdded = new EventEmitter();
   @Output() updateevent = new EventEmitter<any>();
   /**EventEmitter:creates an instance of this class that can delliver events  */
   ngOnInit() {
+
+    for(var  i=0 ;i<this.data['collaberators'].length;i++){
+      this.collabReq.push(this.data['collaberators'][i]);
+      console.log(this.collabReq,"notes cARS...............................................................");
+      
+      }
     /**it is a interface */
     /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
   }
+  private imageNew = localStorage.getItem('imageUrl');
+img = environment.profileUrl + this.imageNew;
+mail=localStorage.getItem('name');
+firstName=localStorage.getItem('firstName');
+lastName = localStorage.getItem('lastName');
+
   public body:any={}
   public isPinned = false;
   public isArchived=false;
@@ -81,8 +100,13 @@ list:Notes[]=[]
     }
   }
   close1(){
+        this.collabReq=[];
+
     this.dataarray=[];
     this.array=[];
+  }
+  closecollab(){
+    this.collab=!this.collab;
   }
  public  array=[];remm
  reminder(event){
@@ -94,37 +118,32 @@ list:Notes[]=[]
     /**method that need to perform while clicking the close button */
     this.expression1 = true;
     this.expression2 = false;
+    this.collab=false;
     this.enter(event);
+    // this.collabReq=[];
     this.selectarray2 = [];
     this.selectarray3 = [];
     /**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */
     try {
       this.title = document.getElementById('title').innerHTML;/**innerHTML property setys or returns HTML content of an element */
       /**document.getElementById() method returns the element of specified id */
-      console.log(this.title);
-      console.log(this.note);
-      console.log(this.pinned);
-      console.log(this.selectarray1, "selecttttt");
       if(this.expression3 == true ){
         this.note = document.getElementById('note').innerHTML;/**returns an element of specified id */
-        // console.log("madavi checklist");
         this.body = {
         "title": this.title,
-        "description": this.note,/**attributes to call the api */
+        // "description": this.note,/**attributes to call the api */
         "labelIdList": JSON.stringify(this.selectarray1),
         "checklist": "",
         "isPined": "",
         "color": "",
-        "reminder":this.array
+        "reminder":this.array,
+        "collaberators":JSON.stringify(this.collabReq)
       }
     }
     else{
-      console.log("else................................... part");
-      console.log(this.dataarray,"data array of checklists................");
       for(let i=0;i<this.dataarray.length;i++){
         if(this.dataarray[i].isChecked == true)
         {
-          console.log(this.dataarray[i],"data array in checklists for loop");
           this.status="close"
         }
         let apiObj={
@@ -134,8 +153,6 @@ list:Notes[]=[]
         this.dataArrayApi.push(apiObj)
         this.status="open"
       }
-      console.log(this.dataArrayApi,"data arrayapiiiiiiiiii");
-      console.log("executing   VIJAY WARDADA checklistt.............");
       this.body={
         "title": this.title,
         "checklist":JSON.stringify(this.dataArrayApi),
@@ -143,19 +160,18 @@ list:Notes[]=[]
         "color": "",
         "isArchived": this.isArchived,
         "labelIdList": JSON.stringify(this.selectarray1),
-        "reminder":this.array
+        "reminder":this.array,
+        "collaberators":JSON.stringify(this.collabReq)
+
       }
     }
     this.body.color = this.colorChange;
-      console.log(this.colorChange);
       if (this.title != "") 
       {
-        console.log("executing PRANEE checklistt.............");
         this.noteService.addnotes( this.body)
         .pipe(takeUntil(this.destroy$))
         .subscribe( /**registers handlers for events emitted by this instance */
           data => {
-          console.log("successfull add notes bujji ", data);/**if success then display the data */
           this.selectarray1 = [];
           this.expression3 = true;
           this.selectarray2 = [];
@@ -164,36 +180,41 @@ list:Notes[]=[]
           this.adding=false;
           this.onNewEntryAdded.emit();
           this.close1();
+          // this.collabReq=[];
           this.colorChange = "#ffffff";
-        }, error => {
-          console.log("Error in add notes", error);/**if there exists error then display the error */
-        });
+        },
+                );
       }
     }
 catch (error) {
-  console.log(error);
+  LoggerService.log(error);
 }
 }
-
+opencololab(){
+  this.collab=!this.collab;
+}
 getLabels1() {
     this.noteService.getlabels()
     .pipe(takeUntil(this.destroy$))
     .subscribe(response => {
         this.list=response['data'].details;
         this.labelarray = [];
-        console.log(this.list);
         for (let i = 0; i < (this.list).length; i++) {
           if (this.list[i].isDeleted == false) {
             this.labelarray.push(this.list[i])
           }
         }
-        LoggerService.log('Label array printing success bujji soo sweet of you'
-        ,this.labelarray);
-      }),
-      error => {
-        console.log("error in get LABELS", error);
-      }
+      })
+     }
+     open(note){
+      this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
+       width: '500px',
+       data:note,
+       height:'auto',
+        panelClass: 'myapp-no-padding-dialog' 
+    });
   }
+    
   clickFunc(temp) {
     if (!this.selectarray2.some((data) => data == temp.label)) {
       this.selectarray1.push(temp.id);
@@ -209,8 +230,6 @@ getLabels1() {
     public addCheck=false;
     public i = 0;
   enter(event) {
-    // this.body.color = this.colorChange;
-
     if(this.data!=""){
       this.adding=true;
     }
@@ -220,16 +239,12 @@ getLabels1() {
     this.i++;
     this.isChecked=this.addCheck
     if (this.data != null && event.code=="Enter") {
-      // this.body.color = this.colorChange;
-
-      console.log(event, "keydown");
       let obj = {
         "index": this.i,
         "data": this.data,
         "isChecked":this.isChecked
       }
       this.dataarray.push(obj);
-      console.log(this.dataarray,"data array in enter functionn...............");
       this.data=null;
       this.adding=false;
       this.isChecked=false;
@@ -237,21 +252,71 @@ getLabels1() {
       }
   }
   ondelete(deletedObj) {
-
-    console.log("ondelete function runnig");
     for (let i = 0; i < this.dataarray.length; i++) {
-      // this.body.color = this.colorChange;
-
       if (deletedObj.index == this.dataarray[i].index) {
         this.dataarray.splice(i, 1);
         break;
       }
     }
-    console.log(this.dataarray);
   }
   removereminder() {
     this.array=[];
   }
+  search() {
+    this.done=true;
+    if (this.searchInput !== "") {
+
+      let RequestBody = {
+        "searchWord": this.searchInput
+      }
+      this.noteService.searchuserlist(RequestBody).subscribe(response => {
+        this.searchResult = response['data'].details
+      }, error => {})
+    }
+  }
+  public done = false;
+  public selectedUser;
+  userSelected(user) {
+    this.selectedUser = user
+    this.searchInput = user.email;
+    this.done = true;
+  }
+  addCollabdone(){
+    this.collabReq.push(this.selectedUser)
+    this.searchInput = " "
+  }
+  addCollab() {
+    this.collab = !this.collab;
+    if(this.searchInput!==" "){
+   this.collabReq .push(this.selectedUser)
+    this.searchInput=" "
+    }
+  }
+  cancel(){
+    this.collabReq=[];
+    this.collab=!this.collab;
+  }
+  removeCollaborator(collab){
+    for(let i=0;i<this.collabReq.length;i++){
+      if(collab.userId===this.collabReq[i].userId){
+        this.collabReq.splice(i,1)
+      }
+    }
+  }
+  splice(firstName) {
+    this.initial = firstName[0];
+    this.initial = this.initial.toUpperCase()
+    return true;
+  }
+
+  openCollaborator(note){
+    this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
+     width: '500px',
+     data:note,
+     height:'auto',
+      panelClass: 'myapp-no-padding-dialog' 
+  });}
+  
   ngOnDestroy() {
     this.destroy$.next(true);
     // Now let's also unsubscribe from the subject itself:

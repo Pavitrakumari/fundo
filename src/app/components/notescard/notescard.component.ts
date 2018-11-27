@@ -23,6 +23,7 @@ import { LoggerService } from '../../core/services/logger/logger.service';
 import { NoteService } from '../../core/services/http/note/note.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { DialogcollaboratorComponent } from '../dialogcollaborator/dialogcollaborator.component';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-notescard',/**A string value which represents the component on browser at execution time */
@@ -41,6 +42,9 @@ export class NotescardComponent implements OnInit,OnDestroy {
   @Output() pavitra = new EventEmitter<any>();
   @Output() updateevent = new EventEmitter<any>();
   @Output() remm = new EventEmitter<any>();
+  
+  @Output() testreminder = new EventEmitter<any>();
+
   @Output() newPin = new EventEmitter<any>();
   @Output() state = new EventEmitter<any>();
   @Output() deleted = new EventEmitter<any>();
@@ -48,10 +52,12 @@ export class NotescardComponent implements OnInit,OnDestroy {
   @Input() string;
   @Input() length;
   @Input() myData;
+  collaborators=[];
   condition = true;
   @Input() searchInput;
    list:Notes[]=[];
-  constructor(private noteService:NoteService,public httpService: HttpService, public dialog: MatDialog, public dataService: DataService) {
+  constructor(private noteService:NoteService,public httpService: HttpService, 
+    public dialog: MatDialog, public dataService: DataService) {
     this.dataService.currentMessage2.subscribe(message => {
       console.log(message);
       if (message) {
@@ -67,7 +73,10 @@ export class NotescardComponent implements OnInit,OnDestroy {
   /**myData is a varaible */
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
-  ngOnInit() { }
+  ngOnInit() {
+
+
+   }
   receive(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.noteevent.emit();
   }
@@ -79,9 +88,15 @@ export class NotescardComponent implements OnInit,OnDestroy {
   archive(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
     this.archiveevent.emit();
   }
-  reminder(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
-    this.remm.emit();
+  reminder(event) {
+    /**callback will be invoked &data associated with the event will be given to us via $event property */
+   if(event){
+
+   
+    this.remm.emit(event);
     this.pavitra.emit();
+   }
+    // this.testreminder.emit(event)
   }
 
   unarchive(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
@@ -110,40 +125,37 @@ checkReminder(date){/**function */
   if(value > savedReminder){
 return true;
   }
-  else false;
+  else 
+  return false;
 }
 openDialog(dialogdata): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',/**width of the dialog box */
       // height:'350px',
+      maxWidth:'auto',
+
       data: dialogdata,/**paramaeter that we are passing */
       panelClass: 'myapp-no-padding-dialog'/**to change the padding in dialog box */
     });
-    const sub = dialogRef.componentInstance.eventOne.subscribe((data) => {
-      console.log("sub", data);
+     dialogRef.componentInstance.eventOne.subscribe((data) => {
       this.updateevent.emit();
       this.pavitra.emit();
   })
   dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       this.updateevent.emit();/**emit an event to the parent */
       this.pavitra.emit();
     });
   }
 removelabel(label,note) {/**passing the label id & note id */
 try {
-      console.log(note,label);/**displaying the id's */
-      this.noteService.postAddLabelnotesRemove(label,note,null)
+      this.noteService.postAddLabelnotesRemove(label,note,{})
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {/**using the observabel subscribe using callbackk */
-          console.log("success in remove label", data);/**if success then display the result */
           this.updateevent.emit();/**emit an event to the parent */
           this.pavitra.emit();
 
-        }),
-        error => {/**if error exists */
-          console.log("error in remove", error);/**then display the error */
-        }
+        })
+        
     }
 catch (error) {
       console.log(error);
@@ -158,13 +170,10 @@ try{
     this.noteService.postRemoveReminders( body)
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
-        console.log("success in remove reminders ",data);
         this.updateevent.emit();
         // this.pavitra.emit();
       })
-    error => {
-      console.log("error in remove reminders",error)
-    }
+    
   }
 catch(error){
   LoggerService.log(error)
@@ -175,15 +184,12 @@ try{
     this.noteService.getreminders()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
-        console.log("success in get reminders ",data);
         // this.updateevent.emit();
         this.remm.emit();
         this.pavitra.emit();
 
       })
-    error => {
-      console.log("error in get reminders",error)
-    }
+    
   }
 catch(error){
     LoggerService.log(error)
@@ -198,7 +204,6 @@ catch(error){
     else {
       checklist.status = "open"
     }
-    console.log(checklist);
     this.modifiedCheckList = checklist;
     this.updatelist(index);
   }
@@ -212,26 +217,26 @@ try{
     .pipe(takeUntil(this.destroy$))
     .subscribe(response => {
       this.pavitra.emit();
-
-      console.log("success in update checklists",response);
-
-    }),
-    error=>{
-      LoggerService.log("errror in update checklists............",);
-      
-    }
+})
+    
   }
 catch(error){
     LoggerService.log(error);
   }
 }
+open(note){
+  this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
+   width: '500px',
+   maxWidth:'auto',
+   data:note,
+   height:'auto',
+    panelClass: 'myapp-no-padding-dialog' 
+});}
 ngOnDestroy() {
   this.destroy$.next(true);
   // Now let's also unsubscribe from the subject itself:
   this.destroy$.unsubscribe();
 }
-
-
 }
 
 

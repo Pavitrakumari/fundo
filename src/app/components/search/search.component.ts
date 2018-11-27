@@ -29,8 +29,7 @@ constructor(private noteService:NoteService,public httpService: HttpService, pub
     })
   }
   getCard() {
-try{
-    this.token = localStorage.getItem('token');/**get the token from the local storage */
+
     this.noteService.getcard()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
@@ -38,7 +37,7 @@ try{
       this.arraynewdata = [];
       this.list=data['data'].data
       LoggerService.log("get cards list successfull", data);
-      this.temp =  this.list.reverse();/**reverse() method in typescript to display the data in reverse order */
+      // this.temp =  this.list.reverse();/**reverse() method in typescript to display the data in reverse order */
       // console.log(this.temp);
       this.arraynewdata = [];/**Reinitializing the array so that data gets updated */
       for (let i = 0; i <  this.list.length; i++)/**for loop to go through all cards*/ {
@@ -47,14 +46,9 @@ try{
         }
       }
       LoggerService.log( "array of new data",this.arraynewdata);/**display new array*/
-    }),
-      error => {/**if error occurs then display the error */
-        LoggerService.log("error", error);
-      }
-    }
-catch(error){
-      LoggerService.log(error)
-    }
+    })
+      
+    
   }
   ngOnDestroy() {
     this.destroy$.next(true);

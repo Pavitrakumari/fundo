@@ -76,8 +76,6 @@ try{
         .pipe(takeUntil(this.destroy$))
         .subscribe((data)=>{
                 this.pinevent.emit();
-                LoggerService.log('data',data);
-                LoggerService.log(this.noteid)
               });
             }
           }

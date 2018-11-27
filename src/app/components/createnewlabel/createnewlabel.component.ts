@@ -70,7 +70,7 @@ export class CreatenewlabelComponent implements OnInit,OnDestroy {
   public label;
   changeText = false
   addLabel() {
-try {
+
   let label = this.label;
       console.log(this.labelarray);
       for (let i = 0; i < this.labelarray.length; i++) {
@@ -86,25 +86,17 @@ try {
       })
       .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
-        LoggerService.log("success in createpostlabel", response)
-      }),
-        error => {
-          LoggerService.log("error in create/add postlabel", error)
-        }
-    }
-catch (error) {
-  LoggerService.log(error);
-    }
+      })
+         
   }
   getLabels() {
-try {
+
       this.noteService.getlabels()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         data => {
           this.labelarray = [];
           this.list=data['data'].details
-          LoggerService.log("data details",this.list);
           for (let i = 0; i < (this.list).length; i++) {
             /**running for loop for the length of the array */
             if (this.list[i].isDeleted == false) {
@@ -112,38 +104,22 @@ try {
               this.labelarray.push(this.list[i]);
             }/**pushing labels into an array */
           }
-          LoggerService.log( "Label array printing successsss",this.labelarray);
           this.updateevent.emit();/**emit an event to the parent */
-        }),
-        error => {/**if error exists then display the array */
-          LoggerService.log("error in get LABELS", error);
+        })
         }
-    }
-catch (error) {
-      
-      LoggerService.log(error);
-    }
-  }
+  
   delete(labelid) {/**delete() method to delete the labels from the list */
-try {
-      LoggerService.log(labelid, "label id");
+
       this.noteService.deletedata( labelid)
       .pipe(takeUntil(this.destroy$))
 
         .subscribe(response => {
           /** In angular subscribe is used with Observable*/
-          LoggerService.log("success in delete labels ", response);
           /**if success exists then display the success */
           this.dataService.changeMessage2(true)
           this.getLabels();
-        }),
-        error => {/**if error exists then display the error */
-          LoggerService.log("erroe in deelete", error);
-        }
-    }
-catch (error) {
-      LoggerService.log(error);
-    }
+        })
+        
   }
   edit(label) {
     this.editClick = true;
@@ -166,15 +142,11 @@ try {
         "userId": localStorage.getItem('userId')
       }).pipe(takeUntil(this.destroy$))
       .subscribe(response => {
-        LoggerService.log("success in edit labell ..........", response)
         this.dataService.changeMessage2(true)
         this.getLabels();
         this.updateevent.emit();
         /**emit an event to the parent */
-      }), error => {
-        LoggerService.log("error in edit label...........", error)
-      }
-    }
+      }) }
 catch (error) {
       LoggerService.log(error);
     }

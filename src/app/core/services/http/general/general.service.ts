@@ -11,8 +11,6 @@ export class GeneralService {
 
   constructor(private http: HttpClient) {}
 public httpPost(url,body){
-  console.log('url in post',url);
-  console.log('body in post',body);
   let httpAuthOptions2 = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -22,7 +20,6 @@ public httpPost(url,body){
   return this.http.post(url,body, httpAuthOptions2);/**passing the input & calling the  getFormUrlEncoded()*/
 }
 public httpget(url){
-  console.log("token in general service");
   
   let httpAuthOptions3 = {
     headers: new HttpHeaders({
@@ -36,8 +33,6 @@ public httpget(url){
 }
 
 public httppostpassword(url,body){
-  console.log('url in post',url);
-  console.log('body in post',body);
 
   let httpAuthOptions1 = {
   headers: new HttpHeaders({
@@ -46,6 +41,15 @@ public httppostpassword(url,body){
   })
 };
 return this.http.post(url, this.getFormUrlEncoded(body),httpAuthOptions1)/**passing the input & calling the  getFormUrlEncoded()*/
+}
+geturlencoded(url){
+  var httpheaders={
+    headers:new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+
+    })
+  };
+  return this.http.get(url,httpheaders)
 }
 getFormUrlEncoded(toConvert) {/**a method that encodes the token*/
   const formBody = [];

@@ -15,7 +15,7 @@
 
 /**component has imports , decorator & class */
 import { Component, Output, EventEmitter, OnInit, Inject, Input,OnDestroy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
 import { LoggerService } from '../../core/services/logger/logger.service';
@@ -24,6 +24,7 @@ import { NoteService } from '../../core/services/http/note/note.service';
 import { Notes, Checklists } from '../../core/models/notes';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { DialogcollaboratorComponent } from '../dialogcollaborator/dialogcollaborator.component';
 
 /**A componenet can be reused throughout the application & even in other applications */
 export interface DialogData {
@@ -47,7 +48,7 @@ export class DialogComponent implements OnInit ,OnDestroy{
   public newList;
   list:Checklists[]=[]
   list2:Notes[]=[]
-
+  collaborators=[];
   public newData:any={}
   public modifiedCheckList;
   public bgcolor=this.data.color;
@@ -55,10 +56,13 @@ export class DialogComponent implements OnInit ,OnDestroy{
   selectarray2 = [];
   public id;
   color;
+  collab=false;
+collabReq=[];
   noteid={'isArchived':false}
   public checklist=false;
   public noteLabels;
   constructor(
+    public dialog: MatDialog,
     private noteService:NoteService,
     public dialogRef: MatDialogRef<DialogComponent>,
     public dataService: DataService, public httpService: HttpService,
@@ -74,6 +78,8 @@ export class DialogComponent implements OnInit ,OnDestroy{
       }
     })
   }
+  @Output() pavitra = new EventEmitter<any>();
+
   @Input() reminders;
   @Output() updateevent = new EventEmitter<any>();
   // @Output() pavitra = new EventEmitter<boolean>();
@@ -82,11 +88,21 @@ export class DialogComponent implements OnInit ,OnDestroy{
   onNoClick(): void {
     this.dialogRef.close();
   }
- 
+  pinunpin(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
+    this.pavitra.emit();
+  }
+  
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized
    *  all data-bound properties of a directive. */
 ngOnInit() {
+  this.updateNotes();
+
+  for(let i=0 ;i<this.data['collaborators'].length;i++){
+    this.collaborators.push(this.data['collaborators'][i]);
+    
+    }
+
   // this.pavitra.emit();
 
   LoggerService.log(this.data['noteLabels'], "maaaa");
@@ -98,8 +114,6 @@ ngOnInit() {
       this.checklist=true;
     }
     this.tempArray=this.data['noteCheckLists'];
-    LoggerService.log("selectarray2",this.selectarray2);
-    LoggerService.log("temp arary",this.tempArray);
   }
   more(label) {
     this.selectarray1.push(label);
@@ -115,7 +129,7 @@ ngOnInit() {
   //   // this.pavitra.emit();
   // }
   updateNotes() {
-    try{
+    
     if(this.checklist==false){
       LoggerService.log(this.data['id']);
       let id = this.data['id']
@@ -126,31 +140,33 @@ ngOnInit() {
     var body = {
       "noteId": [id],/**attributes to be passed to change the color of notes */
       "title": this.title,
-      "description": this.note
+      "description": this.note,
+      "reminder":this.array,
+      "collaberators":this.collaborators
     }
-    console.log("dialoooooooooooooooooooooooogg");
-    
+console.log("bodyyyyyy updatee  ",body);
+
     this.noteService.updatenotes(body)
-    .pipe(takeUntil(this.destroy$))
+    // .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
-      LoggerService.log("update changes successfully", data);/**if no errors then display the data */
+      console.log("success in normal update",data);
+      
       this.snackBar.open("update change success", "success", {/**snackbar to display the result */
         duration: 10000,/**duaration of the snackbar to be opened */
-      });
-    }),
-    error => {
-      LoggerService.log("error in update", error);/**if error exists then display the error */
-          this.snackBar.open("update change failed", "error", {/**snackbar to display the result */
-            duration: 10000,
-          });
-        }
+      }),
+      error=>{
+        console.log("error in normal update",error);
+        
+      }
+    })
+    
   }
   else{/**if add note is for checklist,then it executes the else part */
-    LoggerService.log("runnin else.........just .............");
     let apiData={/**Attributes to be passed for hitting the api */
       "itemName": this.modifiedCheckList.itemName,
       "status":this.modifiedCheckList.status
     }
+    // this.color=#ffffff;
     // let url = this.url+"notes/" + id + "/checklist/" + modifiedid + "/update";
 
     this.noteService.postUpdateChecklist(this.data['id'], this.modifiedCheckList.id ,
@@ -158,24 +174,35 @@ ngOnInit() {
     .pipe(takeUntil(this.destroy$))
     .subscribe(response => {
       LoggerService.log("else part.......................",response);
-    }),
-    error=>{/**if error exists,then display the error */
-      LoggerService.log("else paer errorrrrr",error);
-    }
+    })
+    
   }
   
-    }
-  catch(error){
-    LoggerService.log(error);
-  }
+    
+  
 }
 editing(editedList,event){
-  LoggerService.log(editedList);
     if(event.code=="Enter"){
     this.modifiedCheckList=editedList;
     this.updateNotes();
     }
     }
+    public array=[]
+    
+reminderevent(event)  {
+      var flag=false,index;
+       this.array=[];
+       if(event)
+       {
+           flag=true;
+           index=1;
+           this.array.push(event);
+          }
+         if(flag==true){
+              this.array.splice(index,1)
+    }
+  }
+
 checkBox(checkList){
     if (checkList.status=="open"){
       checkList.status = "close"
@@ -183,13 +210,11 @@ checkBox(checkList){
     else{
       checkList.status = "open"
     }
-    LoggerService.log(checkList);
     this.modifiedCheckList=checkList;
     this.updateNotes();
   }
   public removedList;
   removeList(checklist){/**method to remove the check lists */
-    LoggerService.log(checklist)
     this.removedList=checklist;/**move them into the remove list */
     this.removeCheckList()/**calling the removechecklist function */
   }
@@ -236,7 +261,7 @@ try{
       LoggerService.log(this.newData,"newwwwwww dataaaaaaaaaaaa");
       console.log("9603273",this.newData);
       
-      this.noteService.postCheckListAdd(this.data, this.newData)
+      this.noteService.postCheckListAdd(this.data['id'], this.newData)
       // .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
         LoggerService.log("response",response);
@@ -259,7 +284,7 @@ emit(event){
   removelabel(label, note) {/**passing the label id & note id */
 try {
   LoggerService.log(note, label);/**displaying the id's */
-      this.noteService.postAddLabelnotesRemove(label.id ,note, null)
+      this.noteService.postAddLabelnotesRemove(label.id ,note, {})
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {/**using the observabel subscribe using callbackk */
           LoggerService.log("success in remove label", data);
@@ -269,13 +294,11 @@ try {
           if (index > -1) {
             this.selectarray1.splice(index, 1);
           }
-        }),
+        })
         this.updateevent.emit();
         // this.pavitra.emit();
 
-      error => {/**if error exists */
-        LoggerService.log("error in remove", error);/**then display the error */
-      }
+      
     }
 catch (error) {
   LoggerService.log(error);
@@ -295,26 +318,29 @@ try{
     this.noteService.postRemoveReminders( body)
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
-        LoggerService.log("success in remove reminders ",data);
         this.eventOne.emit(true);/**emitting the event */
         const index = this.selectarray2.indexOf(item,0);
         if (index > -1) {/**if index is greater than -1 then remove those index's from the selectarray2 */
           this.selectarray2.splice(index, 1);
         }
         this.updateevent.emit();/**emitting the event */
-        // this.pavitra.emit();
-
       })
-      error => {
-        LoggerService.log("error in remove reminders",error);
-    }}
-catch(error){/**if error exists then handle the errors
-   */
-  LoggerService.log(error);
       
-    }
   }
-  ngOnDestroy() {
+catch(error){/**if error exists then handle the errors*/
+  LoggerService.log(error);
+}
+}
+opencololab(note){
+  this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
+   width: '500px',
+   maxWidth:'auto',
+   data:note,
+   height:'auto',
+    panelClass: 'myapp-no-padding-dialog' 
+});}
+
+ngOnDestroy() {
     this.destroy$.next(true);
     // Now let's also unsubscribe from the subject itself:
     this.destroy$.unsubscribe();

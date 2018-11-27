@@ -64,19 +64,11 @@ export class LoginComponent implements OnInit,OnDestroy {
         localStorage.setItem('userId', data['userId']);
         localStorage.setItem('firstName', data['firstName']);
         localStorage.setItem('lastName', data['lastName']);
-
         localStorage.setItem('imageUrl',data['imageUrl']);
-        
-        LoggerService.log(data['id']);
         this.snackBar.open("successfully login","login", {
           duration: 10000,
         });
-        let firstName=localStorage.getItem('firstName');
-        LoggerService.log("firstName IN LOGIN",firstName);
-
         let pushToken=localStorage.getItem('pushToken')
-        LoggerService.log('pushtoken in login',pushToken);
-
         let body={
           "pushToken":pushToken
         }
@@ -84,24 +76,14 @@ export class LoginComponent implements OnInit,OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe(
           data=>{
-            LoggerService.log("post of pushToken is successful****************************",data)
+            LoggerService.log("login success",data)
 
-          }),
-          error=>{
-            LoggerService.log(error,"error in pushToken");
-            
-          }
+          })
 
-
-
-
-        }),
-      error => {/**if error exists then displays the error message using snackbar */
-        console.log("Error", error);
-        this.snackBar.open("Please enter correct details ", "login  FAILED", {
-          duration: 10000,
-        });
-      }}
+        })
+      
+      
+    }
    catch(error){
      LoggerService.log(error);
    } 
