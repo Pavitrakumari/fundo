@@ -49,14 +49,6 @@ fxFlex="54" fxFlex.md="100%" fxFlex.xs="95%"
         placeholder="Take a note..."
             autofocus #description></div><br>
     
-<!-----------------------------------------Labels----------------------------------- -->
-        <div *ngFor="let label of selectarray2">
-            <mat-chip-list selected style="margin-top:15px;">
-                <mat-chip>
-                    {{label}}
-                </mat-chip>
-            </mat-chip-list>
-        </div>
 <!-----------------------------------------Reminders----------------------------------- -->
 <div fxLayout="row" fxLayoutAlign="start start" class="row-height">
     <div *ngFor="let item of array">
@@ -87,6 +79,14 @@ fxFlex="54" fxFlex.md="100%" fxFlex.xs="95%"
         </mat-chip-list>
     </div>
 </div>
+<!-----------------------------------------Labels----------------------------------- -->
+<div *ngFor="let label of selectarray2">
+        <mat-chip-list selected style="margin-top:15px;">
+            <mat-chip>
+                {{label}}
+            </mat-chip>
+        </mat-chip-list>
+    </div>
 
 <!-----------------------------------------collaborator icon ----------------------------------- -->
 
@@ -102,10 +102,10 @@ fxFlex="54" fxFlex.md="100%" fxFlex.xs="95%"
      </div>
 
 <!----------------------------------Mat-card actions----------------------------------->
-<div fxLayoutAlign="space-between"  style="border:solid;height:40px;">
+<div fxLayoutAlign="space-between"  style="height:40px;">
     <app-icon1 (remm)="reminder($event)" ></app-icon1>
 
-<mat-icon (click)="opencololab()">person_add</mat-icon>
+<mat-icon class="icon2" (click)="opencololab()">person_add</mat-icon>
 
     <app-coloricon (response)="color($event)"></app-coloricon>
     <app-imageicon></app-imageicon>
@@ -127,7 +127,7 @@ fxFlex="54" fxFlex.md="100%" fxFlex.xs="95%"
         </mat-menu>
         <button mat-menu-item><span>Add drawing</span></button>
     </mat-menu>
-<button fxLayoutAlign="end end" class="closeButton" mat-button (click)="close();expression3=true">CLOSE</button>
+<button fxLayoutAlign="end end" class="closeButton" mat-button (click)="close();close1();expression3=true">CLOSE</button>
 </div>
     </mat-card>
 </div>

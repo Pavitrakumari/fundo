@@ -29,8 +29,7 @@ constructor(private noteService:NoteService,public httpService: HttpService, pub
     })
   }
   getCard() {
-try{
-    this.token = localStorage.getItem('token');/**get the token from the local storage */
+
     this.noteService.getcard()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
@@ -49,10 +48,7 @@ try{
       LoggerService.log( "array of new data",this.arraynewdata);/**display new array*/
     })
       
-    }
-catch(error){
-      LoggerService.log(error)
-    }
+    
   }
   ngOnDestroy() {
     this.destroy$.next(true);

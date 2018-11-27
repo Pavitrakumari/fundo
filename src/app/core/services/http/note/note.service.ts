@@ -17,14 +17,12 @@ export class NoteService {
     return this.note.delete(url);/**returns the output */
   }
   addnotes(input)/**post() service to post the token which is generated */ {
-  console.log(input);
 
    let url = this.url + "notes/addnotes";
    return this.service.httppostpassword(url, input);/**passing the input & calling the  getFormUrlEncoded()*/
 
   }
 updatenotes(input){
-    console.log("input in note service",input);
     let url = this.url + "notes/updateNotes";
     return this.service.httppostpassword(url, input);/**passing the input & calling the  getFormUrlEncoded()*/
  }

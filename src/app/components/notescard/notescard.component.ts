@@ -132,6 +132,8 @@ openDialog(dialogdata): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '550px',/**width of the dialog box */
       // height:'350px',
+      maxWidth:'auto',
+
       data: dialogdata,/**paramaeter that we are passing */
       panelClass: 'myapp-no-padding-dialog'/**to change the padding in dialog box */
     });
@@ -225,6 +227,7 @@ catch(error){
 open(note){
   this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
    width: '500px',
+   maxWidth:'auto',
    data:note,
    height:'auto',
     panelClass: 'myapp-no-padding-dialog' 

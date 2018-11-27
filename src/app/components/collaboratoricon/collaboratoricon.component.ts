@@ -16,6 +16,7 @@ constructor(private dialog:MatDialog) {}
   opencollaborator(){
      this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
       width: '500px',
+      maxWidth:'auto',
       // height:'500px',
       data:this.noteid,
       height:'auto',

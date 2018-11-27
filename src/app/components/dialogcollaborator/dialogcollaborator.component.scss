@@ -27,6 +27,13 @@
     margin-left:58px;
     margin-top:-20px;
 }
+.card1{
+    height:auto;
+    width: 500px;   
+    @include border;
+    padding: 2px;
+    }
+  
 .names{
     margin-top:15px;
     cursor: pointer;

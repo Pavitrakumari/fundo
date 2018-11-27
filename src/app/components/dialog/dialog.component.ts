@@ -15,7 +15,7 @@
 
 /**component has imports , decorator & class */
 import { Component, Output, EventEmitter, OnInit, Inject, Input,OnDestroy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { HttpService } from '../../core/services/http/http.service';
 import { MatSnackBar } from '@angular/material';
 import { LoggerService } from '../../core/services/logger/logger.service';
@@ -24,6 +24,7 @@ import { NoteService } from '../../core/services/http/note/note.service';
 import { Notes, Checklists } from '../../core/models/notes';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { DialogcollaboratorComponent } from '../dialogcollaborator/dialogcollaborator.component';
 
 /**A componenet can be reused throughout the application & even in other applications */
 export interface DialogData {
@@ -61,6 +62,7 @@ collabReq=[];
   public checklist=false;
   public noteLabels;
   constructor(
+    public dialog: MatDialog,
     private noteService:NoteService,
     public dialogRef: MatDialogRef<DialogComponent>,
     public dataService: DataService, public httpService: HttpService,
@@ -76,6 +78,8 @@ collabReq=[];
       }
     })
   }
+  @Output() pavitra = new EventEmitter<any>();
+
   @Input() reminders;
   @Output() updateevent = new EventEmitter<any>();
   // @Output() pavitra = new EventEmitter<boolean>();
@@ -84,7 +88,10 @@ collabReq=[];
   onNoClick(): void {
     this.dialogRef.close();
   }
- 
+  pinunpin(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
+    this.pavitra.emit();
+  }
+  
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized
    *  all data-bound properties of a directive. */
@@ -93,7 +100,6 @@ ngOnInit() {
 
   for(let i=0 ;i<this.data['collaborators'].length;i++){
     this.collaborators.push(this.data['collaborators'][i]);
-    console.log(this.collaborators,"notes cARS...............................................................");
     
     }
 
@@ -123,7 +129,7 @@ ngOnInit() {
   //   // this.pavitra.emit();
   // }
   updateNotes() {
-    try{
+    
     if(this.checklist==false){
       LoggerService.log(this.data['id']);
       let id = this.data['id']
@@ -172,10 +178,8 @@ console.log("bodyyyyyy updatee  ",body);
     
   }
   
-    }
-  catch(error){
-    LoggerService.log(error);
-  }
+    
+  
 }
 editing(editedList,event){
     if(event.code=="Enter"){
@@ -193,7 +197,6 @@ reminderevent(event)  {
            flag=true;
            index=1;
            this.array.push(event);
-           console.log("event in ========dialog",this.array);
           }
          if(flag==true){
               this.array.splice(index,1)
@@ -328,6 +331,15 @@ catch(error){/**if error exists then handle the errors*/
   LoggerService.log(error);
 }
 }
+opencololab(note){
+  this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
+   width: '500px',
+   maxWidth:'auto',
+   data:note,
+   height:'auto',
+    panelClass: 'myapp-no-padding-dialog' 
+});}
+
 ngOnDestroy() {
     this.destroy$.next(true);
     // Now let's also unsubscribe from the subject itself:

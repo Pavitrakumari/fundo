@@ -69,8 +69,9 @@ import { PinComponent } from './components/pin/pin.component';
 import { MessagingService } from './core/services/messaging/messaging.service';
 import { InterceptorService} from './core/services/interceptor/interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorsHandler } from './core/services/errorhandler/error-handler';
+import { ErrorsHandler } from './core/services/errorhandler/errorshandler';
 import { DialogcollaboratorComponent } from './components/dialogcollaborator/dialogcollaborator.component';
+import { InternetLostComponent } from './components/internet-lost/internet-lost.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { DialogcollaboratorComponent } from './components/dialogcollaborator/dia
          CropImageComponent,
          PinComponent,
          DialogcollaboratorComponent,
+         InternetLostComponent,
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   imports: [

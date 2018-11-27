@@ -2,7 +2,7 @@
 @import "../../../sass/_mixins.scss";
 
 .hiddencard {
-    width: aut;
+    width: auto;
     height: auto;
     left: 0;
     border-radius:60px 20px 20px 20px;
@@ -97,8 +97,24 @@
 .maticon{
   margin-bottom: 100px;
 }
+
+::ng-deep.cdk-overlay-backdrop{
+  opacity:0.7!important;
+  background-color: #fff!important;
+  
+}
+
 .matmenu{
   cursor: pointer;
+}
+.pin{
+  opacity:0;
+
+}
+// (click)="opencololab(data)" 
+
+.pin:hover{
+  opacity:1;
 }
 .done{
   float:right;

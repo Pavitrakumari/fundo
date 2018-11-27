@@ -91,19 +91,20 @@
 
 <!-------------------------------------------Notes------------------------------------------------>
 
-<a class="color" mat-list-item routerLink="/home/notes"><img class="note" src="../../../assets/images/image1.svg"><span
-      (click)="titlechange('fundooNotes')" class="notes">Notes</span></a>
+<a  mat-list-item routerLink="/home/notes" routerLinkActive="list">
+  <img  src="../../../assets/images/image1.svg"><span
+      (click)="titlechange('fundooNotes')"  routerLinkActive="list" class="notes">Notes</span></a>
 
 <!-------------------------------------------Reminders------------------------------------------------>
 
-<a class="color" mat-list-item routerLink="/home/reminders"><img class="note" src="../../../assets/images/image2.svg"><span
+<a routerLinkActive="list" mat-list-item routerLink="/home/reminders"><img  src="../../../assets/images/image2.svg"><span
         (click)="titlechange('Reminders')" class="notes">Reminders</span></a><hr>
 
 <!-------------------------------------------Labels------------------------------------------------>
 
 <div class="labels">Labels<a mat-button routerLink="." style="margin-left:130px;"></a></div>
 <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="200px" *ngFor="let index of labelarray">
-  <a class="color" mat-list-item><hr>
+  <a routerLinkActive="list" mat-list-item><hr>
     <mat-icon style="position:relative">label_outline</mat-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a style="position:relative;
     margin-left:0px;
@@ -112,21 +113,21 @@
     text-overflow: ellipsis;
     overflow:hidden !important;" routerLink="/home/labels/{{index.label}}" 
     (click)="labelheading(index)">{{index.label}}</a>&nbsp;</a></div>
-        <a class="color" mat-list-item (click)="addlabel()">
+        <a routerLinkActive="list" mat-list-item (click)="addlabel()">
 
 <!-------------------------------------------Edit Labels------------------------------------------------>
 
 <mat-icon class="side">edit</mat-icon><span class="notes">Edit labels</span></a><hr>
-<a class="color" (click)="titlechange('Archive')" mat-list-item routerLink="/home/archive">
+<a routerLinkActive="list" (click)="titlechange('Archive')" mat-list-item routerLink="/home/archive">
 
 <!-------------------------------------------Archive------------------------------------------------>
 
-<mat-icon  class="note">archive</mat-icon><span class="notes"></span>Archive</a>
-<a class="color" (click)="titlechange('Trash')" mat-list-item routerLink="/home/trash">
+<mat-icon  >archive</mat-icon><span class="notes"></span>Archive</a>
+<a routerLinkActive="list" (click)="titlechange('Trash')" mat-list-item routerLink="/home/trash">
 
 <!-------------------------------------------Delete------------------------------------------------>
 
-<mat-icon  class="note">delete</mat-icon><span class="notes"></span>Trash</a>
+<mat-icon  >delete</mat-icon><span class="notes"></span>Trash</a>
 </mat-nav-list>
 </mat-sidenav>
 <mat-sidenav-content>

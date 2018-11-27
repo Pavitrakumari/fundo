@@ -24,9 +24,8 @@
 <!------------------------------ Matcard title------------------------------------- -->
 <mat-card-title>
 <!------------------------------ Pin Component--------------------------------- ----->
-<app-pin (pinevent)="pinunpin($event)" [noteid]="index"></app-pin>
+<app-pin class="pin" (pinevent)="pinunpin($event)" [noteid]="index"></app-pin>
 <div fxLayout="row" class="hiddenDiv">
-
 <div  dir="ltr" contenteditable="false" style="font-size:19px" 
 aria-multiline="true" role="textbox" role="textbox"
  [innerHTML]="index.title">
@@ -36,16 +35,13 @@ aria-multiline="true" role="textbox" role="textbox"
 </mat-card-header>
 <!------------------------------ Matcard content----------------------------------- -->
 <div (click)="openDialog(index)">
-
-
   <mat-card-content class="content">
     <div  contenteditable="false" role="textbox" aria-multiline="true" 
     layout-align="end center" class="content" [innerHTML]="index.description">{{index.description}}</div>
           </mat-card-content>
           </div>
           </div>
-
-<!------------------------------ checklist--------------------------------- -->
+<!--------------------------------------- checklist--------------------------------------->
           <div class="note" *ngFor="let checklist of index.noteCheckLists" fxLayout="row">
             <mat-checkbox fxFlex="10%" *ngIf="checklist.status=='open' && !checklist.isDeleted" (click)=checkBox(checklist,index.id)></mat-checkbox>
             <input *ngIf="!checklist.isDeleted && checklist.status=='open' " [(ngModel)]=checklist.itemName fxFlex="90%"
@@ -55,28 +51,7 @@ aria-multiline="true" role="textbox" role="textbox"
             <mat-checkbox fxFlex="10%" checked=true *ngIf="checklist.status=='close'&& !checklist.isDeleted" (click)=checkBox(checklist,index.id)></mat-checkbox>
             <del *ngIf="!checklist.isDeleted && checklist.status=='close'" class="note" (click)="openDialog(index)">{{checklist.itemName}}</del>
           </div>
-<!------------------------------ labels--------------------------------------------- -->
-          <div fxLayout="row wrap" fxLayoutAlign="start" class="row-height" fxLayoutGap="5px">
-            <div *ngFor="let item of index.noteLabels">
-              <mat-chip-list selected>
-                <mat-chip class="labelmatchip" routerLink="/home/labels/{{item.label}}" 
-                (click)="funclabel(item.label)"
-                  appearance="outline" *ngIf="item.isDeleted==false">
-                  <span class="span" >{{item.label}}</span>
-                  <mat-icon matChipRemove (click)="removelabel(item.id,index.id)">cancel</mat-icon>
-                </mat-chip><br>
-              </mat-chip-list>
-            </div>
-          </div><br>
-<!-------------------------------------------collaborators----------------------------------------->
-
-<div fxLayoutAlign="row" fxLayoutGap="3px" class="collaborators">
-    <div *ngFor="let value of index.collaborators">
-      <button (click)="open(index)" mat-mini-fab color="accent">
-        {{value.email | titlecase | slice:0:1}}</button>
-      </div>
-  </div>
-<!------------------------------ Reminders------------------------------------------ -->
+<!----------------------------------------- Reminders------------------------------------->
           <div fxLayout="row" *ngIf="checkReminder(index.reminder[0])" fxLayoutAlign="start start" class="row-height"
             fxLayoutGap="5px">
             <div *ngFor="let item of index.reminder">
@@ -113,7 +88,7 @@ aria-multiline="true" role="textbox" role="textbox"
               </mat-chip-list>
             </div>
           </div>
-<!------------------------------delete Reminders------------------------------------ -->
+<!--------------------------------------delete Reminders--------------------------------->
           <div fxLayout="row" *ngIf="!checkReminder(index.reminder[0])" fxLayoutAlign="start start" class="row-height"
             fxLayoutGap="5px">
             <div *ngFor="let item of index.reminder">
@@ -128,8 +103,27 @@ aria-multiline="true" role="textbox" role="textbox"
               </mat-chip-list>
             </div>
           </div>
-    
-<!------------------------------mat-card icons ----------------------------------- -->
+<!---------------------------------------labels------------------------------------------->
+<div  fxLayout="row wrap" fxLayoutAlign="start" class="row-height" fxLayoutGap="5px">
+    <div  *ngFor="let item of index.noteLabels">
+      <mat-chip-list selected>
+        <mat-chip class="labelmatchip" routerLink="/home/labels/{{item.label}}" 
+        (click)="funclabel(item.label)"
+          appearance="outline" *ngIf="item.isDeleted==false">
+          <span class="span" >{{item.label}}</span>
+          <mat-icon matChipRemove (click)="removelabel(item.id,index.id)">cancel</mat-icon>
+        </mat-chip><br>
+      </mat-chip-list>
+    </div>
+  </div><br>
+<!-----------------------------------collaborators---------------------------------------->
+<div fxLayoutAlign="row" fxLayoutGap="3px" class="collaborators">
+    <div *ngFor="let value of index.collaborators">
+      <button (click)="open(index)" mat-mini-fab color="accent">
+        {{value.email | titlecase | slice:0:1}}</button>
+      </div>
+  </div>
+<!-----------------------------------mat-card icons -------------------------------------->
     <mat-card-actions>
       <div fxLayoutAlign="space-between" class="invisible">
         <app-icon1 (click)="getReminder()" (reminderevent)="reminder($event)"  

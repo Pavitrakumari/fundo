@@ -36,7 +36,7 @@ export class ArchiveiconComponent implements OnInit ,OnDestroy{
   public body: any = {}
   constructor(private noteService:NoteService,public httpService: HttpService, public snackBar: MatSnackBar) { }
  archive() {
-try{
+
     let array = [];
     array.push(this.noteid.id);
     this.noteService.postArchivenotes( this.body = {
@@ -54,10 +54,8 @@ try{
         this.snackBar.open("archive failllll", "failed", {
           duration: 10000,
         });
-      })}
-catch(error){
-      LoggerService.log(error);
-    }}
+      })
+}
   unarchive() {
 try{
     let array = [];

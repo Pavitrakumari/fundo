@@ -1,9 +1,9 @@
-<div *ngIf="!collab">
-<mat-card [ngStyle]="{'background-color':color}">
-<div >
-    <div fxFlex="100" [ngStyle]="{'background-color':color}">
-        <div [ngStyle]="{'background-color':color}" fxFlex.lg="65%" fxFlex.md="100%"
-         fxFlex.xs="100%" fxFlex.sm="100%" class="hiddencard">
+<div  *ngIf="!collab">
+<mat-card  [ngStyle]="{'background-color':color}">
+<div fxFlex.lg="100%" fxFlex.md="100%"
+fxFlex.xs="100%" fxFlex.sm="100%" class="hiddencard">
+<app-pin  (pinevent)="pinunpin($event)" [noteid]="data"></app-pin>
+  
             <div fxLayout="row" class="hiddenDiv">
                 <div class="inputTitle" contenteditable="true" id="title" [innerHTML]="data.title" placeholder="Title">
                     {{data.title}}</div>
@@ -11,25 +11,6 @@
                 <div [ngStyle]="{'background-color':color}" *ngIf="!checklist" class="inputNote" contenteditable="true" id="note" 
             [innerHTML]="data.description" placeholder="Note"
                 autofocus>{{data.description}}</div><br>
-<!---------------------------------------------labels---------------------------------------------->
-            <div fxLayout="row" fxLayoutAlign="start start" class="row-height" fxLayoutGap="5px">
-                <div *ngFor="let item of selectarray1">
-                    <mat-chip-list selected>
-                        <mat-chip *ngIf="item.isDeleted==false">
-                            {{item.label}}
-                            <mat-icon matChipRemove (click)="removelabel(item,data.id)">cancel</mat-icon>
-                        </mat-chip>
-                    </mat-chip-list>
-                </div>
-            </div>
-<!---------------------------------------------collaborators---------------------------------------------->
-<div fxLayout="row wrap" fxLayoutGap="3px" >
-        <div  *ngFor="let person of  data.collaborators"  class="index">
-            <button  matTooltip="{{person.email}}" (click)="opencololab()" class="basic" mat-mini-fab color="accent">
-        {{person.firstName | uppercase | slice : 0 : 1 }}
-     </button>
-    </div>
-</div>
 <!---------------------------------------------checkllist---------------------------------------------->
 <div [ngStyle]="{'background-color':color}" class="note" *ngFor="let check of tempArray" fxLayout="row">
     <mat-checkbox fxFlex="10%" *ngIf="check.status=='open'&& !check.isDeleted" (click)=checkBox(check)></mat-checkbox>
@@ -62,6 +43,27 @@
         </mat-chip-list>
     </div>
 </div>
+<!---------------------------------------------labels---------------------------------------------->
+<div fxLayout="row" fxLayoutAlign="start start" class="row-height" fxLayoutGap="5px">
+        <div *ngFor="let item of selectarray1">
+            <mat-chip-list selected>
+                <mat-chip *ngIf="item.isDeleted==false">
+                    {{item.label}}
+                    <mat-icon matChipRemove (click)="removelabel(item,data.id)">cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+    </div>
+<!---------------------------------------------collaborators---------------------------------------------->
+<div fxLayout="row wrap" fxLayoutGap="3px" >
+        <div  *ngFor="let person of  data.collaborators"  class="index">
+            <button  matTooltip="{{person.email}}"
+             class="basic" mat-mini-fab color="accent">
+        {{person.firstName | uppercase | slice : 0 : 1 }}
+     </button>
+    </div>
+</div>
+
 <!---------------------------------------------mat-icons---------------------------------------------->
 <div fxLayoutAlign="space-between"   style="height:40px;"  >
     <app-icon1 [reminders]="data" (reminderevent)="reminderevent($event)" (remm)="emit($event)"
@@ -76,8 +78,8 @@
     <app-moreicon (moreevent)="more($event)" [arrayofnotes]="data.id"></app-moreicon>   
     <button  mat-button (click)="onNoClick()" (click)="close()">CLOSE</button>
 </div>
-</div>
-</div>
+
+
 </div>
 </mat-card>
 </div>

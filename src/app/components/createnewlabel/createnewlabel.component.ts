@@ -70,7 +70,7 @@ export class CreatenewlabelComponent implements OnInit,OnDestroy {
   public label;
   changeText = false
   addLabel() {
-try {
+
   let label = this.label;
       console.log(this.labelarray);
       for (let i = 0; i < this.labelarray.length; i++) {
@@ -87,12 +87,10 @@ try {
       .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
       })
-         }
-catch (error) {
-    }
+         
   }
   getLabels() {
-try {
+
       this.noteService.getlabels()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
@@ -109,13 +107,9 @@ try {
           this.updateevent.emit();/**emit an event to the parent */
         })
         }
-catch (error) {
-      
-      LoggerService.log(error);
-    }
-  }
+  
   delete(labelid) {/**delete() method to delete the labels from the list */
-try {
+
       this.noteService.deletedata( labelid)
       .pipe(takeUntil(this.destroy$))
 
@@ -125,10 +119,7 @@ try {
           this.dataService.changeMessage2(true)
           this.getLabels();
         })
-        }
-catch (error) {
-      LoggerService.log(error);
-    }
+        
   }
   edit(label) {
     this.editClick = true;

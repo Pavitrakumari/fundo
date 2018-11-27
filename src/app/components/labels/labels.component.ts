@@ -32,7 +32,6 @@ export class LabelsComponent implements OnInit,OnDestroy {
     this.getCard();
   }
   getCard() {
-    this.token = localStorage.getItem('token');/**get the token from the local storage */
     this.noteService.getcard()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {

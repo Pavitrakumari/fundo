@@ -31,16 +31,14 @@ ngOnInit() {
     this.lastName=this.data['user'].lastName;
     this.img=environment.profileUrl+this.data['user'].imageUrl;
   }
-  
-  }
- userlist=[];
- receiverlist=[];
+}
+userlist=[];
+receiverlist=[];
 private imageNew = localStorage.getItem('imageUrl');
 img = environment.profileUrl + this.imageNew;
 mail=localStorage.getItem('name');
 firstName=localStorage.getItem('firstName');
 lastName = localStorage.getItem('lastName');
-
 searchpeople(searchemail){
   LoggerService.log("search email",searchemail);
   var body={
@@ -50,7 +48,6 @@ searchpeople(searchemail){
     this.userlist=[];
     this.userlist=data['data'].details;
     })
-  
 }
 addCollaboratorNotes(colors){
   var body={
@@ -72,24 +69,18 @@ this.noteService.removeCollaborator(this.data['id'],colors.userId).subscribe(dat
     if(this.newList[i].userId==colors.userId){
       this.newList.splice(i,1);
       this.data['collaborators'].splice(i,1);
-
-
     }
   }
 })
-
 }
 onEnter(searchFriend){
-
   for(let index=0;index<this.userlist.length;index++){
     if(this.userlist[index].email==searchFriend){
     this.newList.push(this.userlist[index]);
   }
   }
   this.searchemail=[];
-
   LoggerService.log('list',this.newList)
-
 }
 select(userMail){
   this.searchemail=userMail;
@@ -103,9 +94,10 @@ this.close()
 const dialogRef = this.dialog.open(DialogComponent, {
   width: '550px',/**width of the dialog box */
   // height:'350px',
+  maxWidth:'auto',
   data: this.data,/**paramaeter that we are passing */
   panelClass: 'myapp-no-padding-dialog'/**to change the padding in dialog box */
 });
    }
 }
-// }
+

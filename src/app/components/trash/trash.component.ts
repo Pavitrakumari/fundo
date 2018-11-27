@@ -37,8 +37,8 @@ export class TrashComponent implements OnInit,OnDestroy {
     this.getcard();
   }
   getcard() {
-try{
-    this.noteService.getcard( )
+
+    this.noteService.getcard()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
       /**hitting the api by passing the url & token*/
@@ -51,10 +51,8 @@ try{
         }
       }
     })
-  }
-catch(error){
-    LoggerService.log(error)
-  }
+  
+
   }
   carddel(event) {
     this.getcard();

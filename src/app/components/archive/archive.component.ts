@@ -36,15 +36,14 @@ export class ArchiveComponent implements OnInit,OnDestroy {
     this.getarchive();
   }
   getarchive() {
-try{
+
     this.noteService.getarchive()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {/**calling the noteservice method */
       this.temp1 = data['data'].data.reverse();/**reverse() method in typescript to display the data in reverse order */
     })
-    }
-catch(error){
-  }}
+    
+}
   ngOnDestroy() {
     this.destroy$.next(true);
     // Now let's also unsubscribe from the subject itself:

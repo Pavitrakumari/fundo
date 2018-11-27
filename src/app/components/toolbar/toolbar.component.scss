@@ -26,6 +26,13 @@
   border-radius: 0px 70px 70px 0px;
   background-color: $searchcolor;
 }
+.mat-nav-list .list{
+  @include text-overflow-hide;
+
+  width:290px;
+  border-radius: 0px 70px 70px 0px;
+  background-color: $searchcolor;
+}
 .change{
   margin-top: 70px;
   opacity: 1;
@@ -73,12 +80,7 @@
 .account{
   font-size:10px;
 }
-.note{
-  opacity: 0.5;
-}
-.note:hover{
-  opacity: 1;
-}
+
 ::placeholder {
   color: rgb(160, 148, 12);
   opacity: 1; 

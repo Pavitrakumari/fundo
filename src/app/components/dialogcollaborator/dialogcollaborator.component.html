@@ -1,6 +1,6 @@
 <div class="collaborator">
-  <mat-card>
-    <div class="collab">Collaborators</div>
+  <mat-card >
+         <div class="collab">Collaborators</div>
     <hr>
     <br>
     <mat-card-content>
@@ -16,16 +16,16 @@
       </div>
 
 
-      <div class="scroll" >
+      <div class="scroll">
         <div fxLayout="row" mat-mini-fab *ngFor='let index of newList' fxLayoutGap="20px">
           <div fxFlex="10%">
             <button mat-mini-fab color="accent">
               {{index.email | titlecase | slice:0:1}}
             </button>
           </div>
-          <div fxFlex="85%" class="names">{{index.email | titlecase}} </div>
-          <div fxFlex="5%">
-            <mat-icon (click)="removecollaborator(index)" class="clear" fxFlex="100">clear</mat-icon>
+          <div fxFlex="75%" class="names">{{index.email | titlecase}} </div>
+          <div fxFlex="15%">
+            <mat-icon fxFlex (click)="removecollaborator(index)" class="clear" fxFlex="100">clear</mat-icon>
           </div>
         </div>
       </div>
@@ -52,6 +52,7 @@
         <a class="button" (click)=save() mat-button>Close</a>
       </div>
     </mat-card-footer>
+ 
   </mat-card>
 </div>
 <mat-menu class="matmenu" (click)="$event.stopPropagation()" #menu="matMenu" [overlapTrigger]="false">
