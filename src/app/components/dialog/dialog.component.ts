@@ -96,21 +96,21 @@ collabReq=[];
   /**OnInit is a lifecycle hook that is called after Angular has initialized
    *  all data-bound properties of a directive. */
 ngOnInit() {
-  this.updateNotes();
+  // this.updateNotes();
 
-  for(let i=0 ;i<this.data['collaborators'].length;i++){
-    this.collaborators.push(this.data['collaborators'][i]);
+  // for(let i=0 ;i<this.data['collaborators'].length;i++){
+  //   this.collaborators.push(this.data['collaborators'][i]);
     
-    }
+  //   }
 
   // this.pavitra.emit();
 
-  LoggerService.log(this.data['noteLabels'], "maaaa");
+  // LoggerService.log(this.data['noteLabels'], "maaaa");
     this.selectarray1 = this.data['noteLabels'];
     this.selectarray2 = this.data['reminder'];
     this.color = this.data['color'];
     if (this.data['noteCheckLists'].length>0){
-      LoggerService.log(this.data['noteCheckLists'],"update check lists in dialog for checking............");
+      // LoggerService.log(this.data['noteCheckLists'],"update check lists in dialog for checking............");
       this.checklist=true;
     }
     this.tempArray=this.data['noteCheckLists'];
@@ -131,7 +131,7 @@ ngOnInit() {
   updateNotes() {
     
     if(this.checklist==false){
-      LoggerService.log(this.data['id']);
+      // LoggerService.log(this.data['id']);
       let id = this.data['id']
     /**The innerHTML property sets or returns the HTML content (inner HTML) of an element. */
     this.title = document.getElementById('title').innerHTML;
@@ -144,12 +144,12 @@ ngOnInit() {
       "reminder":this.array,
       "collaberators":this.collaborators
     }
-console.log("bodyyyyyy updatee  ",body);
+// console.log("bodyyyyyy updatee  ",body);
 
     this.noteService.updatenotes(body)
     // .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
-      console.log("success in normal update",data);
+      // console.log("success in normal update",data);
       
       this.snackBar.open("update change success", "success", {/**snackbar to display the result */
         duration: 10000,/**duaration of the snackbar to be opened */
@@ -177,9 +177,6 @@ console.log("bodyyyyyy updatee  ",body);
     })
     
   }
-  
-    
-  
 }
 editing(editedList,event){
     if(event.code=="Enter"){
@@ -219,7 +216,7 @@ checkBox(checkList){
     this.removeCheckList()/**calling the removechecklist function */
   }
   removeCheckList(){/**function to remove the check lists */
-try{
+
   let body={}
     this.noteService.postChecklistRemove(this.data['id'],this.removedList.id ,body)
     .pipe(takeUntil(this.destroy$))
@@ -231,10 +228,7 @@ try{
         }
       }
     })
-  }
-catch(error){
-  LoggerService.log(error);
-  }
+  
 }
   public adding=false;
   public addCheck=false;
@@ -331,14 +325,14 @@ catch(error){/**if error exists then handle the errors*/
   LoggerService.log(error);
 }
 }
-opencololab(note){
-  this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
-   width: '500px',
-   maxWidth:'auto',
-   data:note,
-   height:'auto',
-    panelClass: 'myapp-no-padding-dialog' 
-});}
+// opencololab(note){
+//   this.dialog.open(DialogcollaboratorComponent, {/**open dialog  */
+//    width: '500px',
+//    maxWidth:'auto',
+//    data:note,
+//    height:'auto',
+//     panelClass: 'myapp-no-padding-dialog' 
+// });}
 
 ngOnDestroy() {
     this.destroy$.next(true);

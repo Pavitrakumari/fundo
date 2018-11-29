@@ -19,6 +19,7 @@ import { NotesparentComponent } from './components/notesparent/notesparent.compo
 import { SearchComponent } from './components/search/search.component';
 import { LabelsComponent } from './components/labels/labels.component';
 import { InternetLostComponent } from './components/internet-lost/internet-lost.component';
+import { QuestionAnswersComponent } from './components/question-answers/question-answers.component';
 
 
 const appRoutes: Routes = [
@@ -32,7 +33,9 @@ const appRoutes: Routes = [
   {
     path: 'home', component: HomeComponent, canActivate: [AuthGuard],
     children: [
+
       { path: '', redirectTo: 'notes', pathMatch: 'full' },
+      { path: 'notes/:noteid/questionAnswers', component: QuestionAnswersComponent },
       { path: 'labels/:id', component: LabelsComponent },
       { path: 'notes', component: NotesparentComponent, },
       { path: 'reminders', component: RemindersComponent },

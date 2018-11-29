@@ -72,6 +72,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorsHandler } from './core/services/errorhandler/errorshandler';
 import { DialogcollaboratorComponent } from './components/dialogcollaborator/dialogcollaborator.component';
 import { InternetLostComponent } from './components/internet-lost/internet-lost.component';
+import { QuestionAnswersComponent } from './components/question-answers/question-answers.component';
+import { BarRatingModule } from "ngx-bar-rating";
 
 @NgModule({
   declarations: [
@@ -111,9 +113,11 @@ import { InternetLostComponent } from './components/internet-lost/internet-lost.
          PinComponent,
          DialogcollaboratorComponent,
          InternetLostComponent,
+         QuestionAnswersComponent,
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   imports: [
+    BarRatingModule,
          MatDatepickerModule,
          NativeDateModule,
          ImageCropperModule,

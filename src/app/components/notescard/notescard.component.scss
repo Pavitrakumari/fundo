@@ -15,6 +15,20 @@
   .pin{
       opacity: 0;
   }
+  .valueNew{
+      margin:3px;
+      font-weight: bold;
+      font-family:cursive;
+    }
+  .value{
+    margin:4px;
+    font-family:cursive;
+
+      font-weight: lighter;
+  }
+  .question{
+      margin-top:-45px;
+  }
   .pin:hover{
       opacity:1;
   }

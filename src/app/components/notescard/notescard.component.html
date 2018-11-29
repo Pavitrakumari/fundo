@@ -9,13 +9,14 @@
         fxLayout.sm="100">
         <div *ngIf="length!=0" style="width:100%;font-weight:bold" >{{string}}</div>
   <mat-card 
-  ngStyle.sm="width:95%" 
+  ngStyle.sm="width:95%"
   ngStyle.xs="width:90%;margin-left:3px;margin-right:9px;"
   ngStyle.xl="width:100px" 
   ngStyle.1024-1366="width:0px" 
   ngStyle.md="width:0px" 
   ngstyle.gt-sm="width:100px"
-  ngStyle.md="width:200px" [ngClass]="{'viewgrid':condition,'viewlist':!condition}" 
+  ngStyle.md="width:200px" 
+  [ngClass]="{'viewgrid':condition,'viewlist':!condition}" 
   class="matcard"
   *ngFor='let index of myData | LockFilter:searchInput' [ngStyle]="{'background-color':index.color}">
   <div>
@@ -44,7 +45,8 @@ aria-multiline="true" role="textbox" role="textbox"
 <!--------------------------------------- checklist--------------------------------------->
           <div class="note" *ngFor="let checklist of index.noteCheckLists" fxLayout="row">
             <mat-checkbox fxFlex="10%" *ngIf="checklist.status=='open' && !checklist.isDeleted" (click)=checkBox(checklist,index.id)></mat-checkbox>
-            <input *ngIf="!checklist.isDeleted && checklist.status=='open' " [(ngModel)]=checklist.itemName fxFlex="90%"
+            <input *ngIf="!checklist.isDeleted && checklist.status=='open' "
+            [(ngModel)]=checklist.itemName fxFlex="90%"
               class="note" (click)="openDialog(index)" [style.backgroundColor]="index.color">
           </div>
           <div class="note" *ngFor="let checklist of index.noteCheckLists" fxLayout="row">
@@ -137,11 +139,24 @@ aria-multiline="true" role="textbox" role="textbox"
          [arrayofnotes]="index.id" [array]="index.id"></app-moreicon>
       </div>
     </mat-card-actions>
-  </mat-card></div>
 
-  <div fx.show="true"  fxShow.sm="false" fxShow.md="false" fxShow.xs="false" class="grow" fxFlex="10">
-    </div>
+<!------------------------------------Question & Answers-------------------------------->
+  <div (click)="QnA(index.id)" fxLayout="row wrap" *ngIf="index.questionAndAnswerNotes.length != 0"  class="question" fxLayoutGap="40px">
+    <mat-divider></mat-divider>
+    <div (click)="QnA(index.id)"  class="valueNew">Question Asked</div>
+    <div  (click)="QnA(index.id)" class="value" >  {{index.questionAndAnswerNotes[0].message }} ?
+      </div>
+  </div>
+<!------------------------------------closing mat-card -------------------------------->
+</mat-card>
+</div>
+<div fx.show="true"  fxShow.sm="false" fxShow.md="false" fxShow.xs="false" class="grow" fxFlex="10">
+
+</div>
     <div fxFlex.xs=0 fx.show="true" fxShow.md="false" fxShow.xs="false" fxShow.sm="false" 
          class="shrink" fxFlex></div>
   
 </div>
+
+
+

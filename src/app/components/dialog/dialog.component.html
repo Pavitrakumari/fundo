@@ -78,9 +78,21 @@ fxFlex.xs="100%" fxFlex.sm="100%" class="hiddencard">
     <app-moreicon (moreevent)="more($event)" [arrayofnotes]="data.id"></app-moreicon>   
     <button  mat-button (click)="onNoClick()" (click)="close()">CLOSE</button>
 </div>
+<!-- --------------------------------------QnA--------------------------------------- -->
+
+<div  fxLayout="column" *ngIf="data.questionAndAnswerNotes.length != 0"  class="question" fxLayoutGap="40px">
+    <mat-divider></mat-divider>
+    <div   class="valueNew">Question Asked</div>
+    <div   class="value" >  {{data.questionAndAnswerNotes[0].message }} ?
+      </div>
+  </div>
+
+
 
 
 </div>
+
+
+
 </mat-card>
 </div>
-<!-- --------------------------------------collaborators--------------------------------------- -->

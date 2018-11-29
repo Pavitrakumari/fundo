@@ -4,3 +4,123 @@
     opacity: 0.5;
 }
 
+@import "../../../sass/_variable.scss";
+@import "../../../sass/_mixins.scss";
+.example-card{
+    margin-top:25px;
+    border-radius: 15px;
+}
+
+.matcard{
+    cursor: pointer;
+    @include box_shadow;
+    margin: 10px;
+    width:190px; 
+    border-radius: $bor_rad_10;
+  } 
+  .pin{
+      opacity: 0;
+  }
+  .valueNew{
+      margin:3px;
+      font-weight: bold;
+      font-family:cursive;
+    }
+  .value{
+    margin:4px;
+    font-family:cursive;
+
+      font-weight: lighter;
+  }
+  .question{
+      margin-top:-45px;
+  }
+  .pin:hover{
+      opacity:1;
+  }
+.matcard:hover{
+    cursor: pointer;
+    @include box_shadow_hover;
+    margin: 10px;
+    border-radius: $bor_rad_10;
+} 
+mat-chip {
+    cursor: pointer;
+    justify-content: space-between;
+    @include text-overflow-hide;
+}
+.collaborators{
+    display:flex;
+    flex-wrap: wrap;
+}
+mat-card-title{
+    cursor: pointer;
+    font-family: 'Google Sans','Roboto',Arial,sans-serif;
+    width:180px;
+    height:auto;
+    word-wrap: break-word;
+    font-size: 100px;
+    font-weight: bolder;
+}
+.main{
+    width:800px;
+    flex-wrap: wrap;
+}
+mat-card-content{
+    cursor: pointer;
+    width:180px;
+    height:auto;
+    font-family: 'Google Sans',Roboto,Arial,sans-serif;
+    line-height: 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+.invisible {
+    margin-bottom: 0px;
+    opacity: 0;
+    &:hover {
+      opacity: 1;
+    }
+  }
+.mat-chip.mat-standard-chip .mat-chip-remove {
+    color: $blackcolor;
+    opacity: 0;
+    word-wrap: break-word;
+}
+.mat-chip.mat-standard-chip .mat-chip-remove:hover {
+    color: $blackcolor;
+    opacity: 0.4;
+    word-wrap: break-word;
+}
+.span{
+    width:50px;
+   @include text-overflow-hide;
+ }
+.viewgrid{
+    width:190px;
+}
+.viewlist{
+    width:700px;
+}
+.note{
+    @include border;
+}
+.accesstime{
+    margin-left:-35px;
+    margin-right: 0px;
+}
+.mat-chip-list-wrapper .mat-standard-chip,
+ .mat-chip-list-wrapper input.mat-input-element {
+    margin: 8px;
+    word-wrap: break-word;
+}
+.labelmatchip{
+    height:30px;
+    width:auto;
+    margin-top:50px;
+}
+.top{
+    height:30px;
+    width:auto;
+}

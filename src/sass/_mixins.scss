@@ -31,3 +31,10 @@
     float:right;
     text-align:right;
    }
+@mixin margins($top,$right,$bottom,$left){
+    margin-top:$top;
+    margin-bottom:$bottom;
+    margin-left:$left;
+    margin-right:$right;
+
+}

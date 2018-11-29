@@ -146,4 +146,10 @@ imageupload(body){/** */
       let url=this.url+"notes/"+dataid+"/removeCollaboratorsNotes/"+userid;
       return this.note.delete(url);
   }
+  getNoteDetail(noteid){
+    
+      let url=this.url+"notes/getNotesDetail/"+noteid;
+      return this.service.httpget(url);
+  }
+  
 }

@@ -131,7 +131,7 @@ lastName = localStorage.getItem('lastName');
         this.note = document.getElementById('note').innerHTML;/**returns an element of specified id */
         this.body = {
         "title": this.title,
-        // "description": this.note,/**attributes to call the api */
+        "description": this.note,/**attributes to call the api */
         "labelIdList": JSON.stringify(this.selectarray1),
         "checklist": "",
         "isPined": "",

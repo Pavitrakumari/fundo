@@ -23,9 +23,9 @@ export class ErrorsHandler implements ErrorHandler {
         window.location.href="/internet-lost";
       }
       if(error.status==500){
-        this.snackBar.open(error.statusText, "500", {
-          duration: 10000,
-      });
+      //   this.snackBar.open(error.statusText, "500", {
+      //     duration: 10000,
+      // });
       }
       if(error.status==400){
         this.snackBar.open(error.statusText, "400,Bad Request", {
@@ -56,10 +56,10 @@ export class ErrorsHandler implements ErrorHandler {
     }
 else{
   // window.location.href="/internet-lost";
-  this.snackBar.open("It happens : ", "Please provide"+error, {
-    duration: 10000,
-});
-alert('It happens'+error);
+//   this.snackBar.open("It happens : ", "Please provide"+error, {
+//     duration: 10000,
+// });
+// alert('It happens'+error);
 
 }
     }

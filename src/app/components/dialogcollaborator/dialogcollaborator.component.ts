@@ -74,6 +74,13 @@ this.noteService.removeCollaborator(this.data['id'],colors.userId).subscribe(dat
 })
 }
 onEnter(searchFriend){
+  for(let j=0;j<this.newList.length;j++){
+    if(this.searchemail==this.newList[j].email){
+    this.searchemail=[];
+    return false;
+    }
+    }
+    
   for(let index=0;index<this.userlist.length;index++){
     if(this.userlist[index].email==searchFriend){
     this.newList.push(this.userlist[index]);
@@ -89,15 +96,15 @@ close(){
   this.dialogRef.close();
 }
 // save(){
-  save(){
-this.close()
-const dialogRef = this.dialog.open(DialogComponent, {
-  width: '550px',/**width of the dialog box */
-  // height:'350px',
-  maxWidth:'auto',
-  data: this.data,/**paramaeter that we are passing */
-  panelClass: 'myapp-no-padding-dialog'/**to change the padding in dialog box */
-});
-   }
+//   save(){
+// this.close()
+// const dialogRef = this.dialog.open(DialogComponent, {
+//   width: '550px',/**width of the dialog box */
+//   // height:'350px',
+//   maxWidth:'auto',
+//   data: this.data,/**paramaeter that we are passing */
+//   panelClass: 'myapp-no-padding-dialog'/**to change the padding in dialog box */
+// });
+//    }
 }
 

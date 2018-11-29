@@ -23,6 +23,8 @@ import { NoteService } from '../../core/services/http/note/note.service';
 import { Notes, Label } from '../../core/models/notes';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { LoggerService } from '../../core/services/logger/logger.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
@@ -56,8 +58,10 @@ export class MoreiconComponent implements OnInit,OnDestroy {
 
   list:Label[]=[]
   list1:Label[]=[]
-  constructor(private noteService:NoteService,public dialog: MatDialog, public httpService: HttpService, public snackBar: MatSnackBar) { }
+  constructor(private noteService:NoteService,public route:ActivatedRoute,public router: Router,public dialog: MatDialog, public httpService: HttpService, public snackBar: MatSnackBar) { }
   ngOnInit() { 
+    LoggerService.log("noteid", this.arrayofnotes);
+
 }
   deletecard() {/**method to delete the cards */
     try {
@@ -214,6 +218,12 @@ export class MoreiconComponent implements OnInit,OnDestroy {
       }
     });
   }
+  questionState(){
+    this.router.navigate(['/home/notes/'+this.arrayofnotes+'/questionAnswers']);
+    LoggerService.log("noteid", this.arrayofnotes);
+    
+    }
+    
   ngOnDestroy() {
     this.destroy$.next(true);
     // Now let's also unsubscribe from the subject itself:

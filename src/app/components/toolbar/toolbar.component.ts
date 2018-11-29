@@ -89,6 +89,13 @@ if (this.router.url == "/home/reminders") {
 if (this.router.url == "/home/trash") {
   this.value = "Trash"
 }
+if (this.router.url == "/home/trash") {
+  this.value = "Trash"
+}
+else{
+  this.value="fundooNotes"
+}
+
     this.raw_data = localStorage.getItem('name');/**get the name from local storahe */
     this.firstName=localStorage.getItem('firstName');
     let array = this.raw_data.split("");/**split the name & pass it to a variable array */

@@ -24,6 +24,8 @@ import { NoteService } from '../../core/services/http/note/note.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DialogcollaboratorComponent } from '../dialogcollaborator/dialogcollaborator.component';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-notescard',/**A string value which represents the component on browser at execution time */
@@ -57,7 +59,7 @@ export class NotescardComponent implements OnInit,OnDestroy {
   @Input() searchInput;
    list:Notes[]=[];
   constructor(private noteService:NoteService,public httpService: HttpService, 
-    public dialog: MatDialog, public dataService: DataService) {
+    public dialog: MatDialog, public dataService: DataService,public router: Router) {
     this.dataService.currentMessage2.subscribe(message => {
       console.log(message);
       if (message) {
@@ -138,12 +140,13 @@ openDialog(dialogdata): void {
       panelClass: 'myapp-no-padding-dialog'/**to change the padding in dialog box */
     });
      dialogRef.componentInstance.eventOne.subscribe((data) => {
-      this.updateevent.emit();
-      this.pavitra.emit();
+      // this.updateevent.emit();
+      // this.pavitra.emit();
   })
   dialogRef.afterClosed().subscribe(result => {
-      this.updateevent.emit();/**emit an event to the parent */
-      this.pavitra.emit();
+      // this.updateevent.emit();
+      /**emit an event to the parent */
+      // this.pavitra.emit();
     });
   }
 removelabel(label,note) {/**passing the label id & note id */
@@ -232,6 +235,10 @@ open(note){
    height:'auto',
     panelClass: 'myapp-no-padding-dialog' 
 });}
+QnA(id){
+  this.router.navigate(['/home/notes/'+id+'/questionAnswers']);
+ 
+}
 ngOnDestroy() {
   this.destroy$.next(true);
   // Now let's also unsubscribe from the subject itself:
