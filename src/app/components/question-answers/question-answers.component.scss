@@ -2,37 +2,32 @@
 @import "../../../sass/_mixins.scss";
 .span{
 font-size:10px;
-margin-left: 5px
+@include  margins(0px,0px,0px,5px);
 }
 .questionCard{
-    // width:995px;
-    margin-top:30px;
+    @include  margins(30px,0px,0px,0px);
 }
 .top{
-    margin-top:10px;
+    @include  margins(10px,0px,0px,0px);
 }
 .border{
     @include border;
-    margin-top:10px;
-
+    @include  margins(10px,0px,0px,0px);
 }
-
 .text{
-    margin-top:18px;
+    @include  margins(18px,0px,0px,0px);
     font-size:22px;
 }
-
 .desc{
-    margin:10px 0px 20px 0px;
+    @include  margins(10px,0px,20px,0px);
     font-size:20px;
 }
 .title{
     font-size:25px;
 }
 .newMsg{
-    margin-top:15px;
+    @include  margins(15px,0px,0px,0px);
     opacity:0.54;
-
 }
 .user{
     font-size:15px;
@@ -45,24 +40,72 @@ margin-left: 5px
     @include  margins(3px,0px,0px,0px);
 }
 .rate{
-    @include  margins(18px,0px,0px,15px);
+    display: flex;   
+    flex-wrap: wrap;
+    font-size: 0px;
+    @include  margins(-15px,0px,0px,0px);
 }
 .icons{
-    margin-top:18px;
+    display: flex;   
+    flex-wrap: wrap;
+    @include  margins(38px,0px,0px,0px);
 }
 .icon{
+    color: rgb(10, 0, 1);
+    font-size: 25px;
     cursor: pointer;
-
 }
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .icon {
+        color: rgb(10, 0, 1);
+        cursor: pointer;
+        font-size:10px;
+    }
+}
+.image{
+    height:35px;
+    width: 30px;
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+
+.image{
+    height:25px;
+    width: 20px;
+}
+}
+
 .msg{
+    font-family:BURW Chancery L, cursive ; 
     font-size:20px;
 }
-.msgNew{
-    margin-left: 10px
-
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .msg {
+        font-size:10px;
+        font-family:BURW Chancery L, cursive ; 
+    }
 }
+.msgNew{
+    font-size:15px;
+    @include  margins(0px,0px,0px,10px);
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .msgNew {
+        @include  margins(0px,0px,0px,10px);
+        font-size:0px;
+        font-family:BURW Chancery L, cursive ; 
+    }
+}
+.reply_Div{
+    border:solid;
+    width:20px;
+}
+.reply_Div:empty:not(:focus):before {
+    content: attr(placeholder);
+    opacity: 0.5!important;
+    }
+    
 .textNew{
-    margin: 30px 0px 0px 50px;
+    @include  margins(30px,0px,0px,50px);
     width:800px;
     @include border;
 }

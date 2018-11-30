@@ -26,7 +26,7 @@ export class InterceptorService  implements HttpInterceptor {
 	        Authorization: `${localStorage.getItem('token')}`
 	      }
 	    });
-	  //  console.log("token",localStorage.getItem('token'));
+	   console.log("token",localStorage.getItem('token'));
 		 
 
 	 	// console.log(request);
@@ -47,8 +47,8 @@ export class InterceptorService  implements HttpInterceptor {
 	   			// http response status code
 	          	// console.log("----response----");
 	          	// console.error("status code:");
-	          	// console.error(error.status);
-	          	// console.error(error.message);
+	          	console.error(error.status);
+	          	console.error(error.message);
 	          	// console.log("--- end of response---");
 
 	        })
