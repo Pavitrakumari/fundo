@@ -30,7 +30,11 @@ import { Subject } from 'rxjs';
 })
 export class QuestionAnswersComponent implements OnInit {
   @ViewChild('replyMessage') public replyMessageRef:ElementRef;
+  @ViewChild('questionAsked') public questionAskedRef:ElementRef;
+
   destroy$: Subject<boolean> = new Subject<boolean>();
+  value: number;
+  avgRate: number;
 
   constructor(private route: ActivatedRoute, private notesService: NoteService,
   public router: Router, public quesService: QstnAnsService) { }
@@ -49,6 +53,8 @@ export class QuestionAnswersComponent implements OnInit {
   private replyId;
   private questionAnswerArray;
   private show = true;
+  private hide = true;
+  private new=true;
   private rate=0;
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -92,7 +98,7 @@ getNotesQues() {
           if(this.details.questionAndAnswerNotes[0].rate!=undefined){
             this.rate=0;
             for(let i=0;i<this.details.questionAndAnswerNotes[0].rate.length;i++){
-              this.rate=(this.rate+this.details.questionAndAnswerNotes[0].rate[i].rate)/(i+1)
+              this.rate=(this.rate+this.details.questionAndAnswerNotes[0].rate[i].rate)/(i+1);
             }
 
 
@@ -115,12 +121,15 @@ ngOnDestroy() {
   }
 /***********************************Asking A question***********************************/
 askQuestion(questionAsked) {
+  console.log("questionAskedRef.....:: ",this.questionAskedRef.nativeElement.innerHTML);
+questionAsked=this.questionAskedRef.nativeElement.innerHTML;
     var content = {
       'message': questionAsked,
       'notesId': this.noteId
     }
     this.quesService.quesAnsNotes(content).subscribe(data => {
       LoggerService.log('success in adding', data);
+      this.getNotesQues();
       this.message = data['data']['details'].message;
     })
   }
@@ -134,6 +143,8 @@ like(value) {
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
         LoggerService.log('success in like', data);
+        this.getNotesQues();
+
       });
     }
 /***********************************Rating A question***********************************/
@@ -170,6 +181,28 @@ reply() {
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
     LoggerService.log('success in replying', data);
+    this.getNotesQues();
+
   })
 }
+averageRating(rateArray) {
+  this.value = 0;
+  if (rateArray.length != 0) {
+  for (let i = 0; i < rateArray.length; i++) {
+  this.value =this.value + rateArray[i].rate
+  }
+  this.avgRate = this.value / rateArray.length;
+  return this.avgRate;
+  }
+  }
+  private newreply;
+  replyQues(question){
+    this.newreply=0;
+    for(var i=0;i<this.questionAnswerArray.length;i++){
+      if(question.id==this.questionAnswerArray[0].id){
+        this.newreply++;
+      }
+    }
+return this.newreply;
+  }
 }
