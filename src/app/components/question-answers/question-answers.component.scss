@@ -28,10 +28,10 @@ font-size:10px;
 }
 .newMsg{
     @include  margins(15px,0px,0px,0px);
-    opacity:0.54;
+    opacity:0.5;
 }
 .user2{
-    color: rgb(226, 165, 74)
+    color: $qstncolor
 }
 .user{
     font-size:15px;
@@ -47,7 +47,6 @@ font-size:10px;
     opacity: 0;
 }
 .rate{
-    font-size: 0px;
     @include  margins(-15px,0px,0px,0px);
 }
 .icons{
@@ -76,10 +75,21 @@ font-size:10px;
     width: 20px;
 }
 }
-
+.send{
+    margin:60px;
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .send{
+        margin:30px;
+    }
+}
+.froal{
+    color: pink;
+    width:600px;
+}
 .msg{
     overflow-wrap: break-word;
-        font-family:BURW Chancery L, cursive ; 
+    font-family:BURW Chancery L, cursive ; 
     font-size:20px;
 }
 @media only screen and (min-width: 300px) and (max-width: 800px) {
@@ -100,25 +110,22 @@ font-size:10px;
     }
 }
 .reply_Div{
+    overflow-y:auto;
+    overflow-x:hidden !important;
     margin-left:50px;
     height:30px;
     border-bottom:2px solid rgb(228, 199, 156);
     width:50px;
 }
 @media only screen and (min-width: 300px) and (max-width: 800px) {
-
 .reply_Div{
-    margin-left:60px;
-    margin-top:30px;
-
+    overflow-y:auto;
+    overflow-x:hidden !important;
+    @include  margins(0px,0px,0px,60px);
     height:30px;
-
-    border-bottom:2px solid rgb(228, 199, 156);
+    border-bottom:2px  rgb(228, 199, 156);
     width:10px;
 }}
-.starrate{
-    margin-right:0px;
-}
 .reply_Div:empty:not(:focus):before {
     content: attr(placeholder);
     opacity: 0.5!important;

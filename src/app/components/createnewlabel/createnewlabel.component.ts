@@ -33,6 +33,7 @@ export class CreatenewlabelComponent implements OnInit,OnDestroy {
  
   public labelarray = [];
   list:Notes[]=[]
+  loading: boolean;
 
   constructor(private noteService:NoteService,public dialogRef:
      MatDialogRef<CreatenewlabelComponent>,
@@ -90,6 +91,7 @@ export class CreatenewlabelComponent implements OnInit,OnDestroy {
          
   }
   getLabels() {
+    this.loading=true
 
       this.noteService.getlabels()
       .pipe(takeUntil(this.destroy$))
@@ -106,6 +108,8 @@ export class CreatenewlabelComponent implements OnInit,OnDestroy {
           }
           this.updateevent.emit();/**emit an event to the parent */
         })
+        this.loading=false
+
         }
   
   delete(labelid) {/**delete() method to delete the labels from the list */

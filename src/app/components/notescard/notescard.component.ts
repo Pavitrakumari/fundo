@@ -140,17 +140,16 @@ openDialog(dialogdata): void {
       panelClass: 'myapp-no-padding-dialog'/**to change the padding in dialog box */
     });
      dialogRef.componentInstance.eventOne.subscribe((data) => {
-      // this.updateevent.emit();
-      // this.pavitra.emit();
+      this.updateevent.emit();
   })
   dialogRef.afterClosed().subscribe(result => {
-      // this.updateevent.emit();
+      this.updateevent.emit();
       /**emit an event to the parent */
       // this.pavitra.emit();
     });
   }
 removelabel(label,note) {/**passing the label id & note id */
-try {
+
       this.noteService.postAddLabelnotesRemove(label,note,{})
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {/**using the observabel subscribe using callbackk */
@@ -159,10 +158,7 @@ try {
 
         })
         
-    }
-catch (error) {
-      console.log(error);
-    }
+    
   }
   removereminder(noteid) {
 try{

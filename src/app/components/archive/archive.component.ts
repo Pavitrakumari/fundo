@@ -28,6 +28,7 @@ export class ArchiveComponent implements OnInit,OnDestroy {
   token;
   temp1 = [];
   list:Notes[]=[]
+  loading: boolean;
   constructor(private noteService:NoteService,public httpService: HttpService, public snackBar: MatSnackBar) { }
   ngOnInit() {
     this.getarchive();
@@ -36,11 +37,14 @@ export class ArchiveComponent implements OnInit,OnDestroy {
     this.getarchive();
   }
   getarchive() {
+    this.loading=true
 
     this.noteService.getarchive()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {/**calling the noteservice method */
       this.temp1 = data['data'].data.reverse();/**reverse() method in typescript to display the data in reverse order */
+      this.loading=false
+
     })
     
 }

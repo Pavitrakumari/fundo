@@ -144,7 +144,7 @@ aria-multiline="true" role="textbox" role="textbox"
   <div (click)="QnA(index.id)" fxLayout="row wrap" *ngIf="index.questionAndAnswerNotes.length != 0"  class="question" fxLayoutGap="40px">
     <mat-divider></mat-divider>
     <div (click)="QnA(index.id)"  class="valueNew">Question Asked</div>
-    <div  (click)="QnA(index.id)" class="value" >  {{index.questionAndAnswerNotes[0].message }} ?
+    <div  (click)="QnA(index.id)" class="value" [innerHTML]="index.questionAndAnswerNotes[0].message">
       </div>
   </div>
 <!------------------------------------closing mat-card -------------------------------->

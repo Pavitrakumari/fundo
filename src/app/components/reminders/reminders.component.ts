@@ -19,6 +19,7 @@ export class RemindersComponent implements OnInit,OnDestroy {
 
   temp2=[];
   list:Notes[]=[]
+  loading: boolean;
 
   constructor(private noteService:NoteService,public httpService:HttpService) { }
   sortedItems :any
@@ -30,7 +31,7 @@ export class RemindersComponent implements OnInit,OnDestroy {
   }
   getReminder() {
     try{
-    this.token = localStorage.getItem('token');/**get the token from the local storage */
+      this.loading=true;
 
     this.noteService.getreminders()
     .pipe(takeUntil(this.destroy$))
@@ -46,6 +47,8 @@ export class RemindersComponent implements OnInit,OnDestroy {
       this.removeremindevent.emit();
 }
       })
+      this.loading=false
+
     
   }
   catch(error){

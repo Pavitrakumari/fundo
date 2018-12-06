@@ -5,12 +5,25 @@
 (updateevent)="getCard($event)" (archiveevent)="getCard($event)"
 (colorevent)="getCard($event)" (pavitra)="pinNew($event)"  [length]="pinarraay.length" [string]="'OTHERS'"
 > </app-notescard>
-
-<!-- PINNED -->
+<div *ngIf="loading" class="sk-circle">
+    <div class="sk-circle1 sk-child"></div>
+    <div class="sk-circle2 sk-child"></div>
+    <div class="sk-circle3 sk-child"></div>
+    <div class="sk-circle4 sk-child"></div>
+    <div class="sk-circle5 sk-child"></div>
+    <div class="sk-circle6 sk-child"></div>
+    <div class="sk-circle7 sk-child"></div>
+    <div class="sk-circle8 sk-child"></div>
+    <div class="sk-circle9 sk-child"></div>
+    <div class="sk-circle10 sk-child"></div>
+    <div class="sk-circle11 sk-child"></div>
+    <div class="sk-circle12 sk-child"></div>
+  </div>  
+  
+  <!-- PINNED -->
 <app-notescard [myData]="pinarraay" (pavitra)="pinNew($event)"
 (remm)="getCard($event)" (noteevent)="getCard($event)"
 (updateevent)="getCard($event)" (archiveevent)="getCard($event)"
 (colorevent)="getCard($event)"  (remm)="getCard($event)"  [length]="pinarraay.length" [string]="'PINNED'"
 > </app-notescard>
-
 

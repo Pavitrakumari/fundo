@@ -5,7 +5,7 @@
 * 
 *  Description    
 * 
-*  @file           : QuestionAnswersComponent.js
+*  @file           : QuestionAnswersComponent.ts
 *  @overview       : To ask a question ,like , rate & replying a question
 *  @module         : QuestionAnswersComponent.ts - This is optional if expeclictly it's an npm or local package
 *  @author         : Pavitrakumari <pavithra.korapati@gmail.com>
@@ -35,11 +35,14 @@ export class QuestionAnswersComponent implements OnInit {
   destroy$: Subject<boolean> = new Subject<boolean>();
   value: number;
   avgRate: number;
+  loading: boolean;
+  reppply=true;
 
   constructor(private route: ActivatedRoute, private notesService: NoteService,
   public router: Router, public quesService: QstnAnsService) { }
   private noteId;
   private Title;
+  public editorContent:string;
   private Description;
   private details;
   private checkList = [];
@@ -63,6 +66,16 @@ export class QuestionAnswersComponent implements OnInit {
     });
     this.getNotesQues();
   }
+  public options: Object = {
+    charCounterCount: true,
+    toolbarButtons: ['fullscreen','bold', 'italic', 'underline', 'paragraphFormat','alert','strike Through','subscript','superscript','fontFamily','fontSize','align','inlineClasses','inlinestyle', 'clearFormatting','redo','undo','quote','indent','orderedList','unorderedList'],
+    toolbarButtonsXS: ['bold', 'italic', 'underline', 'paragraphFormat','alert','autofocus'],
+    toolbarButtonsSM: ['bold', 'italic', 'underline', 'paragraphFormat','alert','autofocus'],
+    toolbarButtonsMD: ['bold', 'italic', 'underline', 'paragraphFormat','alert','autofocus'],
+
+
+
+  };
 /***********************************getnotes of question method***************************/
 getNotesQues() {
     this.notesService.getNoteDetail(this.noteId)
@@ -82,7 +95,8 @@ getNotesQues() {
 
         for (var i = 0; i < data['data']['data'][0].noteCheckLists.length; i++) {
           if (data['data']['data'][0].noteCheckLists[i].isDeleted == false) {
-            this.checkList.push(data['data']['data'][0].noteCheckLists[i])
+            this.checkList.push(data['data']['data'][0].noteCheckLists[i]);
+
           }
         }
         if (this.details.questionAndAnswerNotes[0] != undefined) {
@@ -94,18 +108,9 @@ getNotesQues() {
 
           LoggerService.log('questionArray', this.questionAnswerArray)
         }
-        if(this.details.questionAndAnswerNotes[0]!=undefined){
-          if(this.details.questionAndAnswerNotes[0].rate!=undefined){
-            this.rate=0;
-            for(let i=0;i<this.details.questionAndAnswerNotes[0].rate.length;i++){
-              this.rate=(this.rate+this.details.questionAndAnswerNotes[0].rate[i].rate)/(i+1);
-            }
-
-
-          }
-
-        }
+        
       })
+
   }
 /***********************************close() back to notes*********************************/
 close() {
@@ -120,15 +125,18 @@ ngOnDestroy() {
     this.destroy$.unsubscribe();
   }
 /***********************************Asking A question***********************************/
-askQuestion(questionAsked) {
-  console.log("questionAskedRef.....:: ",this.questionAskedRef.nativeElement.innerHTML);
-questionAsked=this.questionAskedRef.nativeElement.innerHTML;
+askQuestion() {
+  this.loading=true;
+
+// questionAsked=this.questionAskedRef.nativeElement.innerText;
     var content = {
-      'message': questionAsked,
+      'message': this.editorContent,
       'notesId': this.noteId
     }
     this.quesService.quesAnsNotes(content).subscribe(data => {
       LoggerService.log('success in adding', data);
+      this.loading=false;
+
       this.getNotesQues();
       this.message = data['data']['details'].message;
     })
@@ -149,10 +157,10 @@ like(value) {
     }
 /***********************************Rating A question***********************************/
 ratingAnswer(value, event) {
-    var content = {
+    var rateArray = {
       'rate': event
     }
-    this.quesService.rateQnA(value.id, content)
+    this.quesService.rateQnA(value.id, rateArray)
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
         LoggerService.log('success in rating', data);
@@ -170,20 +178,26 @@ replyAnswer(value) {
   private  content = {
     'message': ''
   }
-  public replyMessage;
+  // public replyMessage;
 reply() {
-  console.log("replyMessageTextRef.....:: ",this.replyMessageRef.nativeElement.innerHTML);
-  this.replyMessage=this.replyMessageRef.nativeElement.innerHTML;
-    LoggerService.log(this.content.message);
+  this.reppply=true;
+  LoggerService.log(this.content.message);
     LoggerService.log(this.replyId);
-    this.content.message=this.replyMessage;
+    this.content.message=this.editorContent;
     this.quesService.replyQnA(this.replyId, this.content)
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
-    LoggerService.log('success in replying', data);
-    this.getNotesQues();
+        this.reppply=false;
 
-  })
+    console.log('success in replying', data);
+    this.getNotesQues();
+    this.editorContent='';
+
+  }),
+  error=>{
+    console.log("error in reply",error);
+    
+  }
 }
 averageRating(rateArray) {
   this.value = 0;
@@ -195,14 +209,14 @@ averageRating(rateArray) {
   return this.avgRate;
   }
   }
-  private newreply;
-  replyQues(question){
+private newreply;
+replyQues(question){
     this.newreply=0;
     for(var i=0;i<this.questionAnswerArray.length;i++){
-      if(question.id==this.questionAnswerArray[0].id){
+      if(question.id==this.questionAnswerArray[i].parentId){
         this.newreply++;
       }
     }
-return this.newreply;
+    return this.newreply;
   }
 }

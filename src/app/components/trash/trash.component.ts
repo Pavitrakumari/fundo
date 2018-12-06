@@ -32,11 +32,13 @@ export class TrashComponent implements OnInit,OnDestroy {
   myData = [];
   name = 'trash';
   list:Notes[]=[]
+  loading: boolean;
   constructor(private noteService:NoteService,public httpService: HttpService) { }
   ngOnInit() {
     this.getcard();
   }
   getcard() {
+    this.loading=true;
 
     this.noteService.getcard()
     .pipe(takeUntil(this.destroy$))
@@ -50,6 +52,8 @@ export class TrashComponent implements OnInit,OnDestroy {
           this.myData.push(this.list[i]);
         }
       }
+      this.loading=false;
+
     })
   
 

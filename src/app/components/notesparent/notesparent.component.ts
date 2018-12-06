@@ -30,7 +30,7 @@ import { Subject } from 'rxjs';
 /**To use components in other modules , we have to export them */
 export class NotesparentComponent implements OnInit,OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
-
+loading;
   token;
   temp = [];
   arraynewdata = [];
@@ -52,11 +52,17 @@ console.log("checking notes parent................");
       this.getCard();
     }
   }
+  get(event){
+    if(event){
+      this.getCard();
+    }
+  }
   getCard() {
-
+this.loading=true;
     this.noteService.getcard()
     .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
+      this.loading=false;
       this.list=data['data'].data
       this.temp = this.list.reverse();/**reverse() method in typescript to display the data in reverse order */
       // console.log(this.temp);

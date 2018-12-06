@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UndoiconComponent } from './undoicon.component';
+import { PackdetailsComponent } from './packdetails.component';
 
-describe('UndoiconComponent', () => {
-  let component: UndoiconComponent;
-  let fixture: ComponentFixture<UndoiconComponent>;
+describe('PackdetailsComponent', () => {
+  let component: PackdetailsComponent;
+  let fixture: ComponentFixture<PackdetailsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UndoiconComponent ]
+      declarations: [ PackdetailsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UndoiconComponent);
+    fixture = TestBed.createComponent(PackdetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

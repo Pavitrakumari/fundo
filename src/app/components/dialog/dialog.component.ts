@@ -73,7 +73,7 @@ collabReq=[];
       console.log(message);
       if (message) {
         this.updateevent.emit();
-        // this.pavitra.emit();
+        this.pavitra.emit();
 
       }
     })
@@ -103,7 +103,7 @@ ngOnInit() {
     
   //   }
 
-  // this.pavitra.emit();
+  this.pavitra.emit();
 
   // LoggerService.log(this.data['noteLabels'], "maaaa");
     this.selectarray1 = this.data['noteLabels'];
@@ -117,12 +117,14 @@ ngOnInit() {
   }
   more(label) {
     this.selectarray1.push(label);
-    // this.pavitra.emit();
+    this.pavitra.emit();
 
   }
   close() {
     this.updateNotes();
-    // this.pavitra.emit();
+    this.pavitra.emit();
+    this.updateevent.emit();
+
 
   }
   // pinunpin(event) {/**callback will be invoked &data associated with the event will be given to us via $event property */
@@ -149,15 +151,14 @@ ngOnInit() {
     this.noteService.updatenotes(body)
     // .pipe(takeUntil(this.destroy$))
     .subscribe(data => {
-      // console.log("success in normal update",data);
-      
+      console.log("success in normal update",data);
+      this.updateevent.emit();
+
       this.snackBar.open("update change success", "success", {/**snackbar to display the result */
         duration: 10000,/**duaration of the snackbar to be opened */
-      }),
-      error=>{
-        console.log("error in normal update",error);
-        
-      }
+      })
+      // this.updateevent.emit();
+     
     })
     
   }
@@ -290,7 +291,7 @@ try {
           }
         })
         this.updateevent.emit();
-        // this.pavitra.emit();
+        this.pavitra.emit();
 
       
     }
