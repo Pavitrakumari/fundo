@@ -6,6 +6,8 @@ import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material/tabs';
+
 import * as _moment from 'moment';
 import { MatSnackBarModule,
          MatToolbarModule, 
@@ -39,10 +41,8 @@ import { NotesComponent } from './components/notes/notes.component';
 import { CreatenewlabelComponent } from './components/createnewlabel/createnewlabel.component';
 import { ArchiveComponent } from './components/archive/archive.component';
 import { TrashComponent } from './components/trash/trash.component';
-import { SettingsComponent } from './components/settings/settings.component';
 import { RemindersComponent } from './components/reminders/reminders.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
-import { HelpComponent } from './components/help/help.component';
 import { AppdownloadsComponent } from './components/appdownloads/appdownloads.component';
 import { KeyboardshortcutsComponent } from './components/keyboardshortcuts/keyboardshortcuts.component';
 import { CollaboratoriconComponent } from './components/collaboratoricon/collaboratoricon.component';
@@ -50,7 +50,7 @@ import { ColoriconComponent } from './components/coloricon/coloricon.component';
 import { ImageiconComponent } from './components/imageicon/imageicon.component';
 import { ArchiveiconComponent } from './components/archiveicon/archiveicon.component';
 import { MoreiconComponent } from './components/moreicon/moreicon.component';
-import { UndoiconComponent } from './components/undoicon/undoicon.component';
+
 import { RedoiconComponent } from './components/redoicon/redoicon.component';
 import { NotescardComponent } from './components/notescard/notescard.component';
 import { NotesparentComponent } from './components/notesparent/notesparent.component';
@@ -74,6 +74,10 @@ import { DialogcollaboratorComponent } from './components/dialogcollaborator/dia
 import { InternetLostComponent } from './components/internet-lost/internet-lost.component';
 import { QuestionAnswersComponent } from './components/question-answers/question-answers.component';
 import { BarRatingModule } from "ngx-bar-rating";
+import { CartComponent } from './components/cart/cart.component';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { PackdetailsComponent } from './components/packdetails/packdetails.component';
+import { AdvancepackdetailsComponent } from './components/advancepackdetails/advancepackdetails.component';
 
 @NgModule({
   declarations: [
@@ -87,10 +91,9 @@ import { BarRatingModule } from "ngx-bar-rating";
          CreatenewlabelComponent, 
          ArchiveComponent, 
          TrashComponent, 
-         SettingsComponent,
+         
          RemindersComponent,
          FeedbackComponent,
-         HelpComponent,
          AppdownloadsComponent,
          KeyboardshortcutsComponent,
          Icon1Component,
@@ -99,7 +102,6 @@ import { BarRatingModule } from "ngx-bar-rating";
          ImageiconComponent, 
          ArchiveiconComponent, 
          MoreiconComponent, 
-         UndoiconComponent, 
          RedoiconComponent,
          NotescardComponent, 
          NotesparentComponent, 
@@ -114,6 +116,9 @@ import { BarRatingModule } from "ngx-bar-rating";
          DialogcollaboratorComponent,
          InternetLostComponent,
          QuestionAnswersComponent,
+         CartComponent,
+         PackdetailsComponent,
+         AdvancepackdetailsComponent,
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -151,8 +156,14 @@ import { BarRatingModule } from "ngx-bar-rating";
          MatListModule, 
          MatDialogModule, 
          MatChipsModule,
-         HttpClientModule
+         HttpClientModule,
+         FroalaEditorModule.forRoot(), 
+         FroalaViewModule.forRoot(),
+         MatTabsModule,
+
   ],
+  // imports: [FroalaEditorModule.forRoot(), FroalaViewModule.forRoot() ... ],
+
   providers: [
     DataService,
     LoggerService,
@@ -173,7 +184,8 @@ import { BarRatingModule } from "ngx-bar-rating";
       DeleteComponent, 
       AddlabelComponent, 
       CreatenewlabelComponent,
-      DialogcollaboratorComponent
+      DialogcollaboratorComponent,
+      PackdetailsComponent
    ],
     bootstrap: [AppComponent]
 })

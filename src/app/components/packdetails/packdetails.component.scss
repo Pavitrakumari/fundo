@@ -1,0 +1,57 @@
+.tab{
+    margin-top:40px;
+    height: 48px;
+    padding: 0px!important;
+    cursor: pointer;
+    box-sizing: border-box;
+    opacity: .6;
+    min-width: 50px!important;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    position: relative;
+
+}
+::ng-deep.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #fb0!important;
+}
+.dollar{
+    text-align: right;
+    background-color: #fb0;
+    color:white;
+    padding-top:20px;
+    height:50px;
+
+    font-weight: bold;
+    font-family:BURW Chancery L, cursive ;
+
+
+}
+.title{
+    background-color: #fb0;
+    height:50px;
+    color:white;
+    padding-top:20px;
+    text-align:left;
+    font-weight: bold;
+    font-family:BURW Chancery L, cursive ;
+}
+.firstclass{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 16px;
+    padding: 16px;
+    border-radius: 8px;
+}
+.btnclr{
+    color:white;
+    margin:8px;
+    border-radius: 5px;
+    background-color:#4169E1;
+}
+.button2{
+float:right;
+}

@@ -32,14 +32,41 @@
           </mat-form-field>
         </div>
         <div flexLayout="row" fxFlexLayout="center">
-          <div fxFlex.lg="100" *ngFor="let data of card">
+          <!-- <div fxFlex.lg="100" *ngFor="let data of card">
             <mat-card mat-button (click)="respond(data)" [ngClass]="data.select? 'selected': 'notselected'" style="height:70px;width:100px">
               <mat-card-title class="mat_card_title" >
                 {{data.name}}</mat-card-title>
               <mat-card-content style="font-size:12px">{{data.description}}</mat-card-content>
             </mat-card>
+          </div> -->
+
+
+        <div fxFlex.lg="100" *ngFor="let card of card">
+            <mat-card mat-button  (click)="respond(card)"  [ngClass]="productId1 == card.id ? 'selectedbelow' : 'belowcard'" 
+            ngStyle.xs="font-size:15px;background-color: rgb(158, 158, 158);width:100px;height:145px">
+              <mat-card   [ngClass]="card.select? 'aboveCardSelected' : 'aboveCard'" 
+              ngStyle.xs="width:90px;height:120px;margin-left: -20px;margin-top: -32px;" (click)="clicked(card);open()">
+                <div class="dollar">
+                  $ {{card.price}} per Month
+                </div>
+                <a style="font-size:smaller;color:deepskyblue">{{card.name}}</a>
+                <ul>
+                    <li class="content">Unlimited wall space</li>
+                    <li class="content">Nice Interface</li>
+                    <li class="content">${{card.price}}/month</li>
+                    <li class="content">{{card.description}}</li>
+                </ul>
+              </mat-card>
+              <div ngStyle.lg="margin:2%" ngStyle.xs="padding:1%">ADD TO CART</div>
+            </mat-card>
           </div>
         </div>
+
+
+
+
+
+
         <div class="password">
           <button matTooltip="If you already have an account" matTooltipClass="example-tooltip-red" mat-button
             mat-button routerLink="/login" color="primary">

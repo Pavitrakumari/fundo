@@ -1,25 +1,28 @@
 <div fxLayout="column"  fxLayoutGap="5%" fxLayoutGap.xs="10%" >
-        <div fxFlex=10% fxLayoutAlign="start center" style="background-color: #fb0;border:2px solid blue">
+        <div fxFlex=10%   fxLayoutAlign="start center" style="background-color: #fb0;border: 2px ">
           <div style="margin:2%">fundooNotes</div>
         </div>
-        <div fxLayoutAlign="center center" >
-          Which fundooNotes service package do you want??</div>
-        <div fxLayout="row" fxLayoutAlign="center center" >
-          <div fxflex.lg="80" fxflex.md="80" fxflex.sm="90" fxflex.xs="90" >
+        <div  class="heading" fxLayoutAlign="center center">
+          Which fundooNotes service package do you want?</div>
+        <div  class="cards" fxLayout="row" fxLayoutAlign="center center">
+          <div fxFlex="34" ></div>
+
+          <div fxFlex.lg="80" fxFlex.md="80" fxFlex.sm="90" fxFlex.xs="90">
             <div fxLayout="row" fxLayoutGap="40px">
-              <div *ngFor="let card of array">
-                <mat-card  [ngClass]="card.select ? 'selectedbelow' : 'belowcard'" 
+              <div  *ngFor="let card of cards">
+                <mat-card (click)="respond(card)"  [ngClass]="card.select ? 'selectedbelow' : 'belowcard'" 
                 ngStyle.xs="font-size:15px;background-color: rgb(158, 158, 158);width:100px;height:145px">
-                  <mat-card  [ngClass]="card.select ? 'aboveCardSelected' : 'aboveCard'" 
-                  ngStyle.xs="width:90px;height:120px;margin-left: -20px;margin-top: -32px;" (click)="clicked(card);open()">
-                    <div style="font-size:larger">
-                      $6.99per month
+                  <mat-card   [ngClass]="card.select ? 'aboveCardSelected' : 'aboveCard'" 
+                  ngStyle.xs="width:90px;height:120px;margin-left: -20px;margin-top: -32px;" (click)="clicked(card);open(card)">
+                    <div class="dollar">
+                      $ {{card.price}} per Month
                     </div>
-                    <span style="font-size:smaller">Advance</span>
+                    <a style="font-size:smaller;color:deepskyblue">{{card.name}}</a>
                     <ul>
-                      <li>Coffee</li>
-                      <li>Tea</li>
-                      <li>Milk</li>
+                        <li class="content">Unlimited wall space</li>
+                        <li class="content">Nice Interface</li>
+                        <li class="content">${{card.price}}/month</li>
+                        <li class="content">{{card.description}}</li>
                     </ul>
                   </mat-card>
                   <div ngStyle.lg="margin:2%" ngStyle.xs="padding:1%">ADD TO CART</div>

@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 
 import { UserService } from '../../core/services/http/user/user.service';
 import { LoggerService } from '../../core/services/logger/logger.service';
+import { CartService } from '../../core/services/http/cart/cart.service';
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-signup',
@@ -18,10 +19,13 @@ import { LoggerService } from '../../core/services/logger/logger.service';
 /**To use components in other modules , we have to export them */
 export class SignupComponent implements OnInit,OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
+  public selectedBefore=false;
+  public array=[];
 
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
   firstname = new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z]*')]);
+  productId1: any;
   getErrorMessageFirstName() {/**validation for firstname of user */
     return this.firstname.hasError('required') ? 'first name is required' :
       this.firstname.hasError('firstname') ? 'Not a valid first name' :
@@ -53,9 +57,10 @@ export class SignupComponent implements OnInit,OnDestroy {
   public arr = [];
   service; 
   list:Notes[]=[]
-constructor(public httpService: HttpService,private userService:UserService, public snackBar: MatSnackBar) { }
+constructor(public httpService: HttpService,private userService:UserService, private cartService:CartService,public snackBar: MatSnackBar) { }
   /**method to get the service for the user */
   ngOnInit() {
+    this.getCartDetails();
     let obs = this.userService.getDataService1();
     obs
     .pipe(takeUntil(this.destroy$))
@@ -78,6 +83,21 @@ constructor(public httpService: HttpService,private userService:UserService, pub
       this.card[i].select = false;
     }
   }
+  
+  clicked(card){
+    if(card.select==true){
+      this.selectedBefore=true;
+      return;
+    }
+    card.select = true;
+    for (let i = 0; i < this.array.length; i++) {
+      if (card.index == this.array[i].index) {
+        continue;
+      }
+      this.array[i].select = false;
+    }
+
+}
   model: any = {};
   /**signup method to post the data when a particular user is signed in successfully */
   signup() {
@@ -121,6 +141,21 @@ catch(error){
     LoggerService.log(error)
   }
 }
+private productId=localStorage.getItem('productId')
+getCartDetails(){
+  this.cartService.cartDetails(this.productId).subscribe(response=>{
+  console.log('cartDetails',response);
+  this.productId1=response['data']['product']['id']
+  console.log("productid",this.productId1);
+  // localStorage.removeItem('productId');
+  // console.log('cartDetailssdssd',response['data']['id']);
+  // console.log(this.productId);
+  
+  
+  });
+  
+  }
+  
 ngOnDestroy() {
   this.destroy$.next(true);
   // Now let's also unsubscribe from the subject itself:

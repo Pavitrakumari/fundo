@@ -8,10 +8,8 @@ import { NotesComponent } from './components/notes/notes.component';
 import { CreatenewlabelComponent } from './components/createnewlabel/createnewlabel.component';
 import { ArchiveComponent } from './components/archive/archive.component';
 import { TrashComponent } from './components/trash/trash.component';
-import { SettingsComponent } from './components/settings/settings.component';
 import { RemindersComponent } from './components/reminders/reminders.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
-import { HelpComponent } from './components/help/help.component';
 import { AppdownloadsComponent } from './components/appdownloads/appdownloads.component';
 import { KeyboardshortcutsComponent } from './components/keyboardshortcuts/keyboardshortcuts.component';
 import { AuthGuard as AuthGuard } from '../app/core/services/auth/authGuard/auth.guard';
@@ -20,6 +18,8 @@ import { SearchComponent } from './components/search/search.component';
 import { LabelsComponent } from './components/labels/labels.component';
 import { InternetLostComponent } from './components/internet-lost/internet-lost.component';
 import { QuestionAnswersComponent } from './components/question-answers/question-answers.component';
+import { CartComponent } from './components/cart/cart.component';
+import { AdvancepackdetailsComponent } from './components/advancepackdetails/advancepackdetails.component';
 
 
 const appRoutes: Routes = [
@@ -29,6 +29,11 @@ const appRoutes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'forgotpassword', component: ForgotpasswordComponent },
   { path: 'internet-lost', component: InternetLostComponent },
+  { path: 'cart' , component:CartComponent},
+  { path: 'advancepack' , component:AdvancepackdetailsComponent},
+
+
+
 
   {
     path: 'home', component: HomeComponent, canActivate: [AuthGuard],
@@ -42,12 +47,11 @@ const appRoutes: Routes = [
       { path: 'newlabel', component: CreatenewlabelComponent },
       { path: 'archive', component: ArchiveComponent },
       { path: 'trash', component: TrashComponent },
-      { path: 'settings', component: SettingsComponent },
       { path: 'sendfeedback', component: FeedbackComponent },
-      { path: 'help', component: HelpComponent },
       { path: 'appdownloads', component: AppdownloadsComponent },
       { path: 'keyboardshortcuts', component: KeyboardshortcutsComponent },
       { path: 'search', component: SearchComponent },
+
     ]
   },
   // { path: '', redirectTo: '/login', pathMatch: 'full' },

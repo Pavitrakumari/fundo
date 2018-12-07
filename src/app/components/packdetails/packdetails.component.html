@@ -1,3 +1,39 @@
-<p>
-  packdetails works!
-</p>
+<div  fxFlex="100%">
+  <div   fxLayout="row"  >
+  <div fxFlex="50%" class="title"> Advanced Pack Details</div>
+  <div fxFlex="50%" class="dollar">$6.99/month</div>
+</div>
+<mat-tab-group>
+        <mat-tab label="First class" class="tab">
+            You can put more than one component tree on a host web page, that's not typical. 
+            Most of the applications have only one component tree and they bootstrap a single
+             root component and you can call the one root component anything you want but most 
+             developers call it AppComponent.
+          </mat-tab>
+        <mat-tab label="Second class" class="tab"> 
+            You can put more than one component tree on a host web page, that's not typical. 
+            Most of the applications have only one component tree and they bootstrap a single
+             root component and you can call the one root component anything you want but most 
+             developers call it AppComponent.       
+             You can put more than one component tree on a host web page, that's not typical. 
+             Most of the applications have only one component tree and they bootstrap a single
+              root component and you can call the one root component anything you want but most 
+              de
+              </mat-tab>
+        <mat-tab label="Third class" class="tab"> 
+            You can put more than one component tree on a host web page, that's not typical. 
+            Most of the applications have only one component tree and they bootstrap a single
+             root component and you can call the one root component anything you want but most 
+             developers call it AppComponent.        </mat-tab>
+      </mat-tab-group>
+      <div  style="margin:20px;"></div>
+      <div fxLayout="row">
+        <div fxFlex="60%" class="button1"> 
+          <button mat-raised-button (click)="close()" class="btnclr">Remove</button>
+        </div>
+        <div fxFlex="40%" class="button2">
+          <button mat-raised-button (click)="checkOut()" class="btnclr">Proceed to check-out</button>
+        </div>
+      </div>
+    </div>
+  
