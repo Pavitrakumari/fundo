@@ -1,94 +1,168 @@
-<div>
-<div  fxLayout="column"  fxLayoutGap="5%" fxLayoutGap.xs="10%" >
-    <div  fxFlex=100% fxLayout="row"   fxLayoutAlign="start center" style="background-color: #fb0;border: 2px ">
-      <div  fxFlex=20% style="margin:2%">fundooNotes</div>
-      <div  fxFlex="65%"></div>
-      <div  fxFlex="5%">
-        <mat-icon>shopping_cart</mat-icon>
-      </div>
-      <div  fxFlex="5%">
-          <mat-icon>refresh</mat-icon>
-        </div>
-        <div  fxFlex="5%">
-            <mat-icon>notifications</mat-icon>
-          </div>
-        </div>
-      </div>
-    <div   fxLayout="row" >
-      <div fxFlex="5%"></div>
-     
-    <div fxFlex="10%" class="matchip">
-        <mat-chip-list>
-          <mat-chip class="chip" color="#fb0" selected>fundooNotes</mat-chip>
-        </mat-chip-list>
-      </div>
-      <div  fxFlex="66%" class="slide">
-        <mat-tab-group dynamicHeight>
-          <mat-tab label="SIGN IN">
-            <div fxFlex="100%" fxLayout="column">
-            <div  fxLayout="row">
-            <div  class="shpgcart">shopping cart</div>
-            <div  class="price">price</div>
-            <div  class="validity">validity</div>
-          </div>
+
+
+<mat-toolbar  fxLayout="row" color="primary">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+      <div fxFlex="25" ></div>
+    </button>
+    <div  class="title"><span fxFlex="10" 
+         ngStyle.xs="width:10%"
+         ngStyle.sm="width:10%"
+         ngStyle.md="width:10%"
+        >fundooNotes
+    </span>
+  </div>
+    <div  fxFlex> 
+   
+    </div>
+                         <!---------------------refresh------------------------->
+  
+    <button mat-icon-button> <mat-icon matTooltip="Refresh" (click)="refresh()" fxFlex="40px" >refresh</mat-icon>
+    </button>
+  
+                        <!---------------------View-List or Grid------------- -->
+  
+    <mat-icon fx.show="true" fxShow.xs="false" fxFlex="40px" *ngIf="value==0" (click)="listView()" 
+              matTooltip="View" >
+              view_stream
+     </mat-icon>
+    <mat-icon fx.show="true" fxShow.xs="false" fxFlex="40px" *ngIf="value==1" (click)="gridView()"
+              matTooltip="View" >
+              view_module </mat-icon>
+                       <!---------------------cart------------------------->
+    <mat-icon fxFlex="40px" class="cart" matTooltip="cart" (click)="shoppingCart()" >shopping_cart</mat-icon>
+  
+       
+  
+    </mat-toolbar>
+
+
+
+
+
+  <div fxLayout="row"  >
+
+   
+  <div  fxFlex=5 class="first"  >
+  </div>
+
+  <div fxFlex  fxLayout="column" class="second" >
+  <div class="one">
+
+<div class="first1" fxLayout="row"  fxLayout.xs="column"  >
+  <div class="fundoo">fundooNotes</div>
+  <div fxFlex>
+    <mat-horizontal-stepper labelPosition="bottom" #stepper>
+      <mat-step >
+              <ng-template matStepLabel>SIGN IN</ng-template>
+              <!-- <mat-form-field>
+                  <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+              </mat-form-field>
+              <div>
+                  <button mat-button matStepperNext>Next</button>
+              </div> -->
+      </mat-step>
+      <mat-step  >
+          
+              <ng-template matStepLabel>PLACE ORDER</ng-template>
+              <!-- <mat-form-field>
+                  <input matInput placeholder="Address" formControlName="secondCtrl" required>
+              </mat-form-field>
+              <div>
+                  <button mat-button matStepperPrevious>Back</button>
+                  <button mat-button matStepperNext>Next</button>
+              </div> -->
+          
+      </mat-step>
+      <mat-step>
+          <ng-template matStepLabel>COMPLETE PAYMENT</ng-template>
+          <!-- You are now done.
           <div>
-            <mat-divider></mat-divider>
-          </div>
-          <div  fxFlex="100%" fxLayout="row">
-            <div  fxFlex="15%">
-              <mat-card class="matcard">$6.99 per month Advance</mat-card>
-            </div>
-            <div fxFlex="45%" fxLayout="row">
-              <div  fxLayout="column">
-                <p  class="pack"> Advance Pack Details</p>
-                <li>Unlimited Wall space</li>
-                <li>$6.99/month</li>
-                <li>Nice Interface</li>
-                <li>Ability to add only title & description</li>
-              </div>
-            </div>
-            <div class="num" fxFlex="20%">$6.99</div>
-            <div  class="per_month" fxFlex="20%">
-              <button class="per_month">per Month</button>
-            </div>
-          </div>
-                <div fxFlex="100%" fxLayout="row">
-                  
-                </div>
-                </div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button (click)="stepper.reset()">Reset</button>
+          </div> -->
+      </mat-step>
+  </mat-horizontal-stepper>
+  
+  </div>
+</div>
 
-                
-                
-                
-                
-                
-                
-                
-                
-                <mat-divider></mat-divider>
-                </mat-tab>
-              
-                <mat-tab label="PLACE ORDER">
-                    <div class="example-large-box mat-elevation-z4">
-                      Large content
-                    </div>
-                  </mat-tab>
-                  <mat-tab label="COMPLETE PAYMENT">
-                      <div class="example-large-box mat-elevation-z4">
-                        Large content
-                      </div>
-                    </mat-tab>
-                  
+  </div>
 
-          </mat-tab-group>
+  <div   class="two">
+    <div  fxLayout="row" fxLayout.xs="column" fxLayout.md="column" 
+    fxLayout.sm="column" >
+    <div  fxFlex=75  fxLayout="column">
+   <!-- <div style="border:solid 1px"> -->
+      <div   fxLayout="row" >
+      <div fxFlex=20>Shopping Cart</div>
+     <div fxFlex="34"></div>
+     <div fxFlex="10">Price</div>
+     <div fxFlex="10">Validity</div>
 
+    </div>
+      <div style="width:200px"><hr></div>
+      <!-- --------------------------------card1--------------------------------- -->
+     <div class="card"> 
+       <div fxFlex=70>
+        <div fxLayout="row">
+<div fxFlex="20" class="col1">
+<mat-card class="smallCard">
+<div>$ {{price}} per Month</div>
+<div>{{name  | titlecase}}</div>
+</mat-card>
+</div>
+<div fxFlex="55" class="col2">
+   <div  fxLayout="column"> 
+     <div class="advance">{{name | titlecase}} Pack Details</div>
+    <div fxLayout="row" class="first2" >
+<div fxFlex=45>
+    <li class="list">Unlimited wall space</li>
+    <li class="list">Nice Interface</li>
+   
+</div>
+<div fxFlex>
+    <li class="list">$ {{price}}/month</li>
+    <li class="list">{{desc}}</li>
+</div>
 
+    </div>
+  </div>
+  </div>
+  <div fxFlex="15"   class="col3">
+      <div class="price">$ {{price}} </div>
+
+    </div>
+    <div fxFlex  class="col4">
+Per Month
+    </div>
+
+        </div>
 
       </div>
-    
+     </div>
+     <div style="width:200px"><hr ></div>
+    <!-- </div> -->
 
-
+<div fxLayout="row">
+  <div fxFlex=55></div>
+  <div   fxFlex>Subtotal(item): <span  class="color">$ {{price}}</span></div>
+</div>
     </div>
+        <div>
+          <mat-card  class="sub">
+            <div fxLayout="column">
+              <div  fxFlex>Subtotal (item): <span  class="color">$ {{price}}</span></div>
+              <div style="height:25px"></div>
+            <div>  <button class="proceed" mat-raised-button>Proceed To Checkout</button></div>
+            </div>
+          </mat-card>
+        </div>
 
+  </div>
+  </div>
 
+  <div  class="three">
     </div>
+  </div>
+  <div fxFlex=5 class="first"></div>
+</div>

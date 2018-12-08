@@ -1,81 +1,80 @@
-.matchip{
-    margin-top:20px;
-    margin-left: 20px;
 
+
+@import "../../../sass/_variable.scss";
+@import "../../../sass/_mixins.scss";
+.mat-toolbar.mat-primary {
+    position: sticky;
+    background: #fb0;
+    color: black;
+    top: 0;
+  
+  }
+  .sub{
+      margin-top: 25px;
+      width:200px;
+      background-color: whitesmoke
+  }
+  .proceed{
+      background-color:rgb(84, 123, 196);
+      color:white;
+  }
+.first2{
+    margin-top: 10px;
 }
-.chip{
+.color{
+    color:red
+}
+.fundoo{
+  
+    border-radius:30px 30px 30px 30px;
+    margin-top:25px;
+    padding:10px 0px 0px 10px;
     background-color: #fb0;
     color:white;
-    font-weight:bold;
+    height:35px;
+    width:110px;
+    font-size:16px;
+}
+.list{
+    margin-top: 6px;
+}
+.first{
+    height:100px;
+    width:40px;
+}
+.second{
+    height:100px;
+    width:100px;
+}
+.one{
+    height:400px;
+}
+.two{
+   height:800px;
+}
+.three{
+    height:400px;
+}
+.first1{
+    margin-top: 20px;
+}
+
+.smallCard{
+    width:70px;
+    height:60px;
+    border-radius: 20px 20px 20px 20px;
+    background-color: gainsboro;
+}
+.advance{
+    color:rgb(81, 104, 209);
+}
+.price{
+    color:red;
     font-size:20px;
-    margin-top:30px;
-    font-family:BURW Chancery L, cursive ; 
+    margin-left:10px;
+}
+.col3{
+    margin-left:13px;
 
 }
-.example-large-box {
-    display: flex;
-    height: 200px;
-    width: 450px;
 
-    align-items: center;
-    justify-content: center;
-    margin-left: 40px;
-    margin:40px;
-    
-    padding: 16px;
-    border-radius: 8px;
-  }
-  .shpgcart{
-      text-align: left;
-      float:left;
-      font-weight: bold;
-      font-size:20px;
-      font-family:BURW Chancery L, cursive ; 
-
-      margin-top:20px;
-    //   margin-left:-30px;
-  }
-  .price{
-      float:right;
-      margin-top:30px;
-      margin-left:450px;
-      font-family:BURW Chancery L, cursive ; 
-
-      font-weight: lighter;
-      font-size:12px;
-  }
-  .validity{
-    float:right;
-    margin-top:30px;
-    margin-left:200px;
-    font-family:BURW Chancery L, cursive ; 
-
-    font-weight: lighter;
-    font-size:12px;
-
-
-  }
-  .matcard{
-    margin:10px;
-    border-radius: 20px;
-    height:50px;
-    width:50px;
-    // padding-top:-1000px;
-    background-color: rgb(180, 176, 176);
-    color:white;
-  }
-  .pack{
-      color:rgb(84, 123, 196);
-  }
-  .num{
-    //   margin-left:70px;
-      text-align: center;
-      color: rgb(114, 68, 68)
-
-  }
-  .per_month{
-      float: right;
-    //   margin-right:-30px;
-  }
-  
-  

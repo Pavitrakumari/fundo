@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatStepperModule} from '@angular/material/stepper';
 
 import * as _moment from 'moment';
 import { MatSnackBarModule,
@@ -122,6 +123,7 @@ import { AdvancepackdetailsComponent } from './components/advancepackdetails/adv
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   imports: [
+    MatStepperModule,
     BarRatingModule,
          MatDatepickerModule,
          NativeDateModule,
