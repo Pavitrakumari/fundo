@@ -1,5 +1,3 @@
-
-
 @import "../../../sass/_variable.scss";
 @import "../../../sass/_mixins.scss";
 .mat-toolbar.mat-primary {
@@ -12,8 +10,17 @@
   .sub{
       margin-top: 25px;
       width:200px;
-      background-color: whitesmoke
+      background-color: rgba(70, 67, 67, 0.295);
   }
+  @media only screen and (min-width: 300px) and (max-width: 800px) {
+    .sub{
+        margin-top: 10px;
+        width:150px;
+        // height:70px;
+        background-color: whitesmoke;
+    }
+   
+}
   .proceed{
       background-color:rgb(84, 123, 196);
       color:white;
@@ -22,7 +29,24 @@
     margin-top: 10px;
 }
 .color{
+    font-size:20px;
     color:red
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .color{
+        font-size:10px;
+        color:red
+    }
+    
+}
+.total{
+    font-size:20px;
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .total{
+        font-size:10px;
+    }
+    
 }
 .fundoo{
   
@@ -35,8 +59,27 @@
     width:110px;
     font-size:16px;
 }
-.list{
+.list{        display: flex;
+    font-size:15px;
+    margin-left: 25px;
     margin-top: 6px;
+}
+.toolbar{
+    z-index: 2;
+    position: fixed;
+    width: 100%;
+
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .list{
+        margin-top: 0px;
+        font-weight: lighter;
+        font-size:8px;
+        margin-left: 45px;
+        display: flex;
+
+    }
+    
 }
 .first{
     height:100px;
@@ -65,16 +108,94 @@
     border-radius: 20px 20px 20px 20px;
     background-color: gainsboro;
 }
+.smalldetails{
+    font-size:20px;
+
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .smalldetails{
+        font-size:10px;
+    
+    }
+    
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .smallCard{
+        width:40px;
+        height:30px;
+        border-radius: 20px 20px 20px 20px;
+        background-color: gainsboro;
+    }
+    
+}
+
+.hrr{
+width:650px
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .hrr{
+        width:300px
+        }
+    }
 .advance{
+    margin-left:20px;
+
+    font-size:20px;
     color:rgb(81, 104, 209);
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .advance{
+        font-size:10px;
+        margin-left:40px;
+        color:rgb(81, 104, 209);
+    }
+    
 }
 .price{
     color:red;
     font-size:20px;
     margin-left:10px;
 }
+.heading{
+    font-size:20px;
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .heading{
+        font-size:10px;
+        margin:5px;
+    }
+    
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .price{
+        color:red;
+        font-size:10px;
+        margin-left:10px;
+
+        margin-left:20px;
+    }
+    
+}
 .col3{
     margin-left:13px;
 
 }
-
+.col4{
+    font-size:15px;
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .col4{
+        font-size:12px;
+        margin-left:20px;
+    }
+    
+}
+.head2{
+    font-weight: bold;
+    font-size:15px;
+    // color:pink
+}
+.heading2{
+    font-weight: lighter;
+    font-size:15px;
+}

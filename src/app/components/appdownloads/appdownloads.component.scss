@@ -1,126 +1,182 @@
-.matchip{
-    margin-top:20px;
-    margin-left: 20px;
-
+@import "../../../sass/_variable.scss";
+@import "../../../sass/_mixins.scss";
+.mat-toolbar.mat-primary {
+    position: sticky;
+    background: #fb0;
+    color: black;
+    top: 0;
+  
+  }
+  .sub{
+      margin-top: 25px;
+      width:200px;
+      background-color: rgba(70, 67, 67, 0.295);
+  }
+  @media only screen and (min-width: 300px) and (max-width: 800px) {
+    .sub{
+        margin-top: 10px;
+        width:150px;
+        // height:70px;
+        background-color: whitesmoke;
+    }
+   
+}
+  .proceed{
+      background-color:rgb(84, 123, 196);
+      color:white;
+  }
+.first2{
+    margin-top: 10px;
+}
+.color{
+    font-size:20px;
+    color:red
 }
 @media only screen and (min-width: 300px) and (max-width: 800px) {
-    .matchip{
-        margin-top:10px;
-        margin-left: 0px;
-    
+    .color{
+        font-size:10px;
+        color:red
     }
     
-
 }
-.chip{
+.total{
+    font-size:20px;
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .total{
+        font-size:10px;
+    }
+    
+}
+.fundoo{
+  
+    border-radius:30px 30px 30px 30px;
+    margin-top:25px;
+    padding:10px 0px 0px 10px;
     background-color: #fb0;
     color:white;
-    font-weight:bold;
+    height:35px;
+    width:110px;
+    font-size:16px;
+}
+.list{
+    margin-top: 6px;
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .list{
+        margin-top: 0px;
+        font-weight: lighter;
+        font-size:8px;
+        margin-left: 45px;
+        display: flex;
+
+    }
+    
+}
+.first{
+    height:100px;
+    width:40px;
+}
+.second{
+    height:100px;
+    width:100px;
+}
+.one{
+    height:400px;
+}
+.two{
+   height:800px;
+}
+.three{
+    height:400px;
+}
+.first1{
+    margin-top: 20px;
+}
+
+.smallCard{
+    width:70px;
+    height:60px;
+    border-radius: 20px 20px 20px 20px;
+    background-color: gainsboro;
+}
+.smalldetails{
     font-size:20px;
-    margin-top:30px;
-    font-family:BURW Chancery L, cursive ; 
 
 }
 @media only screen and (min-width: 300px) and (max-width: 800px) {
-    .chip{
-        background-color: #fb0;
-        color:white;
-        font-weight:bold;
+    .smalldetails{
         font-size:10px;
-        margin-top:20px;
-        font-family:BURW Chancery L, cursive ; 
     
     }
     
 }
-.example-large-box {
-    display: flex;
-    height: 200px;
-    width: 450px;
-
-    align-items: center;
-    justify-content: center;
-    margin-left: 40px;
-    margin:40px;
-    
-    padding: 16px;
-    border-radius: 8px;
-  }
-  .shpgcart{
-      text-align: left;
-      float:left;
-      font-weight: bold;
-      font-size:20px;
-      font-family:BURW Chancery L, cursive ; 
-
-      margin-top:20px;
-    //   margin-left:-30px;
-  }
-  @media only screen and (min-width: 300px) and (max-width: 800px) {
-    .shpgcart{
-        text-align: left;
-        float:left;
-        font-weight: lighter;
-        font-size:10px;
-        font-family:BURW Chancery L, cursive ; 
-  
-        // margin-top:20px;
-      //   margin-left:-30px;
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .smallCard{
+        width:40px;
+        height:30px;
+        border-radius: 20px 20px 20px 20px;
+        background-color: gainsboro;
     }
+    
 }
-  .price{
-      float:right;
-      margin-top:30px;
-      margin-left:450px;
-      font-family:BURW Chancery L, cursive ; 
 
-      font-weight: lighter;
-      font-size:12px;
-  }
-  @media only screen and (min-width: 300px) and (max-width: 800px) {
+.hrr{
+width:770px
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .hrr{
+        width:300px
+        }
+    }
+.advance{
+    font-size:20px;
+    color:rgb(81, 104, 209);
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .advance{
+        font-size:10px;
+        margin-left:30px;
+        color:rgb(81, 104, 209);
+    }
+    
+}
+.price{
+    color:red;
+    font-size:20px;
+    margin-left:10px;
+}
+.heading{
+    font-size:20px;
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .heading{
+        font-size:10px;
+        margin:5px;
+    }
+    
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
     .price{
-        float:right;
-        margin-top:30px;
-        margin-left:50px;
-        font-family:BURW Chancery L, cursive ; 
-  
-        font-weight: lighter;
-        font-size:12px;
+        color:red;
+        font-size:10px;
+        margin-left:10px;
+
+        margin-left:20px;
     }
     
 }
-  .validity{
-    float:right;
-    margin-top:30px;
-    margin-left:200px;
-    font-family:BURW Chancery L, cursive ; 
+.col3{
+    margin-left:13px;
 
-    font-weight: lighter;
-    font-size:12px;
-
-
-  }
-  .matcard{
-    margin:10px;
-    border-radius: 20px;
-    height:50px;
-    width:50px;
-    // padding-top:-1000px;
-    background-color: rgb(180, 176, 176);
-    color:white;
-  }
-  .pack{
-      color:rgb(84, 123, 196);
-  }
-  .num{
-    //   margin-left:70px;
-      text-align: center;
-      color: rgb(114, 68, 68)
-
-  }
-  .per_month{
-      float: right;
-    //   margin-right:-30px;
-  }
-  
-  
+}
+.col4{
+    font-size:15px;
+}
+@media only screen and (min-width: 300px) and (max-width: 800px) {
+    .col4{
+        font-size:12px;
+        margin-left:20px;
+    }
+    
+}
