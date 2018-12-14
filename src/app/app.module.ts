@@ -79,6 +79,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { PackdetailsComponent } from './components/packdetails/packdetails.component';
 import { AdvancepackdetailsComponent } from './components/advancepackdetails/advancepackdetails.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -123,6 +124,7 @@ import { AdvancepackdetailsComponent } from './components/advancepackdetails/adv
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   imports: [
+    MatProgressBarModule,
     MatStepperModule,
     BarRatingModule,
          MatDatepickerModule,
@@ -162,6 +164,7 @@ import { AdvancepackdetailsComponent } from './components/advancepackdetails/adv
          FroalaEditorModule.forRoot(), 
          FroalaViewModule.forRoot(),
          MatTabsModule,
+         
 
   ],
   // imports: [FroalaEditorModule.forRoot(), FroalaViewModule.forRoot() ... ],

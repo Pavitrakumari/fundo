@@ -38,3 +38,25 @@
     margin-right:$right;
 
 }
+@mixin fundoo(){
+    border-radius:30px 30px 30px 30px;
+    margin-top:25px;
+    padding:10px 0px 0px 10px;
+    background-color: #fb0;
+    color:white;
+    height:35px;
+    width:110px;
+    font-size:18px;
+}
+@mixin go(){
+    width:240px;
+    background-color: rgb(41, 68, 189);
+    color:white;
+}
+@mixin toolbar(){
+    position: sticky;
+    background: #fb0;
+    color: black;
+    top: 0;
+}
+

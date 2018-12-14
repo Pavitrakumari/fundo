@@ -19,7 +19,19 @@ export class CartService {
   }
 
   cartDetails(cartId) {
-    let url = this.url + "/productcarts/getCartDetails/"+cartId;
+    console.log("cart id in cartservice",cartId);
+    let url = this.url + "productcarts/getCartDetails/"+cartId;
     return this.service.httpget(url);
   }
+  placeOrder(body){
+    console.log('szhgjaw',body);
+    let url=this.url+"productcarts/placeOrder";
+    return this.service.httpPost(url,body)
+
+  }
+  myCart(){
+    this.url = this.url+"/productcarts/myCart"
+    return this.service.httpget(this.url)
+  }
+
 }

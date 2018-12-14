@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material';
 import { Notes } from '../../core/models/notes';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { UserService } from '../../core/services/http/user/user.service';
 import { LoggerService } from '../../core/services/logger/logger.service';
@@ -57,7 +58,7 @@ export class SignupComponent implements OnInit,OnDestroy {
   public arr = [];
   service; 
   list:Notes[]=[]
-constructor(public httpService: HttpService,private userService:UserService, private cartService:CartService,public snackBar: MatSnackBar) { }
+constructor(public router: Router,public httpService: HttpService,private userService:UserService, private cartService:CartService,public snackBar: MatSnackBar) { }
   /**method to get the service for the user */
   ngOnInit() {
     this.getCartDetails();
@@ -83,7 +84,10 @@ constructor(public httpService: HttpService,private userService:UserService, pri
       this.card[i].select = false;
     }
   }
-  
+  cart(){
+    this.router.navigate(['cart']);
+
+  }
   clicked(card){
     if(card.select==true){
       this.selectedBefore=true;
@@ -108,8 +112,8 @@ try{
         "lastName": this.model.Lastname,
         "phoneNumber": "9603273903",
         "service": this.service,
-        "createdDate": "2018-10-09T06:35:12.617Z",
-        "modifiedDate": "2018-10-09T06:35:12.617Z",
+        // "createdDate": "2018-10-09T06:35:12.617Z",
+        // "modifiedDate": "2018-10-09T06:35:12.617Z",
         "username": this.model.Username,
         "email": this.model.Username,
         "emailVerified": true,
@@ -124,6 +128,8 @@ try{
             duration: 10000,
 
           });
+          this.router.navigate(["login"]);
+
 
           
         }),
@@ -145,17 +151,12 @@ private productId=localStorage.getItem('productId')
 getCartDetails(){
   this.cartService.cartDetails(this.productId).subscribe(response=>{
   console.log('cartDetails',response);
-  this.productId1=response['data']['product']['id']
+  this.productId1=response['data']['product']['id'];
+  this.service=response['data']['product']['name'];
+
   console.log("productid",this.productId1);
-  // localStorage.removeItem('productId');
-  // console.log('cartDetailssdssd',response['data']['id']);
-  // console.log(this.productId);
-  
-  
-  });
-  
-  }
-  
+});
+}
 ngOnDestroy() {
   this.destroy$.next(true);
   // Now let's also unsubscribe from the subject itself:

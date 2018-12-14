@@ -9,6 +9,9 @@ import { UserService } from '../../core/services/http/user/user.service';
 import { NoteService } from '../../core/services/http/note/note.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { CartService } from '../../core/services/http/cart/cart.service';
+import { Notes } from '../../core/models/notes';
+
 /**A componenet can be reused throughout the application & even in other applications */
 @Component({
   selector: 'app-login',
@@ -22,14 +25,36 @@ export class LoginComponent implements OnInit,OnDestroy {
     "email": " ",
     "password": ""
   };
+  service; 
+  public card = [];
+  public selectedBefore=false;
+  public array = [];
+
+  productId1: any;
+  list:Notes[]=[]
+
   hide = true;
-  constructor(private noteService:NoteService,public httpService: HttpService,private userService:UserService, public router: Router, public snackBar: MatSnackBar) { }
+  constructor(private cartService:CartService,private noteService:NoteService,public httpService: HttpService,private userService:UserService, public router: Router, public snackBar: MatSnackBar) { }
   ngOnInit() {
+    this.getCartDetails();
+    let obs = this.userService.getDataService1();
+    obs
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((response) => {
+     this.list = response["data"].data;
+      for (let i = 0; i <this.list .length; i++) {
+        this.card.push(this.list [i]);
+      }
+      // LoggerService.log(this.card);
+    })
+    this.clicked(this.card);
+    this.respond(this.card)
     let token;
     if (localStorage.getItem('token')) {
       this.router.navigate(['/home']);
     }
   }
+
   /**it is a interface */
   /**OnInit is a lifecycle hook that is called after Angular has initialized all data-bound properties of a directive. */
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -65,6 +90,7 @@ export class LoginComponent implements OnInit,OnDestroy {
         localStorage.setItem('firstName', data['firstName']);
         localStorage.setItem('lastName', data['lastName']);
         localStorage.setItem('imageUrl',data['imageUrl']);
+
         this.snackBar.open("successfully login","login", {
           duration: 10000,
         });
@@ -88,6 +114,40 @@ export class LoginComponent implements OnInit,OnDestroy {
      LoggerService.log(error);
    } 
   }
+
+private productId=localStorage.getItem('productId');
+getCartDetails(){
+  this.cartService.cartDetails(this.productId).subscribe(response=>{
+  console.log('cartDetails',response);
+  this.productId1=response['data']['product']['id']
+  console.log("productid",this.productId1);
+});
+}
+respond(card) {
+  this.service = card.name;
+  card.select = true;
+  for (let i = 0; i < this.card.length; i++) {
+    if (card.name == this.card[i].name) {
+      continue;
+    }
+    this.card[i].select = false;
+  }
+}
+
+clicked(card){
+  if(card.select==true){
+    this.selectedBefore=true;
+    return;
+  }
+  card.select = true;
+  for (let i = 0; i < this.array.length; i++) {
+    if (card.index == this.array[i].index) {
+      continue;
+    }
+    this.array[i].select = false;
+  }
+
+}
   ngOnDestroy() {
     this.destroy$.next(true);
     // Now let's also unsubscribe from the subject itself:

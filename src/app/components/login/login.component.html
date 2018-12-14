@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" fxLayoutAlign="center center" class="row-height">
+<div  fxLayout="row " fxLayoutAlign="start center" class="row-height">
     <mat-card fxFlex.lg="34%" fxFlex.md="100%" fxFlex.xs="100%" fxFlex.sm="100%">
       <form><mat-card-title align:center>  <h4>Sign in</h4><br><h3>with your account</h3></mat-card-title>
         <mat-card-content fxLayout="column">
@@ -21,5 +21,35 @@
             </div>
           </mat-card-content>
         </form>
+      </mat-card>
+      
+
+
+      <mat-card style="margin-left:50px;background-color:gainsboro">Services
+
+          <div flexLayout="row" fxFlexLayout="center">
+            <div fxFlex.lg="100" *ngFor="let card of card">
+                <mat-card mat-button  (click)="respond(card)"  [ngClass]="productId1 == card.id ? 'selectedbelow' : 'belowcard'" 
+                ngStyle.xs="font-size:15px;background-color: rgb(158, 158, 158);width:100px;height:145px">
+                  <mat-card   [ngClass]="card.select? 'aboveCardSelected' : 'aboveCard'" 
+                  ngStyle.xs="width:90px;height:120px;margin-left: -20px;margin-top: -32px;" (click)="clicked(card);open()">
+                    <div class="dollar">
+                      $ {{card.price}} per Month
+                    </div>
+                    <a style="font-size:smaller;color:deepskyblue">{{card.name}}</a>
+                    <ul>
+                        <li class="content">1) Unlimited wall space</li>
+                        <li class="content">2) Nice Interface</li>
+                        <li class="content">3) ${{card.price}}/month</li>
+                        <li class="content">4) {{card.description}}</li>
+                    </ul>
+                  </mat-card>
+                  <div *ngIf="productId1 == card.id" ngStyle.lg="margin:2%" ngStyle.xs="padding:1%">SELECTED</div>
+                  <div *ngIf="productId1 != card.id" ngStyle.lg="margin:2%" ngStyle.xs="padding:1%">ADD TO CART</div>
+
+                </mat-card>
+              </div>
+            </div>
+    
       </mat-card>
     </div>

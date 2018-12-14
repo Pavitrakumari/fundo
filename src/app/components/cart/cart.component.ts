@@ -76,7 +76,6 @@ data:cardData
     });
   }
 
-
 }
 ngOnDestroy() {
   this.destroy$.next(true);

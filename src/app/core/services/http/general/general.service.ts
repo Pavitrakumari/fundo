@@ -11,6 +11,8 @@ export class GeneralService {
 
   constructor(private http: HttpClient) {}
 public httpPost(url,body){
+  console.log("url & body in httpPost general service",url,body);
+  
   let httpAuthOptions2 = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'

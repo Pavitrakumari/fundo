@@ -4,6 +4,7 @@
       <mat-card-title align:left>
         <h4>Create your account</h4><br>
         <h3>to continue to fundooNotes</h3>
+        <button (click)="cart()">Go to Cart</button>
       </mat-card-title>
       <mat-card-content fxLayout="column">
         <div class="example-container">
@@ -57,7 +58,9 @@
                     <li class="content">{{card.description}}</li>
                 </ul>
               </mat-card>
-              <div ngStyle.lg="margin:2%" ngStyle.xs="padding:1%">ADD TO CART</div>
+              <div  *ngIf="productId1 != card.id" ngStyle.lg="margin:2%" ngStyle.xs="padding:1%">ADD TO CART</div>
+              <div *ngIf="productId1 == card.id" ngStyle.lg="margin:2%" ngStyle.xs="padding:1%">SELECTED</div>
+
             </mat-card>
           </div>
         </div>

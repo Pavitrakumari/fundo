@@ -122,6 +122,7 @@ logout() {
     .subscribe(data => {/**registers handlers for events emitted by the instance */
       localStorage.removeItem('email');/**remove email from local storage when logout */
       localStorage.removeItem('token');/**remove token from local storage when logout */
+      // localStorage.clear();
       this.router.navigate(['/login']);/**when logout() is performed then navigate the page to login */
       this.snackBar.open("successfully logout", "LOGOUT", {/**snackbar to display the result */
         duration: 10000,/**for a duration of 10 seconds */

@@ -1,171 +1,181 @@
-
-
-
-<mat-toolbar  fxLayout="row" color="primary">
-  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-    <div fxFlex="25" ></div>
-  </button>
-  <div  class="title"><span fxFlex="10" 
-       ngStyle.xs="width:10%"
-       ngStyle.sm="width:10%"
-       ngStyle.md="width:10%"
-      >fundooNotes
-  </span>
-</div>
-  <div  fxFlex> 
- 
+<mat-toolbar  fxLayout="row" class="toolbar"  color="primary">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+      <div fxFlex="25" ></div>
+    </button>
+    <div  class="title"><span fxFlex="10" 
+         ngStyle.xs="width:10%"
+         ngStyle.sm="width:10%"
+         ngStyle.md="width:10%">fundooNotes</span>
   </div>
-                       <!---------------------refresh------------------------->
-
-  <button mat-icon-button> <mat-icon matTooltip="Refresh" (click)="refresh()" fxFlex="40px" >refresh</mat-icon>
-  </button>
-
-                      <!---------------------View-List or Grid------------- -->
-
-  <mat-icon fx.show="true" fxShow.xs="false" fxFlex="40px" *ngIf="value==0" (click)="listView()" 
-            matTooltip="View" >
-            view_stream
-   </mat-icon>
-  <mat-icon fx.show="true" fxShow.xs="false" fxFlex="40px" *ngIf="value==1" (click)="gridView()"
-            matTooltip="View" >
-            view_module </mat-icon>
-                     <!---------------------cart------------------------->
-  <mat-icon fxFlex="40px" class="cart" matTooltip="cart" (click)="shoppingCart()" >shopping_cart</mat-icon>
-
-     
-
-  </mat-toolbar>
-
-
-
-
-
-<div fxLayout="row"  >
-
- 
-<div  fxFlex=5 class="first"  >
-</div>
-
-<div fxFlex  fxLayout="column" class="second" >
-<div class="one">
-
-<div class="first1" fxLayout="row"  fxLayout.xs="column"  >
-<div class="fundoo">fundooNotes</div>
-<div fxFlex>
-  <mat-horizontal-stepper labelPosition="bottom" #stepper>
-    <mat-step >
-            <ng-template matStepLabel>SIGN IN</ng-template>
-            <button mat-button matStepperNext>Next</button>
-
-            <!-- <mat-form-field>
-                <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-            </mat-form-field>
-            <div>
-                <button mat-button matStepperNext>Next</button>
-            </div> -->
-    </mat-step>
-    <mat-step  >
-        
-            <ng-template matStepLabel>PLACE ORDER</ng-template>
-            <!-- <mat-form-field>
-                <input matInput placeholder="Address" formControlName="secondCtrl" required>
-            </mat-form-field>
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-            </div> -->
-        
-    </mat-step>
-    <mat-step>
-        <ng-template matStepLabel>COMPLETE PAYMENT</ng-template>
-        <!-- You are now done.
-        <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
-        </div> -->
-    </mat-step>
-</mat-horizontal-stepper>
-
-</div>
-</div>
-
-</div>
-
-<div   class="two">
-  <div  fxLayout="row" fxLayout.xs="column" fxLayout.md="column" 
-  fxLayout.sm="column" >
-  <div  fxFlex=75  fxLayout="column">
- <!-- <div style="border:solid 1px"> -->
-    <div   fxLayout="row" >
-    <div class="heading" fxFlex=20>Shopping Cart</div>
-   <div class="heading" fxFlex="34"></div>
-   <div class="heading" fxFlex="10" >Price</div>
-   <div class="heading" fxFlex="10">Validity</div>
-
-  </div>
-    <div style="width:200px"><hr class="hrr"></div>
-    <!-- --------------------------------card1--------------------------------- -->
-   <div class="card"> 
-     <div fxFlex=70>
-      <div fxLayout="row">
-<div fxFlex="20" class="col1">
-<mat-card class="smallCard">
-<div class="smalldetails">$ {{cards.price}} per Month</div>
-<div class="smalldetails">{{cards.name  | titlecase}}</div>
-</mat-card>
-</div>
-<div fxFlex="55" class="col2">
- <div  fxLayout="column"> 
-   <div class="advance">{{name | titlecase}} Pack Details</div>
-  <div fxLayout="row" class="first2" >
-<div fxFlex=45>
-  <li class="list">Unlimited wall space</li>
-  <li class="list">Nice Interface</li>
- 
-</div>
-<div fxFlex>
-  <li class="list">$ {{price}}/month</li>
-  <li class="list">{{desc}}</li>
-</div>
-
-  </div>
-</div>
-</div>
-<div fxFlex="15"   class="col3">
-    <div class="price">$ {{price}} </div>
-
-  </div>
-  <div fxFlex  class="col4">
-Per Month
-  </div>
-
-      </div>
-
-    </div>
-   </div>
-   <div style="width:200px"><hr class="hrr" ></div>
-  <!-- </div> -->
-
+  <div  fxFlex></div>
+                         <!---------------------refresh------------------------->
+<button mat-icon-button> <mat-icon matTooltip="Refresh" (click)="refresh()" fxFlex="40px" >refresh</mat-icon></button>
+  
+                        <!---------------------View-List or Grid------------- -->
+<mat-icon fx.show="true" fxShow.xs="false" fxFlex="40px" *ngIf="value==0" (click)="listView()" matTooltip="View">view_stream</mat-icon>
+    <mat-icon fx.show="true" fxShow.xs="false" fxFlex="40px" *ngIf="value==1" (click)="gridView()" matTooltip="View">view_module </mat-icon>
+                       <!---------------------cart------------------------->
+    <mat-icon fxFlex="40px" class="cart" matTooltip="cart" (click)="shoppingCart()" >shopping_cart</mat-icon>
+</mat-toolbar>
+<!------------------------------------------- Toolbar completed------------------------------>
 <div fxLayout="row">
-<div fxFlex=55></div>
-<div class="total" fxFlex>Subtotal(item): <span  class="color">$ {{price}}</span></div>
-</div>
-  </div>
+  <div  fxFlex=5 class="first"></div>
+  <div fxFlex  fxLayout="column" class="second" >
+    <div class="one">
+      <div class="first1" fxLayout="row"  fxLayout.xs="column"  >
+        <div class="fundoo">fundooNotes</div>
+        <div fxFlex>
+          <mat-horizontal-stepper labelPosition="bottom" #stepper>
+            <mat-step>
+              <ng-template matStepLabel>SIGN IN</ng-template>
+              <button mat-button matStepperNext>Next</button>
+              <div class="two">
+                <div  fxLayout="row" fxLayout.xs="column" fxLayout.md="column" fxLayout.sm="column" >
+                <div  fxFlex=75  fxLayout="column">
+                  <div fxLayout="row" >
+                    <div class="heading" fxFlex=20>Shopping Cart</div>
+                    <div class="heading" fxFlex="34"></div>
+                    <div class="heading" fxFlex="10" >Price</div>
+                    <div class="heading" fxFlex="10">Validity</div>
+                  </div>
+                  <div style="width:200px"><hr class="hrr"></div>
+      <!-- --------------------------------card1--------------------------------- -->
+      <div class="card"> 
+        <div fxFlex=70>
+          <div fxLayout="row">
+            <div fxFlex="20" class="col1">
+              <mat-card class="smallCard">
+                <div class="smalldetails">$ {{cards.price}} per Month</div>
+                <div class="smalldetails">{{cards.name  | titlecase}}</div>
+              </mat-card>
+            </div>
+            <div fxFlex="55" class="col2">
+               <div  fxLayout="column"> 
+                 <div class="advance">{{name | titlecase}} Pack Details</div>
+                 <div fxLayout="row" class="first2" >
+                   <div fxFlex=45>
+                     <li class="list">1)Unlimited wall space</li>
+                     <li class="list">2)Nice Interface</li>
+                    </div>
+                    <div fxFlex>
+                      <li class="list">3)$ {{price}}/month</li>
+                      <li class="list">4){{desc}}</li>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div fxFlex="15"   class="col3">
+                <div class="price">$ {{price}} </div>
+              </div>
+              <div fxFlex  class="col4">Per Month</div>
+            </div>
+          </div>
+        </div>
+        <div style="width:200px"><hr class="hrr" ></div>
+        <div fxLayout="row">
+          <div fxFlex=55></div>
+          <div class="total" fxFlex>Subtotal(item): <span  class="color">$ {{price}}</span></div>
+        </div>
+      </div>
       <div>
         <mat-card class="sub">
           <div fxLayout="column">
             <div  fxFlex>Subtotal (item): <span  class="color">$ {{price}}</span></div>
-            <div style="height:25px"></div>
-          <div fxShow="true" fxShow.xs="true">  <button class="proceed" mat-raised-button>Proceed To Checkout</button></div>
+                          <div style="height:25px"></div>
+                        <div fxShow="true" fxShow.xs="true">  <button class="proceed" mat-raised-button>Proceed To Checkout</button></div>
+                        </div>
+                      </mat-card>
+                    </div>
+                  </div>
+              </div>
+      </mat-step>
+
+<!----------------------------------------------------------------- 2nd part ------------------------------------------------>
+      <mat-step>
+        <ng-template matStepLabel>PLACE ORDER</ng-template>
+        <button mat-button matStepperNext>Next</button>
+        <mat-card class="matcard2">
+            <div class="two">
+                <div  fxLayout="row" fxLayout.xs="column" fxLayout.md="column" fxLayout.sm="column" >
+                <div  fxFlex="75"  fxLayout="column">
+                  <div fxLayout="row" >
+                    <div class="heading" fxFlex="40">Shopping Cart</div>
+                    <div class="heading" fxFlex="0"></div>
+                    <div class="heading" fxFlex="10" ></div>
+                    <div class="heading" fxFlex="10"></div>
+                  </div>
+        <!----------------------------------card1----------------------------------->
+      <div class="card"> 
+        <div fxFlex=70>
+          <div fxLayout="row">
+            <div fxFlex="20" class="col1">
+              <mat-card class="smallCard">
+                <div class="smalldetails">$ {{cards.price}} per Month</div>
+                <div class="smalldetails">{{cards.name  | titlecase}}</div>
+              </mat-card>
+            </div>
+            <div fxFlex="55" class="col2">
+               <div  fxLayout="column"> 
+                 <div class="advance">{{name | titlecase}} Pack Details</div>
+                 <div fxLayout="row" class="first2" >
+                   <div fxFlex=45>
+                     <li class="list">1)Unlimited wall space</li>
+                     <li class="list">2)Nice Interface</li>
+                    </div>
+                    <div fxFlex>
+                      <li class="list">3)$ {{price}}/month</li>
+                      <li class="list">4){{desc}}</li>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="border:solid" fxFlex="15"   class="col3">
+                <div class="price">$ {{price}} Per Month</div>
+              </div>
+              <div style="border:solid" fxFlex  class="col4">ffffffffffff</div>
+            </div>
           </div>
-        </mat-card>
+        </div>
+        <!-- <div style="width:200px"><hr class="hrr" ></div> -->
+        <!-- <div fxLayout="row">
+          <div fxFlex=55></div>
+          <div class="total" fxFlex>Subtotal(item): <span  class="color">$ {{price}}</span></div>
+        </div> -->
       </div>
+      <!-- <div>
+        <mat-card class="sub">
+          <div fxLayout="column">
+            <div  fxFlex>Subtotal (item): <span  class="color">$ {{price}}</span></div>
+                          <div style="height:25px"></div>
+                        <div fxShow="true" fxShow.xs="true">  <button class="proceed" mat-raised-button>Place Your Order</button></div>
+                        </div>
+                      </mat-card>
+                    </div> -->
+                  </div>
+              </div>
 
-</div>
-</div>
 
-<div  class="three">
+
+        </mat-card>
+              
+
+
+          </mat-step>
+          <mat-step>
+          <ng-template matStepLabel>COMPLETE PAYMENT</ng-template>You are now done.
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
   </div>
 </div>
-<div fxFlex=5 class="first"></div>
+
+  
+
+
+
+
+  <div  class="three">
+    </div>
+  </div>
+  <div fxFlex=5 class="first"></div>
 </div>

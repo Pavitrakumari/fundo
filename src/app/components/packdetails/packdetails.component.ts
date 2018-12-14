@@ -33,6 +33,7 @@ export class PackdetailsComponent implements OnInit {
     this.cartService.addToCart(this.content).subscribe(response=>{
 console.log(response);
 localStorage.setItem('productId',response['data']['details']['id']);
+console.log('productId',response['data']['details']['id']);
 
     });
     this.router.navigate(['/signup']);

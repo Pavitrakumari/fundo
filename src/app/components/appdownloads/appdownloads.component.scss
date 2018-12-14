@@ -59,15 +59,28 @@
     width:110px;
     font-size:16px;
 }
-.list{
+.list{        display: flex;
+    font-size:15px;
+    margin-left: 45px;
     margin-top: 6px;
+}
+.matcard2{
+    // border:solid;
+    width:800px;
+    height:200px;
+}
+.toolbar{
+    z-index: 2;
+    position: fixed;
+    width: 100%;
+
 }
 @media only screen and (min-width: 300px) and (max-width: 800px) {
     .list{
         margin-top: 0px;
         font-weight: lighter;
         font-size:8px;
-        margin-left: 45px;
+        margin-left: 65px;
         display: flex;
 
     }
@@ -122,7 +135,7 @@
 }
 
 .hrr{
-width:770px
+width:650px
 }
 @media only screen and (min-width: 300px) and (max-width: 800px) {
     .hrr{
@@ -130,13 +143,15 @@ width:770px
         }
     }
 .advance{
+    margin-left:40px;
+
     font-size:20px;
     color:rgb(81, 104, 209);
 }
 @media only screen and (min-width: 300px) and (max-width: 800px) {
     .advance{
         font-size:10px;
-        margin-left:30px;
+        margin-left:40px;
         color:rgb(81, 104, 209);
     }
     
@@ -179,4 +194,17 @@ width:770px
         margin-left:20px;
     }
     
+}
+.head2{
+    font-weight: bold;
+    font-size:15px;
+    // color:pink
+}
+.heading2{
+    font-weight: lighter;
+    font-size:15px;
+}
+.clr{
+    color: rgb(0, 255, 42);
+    background-color: pink
 }
